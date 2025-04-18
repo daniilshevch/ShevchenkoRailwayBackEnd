@@ -1,0 +1,98 @@
+﻿using RailwayCore.Models;
+using RailwayCore.Context;
+using RailwayCore.DTO;
+using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
+using System.Globalization;
+using System;
+namespace RailwayCore.Services
+{
+    public class TrainRouteOnDateService
+    {
+
+        private AppDbContext context;
+        private TrainRouteService train_route_service;
+        public TrainRouteOnDateService(AppDbContext context, TrainRouteService train_route_service)
+        {
+            this.context = context;
+            this.train_route_service = train_route_service;
+        }
+
+        private static TextService text_service = new TextService("TrainRouteOnDateService");
+        public async Task<TrainRouteOnDate?> CreateTrainRouteOnDate(TrainRouteOnDateDto input)
+        {
+            TrainRouteOnDate? already_in_memory = await context.Train_Routes_On_Date
+                .FirstOrDefaultAsync(train_route_on_date => train_route_on_date.Train_Route_Id == input.Train_Route_Id
+                && train_route_on_date.Departure_Date == input.Departure_Date);
+            if (already_in_memory is not null)
+            {
+                text_service.DuplicateGetInform("Train route with these parameters already exists");
+                return already_in_memory;
+            }
+            TrainRoute? train_route
+            = await train_route_service.FindTrainRouteById(input.Train_Route_Id);
+            if (train_route == null)
+            {
+                text_service.FailPostInform("Fail in TrainRouteService");
+                return null;
+            }
+            DateOnly departure_date = input.Departure_Date;
+            string train_route_id = train_route.Id;
+            string train_route_on_date_id =
+                BuildTrainRouteOnDateIdentificator(train_route_id, departure_date);
+            TrainRouteOnDate train_route_on_date = new TrainRouteOnDate
+            {
+                Id = train_route_on_date_id,
+                Departure_Date = departure_date,
+                Train_Route = train_route
+            };
+            /*TrainRouteOnDate? already_in_memory = await context.Train_Routes_On_Date.FirstOrDefaultAsync(train_route_on_date =>
+            train_route_on_date.Id == train_route_on_date_id);
+            if(already_in_memory is not null)
+            {
+                text_service.DuplicateGetInform($"Train route on date with ID: {train_route_on_date_id} already exists");
+            }*/
+            context.Train_Routes_On_Date.Add(train_route_on_date);
+            await context.SaveChangesAsync();
+            text_service.SuccessPostInform("Succesfully created train route on date");
+            return train_route_on_date;
+        }
+        public async Task<TrainRouteOnDate?> CreateTrainRouteOnDate(string train_route_id, DateOnly departure_date)
+        {
+            TrainRouteOnDateDto input = new TrainRouteOnDateDto { Train_Route_Id = train_route_id, Departure_Date = departure_date };
+            return await CreateTrainRouteOnDate(input);
+
+        }
+        public async Task<TrainRouteOnDate?> FindTrainRouteOnDateById(string id)
+        {
+            TrainRouteOnDate? train_route_on_date = await context.Train_Routes_On_Date
+                .FirstOrDefaultAsync(train_route_on_date => train_route_on_date.Id == id);
+            if (train_route_on_date == null)
+            {
+                text_service.FailGetInform($"Can't find train route on date with ID: {id}");
+                return null;
+            }
+            return train_route_on_date;
+        }
+
+        public string BuildTrainRouteOnDateIdentificator(string train_route_id, DateOnly departure_date)
+        {
+            string departure_day = departure_date.Day.ToString("D2");
+            string departure_month = departure_date.Month.ToString("D2");
+            string departure_year = departure_date.Year.ToString();
+            string train_route_on_date_id =
+                string.Join("_", new string[] { train_route_id, departure_year, departure_month, departure_day });
+            return train_route_on_date_id;
+        }
+        public (string, DateOnly) GetTrainRouteIdAndDateFromTrainRouteOnDate(string train_route_on_date_id)
+        {
+            string[] attributes = train_route_on_date_id.Split('_');
+            string train_route_id = attributes[0];
+            int year = Convert.ToInt32(attributes[1]);
+            int month = Convert.ToInt32(attributes[2]);
+            int day = Convert.ToInt32(attributes[3]);
+            return (train_route_id, new DateOnly(year, month, day));
+        }
+
+    }
+}

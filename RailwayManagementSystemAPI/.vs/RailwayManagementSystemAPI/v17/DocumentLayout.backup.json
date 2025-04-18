@@ -1,0 +1,326 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\RailwayCoreAndAPI\\RailwayManagementSystemAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\ticketbookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\errorhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\trainrouteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\trainrouteondateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\trainrouteondateonstationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\textservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\stationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\railwaybranchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\passengercarriageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\passengercarriageontrainrouteondateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\fulltrainroutesearchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\services\\fulltrainassignementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Migrations\\20250418051425_carriage_position_in_ticket_new.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\models\\ticketbooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\railwaycoreandapi\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\railwaycoreandapi\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\clientcontrollers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\clientcontrollers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\models\\ticketinselling.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\models\\trainroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\railwaycoreandapi\\railwaycore\\railwaycore\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TrainRouteService.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\TrainRouteService.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\TrainRouteService.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\TrainRouteService.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\TrainRouteService.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAAADwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:19:01.761Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TrainRouteOnDateService.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\TrainRouteOnDateService.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\TrainRouteOnDateService.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\TrainRouteOnDateService.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\TrainRouteOnDateService.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAAAF8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:18:53.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TrainRouteOnDateOnStationService.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\TrainRouteOnDateOnStationService.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\TrainRouteOnDateOnStationService.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\TrainRouteOnDateOnStationService.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\TrainRouteOnDateOnStationService.cs",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAAAG0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:18:46.829Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TicketBookingService.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\TicketBookingService.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\TicketBookingService.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\TicketBookingService.cs*",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\TicketBookingService.cs*",
+              "ViewState": "AgIAACMAAAAAAAAAAAAAAC4AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:18:27.761Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TextService.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\TextService.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\TextService.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\TextService.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\TextService.cs",
+              "ViewState": "AgIAAJoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:17:14.727Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "StationService.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\StationService.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\StationService.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\StationService.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\StationService.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAAAEcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:18:17.344Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RailwayBranchService.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\RailwayBranchService.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\RailwayBranchService.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\RailwayBranchService.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\RailwayBranchService.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:18:04.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PassengerCarriageService.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\PassengerCarriageService.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\PassengerCarriageService.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\PassengerCarriageService.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\PassengerCarriageService.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAAAEkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:17:57.88Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PassengerCarriageOnTrainRouteOnDateService.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\PassengerCarriageOnTrainRouteOnDateService.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\PassengerCarriageOnTrainRouteOnDateService.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\PassengerCarriageOnTrainRouteOnDateService.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\PassengerCarriageOnTrainRouteOnDateService.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAFcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:17:50.983Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FullTrainRouteSearchService.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\FullTrainRouteSearchService.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\FullTrainRouteSearchService.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\FullTrainRouteSearchService.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\FullTrainRouteSearchService.cs",
+              "ViewState": "AgIAAAgBAAAAAAAAAAAAABABAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:17:42.56Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "FullTrainAssignementService.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\FullTrainAssignementService.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\FullTrainAssignementService.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\FullTrainAssignementService.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\FullTrainAssignementService.cs",
+              "ViewState": "AgIAAFMBAAAAAAAAAAAAAFwBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:17:23.718Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ErrorHandler.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\ErrorHandler.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Services\\ErrorHandler.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Services\\ErrorHandler.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Services\\ErrorHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:17:16.432Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "20250418051425_carriage_position_in_ticket_new.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Migrations\\20250418051425_carriage_position_in_ticket_new.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Migrations\\20250418051425_carriage_position_in_ticket_new.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Migrations\\20250418051425_carriage_position_in_ticket_new.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Migrations\\20250418051425_carriage_position_in_ticket_new.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:14:25.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "TicketBooking.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Models\\TicketBooking.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\TicketBooking.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Models\\TicketBooking.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Models\\TicketBooking.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:10:30.223Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\Program.cs",
+              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\Program.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\Program.cs",
+              "RelativeToolTip": "RailwayManagementSystemAPI\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:09:50.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ClientControllers\\UserController.cs",
+              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ClientControllers\\UserController.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ClientControllers\\UserController.cs",
+              "RelativeToolTip": "RailwayManagementSystemAPI\\ClientControllers\\UserController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:09:43.601Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "TicketInSelling.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Models\\TicketInSelling.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\TicketInSelling.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Models\\TicketInSelling.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Models\\TicketInSelling.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T17:19:29.522Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "TrainRoute.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Models\\TrainRoute.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\TrainRoute.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Models\\TrainRoute.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Models\\TrainRoute.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAswDwAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T17:09:51.698Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Program.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Program.cs",
+              "ToolTip": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\Program.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\Program.cs",
+              "ViewState": "AgIAAI8BAAAAAAAAAIBZwKgBAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-18T17:40:43.598Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

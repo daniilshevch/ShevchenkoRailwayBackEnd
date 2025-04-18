@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\RailwayManagementSystemAPI.props" />
+</Project>

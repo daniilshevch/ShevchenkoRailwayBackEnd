@@ -1,0 +1,381 @@
+[
+  {
+    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "Method": "AssignTrainRouteOnDateWithSchedule",
+    "RelativePath": "Admin-API/TrainAssignment/Assign-Train-With-Schedule",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.API_DTO.TrainRouteWithScheduleAssignmentDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "Method": "AssignTrainRouteOnDateWithScheduleAndSquad",
+    "RelativePath": "Admin-API/TrainAssignment/Assign-Train-With-Schedule-And-Squad",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.API_DTO.TrainRouteWithScheduleAndSquadAssignmentDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "Method": "AssignTrainRouteOnDateWithSquad",
+    "RelativePath": "Admin-API/TrainAssignment/Assign-Train-With-Squad",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.API_DTO.TrainRouteWithSquadAssignmentDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "Method": "ChangeTrainRouteOnDateSchedule",
+    "RelativePath": "Admin-API/TrainAssignment/Change-Train-Schedule",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "departure_date",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "train_stops",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.TrainStopWithArrivalAndDepartureTimeDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      },
+      {
+        "Name": "deletion_option",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "Method": "ChangeTrainRouteOnDateSquad",
+    "RelativePath": "Admin-API/TrainAssignment/Change-Train-Squad",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "departure_date",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "carriage_assignments",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayCore.DTO.CarriageAssignementWithoutRouteDTO, RailwayCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      },
+      {
+        "Name": "deletion_option",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "Method": "CopyTrainRouteOnDateWithSchedule",
+    "RelativePath": "Admin-API/TrainAssignment/Copy-Train-With-Schedule",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "prototype_date",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "new_date",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "creation_option",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "Method": "CopyTrainRouteOnDateWithScheduleAndSquad",
+    "RelativePath": "Admin-API/TrainAssignment/Copy-Train-With-Schedule-And-Squad",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "prototype_date",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "new_date",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "creation_option",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "Method": "CopyTrainRouteOnDateWithSquad",
+    "RelativePath": "Admin-API/TrainAssignment/Copy-Train-With-Squad",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "prototype_date",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "new_date",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "creation_option",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ClientControllers.CompletedTicketBookingController",
+    "Method": "CompleteTicketBookingProcess",
+    "RelativePath": "Client-API/CompletedTicketBooking/Complete-Ticket-Booking",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.API_DTO.CompletedTicketBookingWithUserInfoDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayManagementSystemAPI.API_DTO.CompletedTicketBookingDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ClientControllers.CompletedTicketBookingController",
+    "Method": "InitializeTicketBookingProcess",
+    "RelativePath": "Client-API/CompletedTicketBooking/Initialize-Ticket-Booking",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.API_DTO.InitialTicketBookingDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayManagementSystemAPI.API_DTO.MediatorTicketBookingDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.Controllers.TrainSearchController",
+    "Method": "GetBookingsInfoForAllCarriagesForSpecificTrainRouteOnDate",
+    "RelativePath": "ClientAPI/TrainSearch/Get-All-Carriages-Info",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_on_date",
+        "Type": "RailwayManagementSystemAPI.API_DTO.TrainRouteWithBookingsInfoDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.SinglePassengerCarriageBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.Controllers.TrainSearchController",
+    "Method": "GetBookingsInfoForPassengerCarriagesOfSpecificTypeForSpecificTrainRouteOnDate",
+    "RelativePath": "ClientAPI/TrainSearch/Get-Carriages-Of-Type-Info",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_on_date",
+        "Type": "RailwayManagementSystemAPI.API_DTO.TrainRouteWithBookingsInfoDto",
+        "IsRequired": true
+      },
+      {
+        "Name": "carriage_type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "quality_class",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.SinglePassengerCarriageBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.Controllers.TrainSearchController",
+    "Method": "GetScheduleForSpecificTrainRouteOnDate",
+    "RelativePath": "ClientAPI/TrainSearch/Get-Train-Schedule",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_on_date",
+        "Type": "RailwayManagementSystemAPI.API_DTO.TrainRouteWithBookingsInfoDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.SingleTrainStopDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.Controllers.TrainSearchController",
+    "Method": "SearchTrainRoutesBetweenStationsWithBookingsInfo",
+    "RelativePath": "ClientAPI/TrainSearch/Search-Train-Routes-Between-Stations-With-Bookings",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "starting_station",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ending_station",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "departure_date",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.TrainRouteWithBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]

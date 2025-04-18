@@ -1,0 +1,317 @@
+﻿   /*
+        await full_train_assignement_service.CreateTrainRouteOnDateWithScheduleAndSquad("26SH", new DateOnly(2025, 02, 14), new List<TrainStopWithoutRouteDto>
+            {
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Odesa-Holovna",
+                    Arrival_Time = null,
+                    Departure_Time = new DateTime(2025, 02, 14, 18, 18, 00),
+                    Distance_From_Starting_Station = 0
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Rozdilna-1",
+                    Arrival_Time = new DateTime(2025, 02, 14, 19, 23, 00),
+                    Departure_Time = new DateTime(2025, 02, 14, 19, 25, 00),
+                    Distance_From_Starting_Station = 72
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Zatyshia",
+                    Arrival_Time = new DateTime(2025, 02, 14, 20, 13, 00),
+                    Departure_Time = new DateTime(2025, 02, 14, 20, 15, 00),
+                    Distance_From_Starting_Station = 132
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Podilsk",
+                    Arrival_Time = new DateTime(2025,02, 14, 20, 56, 00),
+                    Departure_Time = new DateTime(2025, 02, 14, 20, 58, 00),
+                    Distance_From_Starting_Station = 188
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Kodyma",
+                    Arrival_Time = new DateTime(2025, 02, 14, 21, 49, 00),
+                    Departure_Time = new DateTime(2025, 02, 14, 21, 51, 00),
+                    Distance_From_Starting_Station = 243
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Rudnytsia",
+                    Arrival_Time = new DateTime(2025, 02, 14, 22, 14, 00),
+                    Departure_Time = new DateTime(2025, 02, 14, 22, 16, 00),
+                    Distance_From_Starting_Station = 268
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Kryzhopil",
+                    Arrival_Time = new DateTime(2025,02, 14, 22, 29, 00),
+                    Departure_Time = new DateTime(2025, 02, 14, 22, 31, 00),
+                    Distance_From_Starting_Station = 284
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Vapniarka",
+                    Arrival_Time = new DateTime(2025, 02, 14, 22, 51, 00),
+                    Departure_Time = new DateTime(2025, 02, 14, 22, 53, 00),
+                    Distance_From_Starting_Station = 305
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Rakhny",
+                    Arrival_Time = new DateTime(2025, 02, 14, 23, 24, 00),
+                    Departure_Time = new DateTime(2025, 02, 14, 23, 26, 00),
+                    Distance_From_Starting_Station = 346
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Zhmerynka",
+                    Arrival_Time = new DateTime(2025, 02, 15, 00, 01, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 00, 21, 00),
+                    Distance_From_Starting_Station = 387
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Derazhnia",
+                    Arrival_Time = new DateTime(2025, 02, 15, 01, 16, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 01, 18, 00),
+                    Distance_From_Starting_Station = 450
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Khmelnytskyi",
+                    Arrival_Time = new DateTime(2025, 02, 15, 01, 51, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 01, 56, 00),
+                    Distance_From_Starting_Station = 486
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Volochysk",
+                    Arrival_Time = new DateTime(2025, 02, 15, 02, 59, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 03, 01, 00),
+                    Distance_From_Starting_Station = 548
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Ternopil",
+                    Arrival_Time = new DateTime(2025, 02, 15, 03, 56, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 04, 01, 00),
+                    Distance_From_Starting_Station = 604
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Zlochiv",
+                    Arrival_Time = new DateTime(2025, 02, 15, 04, 55, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 04, 57, 00),
+                    Distance_From_Starting_Station = 669
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Krasne",
+                    Arrival_Time = new DateTime(2025, 02, 15, 05, 21, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 05, 23, 00),
+                    Distance_From_Starting_Station = 694
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Pidzamche",
+                    Arrival_Time = new DateTime(2025, 02, 15, 05, 56, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 05, 58, 00),
+                    Distance_From_Starting_Station = 738
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Lviv",
+                    Arrival_Time = new DateTime(2025, 02, 15, 06, 09, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 06, 31, 00),
+                    Distance_From_Starting_Station = 745
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Khodoriv",
+                    Arrival_Time = new DateTime(2025, 02, 15, 07, 35, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 07, 37, 00),
+                    Distance_From_Starting_Station = 808
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Halych",
+                    Arrival_Time = new DateTime(2025, 02, 15, 08, 19, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 08, 21, 00),
+                    Distance_From_Starting_Station = 856
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Ivano-Frankivsk",
+                    Arrival_Time = new DateTime(2025, 02, 15, 08, 51, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 09, 24, 00),
+                    Distance_From_Starting_Station = 885
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Yaremche",
+                    Arrival_Time = new DateTime(2025, 02, 15, 10, 44, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 10, 49, 00),
+                    Distance_From_Starting_Station = 948
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Mykulychyn",
+                    Arrival_Time = new DateTime(2025, 02, 15, 11, 05, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 11, 07, 00),
+                    Distance_From_Starting_Station = 958
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Tatariv-Bukovel",
+                    Arrival_Time = new DateTime(2025, 02, 15, 11, 19, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 11, 23, 00),
+                    Distance_From_Starting_Station = 967
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Vorokhta",
+                    Arrival_Time = new DateTime(2025, 02, 15, 11, 35, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 11, 37, 00),
+                    Distance_From_Starting_Station = 974
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Yasinia",
+                    Arrival_Time = new DateTime(2025, 02, 15, 12, 13, 00),
+                    Departure_Time = null,
+                    Distance_From_Starting_Station = 996
+                }
+
+            }, new List<CarriageAssignementWithoutRouteDTO>
+            {
+                new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "01134546",
+                    Position_In_Squad = 1,
+                },
+                new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "01634536",
+                    Position_In_Squad = 2,
+                },
+                new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "01634546",
+                    Position_In_Squad = 3,
+                },
+                new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "01634547",
+                    Position_In_Squad = 4,
+                },
+                 new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "01634549",
+                    Position_In_Squad = 5,
+                },
+                new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "01634566",
+                    Position_In_Squad = 6,
+                },
+                new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "04422331",
+                    Position_In_Squad = 7,
+                },
+                new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "02434566",
+                    Position_In_Squad = 21,
+                },
+
+
+
+
+
+            }, true);
+
+
+
+
+                        //12SH
+            await full_train_assignement_service.CreateTrainRouteOnDateWithScheduleAndSquad("12SH", new DateOnly(2025, 02, 14), new List<TrainStopWithoutRouteDto>
+            {
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Odesa-Holovna",
+                    Arrival_Time = null,
+                    Departure_Time = new DateTime(2025, 02, 14, 19, 42, 00),
+                    Distance_From_Starting_Station = 0
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Zhmerynka",
+                    Arrival_Time = new DateTime(2025, 02, 15, 00, 39, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 00, 59, 00),
+                    Distance_From_Starting_Station = 387
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Khmelnytskyi",
+                    Arrival_Time = new DateTime(2025, 02, 15, 02, 25, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 02, 28, 00),
+                    Distance_From_Starting_Station = 486
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Ternopil",
+                    Arrival_Time = new DateTime(2025, 02, 15, 04, 16, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 04, 21, 00),
+                    Distance_From_Starting_Station = 604
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Pidzamche",
+                    Arrival_Time = new DateTime(2025, 02, 15, 06, 04, 00),
+                    Departure_Time = new DateTime(2025, 02, 15, 06, 06, 00),
+                    Distance_From_Starting_Station = 738
+                },
+                new TrainStopWithoutRouteDto
+                {
+                    Station_Title = "Lviv",
+                    Arrival_Time = new DateTime(2025, 02, 15, 06, 16, 00),
+                    Departure_Time = null,
+                    Distance_From_Starting_Station = 745
+                }
+            },
+                 new List<CarriageAssignementWithoutRouteDTO>
+            {
+                new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "01430522",
+                    Position_In_Squad = 1,
+                },
+                new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "01431522",
+                    Position_In_Squad = 2,
+                },
+                new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "01434522",
+                    Position_In_Squad = 3,
+                },
+                new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "01435229",
+                    Position_In_Squad = 4,
+                },
+                 new CarriageAssignementWithoutRouteDTO
+                {
+                    Passenger_Carriage_Id = "04567322",
+                    Position_In_Squad = 5
+                },
+
+
+
+
+            }, true);
+        
