@@ -24,6 +24,7 @@ namespace RailwayCore.Services
             Description = description;
         }
     }
+    public class NotInUseAttribute: ImportanceAttribute { }
     public class CrucialAttribute : ImportanceAttribute
     {
         public CrucialAttribute(string description = "") : base(description) { }
@@ -65,6 +66,10 @@ namespace RailwayCore.Services
             Version = version;
             Date = date;
         }
+    }
+    public class CheckedAttribute: StatusAttribute
+    {
+        public CheckedAttribute(string date): base("v1.0", date) { }
     }
     public class RefactoredAttribute: StatusAttribute
     {

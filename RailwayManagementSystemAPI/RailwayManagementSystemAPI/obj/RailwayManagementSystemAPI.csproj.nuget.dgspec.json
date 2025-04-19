@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\RailwayCoreAndAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj": {}
+    "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj": {}
   },
   "projects": {
-    "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\RailwayCore.csproj": {
+    "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\RailwayCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\RailwayCore.csproj",
+        "projectUniqueName": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\RailwayCore.csproj",
         "projectName": "RailwayCore",
-        "projectPath": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\RailwayCore.csproj",
+        "projectPath": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\RailwayCore.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\obj\\",
+        "outputPath": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -99,14 +99,14 @@
         }
       }
     },
-    "D:\\RailwayCoreAndAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj": {
+    "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\RailwayCoreAndAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj",
+        "projectUniqueName": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj",
         "projectName": "RailwayManagementSystemAPI",
-        "projectPath": "D:\\RailwayCoreAndAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj",
+        "projectPath": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\RailwayCoreAndAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\obj\\",
+        "outputPath": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -127,8 +127,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\RailwayCore.csproj": {
-                "projectPath": "D:\\RailwayCoreAndAPI\\RailwayCore\\RailwayCore\\RailwayCore.csproj"
+              "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\RailwayCore.csproj": {
+                "projectPath": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\RailwayCore.csproj"
               }
             }
           }

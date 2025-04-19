@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mgDX4hHFhvU=",
+  "dgSpecHash": "2s4u+mgjne4=",
   "success": true,
-  "projectFilePath": "D:\\RailwayCoreAndAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj",
+  "projectFilePath": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.1\\microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.2\\microsoft.entityframeworkcore.8.0.2.nupkg.sha512",

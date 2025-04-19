@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 class Program
 {
-    public static void PrintList(List<SinglePlace> places)
+    public static void PrintList(List<InternalSinglePlaceDto> places)
     {
-        foreach (SinglePlace singlePlace in places)
+        foreach (InternalSinglePlaceDto singlePlace in places)
         {
             Console.WriteLine($"{singlePlace.Place_In_Carriage} - {singlePlace.Is_Free}");
         }
@@ -28,7 +28,7 @@ class Program
                 .AddSingleton<PassengerCarriageOnTrainRouteOnDateService>()
                 .AddSingleton<FullTrainAssignementService>()
                 .AddSingleton<FullTrainRouteSearchService>()
-                .AddSingleton<TicketBookingService>()
+                .AddSingleton<FullTicketBookingService>()
                 .AddSingleton<ConsoleRepresentationService>();
             IServiceProvider provider = services.BuildServiceProvider();
 
@@ -44,7 +44,7 @@ class Program
             FullTrainAssignementService? full_train_assignement_service =
                 provider.GetService<FullTrainAssignementService>();
             FullTrainRouteSearchService? full_train_route_search_service = provider.GetService<FullTrainRouteSearchService>();
-            TicketBookingService? ticket_booking_service = provider.GetService<TicketBookingService>();
+            FullTicketBookingService? ticket_booking_service = provider.GetService<FullTicketBookingService>();
             ConsoleRepresentationService? console_representation_service = provider.GetService<ConsoleRepresentationService>();
             if (railway_branch_service == null || station_service == null || train_route_service == null ||
                 train_route_on_date_service == null || train_route_on_date_on_station_service == null ||
@@ -414,8 +414,8 @@ class Program
                 Manufacturer = PassengerCarriageManufacturer.Amendorf,
                 Quality_Class = PassengerCarriageQualityClass.B
             });*/
-
-            await ticket_booking_service.CreateTicketBooking(new TicketBookingDtoWithCarriagePosition
+            /*
+            await ticket_booking_service.CreateTicketBooking(new InternalTicketBookingDtoWithCarriagePosition
             {
                 User_Id = 1,
                 Train_Route_On_Date_Id = "38SH_2025_02_14",
@@ -426,7 +426,7 @@ class Program
                 Passenger_Name = "Daniil",
                 Passenger_Surname = "Shevchenko",
                 Ticket_Status = TicketStatus.Booked_And_Active
-            }); 
+            }); */
         }
 
     }

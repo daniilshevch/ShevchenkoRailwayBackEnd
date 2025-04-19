@@ -17,7 +17,7 @@ builder.Services.AddSingleton<PassengerCarriageService>();
 builder.Services.AddSingleton<PassengerCarriageOnTrainRouteOnDateService>();
 builder.Services.AddSingleton<FullTrainAssignementService>();
 builder.Services.AddSingleton<FullTrainRouteSearchService>();
-builder.Services.AddSingleton<TicketBookingService>();
+builder.Services.AddSingleton<FullTicketBookingService>();
 builder.Services.AddSingleton<ConsoleRepresentationService>();
 builder.Services.AddScoped<TrainRouteWithBookingsSearchService>();
 builder.Services.AddScoped<CompleteTicketBookingService>();

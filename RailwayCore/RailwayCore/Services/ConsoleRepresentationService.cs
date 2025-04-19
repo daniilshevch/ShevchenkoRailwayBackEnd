@@ -3,7 +3,6 @@ using Pomelo.EntityFrameworkCore.MySql.Query.Internal;
 using Pomelo.EntityFrameworkCore.MySql.Storage.Internal;
 using RailwayCore.DTO;
 using RailwayCore.Models;
-using RailwayCore.Services;
 using System.Runtime.InteropServices;
 
 namespace RailwayCore.Services
@@ -14,16 +13,16 @@ namespace RailwayCore.Services
         private readonly FullTrainAssignementService full_train_assignement_service;
         private readonly FullTrainRouteSearchService full_train_route_search_service;
         private readonly PassengerCarriageService passenger_carriage_service;
-        private readonly TicketBookingService ticket_booking_service;
+        private readonly FullTicketBookingService full_ticket_booking_service;
         private readonly TextService text_service = new TextService("ConsoleRepresentationService");
         public ConsoleRepresentationService(FullTrainAssignementService full_train_assignement_service, FullTrainRouteSearchService full_train_route_search_service,
-            PassengerCarriageService passenger_carriage_service, TrainRouteOnDateService train_route_on_date_service, TicketBookingService ticket_booking_service)
+            PassengerCarriageService passenger_carriage_service, TrainRouteOnDateService train_route_on_date_service, FullTicketBookingService full_ticket_booking_service)
         {
             this.full_train_assignement_service = full_train_assignement_service;
             this.full_train_route_search_service = full_train_route_search_service;
             this.passenger_carriage_service = passenger_carriage_service;
             this.train_route_on_date_service = train_route_on_date_service;
-            this.ticket_booking_service = ticket_booking_service;
+            this.full_ticket_booking_service = full_ticket_booking_service;
         }
 
 

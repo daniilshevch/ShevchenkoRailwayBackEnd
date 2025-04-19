@@ -839,6 +839,26 @@
         },
         "additionalProperties": false
       },
+      "InternalSinglePlaceDto": {
+        "type": "object",
+        "properties": {
+          "place_In_Carriage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "is_Free": {
+            "type": "boolean"
+          },
+          "passenger_Trip_Info": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PassengerTripInfoDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "MediatorTicketBookingDto": {
         "type": "object",
         "properties": {
@@ -908,6 +928,33 @@
         "type": "integer",
         "format": "int32"
       },
+      "PassengerTripInfoDto": {
+        "type": "object",
+        "properties": {
+          "user_Id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "passenger_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "passenger_Surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "trip_Starting_Station": {
+            "type": "string",
+            "nullable": true
+          },
+          "trip_Ending_Station": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "SinglePassengerCarriageBookingsInfoDto": {
         "type": "object",
         "properties": {
@@ -950,22 +997,9 @@
           "places_availability_list": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SinglePlace"
+              "$ref": "#/components/schemas/InternalSinglePlaceDto"
             },
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "SinglePlace": {
-        "type": "object",
-        "properties": {
-          "place_in_carriage": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "is_free": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false

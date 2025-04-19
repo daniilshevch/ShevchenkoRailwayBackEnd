@@ -1,21 +1,21 @@
-﻿using RailwayCore.Services;
-using RailwayCore.Models;
+﻿using RailwayCore.Models;
 using RailwayManagementSystemAPI.API_DTO;
 using RailwayCore.DTO;
 using RailwayManagementSystemAPI.SystemServices;
+using RailwayCore.Services;
 namespace RailwayManagementSystemAPI.ClientServices
 {
     public class CompleteTicketBookingService
     {
-        private readonly TicketBookingService ticket_booking_service;
+        private readonly FullTicketBookingService ticket_booking_service;
         private const int timer_expiration = 1;
-        public CompleteTicketBookingService(TicketBookingService ticket_booking_service)
+        public CompleteTicketBookingService(FullTicketBookingService ticket_booking_service)
         {
             this.ticket_booking_service = ticket_booking_service;
         }
         public async Task<MediatorTicketBookingDto?> InitializeTicketBookingProcess(InitialTicketBookingDto input)
         {
-            TicketBookingDtoWithCarriagePosition ticket_booking_dto_with_carriage_position = new TicketBookingDtoWithCarriagePosition
+            InternalTicketBookingDtoWithCarriagePosition ticket_booking_dto_with_carriage_position = new InternalTicketBookingDtoWithCarriagePosition
             {
                 Train_Route_On_Date_Id = input.Train_Route_On_Date_Id,
                 Passenger_Carriage_Position_In_Squad = input.Passenger_Carriage_Position_In_Squad,
@@ -27,12 +27,14 @@ namespace RailwayManagementSystemAPI.ClientServices
                 Starting_Station_Title = input.Starting_Station_Title,
                 Ending_Station_Title = input.Ending_Station_Title
             };
-            TicketBooking? ticket_booking = await ticket_booking_service.CreateTicketBooking(ticket_booking_dto_with_carriage_position);
-            if (ticket_booking == null)
+            QueryResult<TicketBooking> booking_result = await ticket_booking_service.CreateTicketBookingWithCarriagePositionInSquad(ticket_booking_dto_with_carriage_position);
+            
+            if (booking_result is FailQuery<TicketBooking>)
             {
-                API_ErrorHandler.AddError(ErrorHandler.GetLastErrorFromSingleService(ServiceName.TicketBookingService));
+                //API_ErrorHandler.AddError(ErrorHandler.GetLastErrorFromSingleService(ServiceName.TicketBookingService));
                 return null;
             }
+            TicketBooking ticket_booking = booking_result.Value!;
             _ = CancelTicketBookingAfterTimerExpiration(ticket_booking.Id);
             MediatorTicketBookingDto mediator_ticket_booking = new MediatorTicketBookingDto
             {

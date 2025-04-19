@@ -23,6 +23,7 @@ namespace RailwayManagementSystemAPI.ClientControllers
             if (mediator_ticket_booking == null)
             {
                 Error? error = API_ErrorHandler.GetLastError();
+                /*
                 switch(error?.Error_Type)
                 {
                     case ErrorType.NotFound:
@@ -33,7 +34,7 @@ namespace RailwayManagementSystemAPI.ClientControllers
                         return Unauthorized(error.Message);
                     default:
                         return BadRequest("Unknown error");
-                }
+                }*/
             }
             return Ok(mediator_ticket_booking);
         }

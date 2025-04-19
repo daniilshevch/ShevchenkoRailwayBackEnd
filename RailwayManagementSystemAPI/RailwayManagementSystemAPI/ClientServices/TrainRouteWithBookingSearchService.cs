@@ -8,8 +8,8 @@ namespace RailwayManagementSystemAPI.ClientServices
     public class TrainRouteWithBookingsSearchService
     {
         private readonly FullTrainRouteSearchService full_train_route_search_service;
-        private readonly TicketBookingService ticket_booking_service;
-        public TrainRouteWithBookingsSearchService(FullTrainRouteSearchService full_train_route_search_service, TicketBookingService ticket_booking_service)
+        private readonly FullTicketBookingService ticket_booking_service;
+        public TrainRouteWithBookingsSearchService(FullTrainRouteSearchService full_train_route_search_service, FullTicketBookingService ticket_booking_service)
         {
             this.full_train_route_search_service = full_train_route_search_service;
             this.ticket_booking_service = ticket_booking_service;
@@ -21,24 +21,33 @@ namespace RailwayManagementSystemAPI.ClientServices
             DateTime first = DateTime.Now;
             Console.WriteLine(first);
             List<TrainRouteWithBookingsInfoDto> result_list = new List<TrainRouteWithBookingsInfoDto>();
-            List<TrainRouteOnDateArrivalDepartureTimeDto>? appropriate_train_routes_on_date =
-                await full_train_route_search_service.SearchTrainRouteBetweenStationOnDate(starting_station_title, ending_station_title, departure_date);
+            QueryResult<List<InternalTrainRaceDto>> appropriate_train_routes_on_date_result =
+                await full_train_route_search_service.SearchTrainRoutesBetweenStationsOnDate(starting_station_title, ending_station_title, departure_date);
+
+            List<InternalTrainRaceDto> appropriate_train_routes_on_date = appropriate_train_routes_on_date_result!.Value;
             if (appropriate_train_routes_on_date == null)
             {
                 return null;
             }
             List<string> appropriate_train_routes_on_date_ids = appropriate_train_routes_on_date
                 .Select(train_route_info => train_route_info.Train_Route_On_Date.Id).ToList();
-            Dictionary<string, TrainRouteOnDateCarriageAssignmentsRepresentationDto>? ticket_bookings_info_for_appropriate_train_routes =
-                await ticket_booking_service.GetAllPassengerCarriagesPlacesReportForSeveralTrainRoutesOnDateIntoRepresentationDto
-                (appropriate_train_routes_on_date_ids, starting_station_title, ending_station_title);
+
+            QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>> ticket_bookings_info_for_appropriate_train_routes_result =
+          await ticket_booking_service.GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDateWithPassengerInformationAnalytics
+          (appropriate_train_routes_on_date_ids, starting_station_title, ending_station_title);
+
+            /*QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>> ticket_bookings_info_for_appropriate_train_routes_result =
+                await ticket_booking_service.GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDate
+                (appropriate_train_routes_on_date_ids, starting_station_title, ending_station_title);*/
+            Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto> ticket_bookings_info_for_appropriate_train_routes =
+                ticket_bookings_info_for_appropriate_train_routes_result.Value!;
             if (ticket_bookings_info_for_appropriate_train_routes == null)
             {
                 return null;
             }
-            foreach (KeyValuePair<string, TrainRouteOnDateCarriageAssignmentsRepresentationDto> single_train_route in ticket_bookings_info_for_appropriate_train_routes)
+            foreach (KeyValuePair<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto> single_train_route in ticket_bookings_info_for_appropriate_train_routes)
             {
-                TrainRouteOnDateArrivalDepartureTimeDto? current_train_route_info = appropriate_train_routes_on_date
+                InternalTrainRaceDto? current_train_route_info = appropriate_train_routes_on_date
                     .FirstOrDefault(train_route_info => train_route_info.Train_Route_On_Date.Id == single_train_route.Key);
                 if (current_train_route_info == null)
                 {
@@ -54,8 +63,8 @@ namespace RailwayManagementSystemAPI.ClientServices
                 {
                     trip_distance = (double)trip_ending_station_km_point - (double)trip_starting_station_km_point;
                 }
-                string full_route_starting_station_title = current_train_route_info.Route_Starting_Stop.Station.Title;
-                string full_route_ending_station_title = current_train_route_info.Route_Ending_Stop.Station.Title;
+                string full_route_starting_station_title = current_train_route_info.Full_Route_Starting_Stop.Station.Title;
+                string full_route_ending_station_title = current_train_route_info.Full_Route_Ending_Stop.Station.Title;
 
 
 
@@ -125,15 +134,15 @@ namespace RailwayManagementSystemAPI.ClientServices
                     Train_Route_Id = single_train_route.Value.Train_Route_On_Date.Train_Route.Id,
                     Train_Route_Branded_Name = single_train_route.Value.Train_Route_On_Date.Train_Route.Branded_Name,
                     Train_Route_Class = GetTrainQualityClassIntoString(single_train_route.Value.Train_Route_On_Date.Train_Route.Quality_Class),
-                    Free_Platskart_Places = single_train_route.Value.Platskart_Free,
-                    Total_Platskart_Places = single_train_route.Value.Platskart_Total,
-                    Free_Coupe_Places = single_train_route.Value.Coupe_Free,
-                    Total_Coupe_Places = single_train_route.Value.Coupe_Total,
-                    Free_SV_Places = single_train_route.Value.SV_Free,
-                    Total_SV_Places = single_train_route.Value.SV_Total,
-                    Min_Platskart_Price = single_train_route.Value.Min_Platskart_Price,
-                    Min_Coupe_Price = single_train_route.Value.Min_Coupe_Price,
-                    Min_SV_Price = single_train_route.Value.Min_SV_Price,
+                    Free_Platskart_Places = single_train_route.Value.Total_Place_Highlights.Platskart_Free,
+                    Total_Platskart_Places = single_train_route.Value.Total_Place_Highlights.Platskart_Total,
+                    Free_Coupe_Places = single_train_route.Value.Total_Place_Highlights.Coupe_Free,
+                    Total_Coupe_Places = single_train_route.Value.Total_Place_Highlights.Coupe_Total,
+                    Free_SV_Places = single_train_route.Value.Total_Place_Highlights.SV_Free,
+                    Total_SV_Places = single_train_route.Value.Total_Place_Highlights.SV_Total,
+                    Min_Platskart_Price = single_train_route.Value.Total_Place_Highlights.Min_Platskart_Price,
+                    Min_Coupe_Price = single_train_route.Value.Total_Place_Highlights.Min_Coupe_Price,
+                    Min_SV_Price = single_train_route.Value.Total_Place_Highlights.Min_SV_Price,
                     Trip_Starting_Station_Title = starting_station_title,
                     Trip_Ending_Station_Title = ending_station_title,
                     Trip_Starting_Station_Departure_Time = trip_starting_station_departure_time,

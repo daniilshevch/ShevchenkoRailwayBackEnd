@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RailwayCore.DTO
 {
-    public class TicketBookingDto
+    public class InternalTicketBookingDto
     {
         public int User_Id { get; set; }
         public string Train_Route_On_Date_Id { get; set; } = null!;
@@ -20,7 +20,7 @@ namespace RailwayCore.DTO
         public string Passenger_Surname { get; set; } = null!;
         public TicketStatus Ticket_Status { get; set; }
     }
-    public class TicketBookingDtoWithCarriagePosition
+    public class InternalTicketBookingDtoWithCarriagePosition
     {
         public int User_Id { get; set; }
         public string Train_Route_On_Date_Id { get; set; } = null!;

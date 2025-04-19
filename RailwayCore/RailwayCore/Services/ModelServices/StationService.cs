@@ -47,17 +47,19 @@ namespace RailwayCore.Services
             text_service.SuccessPostInform($"Station {station.Title}({station.Id}) has been added successfully");
             return station;
         }
+        [Checked("18.04.2025")]
         public async Task<Station?> FindStationById(int id)
         {
             Station? station = await context.Stations.FirstOrDefaultAsync(station => station.Id == id);
             if (station == null)
             {
-                text_service.FailGetInform($"Can't find station with Id {id}");
+                text_service.FailGetInform($"Can't find station with ID: {id}");
                 return null;
             }
             text_service.SuccessGetInform($"Successfully got station with ID: {id}");
             return station;
         }
+        [Checked("18.04.2025")]
         public async Task<Station?> FindStationByTitle(string title)
         {
             Station? station = await context.Stations.FirstOrDefaultAsync(station => station.Title == title);

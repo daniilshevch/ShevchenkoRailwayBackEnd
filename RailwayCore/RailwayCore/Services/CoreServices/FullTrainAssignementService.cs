@@ -308,11 +308,11 @@ namespace RailwayCore.Services
         public async Task ChangeTrainRouteOnDateSchedule(string train_route_id, DateOnly departure_date, List<TrainStopWithoutRouteDto> train_stops, bool deletion_option = true)
         {
             string train_route_on_date_id = train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, departure_date);
-            if(deletion_option)
+            if (deletion_option)
             {
                 List<TrainRouteOnDateOnStation> current_train_stops = await context.Train_Routes_On_Date_On_Stations
                     .Where(train_stop => train_stop.Train_Route_On_Date_Id == train_route_on_date_id).ToListAsync();
-                foreach(TrainRouteOnDateOnStation train_stop in current_train_stops)
+                foreach (TrainRouteOnDateOnStation train_stop in current_train_stops)
                 {
                     context.Train_Routes_On_Date_On_Stations.Remove(train_stop);
                 }
@@ -322,11 +322,11 @@ namespace RailwayCore.Services
         public async Task ChangeTrainRouteOnDateSquad(string train_route_id, DateOnly departure_date, List<CarriageAssignementWithoutRouteDTO> carriage_assignments, bool deletion_option = true)
         {
             string train_route_on_date_id = train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, departure_date);
-            if(deletion_option)
+            if (deletion_option)
             {
                 List<PassengerCarriageOnTrainRouteOnDate> current_passenger_carriages = await context.Passenger_Carriages_On_Train_Routes_On_Date
                     .Where(carriage_assignment => carriage_assignment.Train_Route_On_Date_Id == train_route_on_date_id).ToListAsync();
-                foreach(PassengerCarriageOnTrainRouteOnDate carriage_assignment in current_passenger_carriages)
+                foreach (PassengerCarriageOnTrainRouteOnDate carriage_assignment in current_passenger_carriages)
                 {
                     context.Passenger_Carriages_On_Train_Routes_On_Date.Remove(carriage_assignment);
                 }
