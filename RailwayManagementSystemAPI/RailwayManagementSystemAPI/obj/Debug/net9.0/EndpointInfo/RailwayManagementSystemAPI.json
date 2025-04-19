@@ -496,7 +496,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                    "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
                   }
                 }
               },
@@ -504,7 +504,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                    "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
                   }
                 }
               },
@@ -512,7 +512,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                    "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
                   }
                 }
               }
@@ -530,17 +530,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
               }
             }
           }
@@ -553,7 +553,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SingleTrainStopDto"
+                    "$ref": "#/components/schemas/ExternalSingleTrainStopDto"
                   }
                 }
               },
@@ -561,7 +561,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SingleTrainStopDto"
+                    "$ref": "#/components/schemas/ExternalSingleTrainStopDto"
                   }
                 }
               },
@@ -569,7 +569,82 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SingleTrainStopDto"
+                    "$ref": "#/components/schemas/ExternalSingleTrainStopDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ClientAPI/TrainSearch/Get-Train-Schedule2": {
+      "post": {
+        "tags": [
+          "TrainSearch"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalSingleTrainStopDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalSingleTrainStopDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalSingleTrainStopDto"
                   }
                 }
               }
@@ -587,17 +662,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
               }
             }
           }
@@ -610,7 +685,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SinglePassengerCarriageBookingsInfoDto"
+                    "$ref": "#/components/schemas/ExternalSinglePassengerCarriageBookingsInfoDto"
                   }
                 }
               },
@@ -618,7 +693,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SinglePassengerCarriageBookingsInfoDto"
+                    "$ref": "#/components/schemas/ExternalSinglePassengerCarriageBookingsInfoDto"
                   }
                 }
               },
@@ -626,7 +701,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SinglePassengerCarriageBookingsInfoDto"
+                    "$ref": "#/components/schemas/ExternalSinglePassengerCarriageBookingsInfoDto"
                   }
                 }
               }
@@ -660,17 +735,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TrainRouteWithBookingsInfoDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteWithBookingsInfoDto"
               }
             }
           }
@@ -683,7 +758,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SinglePassengerCarriageBookingsInfoDto"
+                    "$ref": "#/components/schemas/ExternalSinglePassengerCarriageBookingsInfoDto"
                   }
                 }
               },
@@ -691,7 +766,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SinglePassengerCarriageBookingsInfoDto"
+                    "$ref": "#/components/schemas/ExternalSinglePassengerCarriageBookingsInfoDto"
                   }
                 }
               },
@@ -699,7 +774,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SinglePassengerCarriageBookingsInfoDto"
+                    "$ref": "#/components/schemas/ExternalSinglePassengerCarriageBookingsInfoDto"
                   }
                 }
               }
@@ -805,6 +880,191 @@
           },
           "user_info_dto": {
             "$ref": "#/components/schemas/UserInfoForCompletedTicketBookingDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalSinglePassengerCarriageBookingsInfoDto": {
+        "type": "object",
+        "properties": {
+          "carriage_position_in_squad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "carriage_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "carriage_quality_class": {
+            "type": "string",
+            "nullable": true
+          },
+          "ticket_price": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "free_places": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total_places": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "air_conditioning": {
+            "type": "boolean"
+          },
+          "shower_availability": {
+            "type": "boolean"
+          },
+          "food_availability": {
+            "type": "boolean"
+          },
+          "wifi_availability": {
+            "type": "boolean"
+          },
+          "is_inclusive": {
+            "type": "boolean"
+          },
+          "places_availability_list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InternalSinglePlaceDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalSingleTrainStopDto": {
+        "type": "object",
+        "properties": {
+          "station_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "arrival_time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "departure_time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "stop_duration": {
+            "type": "string",
+            "format": "date-span",
+            "nullable": true
+          },
+          "is_part_of_trip": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalTrainRouteWithBookingsInfoDto": {
+        "type": "object",
+        "properties": {
+          "train_route_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "train_route_branded_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "train_route_trip_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "train_route_class": {
+            "type": "string",
+            "nullable": true
+          },
+          "trip_starting_station_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "trip_ending_station_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "trip_starting_station_departure_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "trip_ending_station_arrival_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "total_trip_duration": {
+            "type": "string",
+            "format": "date-span"
+          },
+          "full_route_starting_station_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "full_route_ending_station_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "free_platskart_places": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total_plastskart_places": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "free_coupe_places": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total_coupe_places": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "free_sv_places": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total_sv_places": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "min_platskart_price": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "min_coupe_price": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "min_sv_price": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "average_speed_on_trip": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "carriage_statistics_list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalSinglePassengerCarriageBookingsInfoDto"
+            },
+            "nullable": true
+          },
+          "train_schedule": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalSingleTrainStopDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -950,188 +1210,6 @@
           },
           "trip_Ending_Station": {
             "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "SinglePassengerCarriageBookingsInfoDto": {
-        "type": "object",
-        "properties": {
-          "carriage_position_in_squad": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "carriage_type": {
-            "type": "string",
-            "nullable": true
-          },
-          "carriage_quality_class": {
-            "type": "string",
-            "nullable": true
-          },
-          "ticket_price": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "free_places": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "total_places": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "air_conditioning": {
-            "type": "boolean"
-          },
-          "shower_availability": {
-            "type": "boolean"
-          },
-          "food_availability": {
-            "type": "boolean"
-          },
-          "wifi_availability": {
-            "type": "boolean"
-          },
-          "places_availability_list": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/InternalSinglePlaceDto"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "SingleTrainStopDto": {
-        "type": "object",
-        "properties": {
-          "station_title": {
-            "type": "string",
-            "nullable": true
-          },
-          "arrival_time": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "departure_time": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "stop_duration": {
-            "type": "string",
-            "format": "date-span",
-            "nullable": true
-          },
-          "is_part_of_trip": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TrainRouteWithBookingsInfoDto": {
-        "type": "object",
-        "properties": {
-          "train_route_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "train_route_branded_name": {
-            "type": "string",
-            "nullable": true
-          },
-          "train_route_trip_type": {
-            "type": "string",
-            "nullable": true
-          },
-          "train_route_class": {
-            "type": "string",
-            "nullable": true
-          },
-          "trip_starting_station_title": {
-            "type": "string",
-            "nullable": true
-          },
-          "trip_ending_station_title": {
-            "type": "string",
-            "nullable": true
-          },
-          "trip_starting_station_departure_time": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "trip_ending_station_arrival_time": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "total_trip_duration": {
-            "type": "string",
-            "format": "date-span"
-          },
-          "full_route_starting_station_title": {
-            "type": "string",
-            "nullable": true
-          },
-          "full_route_ending_station_title": {
-            "type": "string",
-            "nullable": true
-          },
-          "free_platskart_places": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "total_plastskart_places": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "free_coupe_places": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "total_coupe_places": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "free_sv_places": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "total_sv_places": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "min_platskart_price": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "min_coupe_price": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "min_sv_price": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "average_speed_on_trip": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "carriage_statistics_list": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SinglePassengerCarriageBookingsInfoDto"
-            },
-            "nullable": true
-          },
-          "train_schedule": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SingleTrainStopDto"
-            },
             "nullable": true
           }
         },

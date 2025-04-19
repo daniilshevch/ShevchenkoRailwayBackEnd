@@ -29,7 +29,6 @@ namespace RailwayCore.DTO
     {
         public PassengerCarriageOnTrainRouteOnDate Carriage_Assignment { get; set; } = null!; //Інформація про вагон та його призначення на маршрут(місце в складі і так далі)
         public List<InternalSinglePlaceDto> Places_Availability { get; set; } = new List<InternalSinglePlaceDto>(); //Інформація про бронювання місць
-        public int Price { get; set; } //Ціна квитка в вагон
         public int Free_Places { get; set; }  //Вільних місць в вагоні
         public int Total_Places { get; set; } //Всього місць в вагоні
     }

@@ -264,13 +264,13 @@
     "Parameters": [
       {
         "Name": "train_route_on_date",
-        "Type": "RailwayManagementSystemAPI.API_DTO.TrainRouteWithBookingsInfoDto",
+        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalTrainRouteWithBookingsInfoDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.SinglePassengerCarriageBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.ExternalSinglePassengerCarriageBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -290,7 +290,7 @@
     "Parameters": [
       {
         "Name": "train_route_on_date",
-        "Type": "RailwayManagementSystemAPI.API_DTO.TrainRouteWithBookingsInfoDto",
+        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalTrainRouteWithBookingsInfoDto",
         "IsRequired": true
       },
       {
@@ -306,7 +306,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.SinglePassengerCarriageBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.ExternalSinglePassengerCarriageBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -326,13 +326,44 @@
     "Parameters": [
       {
         "Name": "train_route_on_date",
-        "Type": "RailwayManagementSystemAPI.API_DTO.TrainRouteWithBookingsInfoDto",
+        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalTrainRouteWithBookingsInfoDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.SingleTrainStopDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.ExternalSingleTrainStopDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.Controllers.TrainSearchController",
+    "Method": "GetScheduleForSpecificTrainRouteOnDate",
+    "RelativePath": "ClientAPI/TrainSearch/Get-Train-Schedule2",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_routes_on_date_statistics_list",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.ExternalTrainRouteWithBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      },
+      {
+        "Name": "train_route_on_date_id",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.ExternalSingleTrainStopDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -368,7 +399,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.TrainRouteWithBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.ExternalTrainRouteWithBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

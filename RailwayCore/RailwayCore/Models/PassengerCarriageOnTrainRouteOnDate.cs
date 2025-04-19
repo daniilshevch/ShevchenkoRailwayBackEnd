@@ -18,6 +18,7 @@ namespace RailwayCore.Models
         public bool Factual_Air_Conditioning { get; set; } = false; //Чи фактично буде працювати кондиціонер на даному рейсі
         public bool Factual_Shower_Availability { get; set; } = false; //Чи фактично буде працювати душ на даному рейсі
         public bool Factual_Is_Inclusive { get; set; } = false; //Чи фактично вагон зможе перевозити людей з відхиленнями на даному рейсі
+        public bool Factual_Wifi_Availability { get; set; } = false; //Чи фактично буде працювати вай-фай на даному рейсі
         public bool Food_Availability { get; set; } = false; //Чи буде надаватись харчування на даному рейсі
         public override string ToString()
         {

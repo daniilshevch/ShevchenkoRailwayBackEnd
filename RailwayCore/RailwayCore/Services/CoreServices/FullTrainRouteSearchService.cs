@@ -6,7 +6,7 @@ using RailwayCore.Services;
 using System;
 
 [Checked("18.04.2025")]
-public class InternalTrainRaceDto  //Внутрішній трансфер(використовується в подальшому на сторінці пошуку поїздів між станціями)
+public class  InternalTrainRaceDto  //Внутрішній трансфер(використовується в подальшому на сторінці пошуку поїздів між станціями)
 {
     public TrainRouteOnDate Train_Route_On_Date { get; set; } = null!;
     public DateTime Departure_Time_From_Desired_Starting_Station { get; set; }
@@ -49,7 +49,7 @@ namespace RailwayCore.Services
             }
             if (end_station is null)
             {
-                return new FailQuery<List<InternalTrainRaceDto>>(new Error(ErrorType.NotFound, $"Can't find ending station with title: {start_station_title}"));
+                return new FailQuery<List<InternalTrainRaceDto>>(new Error(ErrorType.NotFound, $"Can't find ending station with title: {end_station_title}"));
             }
 
             //Пошук поїздів, які проходять через 2 задані станції, причому відправляються з початкової станції в указана дату
