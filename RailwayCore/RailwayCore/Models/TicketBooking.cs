@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 public enum TicketStatus
 {
@@ -37,6 +32,7 @@ namespace RailwayCore.Models
         public string Passenger_Surname { get; set; } = null!; //Фактичне прізвище пасажира(може не збігатись з прізвищем в акаунті)
         public DateTime Booking_Time { get; set; } //Час бронювання
         public TicketStatus Ticket_Status { get; set; } = TicketStatus.Booked_And_Active; //Статус бронювання
+        public string? Additional_Services { get; set; } //Стрічка для зберігання додаткових послуг, включених в квиток(постіль, напої, їжа і так далі)
 
     }
 }

@@ -17,6 +17,7 @@ namespace RailwayCore.Models
         [EmailAddress]
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
+        public string? Phone_Number { get; set; }
         public List<TicketBooking> Ticket_Bookings { get; set; } = new List<TicketBooking>();
     }
 }

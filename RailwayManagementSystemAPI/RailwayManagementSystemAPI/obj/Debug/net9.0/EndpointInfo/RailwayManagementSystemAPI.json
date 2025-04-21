@@ -459,7 +459,7 @@
         }
       }
     },
-    "/ClientAPI/TrainSearch/Search-Train-Routes-Between-Stations-With-Bookings": {
+    "/ClientAPI/TrainSearch/Search-Train-Routes-Between-Stations-With-Bookings/{starting_station}/{ending_station}": {
       "get": {
         "tags": [
           "TrainSearch"
@@ -467,14 +467,16 @@
         "parameters": [
           {
             "name": "starting_station",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string"
             }
           },
           {
             "name": "ending_station",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string"
             }

@@ -1,8 +1,10 @@
 ﻿using RailwayManagementSystemAPI.API_DTO;
-using RailwayCore.DTO;
 using RailwayCore.Services;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.SystemServices;
+using System.Diagnostics;
+using RailwayCore.InternalDTO.CoreDTO;
+using RailwayCore.InternalServices.SystemServices;
 namespace RailwayManagementSystemAPI.ClientServices
 {
     public class TrainRouteWithBookingsSearchService
@@ -20,6 +22,7 @@ namespace RailwayManagementSystemAPI.ClientServices
         public async Task<QueryResult<List<ExternalTrainRouteWithBookingsInfoDto>>> SearchTrainRoutesBetweenStationsWithBookingsInfo
             (string starting_station_title, string ending_station_title, DateOnly departure_date, bool admin_mode = false)
         {
+            Stopwatch sw = Stopwatch.StartNew();
             //Отримуємо список поїздів, які проходять через дані станції в потрібному порядку в потрібну дату
             QueryResult<List<InternalTrainRaceDto>> train_routes_list_result = await full_train_route_search_service.SearchTrainRoutesBetweenStationsOnDate(starting_station_title,
                 ending_station_title, departure_date);
@@ -189,6 +192,8 @@ namespace RailwayManagementSystemAPI.ClientServices
 
 
             }
+            sw.Stop();
+            Console.WriteLine(sw.ElapsedMilliseconds);
             return new SuccessQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(total_train_routes_with_bookings_and_stations_info);
 
         }

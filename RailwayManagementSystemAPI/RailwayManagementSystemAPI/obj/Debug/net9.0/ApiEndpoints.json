@@ -376,7 +376,7 @@
   {
     "ContainingType": "RailwayManagementSystemAPI.Controllers.TrainSearchController",
     "Method": "SearchTrainRoutesBetweenStationsWithBookingsInfo",
-    "RelativePath": "ClientAPI/TrainSearch/Search-Train-Routes-Between-Stations-With-Bookings",
+    "RelativePath": "ClientAPI/TrainSearch/Search-Train-Routes-Between-Stations-With-Bookings/{starting_station}/{ending_station}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -384,12 +384,12 @@
       {
         "Name": "starting_station",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "ending_station",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "departure_date",

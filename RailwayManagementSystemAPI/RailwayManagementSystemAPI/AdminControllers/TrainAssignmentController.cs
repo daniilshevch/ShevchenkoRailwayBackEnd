@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RailwayCore.DTO;
+using RailwayCore.InternalDTO.ModelDTO;
 using RailwayManagementSystemAPI.AdminServices;
 using RailwayManagementSystemAPI.API_DTO;
 using System.Net;

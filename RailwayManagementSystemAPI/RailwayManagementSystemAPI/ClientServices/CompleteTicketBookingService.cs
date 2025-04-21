@@ -1,8 +1,9 @@
 ﻿using RailwayCore.Models;
 using RailwayManagementSystemAPI.API_DTO;
-using RailwayCore.DTO;
 using RailwayManagementSystemAPI.SystemServices;
 using RailwayCore.Services;
+using RailwayCore.InternalDTO.ModelDTO;
+using RailwayCore.InternalServices.SystemServices;
 namespace RailwayManagementSystemAPI.ClientServices
 {
     public class CompleteTicketBookingService

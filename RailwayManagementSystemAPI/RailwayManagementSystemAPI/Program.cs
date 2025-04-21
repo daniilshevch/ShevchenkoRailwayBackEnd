@@ -1,4 +1,5 @@
 using RailwayCore.Context;
+using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Services;
 using RailwayManagementSystemAPI.AdminServices;
 using RailwayManagementSystemAPI.ClientServices;
@@ -45,6 +46,7 @@ if (app.Environment.IsDevelopment())
 
 }
 
+string str = "bed: true|";
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

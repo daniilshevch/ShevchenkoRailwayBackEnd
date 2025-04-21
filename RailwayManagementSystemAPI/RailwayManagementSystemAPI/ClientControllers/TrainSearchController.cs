@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RailwayCore.Services;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.API_DTO;
 using RailwayManagementSystemAPI.ClientServices;
+using RailwayCore.InternalServices.SystemServices;
 namespace RailwayManagementSystemAPI.Controllers
 {
     [ApiController]
@@ -14,7 +14,7 @@ namespace RailwayManagementSystemAPI.Controllers
         {
             this.train_route_with_booking_search_service = train_route_with_booking_search_service;
         }
-        [HttpGet("Search-Train-Routes-Between-Stations-With-Bookings")]
+        [HttpGet("Search-Train-Routes-Between-Stations-With-Bookings/{starting_station}/{ending_station}")]
         public async Task<ActionResult<List<ExternalTrainRouteWithBookingsInfoDto>>> SearchTrainRoutesBetweenStationsWithBookingsInfo(string starting_station, string ending_station, DateOnly departure_date)
         {
             QueryResult<List<ExternalTrainRouteWithBookingsInfoDto>>? train_routes_with_bookings_info_result =

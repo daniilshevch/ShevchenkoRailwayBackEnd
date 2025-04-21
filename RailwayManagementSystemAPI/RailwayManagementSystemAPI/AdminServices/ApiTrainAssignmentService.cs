@@ -1,4 +1,4 @@
-﻿using RailwayCore.DTO;
+﻿using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
 using RailwayCore.Services;
 using RailwayManagementSystemAPI.API_DTO;

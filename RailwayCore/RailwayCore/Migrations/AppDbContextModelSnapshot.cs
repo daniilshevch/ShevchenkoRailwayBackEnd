@@ -210,6 +210,9 @@ namespace RailwayCore.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Additional_Services")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("Booking_Time")
                         .HasColumnType("datetime(6)");
 

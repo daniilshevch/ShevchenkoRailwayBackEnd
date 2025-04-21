@@ -1,9 +1,10 @@
 ﻿using RailwayCore.Context;
-using RailwayCore.DTO;
 using RailwayCore.Models;
 using RailwayCore.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using RailwayCore.InternalDTO.CoreDTO;
+using RailwayCore.InternalServices.SystemServices;
 class Program
 {
     public static void PrintList(List<InternalSinglePlaceDto> places)

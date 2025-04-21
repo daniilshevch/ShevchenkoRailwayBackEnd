@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
-using RailwayCore.DTO;
 using RailwayManagementSystemAPI.API_DTO;
 using RailwayManagementSystemAPI.ClientServices;
 using RailwayManagementSystemAPI.SystemServices;
@@ -22,19 +21,7 @@ namespace RailwayManagementSystemAPI.ClientControllers
             MediatorTicketBookingDto? mediator_ticket_booking = await complete_ticket_booking_service.InitializeTicketBookingProcess(input);
             if (mediator_ticket_booking == null)
             {
-                Error? error = API_ErrorHandler.GetLastError();
-                /*
-                switch(error?.Error_Type)
-                {
-                    case ErrorType.NotFound:
-                        return NotFound(error.Message);
-                    case ErrorType.BadRequest:
-                        return BadRequest(error.Message);
-                    case ErrorType.Unathorized:
-                        return Unauthorized(error.Message);
-                    default:
-                        return BadRequest("Unknown error");
-                }*/
+                return null;
             }
             return Ok(mediator_ticket_booking);
         }
