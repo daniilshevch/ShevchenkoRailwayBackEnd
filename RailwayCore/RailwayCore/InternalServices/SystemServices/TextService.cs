@@ -1,7 +1,10 @@
-﻿public enum ErrorType
+﻿using System.Transactions;
+
+public enum ErrorType
 {
     NotFound,
-    BadRequest
+    BadRequest,
+    Unauthorized
 }
 public class Error
 {
@@ -86,12 +89,14 @@ namespace RailwayCore.Services
     public class QueryResult<T>
     {
         public T? Value { get; set; }
+        public bool Fail { get; set; }
         public Error? Error { get; set; }
     }
     public class SuccessQuery<T> : QueryResult<T>
     {
         public SuccessQuery(T value)
         {
+            Fail = false;
             Value = value;
             Error = null;
         }
@@ -100,6 +105,7 @@ namespace RailwayCore.Services
     {
         public FailQuery(Error error)
         {
+            Fail = true;
             Value = default;
             Error = error;
         }

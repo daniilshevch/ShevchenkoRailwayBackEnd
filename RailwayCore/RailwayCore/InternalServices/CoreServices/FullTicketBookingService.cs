@@ -321,7 +321,7 @@ namespace RailwayCore.Services
             List<TrainRouteOnDate> train_routes_on_date_list = await context.Train_Routes_On_Date.Where(train_route_on_date =>
             train_route_on_date_ids.Contains(train_route_on_date.Id)).ToListAsync();
 
-            //За один запит знаходимо всі зупинки для всіх поїзів зі списку(вони будуть посортовані спочатку за поїздом, а потім за порядком слідування на маршруті,
+            //За один запит знаходимо всі зупинки для всіх поїздів зі списку(вони будуть посортовані спочатку за поїздом, а потім за порядком слідування на маршруті,
             //тобто спочатку всі зупинки першого поїзду в порядку слідування, потім всі зупинки другого поїзда в порядку слідування і так далі)
             List<TrainRouteOnDateOnStation> train_stops_from_all_train_routes_on_date = await full_train_route_search_service.GetTrainStopsForSeveralTrainRoutesOnDate(train_route_on_date_ids);
 
@@ -601,43 +601,6 @@ namespace RailwayCore.Services
             return new SuccessQuery<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>(train_route_on_date_carriage_booking_statistics_dictionary);
         }
 
-
-
-
-        public async Task<TicketBooking?> FindTicketBooking(int user_id, string train_route_on_date_id, string passenger_carriage_id, string starting_station_title, string ending_station_title, int place_in_carriage)
-        {
-            TicketBooking? ticket_booking = await context.Ticket_Bookings
-                .Include(ticket_booking => ticket_booking.Starting_Station)
-                .Include(ticket_booking => ticket_booking.Ending_Station)
-                .FirstOrDefaultAsync(ticket_booking =>
-            ticket_booking.User_Id == user_id && ticket_booking.Train_Route_On_Date_Id == train_route_on_date_id
-            && ticket_booking.Passenger_Carriage_Id == passenger_carriage_id && ticket_booking.Starting_Station.Title == starting_station_title
-            && ticket_booking.Ending_Station.Title == ending_station_title && ticket_booking.Place_In_Carriage == place_in_carriage);
-            return ticket_booking;
-        }
-        public async Task<TicketBooking?> FindTicketBookingById(int ticket_booking_id)
-        {
-            TicketBooking? ticket_booking = await context.Ticket_Bookings.FirstOrDefaultAsync(ticket_booking => ticket_booking.Id == ticket_booking_id);
-            return ticket_booking;
-        }
-        public async Task UpdateTicketBooking(TicketBooking ticket_booking)
-        {
-            context.Ticket_Bookings.Update(ticket_booking);
-            await context.SaveChangesAsync();
-        }
-        public async Task DeleteTicketBooking(TicketBooking ticket_booking)
-        {
-            context.Ticket_Bookings.Remove(ticket_booking);
-            await context.SaveChangesAsync();
-        }
-
-        //Перевантажена версія попереднього методу
-        public async Task<InternalCarriageAssignmentRepresentationDto?> GetSinglePassengerCarriagePlacesReportForTrainRouteOnDate(PassengerCarriageOnTrainRouteOnDate carriage_assignment, string starting_station_title, string ending_station_title)
-        {
-            TrainRouteOnDate train_route_on_date = carriage_assignment.Train_Route_On_Date;
-            return await GetSinglePassengerCarriagePlacesReportForTrainRouteOnDate(train_route_on_date.Id, carriage_assignment.Position_In_Squad, starting_station_title, ending_station_title);
-        }
-
         [Crucial]
         [Algorithm("АЛГОРИТМ ТРЬОХ СЕКЦІЙ")]
         [Refactored("v1", "18.04.2025")]
@@ -692,7 +655,39 @@ namespace RailwayCore.Services
             }
             return (consolidated_left_part, consolidated_central_part, consolidated_right_part);
         }
+        public async Task<TicketBooking?> FindTicketBooking(int user_id, string train_route_on_date_id, string passenger_carriage_id, string starting_station_title, string ending_station_title, int place_in_carriage)
+        {
+            TicketBooking? ticket_booking = await context.Ticket_Bookings
+                .Include(ticket_booking => ticket_booking.Starting_Station)
+                .Include(ticket_booking => ticket_booking.Ending_Station)
+                .FirstOrDefaultAsync(ticket_booking =>
+            ticket_booking.User_Id == user_id && ticket_booking.Train_Route_On_Date_Id == train_route_on_date_id
+            && ticket_booking.Passenger_Carriage_Id == passenger_carriage_id && ticket_booking.Starting_Station.Title == starting_station_title
+            && ticket_booking.Ending_Station.Title == ending_station_title && ticket_booking.Place_In_Carriage == place_in_carriage);
+            return ticket_booking;
+        }
+        public async Task<TicketBooking?> FindTicketBookingById(int ticket_booking_id)
+        {
+            TicketBooking? ticket_booking = await context.Ticket_Bookings.FirstOrDefaultAsync(ticket_booking => ticket_booking.Id == ticket_booking_id);
+            return ticket_booking;
+        }
+        public async Task UpdateTicketBooking(TicketBooking ticket_booking)
+        {
+            context.Ticket_Bookings.Update(ticket_booking);
+            await context.SaveChangesAsync();
+        }
+        public async Task DeleteTicketBooking(TicketBooking ticket_booking)
+        {
+            context.Ticket_Bookings.Remove(ticket_booking);
+            await context.SaveChangesAsync();
+        }
 
+        //Перевантажена версія попереднього методу
+        public async Task<InternalCarriageAssignmentRepresentationDto?> GetSinglePassengerCarriagePlacesReportForTrainRouteOnDate(PassengerCarriageOnTrainRouteOnDate carriage_assignment, string starting_station_title, string ending_station_title)
+        {
+            TrainRouteOnDate train_route_on_date = carriage_assignment.Train_Route_On_Date;
+            return await GetSinglePassengerCarriagePlacesReportForTrainRouteOnDate(train_route_on_date.Id, carriage_assignment.Position_In_Squad, starting_station_title, ending_station_title);
+        }
 
 
 

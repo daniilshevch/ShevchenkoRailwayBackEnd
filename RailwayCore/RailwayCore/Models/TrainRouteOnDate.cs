@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RailwayCore.Models
 {
-    public class TrainRouteOnDate //Рейс похзду(конкретне призначення поїзда за певним маршрутом в певну дату)
+    public class TrainRouteOnDate //Рейс поїзду(конкретне призначення поїзда за певним маршрутом в певну дату)
     {
         [Key]
         [MaxLength(20)]

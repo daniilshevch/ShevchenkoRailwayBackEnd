@@ -14,6 +14,7 @@ namespace RailwayCore.Models
     {
         [Key]
         public int Id { get; set; } //Ідентифікатор квитка
+        public Guid? Full_Ticket_Id { get; set; }
         public User User { get; set; } = null!; //Акаунт користувача в додатку, який придбав квиток
         public int User_Id { get; set; } //вище
         public TrainRouteOnDate Train_Route_On_Date { get; set; } = null!; //Рейс поїзда, на який придбано квиток

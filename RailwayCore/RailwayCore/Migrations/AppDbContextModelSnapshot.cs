@@ -219,6 +219,9 @@ namespace RailwayCore.Migrations
                     b.Property<int>("Ending_Station_Id")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("Full_Ticket_Id")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("Passenger_Carriage_Id")
                         .IsRequired()
                         .HasColumnType("varchar(8)");
@@ -406,7 +409,18 @@ namespace RailwayCore.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double?>("Discount")
+                        .HasColumnType("double");
+
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<string>("Exemption")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
@@ -414,6 +428,17 @@ namespace RailwayCore.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("Phone_Number")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Sex")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("User_Name")
                         .IsRequired()

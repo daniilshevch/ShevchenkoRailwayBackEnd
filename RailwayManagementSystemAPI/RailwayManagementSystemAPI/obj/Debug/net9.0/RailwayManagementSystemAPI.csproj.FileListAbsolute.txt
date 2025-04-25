@@ -93,3 +93,11 @@ D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSyste
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\RailwayM.9063389B.Up2Date
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\RailwayManagementSystemAPI.genruntimeconfig.cache
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\ref\RailwayManagementSystemAPI.dll
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
