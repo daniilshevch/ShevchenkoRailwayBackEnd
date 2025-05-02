@@ -2,7 +2,7 @@
 
 namespace RailwayManagementSystemAPI.API_DTO
 {
-    public class MediatorTicketBookingDto
+    public class ExternalOutputMediatorTicketBookingDto
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }
@@ -11,7 +11,7 @@ namespace RailwayManagementSystemAPI.API_DTO
         [JsonPropertyName("train_route_on_date_id")]
         public string Train_Route_On_Date_Id { get; set; } = null!;
         [JsonPropertyName("passenger_carrriage_position_in_squad")]
-        public int Passenger_Carriage_Position_In_Squad { get; set; }
+        public int? Passenger_Carriage_Position_In_Squad { get; set; }
         [JsonPropertyName("passenger_carriage_id")]
         public string Passenger_Carriage_Id { get; set; } = null!;
         [JsonPropertyName("starting_station_title")]
@@ -24,7 +24,7 @@ namespace RailwayManagementSystemAPI.API_DTO
         public string TicketStatus { get; set; } = null!;
         [JsonPropertyName("booking_initializing_time")]
         public DateTime Booking_Initializing_Time { get; set; }
-        public DateTime Booking_Expiration_Time { get; set; }
+        public DateTime? Booking_Expiration_Time { get; set; }
 
     }
 }

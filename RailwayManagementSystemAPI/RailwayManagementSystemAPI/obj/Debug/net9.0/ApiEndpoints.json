@@ -212,13 +212,13 @@
     "Parameters": [
       {
         "Name": "input",
-        "Type": "RailwayManagementSystemAPI.API_DTO.CompletedTicketBookingWithUserInfoDto",
+        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalInputCompletedTicketBookingWithPassengerInfoDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "RailwayManagementSystemAPI.API_DTO.CompletedTicketBookingDto",
+        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalOutputCompletedTicketBookingDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -238,13 +238,13 @@
     "Parameters": [
       {
         "Name": "input",
-        "Type": "RailwayManagementSystemAPI.API_DTO.InitialTicketBookingDto",
+        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalInputInitialTicketBookingDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "RailwayManagementSystemAPI.API_DTO.MediatorTicketBookingDto",
+        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalOutputMediatorTicketBookingDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -430,7 +430,27 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.UserManagementController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.UserTicketManagementController",
+    "Method": "GetAllTicketBookingsForCurrentUser",
+    "RelativePath": "get-tickets-for-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.ExternalProfileTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.UserAccountManagementController",
     "Method": "Login",
     "RelativePath": "login",
     "HttpMethod": "POST",
@@ -456,7 +476,7 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.UserManagementController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.UserAccountManagementController",
     "Method": "Register",
     "RelativePath": "register",
     "HttpMethod": "POST",
@@ -471,7 +491,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "RailwayCore.Models.User",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalOutputRegisterUserDto",
         "MediaTypes": [
           "text/plain",
           "application/json",

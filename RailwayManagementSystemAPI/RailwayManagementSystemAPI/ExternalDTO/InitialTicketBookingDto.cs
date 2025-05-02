@@ -2,7 +2,7 @@
 
 namespace RailwayManagementSystemAPI.API_DTO
 {
-    public class InitialTicketBookingDto
+    public class ExternalInputInitialTicketBookingDto
     {
         [JsonPropertyName("train_route_on_date_id")]
         public string Train_Route_On_Date_Id { get; set; } = null!;

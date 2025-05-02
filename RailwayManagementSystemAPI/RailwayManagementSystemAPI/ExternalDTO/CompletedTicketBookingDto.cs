@@ -2,17 +2,14 @@
 
 namespace RailwayManagementSystemAPI.API_DTO
 {
-    public class UserInfoForCompletedTicketBookingDto
+    public class ExternalInputPassengerInfoForCompletedTicketBookingDto
     {
-        [JsonPropertyName("user_id")]
-
-        public int User_Id { get; set; }
         [JsonPropertyName("passenger_name")]
         public string Passenger_Name { get; set; } = null!;
         [JsonPropertyName("passenger_surname")]
         public string Passenger_Surname { get; set; } = null!;
     }
-    public class CompletedTicketBookingDto
+    public class ExternalOutputCompletedTicketBookingDto
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }
@@ -21,7 +18,7 @@ namespace RailwayManagementSystemAPI.API_DTO
         [JsonPropertyName("train_route_on_date_id")]
         public string Train_Route_On_Date_Id { get; set; } = null!;
         [JsonPropertyName("passenger_carrriage_position_in_squad")]
-        public int Passenger_Carriage_Position_In_Squad { get; set; }
+        public int? Passenger_Carriage_Position_In_Squad { get; set; }
         [JsonPropertyName("passenger_carriage_id")]
         public string Passenger_Carriage_Id { get; set; } = null!;
         [JsonPropertyName("starting_station_title")]
@@ -39,9 +36,9 @@ namespace RailwayManagementSystemAPI.API_DTO
         [JsonPropertyName("passenger_surname")]
         public string Passenger_Surname { get; set; } = null!;
     }
-    public class CompletedTicketBookingWithUserInfoDto
+    public class ExternalInputCompletedTicketBookingWithPassengerInfoDto
     {
-        public MediatorTicketBookingDto ticket_booking_dto { get; set; } = null!;
-        public UserInfoForCompletedTicketBookingDto user_info_dto { get; set; } = null!;
+        public ExternalOutputMediatorTicketBookingDto ticket_booking_dto { get; set; } = null!;
+        public ExternalInputPassengerInfoForCompletedTicketBookingDto user_info_dto { get; set; } = null!;
     }
 }

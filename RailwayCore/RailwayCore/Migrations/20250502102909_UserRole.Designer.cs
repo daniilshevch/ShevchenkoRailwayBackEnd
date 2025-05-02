@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RailwayCore.Context;
 
@@ -11,9 +12,11 @@ using RailwayCore.Context;
 namespace RailwayCore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250502102909_UserRole")]
+    partial class UserRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -212,9 +215,6 @@ namespace RailwayCore.Migrations
 
                     b.Property<string>("Additional_Services")
                         .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("Booking_Expiration_Time")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("Booking_Time")
                         .HasColumnType("datetime(6)");

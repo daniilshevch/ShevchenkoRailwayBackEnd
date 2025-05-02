@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 
 class Server
 {
@@ -44,7 +45,9 @@ class Server
         services.AddScoped<TrainRouteWithBookingsSearchService>();
         services.AddScoped<CompleteTicketBookingService>();
         services.AddScoped<ApiTrainAssignmentService>();
-        services.AddScoped<UserManagementService>();
+        services.AddScoped<UserAccountManagementService>();
+        services.AddScoped<UserTicketManagementService>();
+        services.AddHostedService<ExpiredTicketBookingsRemovingService>();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
@@ -56,7 +59,7 @@ class Server
                 Scheme = "bearer",
                 BearerFormat = "JWT",
                 In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                Description = "Enter jwt-token in format: Bearer <token>"
+                Description = "Enter jwt-token"
             });
             options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
             {

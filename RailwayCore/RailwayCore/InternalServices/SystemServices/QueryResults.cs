@@ -2,13 +2,14 @@
 
 public enum ErrorType
 {
-    General,
-    NotFound, //404
+    General, // Загальна помилка невідомого походження
     BadRequest, //400
     Unauthorized, //401
-    InternalServerError,
-    Forbidden,
-    NoError
+    Forbidden, //403
+    NotFound, //404
+    Conflict, //409
+    InternalServerError, //500
+    NoError //помилки нема
 }
 public class Error
 {

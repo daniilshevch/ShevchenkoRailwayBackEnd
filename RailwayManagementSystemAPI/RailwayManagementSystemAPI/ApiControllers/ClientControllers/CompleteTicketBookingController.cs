@@ -19,25 +19,29 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             this.complete_ticket_booking_service = complete_ticket_booking_service;
         }
         [HttpPost("Initialize-Ticket-Booking")]
-        public async Task<ActionResult<MediatorTicketBookingDto>> InitializeTicketBookingProcess(InitialTicketBookingDto input)
+        public async Task<ActionResult<ExternalOutputMediatorTicketBookingDto>> InitializeTicketBookingProcess(ExternalInputInitialTicketBookingDto input)
         {
-            MediatorTicketBookingDto? mediator_ticket_booking = await complete_ticket_booking_service.InitializeTicketBookingProcess(input);
-            if (mediator_ticket_booking == null)
+            QueryResult<ExternalOutputMediatorTicketBookingDto> ticket_booking_initialization_result =
+                await complete_ticket_booking_service.InitializeTicketBookingProcessForAuthenticatedUser(input);
+            if(ticket_booking_initialization_result.Fail)
             {
-                return null;
+                return ticket_booking_initialization_result.GetErrorFromQueryResult<ExternalOutputMediatorTicketBookingDto, ExternalOutputMediatorTicketBookingDto>();
             }
-            return Ok(mediator_ticket_booking);
+            ExternalOutputMediatorTicketBookingDto mediator_ticket_booking_dto = ticket_booking_initialization_result.Value;
+
+            return Created($"/tickets/{mediator_ticket_booking_dto.Id}", mediator_ticket_booking_dto);
         }
         [HttpPost("Complete-Ticket-Booking")]
-        public async Task<ActionResult<CompletedTicketBookingDto?>> CompleteTicketBookingProcess(CompletedTicketBookingWithUserInfoDto input)
+        public async Task<ActionResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcess(ExternalInputCompletedTicketBookingWithPassengerInfoDto input)
         {
-            CompletedTicketBookingDto? completed_ticket_booking =
-                await complete_ticket_booking_service.CompleteTicketBookingProcess(input.ticket_booking_dto, input.user_info_dto);
-            if (completed_ticket_booking == null)
+            QueryResult<ExternalOutputCompletedTicketBookingDto> ticket_booking_completion_result =
+                await complete_ticket_booking_service.CompleteTicketBookingProcessForAuthenticatedUser(input.ticket_booking_dto, input.user_info_dto);
+            if(ticket_booking_completion_result.Fail)
             {
-                return BadRequest();
+                return ticket_booking_completion_result.GetErrorFromQueryResult<ExternalOutputCompletedTicketBookingDto, ExternalOutputCompletedTicketBookingDto>();
             }
-            return Ok(completed_ticket_booking);
+            ExternalOutputCompletedTicketBookingDto completed_ticket_booking_dto = ticket_booking_completion_result.Value;
+            return Created($"/tickets/{completed_ticket_booking_dto.Id}", completed_ticket_booking_dto);
         }
 
     }

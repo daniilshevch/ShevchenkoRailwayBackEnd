@@ -28,12 +28,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 ending_station_title, departure_date);
             if (train_routes_list_result is FailQuery<List<InternalTrainRaceDto>>)
             {
-                return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_list_result.Error!);
+                return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_list_result.Error);
             }
             List<InternalTrainRaceDto>? appropriate_train_routes_on_date = train_routes_list_result.Value;
             if (appropriate_train_routes_on_date is null)
             {
-                return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_list_result.Error!);
+                return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_list_result.Error);
             }
 
             //Беремо список айді знайдених поїздів(потрібно для функції ядра сервера, яке перевіряє бронювання для поїздів)
@@ -54,13 +54,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             }
             if (train_routes_on_date_bookings_statistics_result is FailQuery<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>)
             {
-                return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_on_date_bookings_statistics_result.Error!);
+                return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_on_date_bookings_statistics_result.Error);
             }
             Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>? ticket_bookings_info_for_appropriate_train_routes =
                 train_routes_on_date_bookings_statistics_result.Value;
             if (ticket_bookings_info_for_appropriate_train_routes is null)
             {
-                return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_on_date_bookings_statistics_result.Error!);
+                return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_on_date_bookings_statistics_result.Error);
             }
 
             //Ініціалізуємо список, де кожен елемент буде містити всю потрібну інформацію по одному конкретному поїзду
@@ -102,8 +102,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                     internal_carriage_statistics_for_current_train_route_on_date.Select(single_carriage_info => new ExternalSinglePassengerCarriageBookingsInfoDto
                     {
                         Carriage_Position_In_Squad = single_carriage_info.Carriage_Assignment.Position_In_Squad,
-                        Carriage_Type = GetCarriageTypeIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Type_Of),
-                        Quality_Class = GetCarriageQualityClassIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Quality_Class),
+                        Carriage_Type = TextEnumConvertationService.GetCarriageTypeIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Type_Of),
+                        Quality_Class = TextEnumConvertationService.GetCarriageQualityClassIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Quality_Class),
                         Free_Places = single_carriage_info.Free_Places,
                         Total_Places = single_carriage_info.Total_Places,
                         Air_Conditioning = single_carriage_info.Carriage_Assignment.Factual_Air_Conditioning,
@@ -167,7 +167,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 {
                     Train_Route_Id = current_train_route_trip_info.Train_Route_On_Date.Train_Route_Id,
                     Train_Route_Branded_Name = current_train_route_trip_info.Train_Route_On_Date.Train_Route.Branded_Name,
-                    Train_Route_Class = GetTrainQualityClassIntoString(current_train_route_trip_info.Train_Route_On_Date.Train_Route.Quality_Class),
+                    Train_Route_Class = TextEnumConvertationService.GetTrainQualityClassIntoString(current_train_route_trip_info.Train_Route_On_Date.Train_Route.Quality_Class),
                     Trip_Starting_Station_Title = current_train_route_trip_info.Desired_Starting_Station.Station.Title,
                     Trip_Ending_Station_Title = current_train_route_trip_info.Desired_Ending_Station.Station.Title,
                     Trip_Starting_Station_Departure_Time = current_train_route_trip_info.Departure_Time_From_Desired_Starting_Station,
@@ -228,72 +228,16 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             if (carriage_type != null)
             {
                 output_result = output_result
-                    .Where(carriage_info => carriage_info.Carriage_Type == GetCarriageTypeIntoString((PassengerCarriageType)carriage_type)).ToList();
+                    .Where(carriage_info => carriage_info.Carriage_Type == TextEnumConvertationService.GetCarriageTypeIntoString((PassengerCarriageType)carriage_type)).ToList();
             }
             if (quality_class != null)
             {
                 output_result = output_result
-                    .Where(carriage_info => carriage_info.Quality_Class == GetCarriageQualityClassIntoString((PassengerCarriageQualityClass)quality_class)).ToList();
+                    .Where(carriage_info => carriage_info.Quality_Class == TextEnumConvertationService.GetCarriageQualityClassIntoString((PassengerCarriageQualityClass)quality_class)).ToList();
             }
             return output_result;
         }
-        [Checked("19.04.2025")]
-        public static string GetCarriageTypeIntoString(PassengerCarriageType carriage_type)
-        {
-            switch (carriage_type)
-            {
-                case PassengerCarriageType.Platskart:
-                    return "Platskart";
-                case PassengerCarriageType.Coupe:
-                    return "Coupe";
-                case PassengerCarriageType.SV:
-                    return "SV";
-                default:
-                    return "";
-            }
-        }
-        [Checked("19.04.2025")]
-        public static string? GetCarriageQualityClassIntoString(PassengerCarriageQualityClass? quality_class)
-        {
-            if (quality_class == null)
-            {
-                return null;
-            }
-            switch (quality_class)
-            {
-                case PassengerCarriageQualityClass.S:
-                    return "S";
-                case PassengerCarriageQualityClass.A:
-                    return "A";
-                case PassengerCarriageQualityClass.B:
-                    return "B";
-                case PassengerCarriageQualityClass.C:
-                    return "C";
-                default:
-                    return "";
-            }
-        }
-        [Checked("19.04.2025")]
-        public static string? GetTrainQualityClassIntoString(TrainQualityClass? quality_class)
-        {
-            if (quality_class == null)
-            {
-                return null;
-            }
-            switch (quality_class)
-            {
-                case TrainQualityClass.S:
-                    return "S";
-                case TrainQualityClass.A:
-                    return "A";
-                case TrainQualityClass.B:
-                    return "B";
-                case TrainQualityClass.C:
-                    return "C";
-                default:
-                    return "";
-            }
-        }
+
 
 
 
@@ -364,8 +308,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                     .Select(single_carriage_info => new ExternalSinglePassengerCarriageBookingsInfoDto
                     {
                         Carriage_Position_In_Squad = single_carriage_info.Carriage_Assignment.Position_In_Squad,
-                        Carriage_Type = GetCarriageTypeIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Type_Of),
-                        Quality_Class = GetCarriageQualityClassIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Quality_Class),
+                        Carriage_Type = TextEnumConvertationService.GetCarriageTypeIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Type_Of),
+                        Quality_Class = TextEnumConvertationService.GetCarriageQualityClassIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Quality_Class),
                         Ticket_Price = PricingService.DefineTicketPrice(
                             carriage_type: single_carriage_info.Carriage_Assignment.Passenger_Carriage.Type_Of,
                             carriage_quality_class: single_carriage_info.Carriage_Assignment.Passenger_Carriage.Quality_Class,
@@ -425,7 +369,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 {
                     Train_Route_Id = single_train_route.Value.Train_Route_On_Date.Train_Route.Id,
                     Train_Route_Branded_Name = single_train_route.Value.Train_Route_On_Date.Train_Route.Branded_Name,
-                    Train_Route_Class = GetTrainQualityClassIntoString(single_train_route.Value.Train_Route_On_Date.Train_Route.Quality_Class),
+                    Train_Route_Class = TextEnumConvertationService.GetTrainQualityClassIntoString(single_train_route.Value.Train_Route_On_Date.Train_Route.Quality_Class),
                     Free_Platskart_Places = single_train_route.Value.Total_Place_Highlights.Platskart_Free,
                     Total_Platskart_Places = single_train_route.Value.Total_Place_Highlights.Platskart_Total,
                     Free_Coupe_Places = single_train_route.Value.Total_Place_Highlights.Coupe_Free,

@@ -15,6 +15,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
                     return new UnauthorizedObjectResult(message);
                 case ErrorType.NotFound:
                     return new NotFoundObjectResult(message);
+                case ErrorType.Conflict:
+                    return new ConflictObjectResult(message);
                 default:
                     return new ObjectResult(message)
                     {

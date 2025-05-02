@@ -245,7 +245,8 @@ namespace RailwayCore.Context
             //10. User
             model_builder.Entity<User>().ToTable("User");
             model_builder.Entity<User>().Property(user => user.Exemption).HasConversion<string>();
-            model_builder.Entity<User>().Property(user => user.Sex).HasConversion<string>();    
+            model_builder.Entity<User>().Property(user => user.Sex).HasConversion<string>();
+            model_builder.Entity<User>().Property(user => user.Role).HasConversion<string>();
             //11. User_Profile
             model_builder.Entity<UserProfile>().ToTable("User_Profile");
 

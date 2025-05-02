@@ -17,8 +17,8 @@ namespace RailwayManagementSystemAPI.ApiControllers.SystemControllers
 {
     public class SystemTestingController : ControllerBase
     {
-        private readonly UserManagementService user_management_service;
-        public SystemTestingController(UserManagementService user_management_service)
+        private readonly UserAccountManagementService user_management_service;
+        public SystemTestingController(UserAccountManagementService user_management_service)
         {
             this.user_management_service = user_management_service;
         }

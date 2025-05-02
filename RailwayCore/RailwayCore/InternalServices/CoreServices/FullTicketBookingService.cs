@@ -50,6 +50,7 @@ namespace RailwayCore.Services
   
 
         [Refactored("v1", "19.04.2025")]
+        [Refactored("v2", "02.05.2025")]
         [Crucial]
         public async Task<QueryResult<TicketBooking>> CreateTicketBooking(InternalTicketBookingDto input)
         {
@@ -134,7 +135,7 @@ namespace RailwayCore.Services
 
             QueryResult<bool> place_availability_result = await CheckTicketAvailabilityBetweenStationsForTrainRouteOnDate(input.Train_Route_On_Date_Id, input.Starting_Station_Title, input.Ending_Station_Title,
                 input.Passenger_Carriage_Id, input.Place_In_Carriage);
-            if(place_availability_result is FailQuery<bool>)
+            if(place_availability_result.Fail)
             {
                 return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"Fail while checking place availability"));
             }
@@ -160,7 +161,8 @@ namespace RailwayCore.Services
                 Passenger_Name = input.Passenger_Name,
                 Passenger_Surname = input.Passenger_Surname,
                 Booking_Time = DateTime.Now,
-                Ticket_Status = input.Ticket_Status
+                Ticket_Status = input.Ticket_Status,
+                Full_Ticket_Id = Guid.NewGuid(),
             };
             await context.Ticket_Bookings.AddAsync(ticket_booking);
             await context.SaveChangesAsync();
@@ -168,6 +170,8 @@ namespace RailwayCore.Services
         }
 
         [Refactored("v1", "19.04.2025")]
+        [Refactored("v2", "02.05.2025")]
+        [Crucial]
         public async Task<QueryResult<TicketBooking>> CreateTicketBookingWithCarriagePositionInSquad(InternalTicketBookingDtoWithCarriagePosition input)
         {
             //Перевіряємо, чи містить склад рейсу поїзда з квитку вагон на позиції, яка вказана в квитку
@@ -178,7 +182,7 @@ namespace RailwayCore.Services
                 && carriage_assignment.Position_In_Squad == input.Passenger_Carriage_Position_In_Squad);
             if(carriage_assignment_from_ticket is null)
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"There is not passenger carriage on position # {input.Passenger_Carriage_Position_In_Squad} in train" +
+                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"There is no passenger carriage on position # {input.Passenger_Carriage_Position_In_Squad} in train" +
                     $" route on date # {input.Train_Route_On_Date_Id}"));
             }
 
@@ -195,25 +199,20 @@ namespace RailwayCore.Services
                 Place_In_Carriage = input.Place_In_Carriage,
                 Passenger_Name = input.Passenger_Name,
                 Passenger_Surname = input.Passenger_Surname,
-                Ticket_Status = input.Ticket_Status
+                Ticket_Status = input.Ticket_Status,
             };
             QueryResult<TicketBooking> ticket_booking_result = await CreateTicketBooking(ticket_booking_dto);
-            if(ticket_booking_result is FailQuery<TicketBooking> fail_result)
+            if(ticket_booking_result.Fail)
             {
-                return new FailQuery<TicketBooking>(fail_result.Error!);
+                return new FailQuery<TicketBooking>(ticket_booking_result.Error);
             }
-
-            TicketBooking? ticket_booking = ticket_booking_result.Value;
-            if(ticket_booking is null) //Перевірка є надлишковою
-            {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, "Fail while booking tickets"));
-            }
+            TicketBooking ticket_booking = ticket_booking_result.Value;
             return new SuccessQuery<TicketBooking>(ticket_booking);
-
         }
 
         [Crucial("Перевірка броні на одне конкретне місце в одному конкретному вагоні в рейсі на машруті між двома станціями")]
         [Refactored("v1", "19.04.2025")]
+        [Checked("02.05.2025")]
         public async Task<QueryResult<bool>> CheckTicketAvailabilityBetweenStationsForTrainRouteOnDate(string train_route_on_date_id, string desired_starting_station_title, 
             string desired_ending_station_title, string passenger_carriage_id, int place_in_carrriage)
         {
@@ -253,9 +252,6 @@ namespace RailwayCore.Services
 
             return new SuccessQuery<bool>(is_available);
         }
-
-
-
 
         [Executive("Перевірка броні на всі місця в одному конкретному вагоні в рейсі на машруті між двома станціями " +
             "з поверненням об'єтку, що містить призначення вагона і список вільних-зайнятих місць")]
@@ -666,11 +662,13 @@ namespace RailwayCore.Services
             && ticket_booking.Ending_Station.Title == ending_station_title && ticket_booking.Place_In_Carriage == place_in_carriage);
             return ticket_booking;
         }
+        [Checked("02.05.2025")]
         public async Task<TicketBooking?> FindTicketBookingById(int ticket_booking_id)
         {
             TicketBooking? ticket_booking = await context.Ticket_Bookings.FirstOrDefaultAsync(ticket_booking => ticket_booking.Id == ticket_booking_id);
             return ticket_booking;
         }
+        [Checked("02.05.2025")]
         public async Task UpdateTicketBooking(TicketBooking ticket_booking)
         {
             context.Ticket_Bookings.Update(ticket_booking);
@@ -690,7 +688,31 @@ namespace RailwayCore.Services
         }
 
 
-
+        public async Task<List<TicketBooking>> GetAllExpiredTicketBookings()
+        {
+            List<TicketBooking> expired_ticket_bookings = await context.Ticket_Bookings
+                .Where(ticket_booking => ticket_booking.Ticket_Status == TicketStatus.Booking_In_Progress
+                && ticket_booking.Booking_Expiration_Time < DateTime.Now).ToListAsync();
+            return expired_ticket_bookings;
+        }
+        public async Task DeleteAllExpiredTickets()
+        {
+            List<TicketBooking> expired_ticket_bookings = await GetAllExpiredTicketBookings();
+            context.Ticket_Bookings.RemoveRange(expired_ticket_bookings);
+            await context.SaveChangesAsync();
+        }
+        public async Task<List<TicketBooking>> GetAllTicketBookingForUser(int user_id)
+        {
+            List<TicketBooking> ticket_bookings = await context.Ticket_Bookings
+                .Include(ticket_booking => ticket_booking.Starting_Station)
+                .Include(ticket_booking => ticket_booking.Ending_Station)
+                .Include(ticket_booking => ticket_booking.User)
+                .Include(ticket_booking => ticket_booking.Passenger_Carriage)
+                .Include(ticket_booking => ticket_booking.Train_Route_On_Date)
+                .ThenInclude(train_route_on_date => train_route_on_date.Train_Route)
+                .Where(ticket_booking => ticket_booking.User_Id == user_id).ToListAsync();
+            return ticket_bookings;
+        }
 
 
 

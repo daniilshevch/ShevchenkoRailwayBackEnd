@@ -32,6 +32,7 @@ namespace RailwayCore.Models
         [MaxLength(30)]
         public string Passenger_Surname { get; set; } = null!; //Фактичне прізвище пасажира(може не збігатись з прізвищем в акаунті)
         public DateTime Booking_Time { get; set; } //Час бронювання
+        public DateTime? Booking_Expiration_Time { get; set; } // Час закінчення періоду бронювання(для квитків в статусі Booking_In_Progress
         public TicketStatus Ticket_Status { get; set; } = TicketStatus.Booked_And_Active; //Статус бронювання
         public string? Additional_Services { get; set; } //Стрічка для зберігання додаткових послуг, включених в квиток(постіль, напої, їжа і так далі)
 

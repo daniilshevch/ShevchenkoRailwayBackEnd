@@ -3,6 +3,7 @@ using RailwayCore.Context;
 using RailwayCore.Services;
 using RailwayCore.Models;
 using System;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 [Checked("18.04.2025")]
 public class  InternalTrainRaceDto  //Внутрішній трансфер(використовується в подальшому на сторінці пошуку поїздів між станціями)
@@ -231,7 +232,7 @@ namespace RailwayCore.Services
         }
 
         [Checked("18.04.2025")]
-        [Peripheral]
+        [Executive]
         public async Task<TrainRouteOnDateOnStation?> GetStartingTrainStopForTrainRouteOnDate(string train_route_on_date_id)
         {
             List<TrainRouteOnDateOnStation>? train_stops = await GetTrainStopsForTrainRouteOnDate(train_route_on_date_id, order_mode: true);
@@ -244,7 +245,7 @@ namespace RailwayCore.Services
         }
 
         [Checked("18.04.2025")]
-        [Peripheral]
+        [Executive]
         public async Task<TrainRouteOnDateOnStation?> GetEndingTrainStopForTrainRouteOnDate(string train_route_on_date_id)
         {
             List<TrainRouteOnDateOnStation>? train_stops = await GetTrainStopsForTrainRouteOnDate(train_route_on_date_id, order_mode: true);
@@ -255,7 +256,12 @@ namespace RailwayCore.Services
             }
             return train_stops[train_stops.Count - 1];
         }
-
+        public async Task<TrainRouteOnDateOnStation?> GetTrainStopInfoByTrainRouteOnDateIdAndStationId(string train_route_on_date_id, int station_id)
+        {
+            return await context.Train_Routes_On_Date_On_Stations
+                .FirstOrDefaultAsync(train_stop => train_stop.Train_Route_On_Date_Id == train_route_on_date_id &&
+                train_stop.Station_Id == station_id);
+        }
         [Refactored("v1", "18.04.2025")]
         [Executive]
         public async Task<List<PassengerCarriageOnTrainRouteOnDate>?> GetPassengerCarriageAssignmentsForTrainRouteOnDate(string train_route_on_date_id)

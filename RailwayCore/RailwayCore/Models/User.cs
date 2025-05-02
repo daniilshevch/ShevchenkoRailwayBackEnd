@@ -13,6 +13,11 @@ public enum Exemption
 {
 
 }
+public enum Role
+{
+    Administrator,
+    General_User
+}
 namespace RailwayCore.Models
 {
     public class User
@@ -35,5 +40,6 @@ namespace RailwayCore.Models
         [Phone]
         public string? Phone_Number { get; set; }
         public List<TicketBooking> Ticket_Bookings { get; set; } = new List<TicketBooking>();
+        public Role Role { get; set; } = Role.General_User;
     }
 }
