@@ -1,6 +1,6 @@
 ﻿using RailwayCore.Models;
 
-namespace RailwayManagementSystemAPI.SystemServices
+namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
 {
     public class PricingService
     {
@@ -28,8 +28,8 @@ namespace RailwayManagementSystemAPI.SystemServices
             {
                 train_route_coefficient = 1.0;
             }
-        
-            if(_train_race_coefficient is not null)
+
+            if (_train_race_coefficient is not null)
             {
                 train_race_coefficient = (double)_train_race_coefficient;
             }
@@ -38,7 +38,7 @@ namespace RailwayManagementSystemAPI.SystemServices
                 train_race_coefficient = 1.0;
             }
             double carriage_type_coefficient;
-            switch(carriage_type)
+            switch (carriage_type)
             {
                 case PassengerCarriageType.SV:
                     carriage_type_coefficient = 2;
@@ -53,7 +53,7 @@ namespace RailwayManagementSystemAPI.SystemServices
                     carriage_type_coefficient = 1;
                     break;
             }
-            switch(carriage_quality_class)
+            switch (carriage_quality_class)
             {
                 case PassengerCarriageQualityClass.S:
                     carriage_quality_class_coefficient = 2;
@@ -70,7 +70,7 @@ namespace RailwayManagementSystemAPI.SystemServices
                 default:
                     carriage_quality_class_coefficient = 1;
                     break;
-            }    
+            }
             return (int)Math.Floor(distance * average_speed_coefficient * train_route_coefficient * train_race_coefficient * carriage_type_coefficient * carriage_quality_class_coefficient);
         }
     }

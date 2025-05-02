@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.InternalDTO.ModelDTO;
-using RailwayManagementSystemAPI.AdminServices;
 using RailwayManagementSystemAPI.API_DTO;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices;
 using System.Net;
-namespace RailwayManagementSystemAPI.AdminControllers
+namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers
 {
     [ApiController]
     [Route("Admin-API/[controller]")]
-    public class TrainAssignmentController: ControllerBase
+    public class TrainAssignmentController : ControllerBase
     {
         private readonly ApiTrainAssignmentService api_train_assignment_service;
         public TrainAssignmentController(ApiTrainAssignmentService api_train_assignment_service)

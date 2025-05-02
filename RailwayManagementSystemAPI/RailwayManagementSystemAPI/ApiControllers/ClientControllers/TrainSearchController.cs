@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.API_DTO;
-using RailwayManagementSystemAPI.ClientServices;
 using RailwayCore.Services;
 using RailwayCore.InternalServices.SystemServices;
-namespace RailwayManagementSystemAPI.Controllers
+using RailwayManagementSystemAPI.ExternalServices.ClientServices;
+namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
     [ApiController]
     [Route("ClientAPI/[controller]")]
@@ -20,7 +20,7 @@ namespace RailwayManagementSystemAPI.Controllers
         {
             QueryResult<List<ExternalTrainRouteWithBookingsInfoDto>>? train_routes_with_bookings_info_result =
                 await train_route_with_booking_search_service.SearchTrainRoutesBetweenStationsWithBookingsInfo(starting_station, ending_station, departure_date, admin_mode: true);
-            if(train_routes_with_bookings_info_result is FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>)
+            if (train_routes_with_bookings_info_result is FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>)
             {
                 return NotFound(train_routes_with_bookings_info_result.Error!.Message);
             }
@@ -36,7 +36,7 @@ namespace RailwayManagementSystemAPI.Controllers
         {
             return train_route_with_booking_search_service.GetScheduleForSpecificTrainRouteOnDateFromGeneralList(train_routes_on_date_statistics_list, train_route_on_date_id);
         }
- 
+
         [HttpPost("Get-All-Carriages-Info")]
         public ActionResult<List<ExternalSinglePassengerCarriageBookingsInfoDto>> GetBookingsInfoForAllCarriagesForSpecificTrainRouteOnDate
             (ExternalTrainRouteWithBookingsInfoDto train_route_on_date)

@@ -1,17 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.API_DTO;
-using RailwayManagementSystemAPI.ClientServices;
-using RailwayManagementSystemAPI.SystemServices;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using System.Security.Claims;
 
-namespace RailwayManagementSystemAPI.ClientControllers
+namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
     [ApiController]
     [Route("Client-API/[controller]")]
-    public class CompletedTicketBookingController : ControllerBase
+    public class CompleteTicketBookingController : ControllerBase
     {
+
         private readonly CompleteTicketBookingService complete_ticket_booking_service;
-        public CompletedTicketBookingController(CompleteTicketBookingService complete_ticket_booking_service)
+        public CompleteTicketBookingController(CompleteTicketBookingService complete_ticket_booking_service)
         {
             this.complete_ticket_booking_service = complete_ticket_booking_service;
         }
@@ -36,5 +39,6 @@ namespace RailwayManagementSystemAPI.ClientControllers
             }
             return Ok(completed_ticket_booking);
         }
+
     }
 }

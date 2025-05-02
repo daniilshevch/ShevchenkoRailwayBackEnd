@@ -1,21 +1,28 @@
 ﻿using RailwayCore.Models;
 using RailwayManagementSystemAPI.API_DTO;
-using RailwayManagementSystemAPI.SystemServices;
 using RailwayCore.Services;
 using RailwayCore.InternalDTO.ModelDTO;
-using RailwayCore.InternalServices.SystemServices;
-namespace RailwayManagementSystemAPI.ClientServices
+
+namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
     public class CompleteTicketBookingService
     {
         private readonly FullTicketBookingService ticket_booking_service;
+        private readonly UserManagementService user_management_service;
         private const int timer_expiration = 1;
-        public CompleteTicketBookingService(FullTicketBookingService ticket_booking_service)
+        public CompleteTicketBookingService(FullTicketBookingService ticket_booking_service, UserManagementService user_management_service)
         {
             this.ticket_booking_service = ticket_booking_service;
+            this.user_management_service = user_management_service;
         }
         public async Task<MediatorTicketBookingDto?> InitializeTicketBookingProcess(InitialTicketBookingDto input)
         {
+            QueryResult<User> user_authentication_result = await user_management_service.GetAuthenticatedUser();
+            if (user_authentication_result.Fail)
+            {
+                return null;
+            }
+            User authenticated_user = user_authentication_result.Value!;
             InternalTicketBookingDtoWithCarriagePosition ticket_booking_dto_with_carriage_position = new InternalTicketBookingDtoWithCarriagePosition
             {
                 Train_Route_On_Date_Id = input.Train_Route_On_Date_Id,
@@ -23,13 +30,13 @@ namespace RailwayManagementSystemAPI.ClientServices
                 Place_In_Carriage = input.Place_In_Carriage,
                 Passenger_Name = "********",
                 Passenger_Surname = "********",
-                User_Id = input.User_Id,
+                User_Id = authenticated_user.Id,
                 Ticket_Status = TicketStatus.Booking_In_Progress,
                 Starting_Station_Title = input.Starting_Station_Title,
                 Ending_Station_Title = input.Ending_Station_Title
             };
             QueryResult<TicketBooking> booking_result = await ticket_booking_service.CreateTicketBookingWithCarriagePositionInSquad(ticket_booking_dto_with_carriage_position);
-            
+
             if (booking_result is FailQuery<TicketBooking>)
             {
                 //API_ErrorHandler.AddError(ErrorHandler.GetLastErrorFromSingleService(ServiceName.TicketBookingService));
@@ -67,7 +74,7 @@ namespace RailwayManagementSystemAPI.ClientServices
             {
                 return null;
             }
-            if(DateTime.Now > input_unfinished_ticket.Booking_Expiration_Time)
+            if (DateTime.Now > input_unfinished_ticket.Booking_Expiration_Time)
             {
                 return null;
             }
@@ -118,7 +125,7 @@ namespace RailwayManagementSystemAPI.ClientServices
             {
                 return;
             }
-            if(ticket_booking.Ticket_Status == TicketStatus.Booking_In_Progress)
+            if (ticket_booking.Ticket_Status == TicketStatus.Booking_In_Progress)
             {
                 await ticket_booking_service.DeleteTicketBooking(ticket_booking);
             }

@@ -1,11 +1,11 @@
 ﻿using RailwayManagementSystemAPI.API_DTO;
 using RailwayCore.Services;
 using RailwayCore.Models;
-using RailwayManagementSystemAPI.SystemServices;
 using System.Diagnostics;
 using RailwayCore.InternalDTO.CoreDTO;
 using RailwayCore.InternalServices.SystemServices;
-namespace RailwayManagementSystemAPI.ClientServices
+using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
     public class TrainRouteWithBookingsSearchService
     {
@@ -14,7 +14,7 @@ namespace RailwayManagementSystemAPI.ClientServices
         public TrainRouteWithBookingsSearchService(FullTrainRouteSearchService full_train_route_search_service, FullTicketBookingService ticket_booking_service)
         {
             this.full_train_route_search_service = full_train_route_search_service;
-            this.full_ticket_booking_service = ticket_booking_service;
+            full_ticket_booking_service = ticket_booking_service;
         }
 
 
@@ -26,7 +26,7 @@ namespace RailwayManagementSystemAPI.ClientServices
             //Отримуємо список поїздів, які проходять через дані станції в потрібному порядку в потрібну дату
             QueryResult<List<InternalTrainRaceDto>> train_routes_list_result = await full_train_route_search_service.SearchTrainRoutesBetweenStationsOnDate(starting_station_title,
                 ending_station_title, departure_date);
-            if(train_routes_list_result is FailQuery<List<InternalTrainRaceDto>>)
+            if (train_routes_list_result is FailQuery<List<InternalTrainRaceDto>>)
             {
                 return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_list_result.Error!);
             }
@@ -37,7 +37,7 @@ namespace RailwayManagementSystemAPI.ClientServices
             }
 
             //Беремо список айді знайдених поїздів(потрібно для функції ядра сервера, яке перевіряє бронювання для поїздів)
-            List<string> appropriate_train_routes_on_date_ids = 
+            List<string> appropriate_train_routes_on_date_ids =
                 appropriate_train_routes_on_date.Select(train_route_on_date_info => train_route_on_date_info.Train_Route_On_Date.Id).ToList();
 
             QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>? train_routes_on_date_bookings_statistics_result = null;
@@ -52,13 +52,13 @@ namespace RailwayManagementSystemAPI.ClientServices
                 train_routes_on_date_bookings_statistics_result = await full_ticket_booking_service.
                    GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDateWithPassengerInformationAnalytics(appropriate_train_routes_on_date_ids, starting_station_title, ending_station_title);
             }
-            if(train_routes_on_date_bookings_statistics_result is FailQuery<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>)
+            if (train_routes_on_date_bookings_statistics_result is FailQuery<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>)
             {
                 return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_on_date_bookings_statistics_result.Error!);
             }
-            Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>? ticket_bookings_info_for_appropriate_train_routes = 
+            Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>? ticket_bookings_info_for_appropriate_train_routes =
                 train_routes_on_date_bookings_statistics_result.Value;
-            if(ticket_bookings_info_for_appropriate_train_routes is null)
+            if (ticket_bookings_info_for_appropriate_train_routes is null)
             {
                 return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_on_date_bookings_statistics_result.Error!);
             }
@@ -67,13 +67,13 @@ namespace RailwayManagementSystemAPI.ClientServices
             List<ExternalTrainRouteWithBookingsInfoDto> total_train_routes_with_bookings_and_stations_info = new List<ExternalTrainRouteWithBookingsInfoDto>();
 
             //Проходимось по кожному поїзду зі списку поїздів, які проходять через дані станції і для яких ми знайшли статистику бронювань
-            foreach (KeyValuePair<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto> single_train_route_on_date_statistics 
+            foreach (KeyValuePair<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto> single_train_route_on_date_statistics
                 in ticket_bookings_info_for_appropriate_train_routes)
             {
                 //Отримуємо азагальну інформацію про даний маршрут поїзда(поки без бронювання), воно буде в першу чергу показуватись на сторінці списку знайдених поїздів
                 InternalTrainRaceDto? current_train_route_trip_info = appropriate_train_routes_on_date.FirstOrDefault(train_race =>
                 train_race.Train_Route_On_Date.Id == single_train_route_on_date_statistics.Key);
-                if(current_train_route_trip_info is null)
+                if (current_train_route_trip_info is null)
                 {
                     return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(new Error(ErrorType.BadRequest, $"Fail while searching info about train route on date " +
                         $"{single_train_route_on_date_statistics.Key}"));
@@ -84,17 +84,17 @@ namespace RailwayManagementSystemAPI.ClientServices
                 DateTime arrival_time_to_trip_ending_station = current_train_route_trip_info.Arrival_Time_For_Desired_Ending_Station;
                 string full_route_starting_station_title = current_train_route_trip_info.Full_Route_Starting_Stop.Station.Title;
                 string full_route_ending_station_title = current_train_route_trip_info.Full_Route_Ending_Stop.Station.Title;
-                
+
                 double? trip_starting_stop_km_point = current_train_route_trip_info.Km_Point_Of_Desired_Starting_Station;
                 double? trip_ending_stop_km_point = current_train_route_trip_info.Km_Point_Of_Desired_Ending_Station;
                 double trip_distance = 0;
-                if(trip_starting_stop_km_point is not null && trip_ending_stop_km_point is not null)
+                if (trip_starting_stop_km_point is not null && trip_ending_stop_km_point is not null)
                 {
                     trip_distance = (double)trip_ending_stop_km_point - (double)trip_starting_stop_km_point;
                 }
 
                 //Отримуємо список об'єктів, кожен з яких становить статистику бронювань в одному вагоні даного поїзда(внутрішній трансфер)
-                List<InternalCarriageAssignmentRepresentationDto> internal_carriage_statistics_for_current_train_route_on_date = 
+                List<InternalCarriageAssignmentRepresentationDto> internal_carriage_statistics_for_current_train_route_on_date =
                     single_train_route_on_date_statistics.Value.Carriage_Statistics_List;
                 //Ініціалізовуємо аналогічний список об'єктів-статистик бронювань в одном вагоні поїзда, але призначений для зовнішньої демонстрації
                 //Вся докладна інформація про вагон, включаючи номер в складі, тип, послуги та бронювання міститься тут (також вираховується ціна подорожі)
@@ -137,17 +137,17 @@ namespace RailwayManagementSystemAPI.ClientServices
                 //Ініціалізуємо лічильник,який буде рахувати, яка за рахунком дана станція при переборі
                 int current_stop_index = 0;
                 // Перебираємо всі станції на маршруті, збираємо інформацію про них і додаємо в список зовнішніх трансферів
-                foreach(TrainRouteOnDateOnStation current_train_stop in train_stops_for_current_train_route_on_date)
+                foreach (TrainRouteOnDateOnStation current_train_stop in train_stops_for_current_train_route_on_date)
                 {
                     DateTime? arrival_time_to_stop = current_train_stop.Arrival_Time;
                     DateTime? departure_time_from_stop = current_train_stop.Departure_Time;
                     TimeSpan? stop_duration = null;
-                    if(arrival_time_to_stop is not null && departure_time_from_stop is not null)
+                    if (arrival_time_to_stop is not null && departure_time_from_stop is not null)
                     {
                         stop_duration = (DateTime)departure_time_from_stop - (DateTime)arrival_time_to_stop;
                     }
                     bool is_part_of_trip = false;
-                    if(current_stop_index >= trip_start_stop_index && current_stop_index <= trip_end_stop_index)
+                    if (current_stop_index >= trip_start_stop_index && current_stop_index <= trip_end_stop_index)
                     {
                         is_part_of_trip = true;
                     }

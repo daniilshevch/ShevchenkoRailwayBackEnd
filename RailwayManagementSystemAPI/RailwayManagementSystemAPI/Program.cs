@@ -1,14 +1,11 @@
 using RailwayCore.Context;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Services;
-using RailwayManagementSystemAPI.AdminServices;
-using RailwayManagementSystemAPI.ClientServices;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 
 class Server
 {
@@ -17,6 +14,19 @@ class Server
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         IServiceCollection services = builder.Services;
         IConfiguration configuration = builder.Configuration;
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+           .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+           {
+               ValidateAudience = true,
+               ValidateIssuer = true,
+               ValidateLifetime = true,
+               ValidateIssuerSigningKey = true,
+               ValidAudience = configuration["JwtAuthentication:Audience"],
+               ValidIssuer = configuration["JwtAuthentication:Issuer"],
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtAuthentication:SecretKey"]!))
+           });
+        services.AddAuthorization();
+        services.AddHttpContextAccessor();
         services.AddControllers();
         services.AddSingleton<AppDbContext>();
         services.AddSingleton<RailwayBranchService>();
@@ -30,26 +40,41 @@ class Server
         services.AddSingleton<FullTrainRouteSearchService>();
         services.AddSingleton<FullTicketBookingService>();
         services.AddSingleton<ConsoleRepresentationService>();
+
         services.AddScoped<TrainRouteWithBookingsSearchService>();
         services.AddScoped<CompleteTicketBookingService>();
-        services.AddSingleton<ApiTrainAssignmentService>();
-        services.AddSingleton<UserManagementService>();
+        services.AddScoped<ApiTrainAssignmentService>();
+        services.AddScoped<UserManagementService>();
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+        services.AddSwaggerGen(options =>
         {
-            options.TokenValidationParameters = new TokenValidationParameters
+            options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Shevchenko Railway Management System", Version = "v1" });
+            options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
             {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidIssuer = configuration["JwtAuthentication:Issuer"],
-                ValidAudience = configuration["JwtAuthentication:Audience"],
-                ValidateLifetime = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtAuthentication:SecretKey"]!)),
-                ValidateIssuerSigningKey = true
-            };
+                Name = "Authorization",
+                Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                Description = "Enter jwt-token in format: Bearer <token>"
+            });
+            options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+            {
+                {
+                    new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                    {
+                        Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                        {
+                            Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
+            });
+
+
         });
-        services.AddAuthorization();
         services.AddCors(options =>
         {
             options.AddPolicy("AllowFrontend",
@@ -60,12 +85,10 @@ class Server
                           .AllowAnyMethod();
                 });
         });
-        
         WebApplication app = builder.Build();
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseCors("AllowFrontend");
-
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();

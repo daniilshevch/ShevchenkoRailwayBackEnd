@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.TrainAssignmentController",
     "Method": "AssignTrainRouteOnDateWithSchedule",
     "RelativePath": "Admin-API/TrainAssignment/Assign-Train-With-Schedule",
     "HttpMethod": "POST",
@@ -16,7 +16,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.TrainAssignmentController",
     "Method": "AssignTrainRouteOnDateWithScheduleAndSquad",
     "RelativePath": "Admin-API/TrainAssignment/Assign-Train-With-Schedule-And-Squad",
     "HttpMethod": "POST",
@@ -32,7 +32,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.TrainAssignmentController",
     "Method": "AssignTrainRouteOnDateWithSquad",
     "RelativePath": "Admin-API/TrainAssignment/Assign-Train-With-Squad",
     "HttpMethod": "POST",
@@ -48,7 +48,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.TrainAssignmentController",
     "Method": "ChangeTrainRouteOnDateSchedule",
     "RelativePath": "Admin-API/TrainAssignment/Change-Train-Schedule",
     "HttpMethod": "PUT",
@@ -79,7 +79,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.TrainAssignmentController",
     "Method": "ChangeTrainRouteOnDateSquad",
     "RelativePath": "Admin-API/TrainAssignment/Change-Train-Squad",
     "HttpMethod": "PUT",
@@ -110,7 +110,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.TrainAssignmentController",
     "Method": "CopyTrainRouteOnDateWithSchedule",
     "RelativePath": "Admin-API/TrainAssignment/Copy-Train-With-Schedule",
     "HttpMethod": "POST",
@@ -141,7 +141,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.TrainAssignmentController",
     "Method": "CopyTrainRouteOnDateWithScheduleAndSquad",
     "RelativePath": "Admin-API/TrainAssignment/Copy-Train-With-Schedule-And-Squad",
     "HttpMethod": "POST",
@@ -172,7 +172,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.AdminControllers.TrainAssignmentController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.TrainAssignmentController",
     "Method": "CopyTrainRouteOnDateWithSquad",
     "RelativePath": "Admin-API/TrainAssignment/Copy-Train-With-Squad",
     "HttpMethod": "POST",
@@ -203,9 +203,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.ClientControllers.CompletedTicketBookingController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.CompleteTicketBookingController",
     "Method": "CompleteTicketBookingProcess",
-    "RelativePath": "Client-API/CompletedTicketBooking/Complete-Ticket-Booking",
+    "RelativePath": "Client-API/CompleteTicketBooking/Complete-Ticket-Booking",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -229,9 +229,9 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.ClientControllers.CompletedTicketBookingController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.CompleteTicketBookingController",
     "Method": "InitializeTicketBookingProcess",
-    "RelativePath": "Client-API/CompletedTicketBooking/Initialize-Ticket-Booking",
+    "RelativePath": "Client-API/CompleteTicketBooking/Initialize-Ticket-Booking",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -255,7 +255,7 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.Controllers.TrainSearchController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.TrainSearchController",
     "Method": "GetBookingsInfoForAllCarriagesForSpecificTrainRouteOnDate",
     "RelativePath": "ClientAPI/TrainSearch/Get-All-Carriages-Info",
     "HttpMethod": "POST",
@@ -281,7 +281,7 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.Controllers.TrainSearchController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.TrainSearchController",
     "Method": "GetBookingsInfoForPassengerCarriagesOfSpecificTypeForSpecificTrainRouteOnDate",
     "RelativePath": "ClientAPI/TrainSearch/Get-Carriages-Of-Type-Info",
     "HttpMethod": "POST",
@@ -317,7 +317,7 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.Controllers.TrainSearchController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.TrainSearchController",
     "Method": "GetScheduleForSpecificTrainRouteOnDate",
     "RelativePath": "ClientAPI/TrainSearch/Get-Train-Schedule",
     "HttpMethod": "POST",
@@ -343,7 +343,7 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.Controllers.TrainSearchController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.TrainSearchController",
     "Method": "GetScheduleForSpecificTrainRouteOnDate",
     "RelativePath": "ClientAPI/TrainSearch/Get-Train-Schedule2",
     "HttpMethod": "POST",
@@ -374,7 +374,7 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.Controllers.TrainSearchController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.TrainSearchController",
     "Method": "SearchTrainRoutesBetweenStationsWithBookingsInfo",
     "RelativePath": "ClientAPI/TrainSearch/Search-Train-Routes-Between-Stations-With-Bookings/{starting_station}/{ending_station}",
     "HttpMethod": "GET",
@@ -410,7 +410,27 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.ClientControllers.UserManagementController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.SystemControllers.SystemTestingController",
+    "Method": "GetAuthenticatedUser",
+    "RelativePath": "get-authenticated-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "SystemUserDemonstrationDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.UserManagementController",
     "Method": "Login",
     "RelativePath": "login",
     "HttpMethod": "POST",
@@ -436,7 +456,7 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.ClientControllers.UserManagementController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.UserManagementController",
     "Method": "Register",
     "RelativePath": "register",
     "HttpMethod": "POST",

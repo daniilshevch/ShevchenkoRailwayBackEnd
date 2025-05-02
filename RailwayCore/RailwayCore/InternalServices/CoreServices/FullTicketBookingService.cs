@@ -492,7 +492,7 @@ namespace RailwayCore.Services
                     Train_Route_On_Date_Id = ticket.Train_Route_On_Date_Id,
                     Carriage_Id = ticket.Passenger_Carriage_Id,
                     Place = ticket.Place_In_Carriage,
-                    Booker_Info = new BookerInfo
+                    Booker_Info = new BookerInfo //Інформація про пасажира + початкову та кінцеву станції його поїздки
                     {
                         Passenger_Name = ticket.Passenger_Name,
                         Passenger_Surname = ticket.Passenger_Surname,

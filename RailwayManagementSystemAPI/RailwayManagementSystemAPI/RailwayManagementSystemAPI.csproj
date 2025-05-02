@@ -18,8 +18,4 @@
     <ProjectReference Include="..\..\RailwayCore\RailwayCore\RailwayCore.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

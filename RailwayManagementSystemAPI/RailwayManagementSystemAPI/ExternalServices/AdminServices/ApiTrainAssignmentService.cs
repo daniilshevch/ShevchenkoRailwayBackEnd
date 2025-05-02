@@ -2,7 +2,7 @@
 using RailwayCore.Models;
 using RailwayCore.Services;
 using RailwayManagementSystemAPI.API_DTO;
-namespace RailwayManagementSystemAPI.AdminServices
+namespace RailwayManagementSystemAPI.ExternalServices.AdminServices
 {
     public class ApiTrainAssignmentService
     {
@@ -19,7 +19,7 @@ namespace RailwayManagementSystemAPI.AdminServices
             List<TrainStopWithArrivalAndDepartureTimeDto> train_stops = input.Train_Stops;
 
             List<TrainStopWithoutRouteDto> train_stops_list = new List<TrainStopWithoutRouteDto>();
-            foreach(TrainStopWithArrivalAndDepartureTimeDto train_stop in train_stops)
+            foreach (TrainStopWithArrivalAndDepartureTimeDto train_stop in train_stops)
             {
                 train_stops_list.Add(new TrainStopWithoutRouteDto
                 {
@@ -96,7 +96,7 @@ namespace RailwayManagementSystemAPI.AdminServices
         }
         public StopType GetStopTypeIntoEnum(string stop_type)
         {
-            switch(stop_type)
+            switch (stop_type)
             {
                 case "Boarding":
                     return StopType.Boarding;

@@ -1,14 +1,14 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "RailwayManagementSystemAPI",
-    "version": "1.0"
+    "title": "Shevchenko Railway Management System",
+    "version": "v1"
   },
   "paths": {
-    "/Client-API/CompletedTicketBooking/Initialize-Ticket-Booking": {
+    "/Client-API/CompleteTicketBooking/Initialize-Ticket-Booking": {
       "post": {
         "tags": [
-          "CompletedTicketBooking"
+          "CompleteTicketBooking"
         ],
         "requestBody": {
           "content": {
@@ -53,10 +53,10 @@
         }
       }
     },
-    "/Client-API/CompletedTicketBooking/Complete-Ticket-Booking": {
+    "/Client-API/CompleteTicketBooking/Complete-Ticket-Booking": {
       "post": {
         "tags": [
-          "CompletedTicketBooking"
+          "CompleteTicketBooking"
         ],
         "requestBody": {
           "content": {
@@ -94,6 +94,35 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CompletedTicketBookingDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-authenticated-user": {
+      "get": {
+        "tags": [
+          "SystemTesting"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemUserDemonstrationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemUserDemonstrationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemUserDemonstrationDto"
                 }
               }
             }
@@ -1255,10 +1284,6 @@
       "InitialTicketBookingDto": {
         "type": "object",
         "properties": {
-          "user_id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "train_route_on_date_id": {
             "type": "string",
             "nullable": true
@@ -1741,6 +1766,28 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "SystemUserDemonstrationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "TicketBooking": {
         "type": "object",
@@ -2244,6 +2291,19 @@
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Enter jwt-token in format: Bearer <token>",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }
