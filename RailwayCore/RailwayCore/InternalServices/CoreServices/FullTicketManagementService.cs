@@ -30,7 +30,7 @@ namespace RailwayCore.Services
         public int Place { get; set; }
         public  BookerInfo Booker_Info { get; set; } = null!;
     }
-    public class FullTicketBookingService
+    public class FullTicketManagementService
     {
         private readonly AppDbContext context;
         private readonly TrainRouteOnDateService train_route_on_date_service;
@@ -38,7 +38,7 @@ namespace RailwayCore.Services
         private readonly PassengerCarriageService passenger_carriage_service;
         private readonly FullTrainRouteSearchService full_train_route_search_service;
         private readonly TextService text_service = new TextService("TicketBookingService");
-        public FullTicketBookingService(AppDbContext context, TrainRouteOnDateService train_route_on_date_service, StationService station_service, PassengerCarriageService passenger_carriage_service, FullTrainRouteSearchService full_train_route_search_service)
+        public FullTicketManagementService(AppDbContext context, TrainRouteOnDateService train_route_on_date_service, StationService station_service, PassengerCarriageService passenger_carriage_service, FullTrainRouteSearchService full_train_route_search_service)
         {
             this.context = context;
             this.train_route_on_date_service = train_route_on_date_service;
@@ -253,55 +253,7 @@ namespace RailwayCore.Services
             return new SuccessQuery<bool>(is_available);
         }
 
-        [Executive("Перевірка броні на всі місця в одному конкретному вагоні в рейсі на машруті між двома станціями " +
-            "з поверненням об'єтку, що містить призначення вагона і список вільних-зайнятих місць")]
-        public async Task<InternalCarriageAssignmentRepresentationDto?> GetSinglePassengerCarriagePlacesReportForTrainRouteOnDate(string train_route_on_date_id, int position_in_squad, string starting_station_title, string ending_station_title)
-        {
-            List<PassengerCarriageOnTrainRouteOnDate>? carriage_assignments_for_train_route_on_date = await full_train_route_search_service.GetPassengerCarriageAssignmentsForTrainRouteOnDate(train_route_on_date_id);
-            if (carriage_assignments_for_train_route_on_date == null)
-            {
-                return null;
-            }
-            PassengerCarriageOnTrainRouteOnDate? desired_carriage_assignment = carriage_assignments_for_train_route_on_date.FirstOrDefault(carriage_assignment => carriage_assignment.Position_In_Squad == position_in_squad);
-            if (desired_carriage_assignment == null)
-            {
-                return null;
-            }
-            List<TrainRouteOnDateOnStation>? all_train_stops_of_train_route_on_date =
-                await full_train_route_search_service.GetTrainStopsForTrainRouteOnDate(train_route_on_date_id);
-            if (all_train_stops_of_train_route_on_date == null)
-            {
-                text_service.FailPostInform("Fail in FullTrainRouteSearchService");
-                return null;
-            }
-            (List<int> left_part, List<int> central_part, List<int> right_part) =
-                DivideSectionIntoThreeParts(all_train_stops_of_train_route_on_date, starting_station_title, ending_station_title);
-            List<int> booked_places_in_carriage = await context.Ticket_Bookings.Where(ticket => ticket.Train_Route_On_Date_Id == train_route_on_date_id
-            && ticket.Passenger_Carriage_Id == desired_carriage_assignment.Passenger_Carriage_Id && (
-           central_part.Contains(ticket.Starting_Station_Id) || central_part.Contains(ticket.Ending_Station_Id)
-           || left_part.Contains(ticket.Starting_Station_Id) && right_part.Contains(ticket.Ending_Station_Id)))
-                .Select(ticket => ticket.Place_In_Carriage).ToListAsync();
-            int total_places_amount = desired_carriage_assignment.Passenger_Carriage.Capacity;
-            List<InternalSinglePlaceDto> places_list = new List<InternalSinglePlaceDto>();
-            for (int place_number = 1; place_number <= total_places_amount; place_number++)
-            {
-                if (booked_places_in_carriage.Contains(place_number))
-                {
-                    places_list.Add(new InternalSinglePlaceDto { Place_In_Carriage = place_number, Is_Free = false });
-                }
-                else
-                {
-                    places_list.Add(new InternalSinglePlaceDto { Place_In_Carriage = place_number, Is_Free = true });
-                }
-            }
-            InternalCarriageAssignmentRepresentationDto single_carriage_statistics = new InternalCarriageAssignmentRepresentationDto
-            {
-                Carriage_Assignment = desired_carriage_assignment,
-                Places_Availability = places_list
-            };
-            return single_carriage_statistics;
-        }
-
+   
 
 
 
@@ -310,6 +262,7 @@ namespace RailwayCore.Services
 
         [Crucial]
         [Refactored("v1", "19.04.2025")]
+        [Checked("11.05.2025")]
         public async Task<QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>> GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDate
             (List<string> train_route_on_date_ids, string starting_station_title, string ending_station_title)
         {
@@ -444,6 +397,7 @@ namespace RailwayCore.Services
 
         [Crucial]
         [Refactored("v1", "19.04.2025")]
+        [Checked("11.05.2025")]
         //Метод додатково вертає інформацію про те, хто бронював місце
         public async Task<QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>> GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDateWithPassengerInformationAnalytics
     (List<string> train_route_on_date_ids, string starting_station_title, string ending_station_title)
@@ -600,6 +554,7 @@ namespace RailwayCore.Services
         [Crucial]
         [Algorithm("АЛГОРИТМ ТРЬОХ СЕКЦІЙ")]
         [Refactored("v1", "18.04.2025")]
+        [Checked("11.05.2025")]
         public static (List<int>, List<int>, List<int>) DivideSectionIntoThreeParts(List<TrainRouteOnDateOnStation> all_sorted_train_stops_of_train_route_on_date,
             string desired_starting_station_title, string desired_ending_station_title)
         {
@@ -631,6 +586,7 @@ namespace RailwayCore.Services
         [Crucial]
         [Algorithm("МОДИФІКОВАНИЙ АЛГОРИТМ ТРЬОХ СЕКЦІЙ ДЛЯ ДЕКІЛЬКОХ ПОЇЗДІВ")]
         [Refactored("v1", "18.04.2025")]
+        [Checked("11.05.2025")]
         public static (List<int>, List<int>, List<int>) DivideSectionIntoThreePartsForSeveralTrains(List<List<TrainRouteOnDateOnStation>> all_sorted_train_stops_of_several_train_routes_on_date,
             string desired_starting_station_title, string desired_ending_station_title)
         {
@@ -701,7 +657,7 @@ namespace RailwayCore.Services
             context.Ticket_Bookings.RemoveRange(expired_ticket_bookings);
             await context.SaveChangesAsync();
         }
-        public async Task<List<TicketBooking>> GetAllTicketBookingForUser(int user_id)
+        public async Task<List<TicketBooking>> GetAllTicketBookingsForUser(int user_id)
         {
             List<TicketBooking> ticket_bookings = await context.Ticket_Bookings
                 .Include(ticket_booking => ticket_booking.Starting_Station)
@@ -712,6 +668,29 @@ namespace RailwayCore.Services
                 .ThenInclude(train_route_on_date => train_route_on_date.Train_Route)
                 .Where(ticket_booking => ticket_booking.User_Id == user_id).ToListAsync();
             return ticket_bookings;
+        }
+        public async Task<TicketBooking?> ReturnTicketBookingById(string ticket_id)
+        {
+            bool is_number = int.TryParse(ticket_id, out int number_id);
+            TicketBooking? ticket_booking = await context.Ticket_Bookings.FirstOrDefaultAsync(ticket => ticket.Id == number_id || ticket.Full_Ticket_Id.ToString() == ticket_id);
+            if (ticket_booking is null)
+            {
+                return null;
+            }
+            ticket_booking.Ticket_Status = TicketStatus.Returned;
+            context.Update(ticket_booking);
+            await context.SaveChangesAsync();
+            return ticket_booking;
+        }
+        public async Task<User?> GetTicketOwner(string ticket_id)
+        {
+            bool is_number = int.TryParse(ticket_id, out int number_id);
+            TicketBooking? ticket_booking = await context.Ticket_Bookings.FirstOrDefaultAsync(ticket => ticket.Id == number_id || ticket.Full_Ticket_Id.ToString() == ticket_id);
+            if (ticket_booking is null)
+            {
+                return null;
+            }
+            return ticket_booking.User;
         }
 
 
@@ -935,6 +914,57 @@ namespace RailwayCore.Services
             return is_available;
 
         }
+
+        [Executive("Перевірка броні на всі місця в одному конкретному вагоні в рейсі на машруті між двома станціями " +
+       "з поверненням об'єтку, що містить призначення вагона і список вільних-зайнятих місць")]
+        [NotInUse]
+        public async Task<InternalCarriageAssignmentRepresentationDto?> GetSinglePassengerCarriagePlacesReportForTrainRouteOnDate(string train_route_on_date_id, int position_in_squad, string starting_station_title, string ending_station_title)
+        {
+            List<PassengerCarriageOnTrainRouteOnDate>? carriage_assignments_for_train_route_on_date = await full_train_route_search_service.GetPassengerCarriageAssignmentsForTrainRouteOnDate(train_route_on_date_id);
+            if (carriage_assignments_for_train_route_on_date == null)
+            {
+                return null;
+            }
+            PassengerCarriageOnTrainRouteOnDate? desired_carriage_assignment = carriage_assignments_for_train_route_on_date.FirstOrDefault(carriage_assignment => carriage_assignment.Position_In_Squad == position_in_squad);
+            if (desired_carriage_assignment == null)
+            {
+                return null;
+            }
+            List<TrainRouteOnDateOnStation>? all_train_stops_of_train_route_on_date =
+                await full_train_route_search_service.GetTrainStopsForTrainRouteOnDate(train_route_on_date_id);
+            if (all_train_stops_of_train_route_on_date == null)
+            {
+                text_service.FailPostInform("Fail in FullTrainRouteSearchService");
+                return null;
+            }
+            (List<int> left_part, List<int> central_part, List<int> right_part) =
+                DivideSectionIntoThreeParts(all_train_stops_of_train_route_on_date, starting_station_title, ending_station_title);
+            List<int> booked_places_in_carriage = await context.Ticket_Bookings.Where(ticket => ticket.Train_Route_On_Date_Id == train_route_on_date_id
+            && ticket.Passenger_Carriage_Id == desired_carriage_assignment.Passenger_Carriage_Id && (
+           central_part.Contains(ticket.Starting_Station_Id) || central_part.Contains(ticket.Ending_Station_Id)
+           || left_part.Contains(ticket.Starting_Station_Id) && right_part.Contains(ticket.Ending_Station_Id)))
+                .Select(ticket => ticket.Place_In_Carriage).ToListAsync();
+            int total_places_amount = desired_carriage_assignment.Passenger_Carriage.Capacity;
+            List<InternalSinglePlaceDto> places_list = new List<InternalSinglePlaceDto>();
+            for (int place_number = 1; place_number <= total_places_amount; place_number++)
+            {
+                if (booked_places_in_carriage.Contains(place_number))
+                {
+                    places_list.Add(new InternalSinglePlaceDto { Place_In_Carriage = place_number, Is_Free = false });
+                }
+                else
+                {
+                    places_list.Add(new InternalSinglePlaceDto { Place_In_Carriage = place_number, Is_Free = true });
+                }
+            }
+            InternalCarriageAssignmentRepresentationDto single_carriage_statistics = new InternalCarriageAssignmentRepresentationDto
+            {
+                Carriage_Assignment = desired_carriage_assignment,
+                Places_Availability = places_list
+            };
+            return single_carriage_statistics;
+        }
+
 
         [Archieved]
         [NotInUse]

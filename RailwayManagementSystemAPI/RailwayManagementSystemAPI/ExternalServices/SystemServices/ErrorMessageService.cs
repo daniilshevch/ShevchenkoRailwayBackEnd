@@ -17,6 +17,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
                     return new NotFoundObjectResult(message);
                 case ErrorType.Conflict:
                     return new ConflictObjectResult(message);
+                case ErrorType.Forbidden:
+                    return new ForbidResult(message); //?
                 default:
                     return new ObjectResult(message)
                     {

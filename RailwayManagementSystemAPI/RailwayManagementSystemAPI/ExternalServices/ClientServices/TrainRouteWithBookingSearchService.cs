@@ -10,8 +10,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
     public class TrainRouteWithBookingsSearchService
     {
         private readonly FullTrainRouteSearchService full_train_route_search_service;
-        private readonly FullTicketBookingService full_ticket_booking_service;
-        public TrainRouteWithBookingsSearchService(FullTrainRouteSearchService full_train_route_search_service, FullTicketBookingService ticket_booking_service)
+        private readonly FullTicketManagementService full_ticket_booking_service;
+        public TrainRouteWithBookingsSearchService(FullTrainRouteSearchService full_train_route_search_service, FullTicketManagementService ticket_booking_service)
         {
             this.full_train_route_search_service = full_train_route_search_service;
             full_ticket_booking_service = ticket_booking_service;
@@ -26,15 +26,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             //Отримуємо список поїздів, які проходять через дані станції в потрібному порядку в потрібну дату
             QueryResult<List<InternalTrainRaceDto>> train_routes_list_result = await full_train_route_search_service.SearchTrainRoutesBetweenStationsOnDate(starting_station_title,
                 ending_station_title, departure_date);
-            if (train_routes_list_result is FailQuery<List<InternalTrainRaceDto>>)
+            if (train_routes_list_result.Fail)
             {
                 return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_list_result.Error);
             }
-            List<InternalTrainRaceDto>? appropriate_train_routes_on_date = train_routes_list_result.Value;
-            if (appropriate_train_routes_on_date is null)
-            {
-                return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_list_result.Error);
-            }
+            List<InternalTrainRaceDto> appropriate_train_routes_on_date = train_routes_list_result.Value;
 
             //Беремо список айді знайдених поїздів(потрібно для функції ядра сервера, яке перевіряє бронювання для поїздів)
             List<string> appropriate_train_routes_on_date_ids =
@@ -52,16 +48,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 train_routes_on_date_bookings_statistics_result = await full_ticket_booking_service.
                    GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDateWithPassengerInformationAnalytics(appropriate_train_routes_on_date_ids, starting_station_title, ending_station_title);
             }
-            if (train_routes_on_date_bookings_statistics_result is FailQuery<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>)
+            if (train_routes_on_date_bookings_statistics_result.Fail)
             {
                 return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_on_date_bookings_statistics_result.Error);
             }
-            Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>? ticket_bookings_info_for_appropriate_train_routes =
+            Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto> ticket_bookings_info_for_appropriate_train_routes =
                 train_routes_on_date_bookings_statistics_result.Value;
-            if (ticket_bookings_info_for_appropriate_train_routes is null)
-            {
-                return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_on_date_bookings_statistics_result.Error);
-            }
 
             //Ініціалізуємо список, де кожен елемент буде містити всю потрібну інформацію по одному конкретному поїзду
             List<ExternalTrainRouteWithBookingsInfoDto> total_train_routes_with_bookings_and_stations_info = new List<ExternalTrainRouteWithBookingsInfoDto>();
@@ -75,7 +67,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 train_race.Train_Route_On_Date.Id == single_train_route_on_date_statistics.Key);
                 if (current_train_route_trip_info is null)
                 {
-                    return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(new Error(ErrorType.BadRequest, $"Fail while searching info about train route on date " +
+                    return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(new Error(ErrorType.InternalServerError, $"Fail while searching info about train route on date " +
                         $"{single_train_route_on_date_statistics.Key}"));
                 }
 

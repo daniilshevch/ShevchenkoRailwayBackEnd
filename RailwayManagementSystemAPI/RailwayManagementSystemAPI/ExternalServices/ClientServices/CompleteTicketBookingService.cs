@@ -10,13 +10,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
     public class CompleteTicketBookingService
     {
-        private readonly FullTicketBookingService ticket_booking_service;
-        private readonly UserAccountManagementService user_account_management_service;
+        private readonly FullTicketManagementService full_ticket_management_service;
+        private readonly SystemAuthenticationService system_authentication_service;
         private readonly IConfiguration configuration;
-        public CompleteTicketBookingService(FullTicketBookingService ticket_booking_service, UserAccountManagementService user_account_management_service, IConfiguration configuration)
+        public CompleteTicketBookingService(FullTicketManagementService full_ticket_management_service, SystemAuthenticationService system_authentication_service, IConfiguration configuration)
         {
-            this.ticket_booking_service = ticket_booking_service;
-            this.user_account_management_service = user_account_management_service;
+            this.full_ticket_management_service = full_ticket_management_service;
+            this.system_authentication_service = system_authentication_service;
             this.configuration = configuration;
         }
         [Refactored("v1", "02.05.2025")]
@@ -24,7 +24,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             (ExternalInputInitialTicketBookingDto input)
         {
             //Отримуємо аутентифікованого користувача
-            QueryResult<User> user_authentication_result = await user_account_management_service.GetAuthenticatedUser();
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
             if(user_authentication_result.Fail)
             {
                 return new FailQuery<ExternalOutputMediatorTicketBookingDto>(user_authentication_result.Error);
@@ -45,7 +45,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 Ticket_Status = TicketStatus.Booking_In_Progress,
             };
             //Створюємо квиток через внутрішній сервіс(RailwayCore)
-            QueryResult<TicketBooking> ticket_booking_result = await ticket_booking_service.CreateTicketBookingWithCarriagePositionInSquad(internal_ticket_dto);
+            QueryResult<TicketBooking> ticket_booking_result = await full_ticket_management_service.CreateTicketBookingWithCarriagePositionInSquad(internal_ticket_dto);
             if(ticket_booking_result.Fail)
             {
                 return new FailQuery<ExternalOutputMediatorTicketBookingDto>(ticket_booking_result.Error);
@@ -53,7 +53,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             TicketBooking current_ticket_booking = ticket_booking_result.Value;
             //Додаємо квитку інформацію про те, коли буде спливати бронь(актуально, адже квиток перебуває в статусі бронювання)
             current_ticket_booking.Booking_Expiration_Time = DateTime.Now.AddMinutes(Convert.ToDouble(configuration["RailwaySystemFunctioning:BookingExpirationTimeInMinutes"]));
-            await ticket_booking_service.UpdateTicketBooking(current_ticket_booking);
+            await full_ticket_management_service.UpdateTicketBooking(current_ticket_booking);
             //Видаємо проміжну інформацію про квиток на даний момент(бронювання вже ініціалізоване і перебуває в процесі)
             ExternalOutputMediatorTicketBookingDto mediator_ticket_booking_dto = new ExternalOutputMediatorTicketBookingDto
             {
@@ -72,18 +72,19 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             return new SuccessQuery<ExternalOutputMediatorTicketBookingDto>(mediator_ticket_booking_dto);
 
         }
+        [Refactored("v1", "02.05.2025")]
         public async Task<QueryResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcessForAuthenticatedUser
             (ExternalOutputMediatorTicketBookingDto input_unfinished_ticket, ExternalInputPassengerInfoForCompletedTicketBookingDto passenger_info)
         {
             //Отримуємо аутентифікованого користувача
-            QueryResult<User> user_authentication_result = await user_account_management_service.GetAuthenticatedUser();
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
             if(user_authentication_result.Fail)
             {
                 return new FailQuery<ExternalOutputCompletedTicketBookingDto>(user_authentication_result.Error);
             }
             User user = user_authentication_result.Value;
             //Отримуємо з бази запис про поточне бронювання
-            TicketBooking? ticket_booking = await ticket_booking_service.FindTicketBookingById(input_unfinished_ticket.Id);
+            TicketBooking? ticket_booking = await full_ticket_management_service.FindTicketBookingById(input_unfinished_ticket.Id);
             //Перевірка, чи квиток є в базі
             if(ticket_booking is null)
             {
@@ -109,7 +110,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             //Оновлюємо статус квитка
             ticket_booking.Ticket_Status = TicketStatus.Booked_And_Active;
             //Оновлюємо в базі інформацію про квиток
-            await ticket_booking_service.UpdateTicketBooking(ticket_booking);
+            await full_ticket_management_service.UpdateTicketBooking(ticket_booking);
             ExternalOutputCompletedTicketBookingDto finished_ticket_booking_dto =  new ExternalOutputCompletedTicketBookingDto
             {
                 Id = ticket_booking.Id,
@@ -128,19 +129,9 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             return new SuccessQuery<ExternalOutputCompletedTicketBookingDto>(finished_ticket_booking_dto);
         }
        
-
-        public async Task<List<TicketBooking>> GetAllExpiredTicketBookings()
-        {
-            return await ticket_booking_service.GetAllExpiredTicketBookings();
-        }
         public async Task DeleteAllExpiredBookings()
         {
-            await ticket_booking_service.DeleteAllExpiredTickets();
-        }
-        public async Task<List<TicketBooking>> GetAllTicketBookingsForUser(int user_id)
-        {
-            List<TicketBooking> ticket_bookings_for_user = await ticket_booking_service.GetAllTicketBookingForUser(user_id);
-            return ticket_bookings_for_user;
+            await full_ticket_management_service.DeleteAllExpiredTickets();
         }
     }
  

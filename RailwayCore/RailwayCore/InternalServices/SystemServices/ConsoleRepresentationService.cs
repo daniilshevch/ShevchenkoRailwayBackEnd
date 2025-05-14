@@ -14,10 +14,10 @@ namespace RailwayCore.InternalServices.SystemServices
         private readonly FullTrainAssignementService full_train_assignement_service;
         private readonly FullTrainRouteSearchService full_train_route_search_service;
         private readonly PassengerCarriageService passenger_carriage_service;
-        private readonly FullTicketBookingService full_ticket_booking_service;
+        private readonly FullTicketManagementService full_ticket_booking_service;
         private readonly TextService text_service = new TextService("ConsoleRepresentationService");
         public ConsoleRepresentationService(FullTrainAssignementService full_train_assignement_service, FullTrainRouteSearchService full_train_route_search_service,
-            PassengerCarriageService passenger_carriage_service, TrainRouteOnDateService train_route_on_date_service, FullTicketBookingService full_ticket_booking_service)
+            PassengerCarriageService passenger_carriage_service, TrainRouteOnDateService train_route_on_date_service, FullTicketManagementService full_ticket_booking_service)
         {
             this.full_train_assignement_service = full_train_assignement_service;
             this.full_train_route_search_service = full_train_route_search_service;

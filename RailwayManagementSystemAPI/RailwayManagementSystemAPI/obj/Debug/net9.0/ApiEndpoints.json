@@ -500,5 +500,31 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.UserTicketManagementController",
+    "Method": "ReturnTicketBookingForUserById",
+    "RelativePath": "return-ticket-for-user/{ticket_id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticket_id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalProfileTicketBookingDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

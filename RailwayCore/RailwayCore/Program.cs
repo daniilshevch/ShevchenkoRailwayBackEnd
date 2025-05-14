@@ -29,7 +29,7 @@ class Program
                 .AddSingleton<PassengerCarriageOnTrainRouteOnDateService>()
                 .AddSingleton<FullTrainAssignementService>()
                 .AddSingleton<FullTrainRouteSearchService>()
-                .AddSingleton<FullTicketBookingService>()
+                .AddSingleton<FullTicketManagementService>()
                 .AddSingleton<ConsoleRepresentationService>();
             IServiceProvider provider = services.BuildServiceProvider();
 
@@ -45,7 +45,7 @@ class Program
             FullTrainAssignementService? full_train_assignement_service =
                 provider.GetService<FullTrainAssignementService>();
             FullTrainRouteSearchService? full_train_route_search_service = provider.GetService<FullTrainRouteSearchService>();
-            FullTicketBookingService? ticket_booking_service = provider.GetService<FullTicketBookingService>();
+            FullTicketManagementService? ticket_booking_service = provider.GetService<FullTicketManagementService>();
             ConsoleRepresentationService? console_representation_service = provider.GetService<ConsoleRepresentationService>();
             if (railway_branch_service == null || station_service == null || train_route_service == null ||
                 train_route_on_date_service == null || train_route_on_date_on_station_service == null ||

@@ -39,7 +39,7 @@ class Server
         services.AddSingleton<PassengerCarriageOnTrainRouteOnDateService>();
         services.AddSingleton<FullTrainAssignementService>();
         services.AddSingleton<FullTrainRouteSearchService>();
-        services.AddSingleton<FullTicketBookingService>();
+        services.AddSingleton<FullTicketManagementService>();
         services.AddSingleton<ConsoleRepresentationService>();
 
         services.AddScoped<TrainRouteWithBookingsSearchService>();

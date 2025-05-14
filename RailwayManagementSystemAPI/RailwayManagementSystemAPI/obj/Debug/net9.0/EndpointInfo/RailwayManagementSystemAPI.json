@@ -947,6 +947,45 @@
           }
         }
       }
+    },
+    "/return-ticket-for-user/{ticket_id}": {
+      "delete": {
+        "tags": [
+          "UserTicketManagement"
+        ],
+        "parameters": [
+          {
+            "name": "ticket_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalProfileTicketBookingDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalProfileTicketBookingDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalProfileTicketBookingDto"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
