@@ -6,7 +6,7 @@ using RailwayCore.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace RailwayCore.Services
+namespace RailwayCore.InternalServices.ModelServices
 {
     public class PassengerCarriageService
     {

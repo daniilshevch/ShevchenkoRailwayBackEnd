@@ -21,8 +21,9 @@ namespace RailwayCore.Models
         public string Train_Route_On_Date_Id { get; set; } = null!; //вище
         public PassengerCarriage Passenger_Carriage { get; set; } = null!; //Пасажирський вагон, в який куплено квиток(фізичний вагон через ідентифікатор)
         public string Passenger_Carriage_Id { get; set; } = null!; //вище
-        public Station Starting_Station { get; set; } = null!; //Стартова станція поїздки у квитку
         public int? Passenger_Carriage_Position_In_Squad { get; set; } //Позиція, на якій вагон курсує в складі (**надлишковий/дискусійний)
+        public Station Starting_Station { get; set; } = null!; //Стартова станція поїздки у квитку
+
         public int Starting_Station_Id { get; set; } //вище
         public Station Ending_Station { get; set; } = null!; //Кінцева станція поїздки у квитку
         public int Ending_Station_Id { get; set; } //вище

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
-using RailwayCore.Services;
+using RailwayCore.InternalServices.CoreServices;
 using RailwayManagementSystemAPI.ApiControllers.ClientControllers;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
@@ -17,15 +17,15 @@ namespace RailwayManagementSystemAPI.ApiControllers.SystemControllers
 {
     public class SystemTestingController : ControllerBase
     {
-        private readonly UserAccountManagementService user_management_service;
-        public SystemTestingController(UserAccountManagementService user_management_service)
+        private readonly SystemAuthenticationService system_authentication_service;
+        public SystemTestingController(SystemAuthenticationService system_authentication_service)
         {
-            this.user_management_service = user_management_service;
+            this.system_authentication_service = system_authentication_service;
         }
         [HttpGet("/get-authenticated-user")]
         public async Task<ActionResult<SystemUserDemonstrationDto>> GetAuthenticatedUser()
         {
-            QueryResult<User> user_authentication_result = await user_management_service.GetAuthenticatedUser();
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
             if (user_authentication_result.Fail)
             {
                 return user_authentication_result.GetErrorFromQueryResult<User, SystemUserDemonstrationDto>();

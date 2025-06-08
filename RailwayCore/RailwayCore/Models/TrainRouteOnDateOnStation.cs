@@ -19,7 +19,7 @@ namespace RailwayCore.Models
         public Station Station { get; set; } = null!; //Станція, на якій робить зупинку рейс поїзда
         public int Station_Id { get; set; } //вище
 
-        public DateTime? Arrival_Time { get; set; } //Час прибуття(якщо станція стартова, то null)
+        public DateTime? Arrival_Time { get; set; } //Час прибуття(якщо станція стартова, то null)  
         public DateTime? Departure_Time { get; set; }  //Час відправлення(якщо станція кінцева, то null)
         [MaxLength(20)]
         public StopType Stop_Type { get; set; } = StopType.Boarding; //Тип зупинки

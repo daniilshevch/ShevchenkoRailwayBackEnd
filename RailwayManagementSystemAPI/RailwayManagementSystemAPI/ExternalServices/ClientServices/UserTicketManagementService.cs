@@ -1,7 +1,7 @@
 ﻿using RailwayManagementSystemAPI.ExternalDTO;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
-using RailwayCore.Services;
+using RailwayCore.InternalServices.CoreServices;
 using System.Net;
 using Microsoft.Extensions.Primitives;
 
@@ -11,13 +11,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
     {
         private readonly SystemAuthenticationService system_authentication_service;
         private readonly FullTrainRouteSearchService full_train_route_search_service;
-        private readonly FullTicketManagementService full_ticket_booking_service;
+        private readonly FullTicketManagementService full_ticket_management_service;
         public UserTicketManagementService(SystemAuthenticationService system_authentication_service,
-            FullTrainRouteSearchService full_train_route_search_service, FullTicketManagementService full_ticket_booking_service)
+            FullTrainRouteSearchService full_train_route_search_service, FullTicketManagementService full_ticket_management_service)
         {
             this.system_authentication_service = system_authentication_service;
             this.full_train_route_search_service = full_train_route_search_service;
-            this.full_ticket_booking_service = full_ticket_booking_service;
+            this.full_ticket_management_service = full_ticket_management_service;
         }
         public async Task<QueryResult<List<ExternalProfileTicketBookingDto>>> GetAllBookedTicketsForCurrentUser()
         {
@@ -27,14 +27,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 return new FailQuery<List<ExternalProfileTicketBookingDto>>(user_authentication_result.Error);
             }
             User user = user_authentication_result.Value;
-            List<TicketBooking> ticket_bookings_for_user = (await full_ticket_booking_service.GetAllTicketBookingsForUser(user.Id))
-                .OrderBy(ticket_booking => ticket_booking.Ticket_Status).ToList();
+            List<TicketBooking> ticket_bookings_for_user = (await full_ticket_management_service.GetAllTicketBookingsForUser(user.Id)).ToList();
             List<ExternalProfileTicketBookingDto> output_tickets = new List<ExternalProfileTicketBookingDto>();
             foreach(TicketBooking ticket_booking in ticket_bookings_for_user)
             {
                 ExternalProfileTicketBookingDto output_ticket = await CreateProfileDtoForTicketBooking(ticket_booking);
                 output_tickets.Add(output_ticket);
             }
+            output_tickets = output_tickets.OrderBy(ticket => ticket.Ticket_Status).ThenBy(ticket => ticket.Departure_Time_From_Trip_Starting_Station).ToList();
             return new SuccessQuery<List<ExternalProfileTicketBookingDto>>(output_tickets);
         }
         public async Task<QueryResult<ExternalProfileTicketBookingDto>> ReturnTicketBookingForCurrentUserById(string ticket_id)
@@ -45,7 +45,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 return new FailQuery<ExternalProfileTicketBookingDto>(user_authentication_result.Error);
             }
             User authenticated_user = user_authentication_result.Value;
-            User? ticket_owner = await full_ticket_booking_service.GetTicketOwner(ticket_id);
+            User? ticket_owner = await full_ticket_management_service.GetTicketOwner(ticket_id);
             if(ticket_owner == null)
             {
                 return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.NotFound, $"Can't find ticket with id: {ticket_id} or ticket owner not found(internal error)"));
@@ -54,7 +54,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             {
                 return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.Forbidden, $"Authenticated user doesn't own this ticket"));
             }
-            TicketBooking? returned_ticket_booking = await full_ticket_booking_service.ReturnTicketBookingById(ticket_id);
+            TicketBooking? returned_ticket_booking = await full_ticket_management_service.ReturnTicketBookingById(ticket_id);
             if(returned_ticket_booking is null)
             {
                 return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.NotFound, $"Can't find ticket with id: {ticket_id}"));

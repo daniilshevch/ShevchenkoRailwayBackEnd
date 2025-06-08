@@ -3,7 +3,8 @@ using Pomelo.EntityFrameworkCore.MySql.Query.Internal;
 using Pomelo.EntityFrameworkCore.MySql.Storage.Internal;
 using RailwayCore.InternalDTO;
 using RailwayCore.Models;
-using RailwayCore.Services;
+using RailwayCore.InternalServices.CoreServices;
+using RailwayCore.InternalServices.ModelServices;
 using System.Runtime.InteropServices;
 
 namespace RailwayCore.InternalServices.SystemServices

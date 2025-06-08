@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RailwayCore.Context;
-using RailwayCore.Services;
+using RailwayCore.InternalServices.ModelServices;
+using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
 using System;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
@@ -20,7 +21,7 @@ public class  InternalTrainRaceDto  //Внутрішній трансфер(ви
     public List<TrainRouteOnDateOnStation> Full_Route_Stops_List { get; set; } = new List<TrainRouteOnDateOnStation>();
 
 }
-namespace RailwayCore.Services
+namespace RailwayCore.InternalServices.CoreServices
 {
     public class FullTrainRouteSearchService
     {

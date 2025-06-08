@@ -1,10 +1,11 @@
 ﻿using RailwayCore.Models;
 using RailwayManagementSystemAPI.API_DTO;
-using RailwayCore.Services;
+using RailwayCore.InternalServices.CoreServices;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using RailwayCore.Migrations;
+using Newtonsoft.Json;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
@@ -25,7 +26,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
         {
             //Отримуємо аутентифікованого користувача
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
-            if(user_authentication_result.Fail)
+            if (user_authentication_result.Fail)
             {
                 return new FailQuery<ExternalOutputMediatorTicketBookingDto>(user_authentication_result.Error);
             }
@@ -46,7 +47,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             };
             //Створюємо квиток через внутрішній сервіс(RailwayCore)
             QueryResult<TicketBooking> ticket_booking_result = await full_ticket_management_service.CreateTicketBookingWithCarriagePositionInSquad(internal_ticket_dto);
-            if(ticket_booking_result.Fail)
+            if (ticket_booking_result.Fail)
             {
                 return new FailQuery<ExternalOutputMediatorTicketBookingDto>(ticket_booking_result.Error);
             }
@@ -54,6 +55,15 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             //Додаємо квитку інформацію про те, коли буде спливати бронь(актуально, адже квиток перебуває в статусі бронювання)
             current_ticket_booking.Booking_Expiration_Time = DateTime.Now.AddMinutes(Convert.ToDouble(configuration["RailwaySystemFunctioning:BookingExpirationTimeInMinutes"]));
             await full_ticket_management_service.UpdateTicketBooking(current_ticket_booking);
+            ///////////////Sockets
+            await WebSocketHandler.BroadcastAsync(JsonConvert.SerializeObject(new
+            {
+                train_route_id = input.Train_Route_On_Date_Id,
+                carriage_position = input.Passenger_Carriage_Position_In_Squad,
+                place_in_carriage = input.Place_In_Carriage,
+                is_free = false
+            }));
+            /////////////////////
             //Видаємо проміжну інформацію про квиток на даний момент(бронювання вже ініціалізоване і перебуває в процесі)
             ExternalOutputMediatorTicketBookingDto mediator_ticket_booking_dto = new ExternalOutputMediatorTicketBookingDto
             {
@@ -72,13 +82,39 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             return new SuccessQuery<ExternalOutputMediatorTicketBookingDto>(mediator_ticket_booking_dto);
 
         }
+        /*
+        public async Task<QueryResult<ExternalOutputMediatorTicketBookingDto> CancelTicketBookingProcessForAuthenticatedUser
+            (ExternalOutputMediatorTicketBookingDto input_unfinished_ticket)
+        {
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
+            if(user_authentication_result.Fail)
+            {
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(user_authentication_result.Error);
+            }
+            User user = user_authentication_result.Value;
+            TicketBooking? ticket_booking = await full_ticket_management_service.FindTicketBookingById(input_unfinished_ticket.Id);
+            if(ticket_booking is null)
+            {
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.NotFound, "System can't find the ticket to cancel booking"));
+            }
+            if(user.Id != input_unfinished_ticket.User_Id)
+            {
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed"));
+            }
+            if(ticket_booking.Ticket_Status != TicketStatus.Booking_In_Progress)
+            {
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Ticket booking proccess has already been completed"));
+            }
+
+        }*/
+
         [Refactored("v1", "02.05.2025")]
         public async Task<QueryResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcessForAuthenticatedUser
             (ExternalOutputMediatorTicketBookingDto input_unfinished_ticket, ExternalInputPassengerInfoForCompletedTicketBookingDto passenger_info)
         {
             //Отримуємо аутентифікованого користувача
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
-            if(user_authentication_result.Fail)
+            if (user_authentication_result.Fail)
             {
                 return new FailQuery<ExternalOutputCompletedTicketBookingDto>(user_authentication_result.Error);
             }
@@ -86,19 +122,23 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             //Отримуємо з бази запис про поточне бронювання
             TicketBooking? ticket_booking = await full_ticket_management_service.FindTicketBookingById(input_unfinished_ticket.Id);
             //Перевірка, чи квиток є в базі
-            if(ticket_booking is null)
+            if (ticket_booking is null)
             {
                 return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.InternalServerError, "System can't find the ticket to complete booking"));
             }
             //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка
-            if(user.Id != input_unfinished_ticket.User_Id)
+            if (user.Id != input_unfinished_ticket.User_Id)
             {
                 return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed"));
             }
             //Перевірка,чи не сплив час бронювання
-            if(DateTime.Now > ticket_booking.Booking_Expiration_Time)
+            if (DateTime.Now > ticket_booking.Booking_Expiration_Time)
             {
                 return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Booking reservation time has expired"));
+            }
+            if(ticket_booking.Ticket_Status != TicketStatus.Booking_In_Progress)
+            {
+                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.BadRequest, "This place has already been booked"));
             }
             //Встановлюємо інформацію про пасажира
             ticket_booking.Passenger_Name = passenger_info.Passenger_Name;
@@ -111,7 +151,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             ticket_booking.Ticket_Status = TicketStatus.Booked_And_Active;
             //Оновлюємо в базі інформацію про квиток
             await full_ticket_management_service.UpdateTicketBooking(ticket_booking);
-            ExternalOutputCompletedTicketBookingDto finished_ticket_booking_dto =  new ExternalOutputCompletedTicketBookingDto
+            ExternalOutputCompletedTicketBookingDto finished_ticket_booking_dto = new ExternalOutputCompletedTicketBookingDto
             {
                 Id = ticket_booking.Id,
                 User_Id = ticket_booking.User_Id,
@@ -128,12 +168,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             };
             return new SuccessQuery<ExternalOutputCompletedTicketBookingDto>(finished_ticket_booking_dto);
         }
-       
+
         public async Task DeleteAllExpiredBookings()
         {
             await full_ticket_management_service.DeleteAllExpiredTickets();
         }
     }
+}
  
       
     /*
@@ -224,4 +265,61 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
            };
        }
        */
-}
+        /*
+        public async Task<QueryResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcessForAuthenticatedUser_OLDVERSION
+            (ExternalOutputMediatorTicketBookingDto input_unfinished_ticket, ExternalInputPassengerInfoForCompletedTicketBookingDto passenger_info)
+        {
+            //Отримуємо аутентифікованого користувача
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
+            if (user_authentication_result.Fail)
+            {
+                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(user_authentication_result.Error);
+            }
+            User user = user_authentication_result.Value;
+            //Отримуємо з бази запис про поточне бронювання
+            TicketBooking? ticket_booking = await full_ticket_management_service.FindTicketBookingById(input_unfinished_ticket.Id);
+            //Перевірка, чи квиток є в базі
+            if (ticket_booking is null)
+            {
+                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.InternalServerError, "System can't find the ticket to complete booking"));
+            }
+            //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка
+            if (user.Id != input_unfinished_ticket.User_Id)
+            {
+                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed"));
+            }
+            //Перевірка,чи не сплив час бронювання
+            if (DateTime.Now > ticket_booking.Booking_Expiration_Time)
+            {
+                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Booking reservation time has expired"));
+            }
+            //Встановлюємо інформацію про пасажира
+            ticket_booking.Passenger_Name = passenger_info.Passenger_Name;
+            ticket_booking.Passenger_Surname = passenger_info.Passenger_Surname;
+            //Оновлюємо час бронювання
+            ticket_booking.Booking_Time = DateTime.Now;
+            //Видаляємо інформацію про час закінчення періоду бронювання(адже бронювання завершено)
+            ticket_booking.Booking_Expiration_Time = null;
+            //Оновлюємо статус квитка
+            ticket_booking.Ticket_Status = TicketStatus.Booked_And_Active;
+            //Оновлюємо в базі інформацію про квиток
+            await full_ticket_management_service.UpdateTicketBooking(ticket_booking);
+            ExternalOutputCompletedTicketBookingDto finished_ticket_booking_dto = new ExternalOutputCompletedTicketBookingDto
+            {
+                Id = ticket_booking.Id,
+                User_Id = ticket_booking.User_Id,
+                Train_Route_On_Date_Id = ticket_booking.Train_Route_On_Date_Id,
+                Passenger_Carriage_Id = ticket_booking.Passenger_Carriage_Id,
+                Passenger_Carriage_Position_In_Squad = ticket_booking.Passenger_Carriage_Position_In_Squad,
+                Place_In_Carriage = ticket_booking.Place_In_Carriage,
+                Booking_Completion_Time = ticket_booking.Booking_Time,
+                Starting_Station_Title = input_unfinished_ticket.Starting_Station_Title,
+                Ending_Station_Title = input_unfinished_ticket.Ending_Station_Title,
+                Passenger_Name = ticket_booking.Passenger_Name,
+                Passenger_Surname = ticket_booking.Passenger_Surname,
+                Ticket_Status = TextEnumConvertationService.GetTicketBookingStatusIntoString(ticket_booking.Ticket_Status),
+            };
+            return new SuccessQuery<ExternalOutputCompletedTicketBookingDto>(finished_ticket_booking_dto);
+        }
+    }
+        */

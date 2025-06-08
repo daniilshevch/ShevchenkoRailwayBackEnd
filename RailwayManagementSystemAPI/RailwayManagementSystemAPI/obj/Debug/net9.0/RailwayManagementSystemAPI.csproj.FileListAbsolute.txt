@@ -101,3 +101,4 @@ D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSyste
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Newtonsoft.Json.dll

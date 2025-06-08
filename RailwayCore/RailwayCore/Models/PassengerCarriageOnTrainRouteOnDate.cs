@@ -8,7 +8,7 @@ namespace RailwayCore.Models
 {
     public class PassengerCarriageOnTrainRouteOnDate //Призначення вагону на певний рейс(певний маршрут в конкретну дату)
     {
-        public PassengerCarriage Passenger_Carriage = null!; //Вагон
+        public PassengerCarriage Passenger_Carriage { get; set; } = null!; //Вагон
         public string Passenger_Carriage_Id { get; set; } = null!; //вище
         public TrainRouteOnDate Train_Route_On_Date { get; set; } = null!; //Рейс поїзда(певний маршрут в конкретну дату)
         public string Train_Route_On_Date_Id { get; set; } = null!; //вище

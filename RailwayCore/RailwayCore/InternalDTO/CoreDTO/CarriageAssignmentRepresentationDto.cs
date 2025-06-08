@@ -1,5 +1,6 @@
 ﻿using RailwayCore.Models;
-using RailwayCore.Services;
+using RailwayCore.InternalServices.CoreServices;
+using System.Text.Json.Serialization;
 
 namespace RailwayCore.InternalDTO.CoreDTO
 {
@@ -14,7 +15,9 @@ namespace RailwayCore.InternalDTO.CoreDTO
     [Checked("18.04.2025")]
     public class InternalSinglePlaceDto //Представлення одного окремого місця в конкретному вагоні(номер місця, заброньованість місця, 
     {                                   //інформація про пасажира, якщо місце заброньоване)
+        [JsonPropertyName("place_in_carriage")]
         public int Place_In_Carriage { get; set; } //Номер місця в вагоні
+        [JsonPropertyName("is_free")]
         public bool Is_Free { get; set; } //Чи місце заброньоване
         public List<PassengerTripInfoDto>? Passenger_Trip_Info { get; set; } //Інформація про поїздки пасажирів, які забронювали місце(не обов'язковий запис)
     }

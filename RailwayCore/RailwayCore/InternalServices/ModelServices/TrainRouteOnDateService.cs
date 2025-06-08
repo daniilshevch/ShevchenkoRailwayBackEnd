@@ -6,7 +6,7 @@ using System.Globalization;
 using System;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.SystemServices;
-namespace RailwayCore.Services
+namespace RailwayCore.InternalServices.ModelServices
 {
     public class TrainRouteOnDateService
     {

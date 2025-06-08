@@ -1,5 +1,5 @@
 ﻿using RailwayManagementSystemAPI.API_DTO;
-using RailwayCore.Services;
+using RailwayCore.InternalServices.CoreServices;
 using RailwayCore.Models;
 using System.Diagnostics;
 using RailwayCore.InternalDTO.CoreDTO;
@@ -10,11 +10,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
     public class TrainRouteWithBookingsSearchService
     {
         private readonly FullTrainRouteSearchService full_train_route_search_service;
-        private readonly FullTicketManagementService full_ticket_booking_service;
-        public TrainRouteWithBookingsSearchService(FullTrainRouteSearchService full_train_route_search_service, FullTicketManagementService ticket_booking_service)
+        private readonly FullTicketManagementService full_ticket_management_service;
+        public TrainRouteWithBookingsSearchService(FullTrainRouteSearchService full_train_route_search_service, FullTicketManagementService full_ticket_management_service)
         {
             this.full_train_route_search_service = full_train_route_search_service;
-            full_ticket_booking_service = ticket_booking_service;
+            this.full_ticket_management_service = full_ticket_management_service;
         }
 
 
@@ -40,12 +40,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             //Отримуємо інформацію про всі бронювання для всіх рейсів поїздів зі списку(ми отримали вище їх айді)
             if (admin_mode == false) //В залежності від того, який режим, включаємо чи не включаємо інформацію про пасажирів
             {
-                train_routes_on_date_bookings_statistics_result = await full_ticket_booking_service.
+                train_routes_on_date_bookings_statistics_result = await full_ticket_management_service.
                     GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDate(appropriate_train_routes_on_date_ids, starting_station_title, ending_station_title);
             }
             else
             {
-                train_routes_on_date_bookings_statistics_result = await full_ticket_booking_service.
+                train_routes_on_date_bookings_statistics_result = await full_ticket_management_service.
                    GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDateWithPassengerInformationAnalytics(appropriate_train_routes_on_date_ids, starting_station_title, ending_station_title);
             }
             if (train_routes_on_date_bookings_statistics_result.Fail)
@@ -116,6 +116,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                         ),
                     }).ToList();
 
+                //Знаходимо мінімальну ціну для кожного типу вагона
+                int min_platskart_price = 10000000;
+                int min_coupe_price = 10000000;
+                int min_sv_price = 1000000;
+
 
                 //Отримуємо список всіх зупинок на маршруті в порядку слідування поїзда
                 List<TrainRouteOnDateOnStation> train_stops_for_current_train_route_on_date = current_train_route_trip_info.Full_Route_Stops_List;
@@ -157,6 +162,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 //Додаємо в список статистик по кожному поїзду статистику для даного поїзда
                 total_train_routes_with_bookings_and_stations_info.Add(new ExternalTrainRouteWithBookingsInfoDto()
                 {
+                    Full_Train_Route_On_Date_Id = current_train_route_trip_info.Train_Route_On_Date.Id,
                     Train_Route_Id = current_train_route_trip_info.Train_Route_On_Date.Train_Route_Id,
                     Train_Route_Branded_Name = current_train_route_trip_info.Train_Route_On_Date.Train_Route.Branded_Name,
                     Train_Route_Class = TextEnumConvertationService.GetTrainQualityClassIntoString(current_train_route_trip_info.Train_Route_On_Date.Train_Route.Quality_Class),
@@ -186,10 +192,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             }
             sw.Stop();
             Console.WriteLine(sw.ElapsedMilliseconds);
-            return new SuccessQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(total_train_routes_with_bookings_and_stations_info);
+            List<ExternalTrainRouteWithBookingsInfoDto> ordered_total_train_routes_with_bookings_and_stations_info = 
+                total_train_routes_with_bookings_and_stations_info.OrderBy(train_route_full_info => train_route_full_info.Trip_Starting_Station_Departure_Time).ToList();
+            return new SuccessQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(ordered_total_train_routes_with_bookings_and_stations_info);
 
         }
-
+         
 
 
 
@@ -261,7 +269,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 .Select(train_route_info => train_route_info.Train_Route_On_Date.Id).ToList();
 
             QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>> ticket_bookings_info_for_appropriate_train_routes_result =
-          await full_ticket_booking_service.GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDateWithPassengerInformationAnalytics
+          await full_ticket_management_service.GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDateWithPassengerInformationAnalytics
           (appropriate_train_routes_on_date_ids, starting_station_title, ending_station_title);
 
             /*QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>> ticket_bookings_info_for_appropriate_train_routes_result =

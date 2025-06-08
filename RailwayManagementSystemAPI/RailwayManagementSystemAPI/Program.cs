@@ -1,12 +1,15 @@
 using RailwayCore.Context;
 using RailwayCore.InternalServices.SystemServices;
-using RailwayCore.Services;
+using RailwayCore.InternalServices.CoreServices;
+using RailwayCore.InternalServices.ModelServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using System.Net.WebSockets;
+using System.Net;
 
 class Server
 {
@@ -47,6 +50,7 @@ class Server
         services.AddScoped<ApiTrainAssignmentService>();
         services.AddScoped<UserAccountManagementService>();
         services.AddScoped<UserTicketManagementService>();
+        services.AddScoped<SystemAuthenticationService>();
         services.AddHostedService<ExpiredTicketBookingsRemovingService>();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
@@ -83,7 +87,7 @@ class Server
             options.AddPolicy("AllowFrontend",
                 policy =>
                 {
-                    policy.WithOrigins("http://localhost:64041")
+                    policy.WithOrigins("http://localhost:52859")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                 });
@@ -92,6 +96,32 @@ class Server
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseCors("AllowFrontend");
+        ////////////////////////////////// Sockets
+        app.UseWebSockets();
+        app.Use(async (HttpContext context, RequestDelegate next) =>
+        {
+            HttpRequest request = context.Request;
+            HttpResponse response = context.Response;
+            PathString path = request.Path;
+            if (path == "/ws/seat-status")
+            {
+                if (context.WebSockets.IsWebSocketRequest)
+                {
+                    WebSocket web_socket = await context.WebSockets.AcceptWebSocketAsync();
+                    await WebSocketHandler.Handle(context, web_socket);
+                }
+                else
+                {
+                    response.StatusCode = 400;
+                }
+            }
+            else
+            {
+                await next.Invoke(context);
+            }
+
+        });
+        //////////////////
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();

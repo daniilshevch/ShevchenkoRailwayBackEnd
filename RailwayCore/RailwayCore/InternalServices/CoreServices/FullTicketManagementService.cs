@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using RailwayCore.Context;
 using RailwayCore.InternalDTO.CoreDTO;
 using RailwayCore.InternalDTO.ModelDTO;
+using RailwayCore.InternalServices.ModelServices;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
-namespace RailwayCore.Services
+namespace RailwayCore.InternalServices.CoreServices
 {
     [Checked("19.04.2025")]
     public class BookerInfo
@@ -252,13 +252,6 @@ namespace RailwayCore.Services
 
             return new SuccessQuery<bool>(is_available);
         }
-
-   
-
-
-
-
-
 
         [Crucial]
         [Refactored("v1", "19.04.2025")]

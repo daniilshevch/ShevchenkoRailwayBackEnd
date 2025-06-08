@@ -3,13 +3,9 @@ using RailwayCore.Context;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RailwayCore.InternalServices.ModelServices;
 
-namespace RailwayCore.Services
+namespace RailwayCore.InternalServices.CoreServices
 {
     public class FullTrainAssignementService
     {

@@ -77,7 +77,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             return new SuccessQuery<ExternalOutputLoginUserDto>(new ExternalOutputLoginUserDto
             {
                 User_Id = user.Id,
-                Token = token
+                Token = token,
             });
 
         }

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RailwayCore.Services
+namespace RailwayCore.InternalServices.ModelServices
 {
     public class RailwayBranchService
     {

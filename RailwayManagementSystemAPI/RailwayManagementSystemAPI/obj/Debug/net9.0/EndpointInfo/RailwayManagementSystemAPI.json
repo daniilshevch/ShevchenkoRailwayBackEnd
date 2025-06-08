@@ -1439,6 +1439,10 @@
       "ExternalTrainRouteWithBookingsInfoDto": {
         "type": "object",
         "properties": {
+          "train_race_id": {
+            "type": "string",
+            "nullable": true
+          },
           "train_route_id": {
             "type": "string",
             "nullable": true
@@ -1544,11 +1548,11 @@
       "InternalSinglePlaceDto": {
         "type": "object",
         "properties": {
-          "place_In_Carriage": {
+          "place_in_carriage": {
             "type": "integer",
             "format": "int32"
           },
-          "is_Free": {
+          "is_free": {
             "type": "boolean"
           },
           "passenger_Trip_Info": {

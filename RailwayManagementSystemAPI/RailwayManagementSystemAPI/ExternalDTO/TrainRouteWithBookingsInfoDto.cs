@@ -1,6 +1,6 @@
 ﻿using RailwayCore.InternalDTO.CoreDTO;
 using RailwayCore.Models;
-using RailwayCore.Services;
+using RailwayCore.InternalServices.CoreServices;
 using System.Text.Json.Serialization;
 namespace RailwayManagementSystemAPI.API_DTO
 {
@@ -50,6 +50,8 @@ namespace RailwayManagementSystemAPI.API_DTO
     [Checked("19.04.2025")]
     public class ExternalTrainRouteWithBookingsInfoDto
     {
+        [JsonPropertyName("train_race_id")] //Айді рейсу
+        public string Full_Train_Route_On_Date_Id { get; set; } = null!;
         [JsonPropertyName("train_route_id")]
         public string Train_Route_Id { get; set; } = null!; //Айді маршруту(не рейсу)
         [JsonPropertyName("train_route_branded_name")]

@@ -1,6 +1,6 @@
 ﻿using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
-using RailwayCore.Services;
+using RailwayCore.InternalServices.CoreServices;
 using RailwayManagementSystemAPI.API_DTO;
 namespace RailwayManagementSystemAPI.ExternalServices.AdminServices
 {
