@@ -10,6 +10,9 @@ using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Net.WebSockets;
 using System.Net;
+using RailwayCore.InternalServices.ExecutiveServices;
+using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices;
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
 
 class Server
 {
@@ -33,18 +36,30 @@ class Server
         services.AddHttpContextAccessor();
         services.AddControllers();
         services.AddSingleton<AppDbContext>();
-        services.AddSingleton<RailwayBranchService>();
-        services.AddSingleton<StationService>();
-        services.AddSingleton<TrainRouteService>();
-        services.AddSingleton<TrainRouteOnDateService>();
-        services.AddSingleton<TrainRouteOnDateOnStationService>();
-        services.AddSingleton<PassengerCarriageService>();
-        services.AddSingleton<PassengerCarriageOnTrainRouteOnDateService>();
+        services.AddSingleton<ConsoleRepresentationService>();
+        //ModelServices
+        services.AddSingleton<RailwayBranchRepository>();
+        services.AddSingleton<StationRepository>();
+        services.AddSingleton<TrainRouteRepository>();
+        services.AddSingleton<TrainRouteOnDateRepository>();
+        services.AddSingleton<TrainRouteOnDateOnStationRepository>();
+        services.AddSingleton<PassengerCarriageRepository>();
+        services.AddSingleton<PassengerCarriageOnTrainRouteOnDateRepository>();
+        //ExecutiveServices
+        services.AddSingleton<TicketAvailabilityCheckService>();
+        services.AddSingleton<TicketAllocationService>();
+        services.AddSingleton<TicketBookingTimerService>();
+        services.AddSingleton<TicketSystemManipulationService>();
+        services.AddSingleton<TicketUserManipulationService>();
+
+        services.AddSingleton<TrainTripsSearchService>();
+        services.AddSingleton<TrainScheduleSearchService>();
+        services.AddSingleton<TrainSquadSearchService>();
+        //CoreServices
         services.AddSingleton<FullTrainAssignementService>();
         services.AddSingleton<FullTrainRouteSearchService>();
         services.AddSingleton<FullTicketManagementService>();
-        services.AddSingleton<ConsoleRepresentationService>();
-
+        //ApiServices
         services.AddScoped<TrainRouteWithBookingsSearchService>();
         services.AddScoped<CompleteTicketBookingService>();
         services.AddScoped<ApiTrainAssignmentService>();
