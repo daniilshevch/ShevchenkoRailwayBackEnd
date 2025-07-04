@@ -6,14 +6,14 @@ using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.SystemServices;
 namespace RailwayCore.InternalServices.ModelServices
 {
-    public class PassengerCarriageOnTrainRouteOnDateService
+    public class PassengerCarriageOnTrainRouteOnDateRepository
     {
         private readonly AppDbContext context;
-        private readonly TrainRouteOnDateService train_route_on_date_service;
-        private readonly PassengerCarriageService passenger_carriage_service;
+        private readonly TrainRouteOnDateRepository train_route_on_date_service;
+        private readonly PassengerCarriageRepository passenger_carriage_service;
         private TextService text_service = new TextService("PassengerCarriageOnTrainRouteOnDateService");
-        public PassengerCarriageOnTrainRouteOnDateService(AppDbContext context, TrainRouteOnDateService train_route_on_date_service,
-            PassengerCarriageService passenger_carriage_service)
+        public PassengerCarriageOnTrainRouteOnDateRepository(AppDbContext context, TrainRouteOnDateRepository train_route_on_date_service,
+            PassengerCarriageRepository passenger_carriage_service)
         {
             this.context = context;
             this.train_route_on_date_service = train_route_on_date_service;

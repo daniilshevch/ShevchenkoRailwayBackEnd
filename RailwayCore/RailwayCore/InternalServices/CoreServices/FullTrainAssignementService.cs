@@ -10,16 +10,16 @@ namespace RailwayCore.InternalServices.CoreServices
     public class FullTrainAssignementService
     {
         private readonly AppDbContext context;
-        private readonly TrainRouteOnDateService train_route_on_date_service;
-        private readonly TrainRouteOnDateOnStationService train_route_on_date_on_station_service;
-        private readonly PassengerCarriageOnTrainRouteOnDateService passenger_carriage_on_train_route_on_date_service;
-        private readonly StationService station_service;
-        private readonly PassengerCarriageService passenger_carriage_service;
+        private readonly TrainRouteOnDateRepository train_route_on_date_service;
+        private readonly TrainRouteOnDateOnStationRepository train_route_on_date_on_station_service;
+        private readonly PassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service;
+        private readonly StationRepository station_service;
+        private readonly PassengerCarriageRepository passenger_carriage_service;
         private static TextService text_service = new TextService("FullTrainAssignementService");
-        public FullTrainAssignementService(AppDbContext context, TrainRouteOnDateService train_route_on_date_service,
-            TrainRouteOnDateOnStationService train_route_on_date_on_station_service,
-            PassengerCarriageOnTrainRouteOnDateService passenger_carriage_on_train_route_on_date_service,
-            StationService station_service, PassengerCarriageService passenger_carriage_service)
+        public FullTrainAssignementService(AppDbContext context, TrainRouteOnDateRepository train_route_on_date_service,
+            TrainRouteOnDateOnStationRepository train_route_on_date_on_station_service,
+            PassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service,
+            StationRepository station_service, PassengerCarriageRepository passenger_carriage_service)
         {
             this.context = context;
             this.train_route_on_date_service = train_route_on_date_service;

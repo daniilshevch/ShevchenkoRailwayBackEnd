@@ -21,28 +21,28 @@ class Program
         {
             IServiceCollection services = new ServiceCollection()
                 .AddSingleton<AppDbContext>()
-                .AddSingleton<RailwayBranchService>()
-                .AddSingleton<StationService>()
-                .AddSingleton<TrainRouteService>()
-                .AddSingleton<TrainRouteOnDateService>()
-                .AddSingleton<TrainRouteOnDateOnStationService>()
-                .AddSingleton<PassengerCarriageService>()
-                .AddSingleton<PassengerCarriageOnTrainRouteOnDateService>()
+                .AddSingleton<RailwayBranchRepository>()
+                .AddSingleton<StationRepository>()
+                .AddSingleton<TrainRouteRepository>()
+                .AddSingleton<TrainRouteOnDateRepository>()
+                .AddSingleton<TrainRouteOnDateOnStationRepository>()
+                .AddSingleton<PassengerCarriageRepository>()
+                .AddSingleton<PassengerCarriageOnTrainRouteOnDateRepository>()
                 .AddSingleton<FullTrainAssignementService>()
                 .AddSingleton<FullTrainRouteSearchService>()
                 .AddSingleton<FullTicketManagementService>()
                 .AddSingleton<ConsoleRepresentationService>();
             IServiceProvider provider = services.BuildServiceProvider();
 
-            RailwayBranchService? railway_branch_service = provider.GetService<RailwayBranchService>();
-            StationService? station_service = provider.GetService<StationService>();
-            TrainRouteService? train_route_service = provider.GetService<TrainRouteService>();
-            TrainRouteOnDateService? train_route_on_date_service = provider.GetService<TrainRouteOnDateService>();
-            TrainRouteOnDateOnStationService? train_route_on_date_on_station_service =
-                provider.GetService<TrainRouteOnDateOnStationService>();
-            PassengerCarriageService? passenger_carriage_service = provider.GetService<PassengerCarriageService>();
-            PassengerCarriageOnTrainRouteOnDateService? passenger_carriage_on_train_route_on_date_service =
-                provider.GetService<PassengerCarriageOnTrainRouteOnDateService>();
+            RailwayBranchRepository? railway_branch_service = provider.GetService<RailwayBranchRepository>();
+            StationRepository? station_service = provider.GetService<StationRepository>();
+            TrainRouteRepository? train_route_service = provider.GetService<TrainRouteRepository>();
+            TrainRouteOnDateRepository? train_route_on_date_service = provider.GetService<TrainRouteOnDateRepository>();
+            TrainRouteOnDateOnStationRepository? train_route_on_date_on_station_service =
+                provider.GetService<TrainRouteOnDateOnStationRepository>();
+            PassengerCarriageRepository? passenger_carriage_service = provider.GetService<PassengerCarriageRepository>();
+            PassengerCarriageOnTrainRouteOnDateRepository? passenger_carriage_on_train_route_on_date_service =
+                provider.GetService<PassengerCarriageOnTrainRouteOnDateRepository>();
             FullTrainAssignementService? full_train_assignement_service =
                 provider.GetService<FullTrainAssignementService>();
             FullTrainRouteSearchService? full_train_route_search_service = provider.GetService<FullTrainRouteSearchService>();

@@ -6,12 +6,12 @@ using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.SystemServices;
 namespace RailwayCore.InternalServices.ModelServices
 {
-    public class TrainRouteService
+    public class TrainRouteRepository
     {
         private static TextService text_service = new TextService("TrainRouteService");
         private readonly AppDbContext context;
-        private readonly RailwayBranchService railway_branch_service;
-        public TrainRouteService(AppDbContext context, RailwayBranchService railway_branch_service)
+        private readonly RailwayBranchRepository railway_branch_service;
+        public TrainRouteRepository(AppDbContext context, RailwayBranchRepository railway_branch_service)
         {
             this.context = context;
             this.railway_branch_service = railway_branch_service;

@@ -7,12 +7,13 @@ using RailwayCore.InternalServices.SystemServices;
 
 namespace RailwayCore.InternalServices.ModelServices
 {
-    public class StationService
+
+    public class StationRepository
     {
         private static TextService text_service = new TextService("StationService");
         private readonly AppDbContext context;
-        private readonly RailwayBranchService railway_branch_service;
-        public StationService(AppDbContext context, RailwayBranchService railway_branch_service)
+        private readonly RailwayBranchRepository railway_branch_service;
+        public StationRepository(AppDbContext context, RailwayBranchRepository railway_branch_service)
         {
             this.context = context;
             this.railway_branch_service = railway_branch_service;

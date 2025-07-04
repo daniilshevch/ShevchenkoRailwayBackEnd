@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace RailwayCore.InternalServices.ModelServices
 {
-    public class RailwayBranchService
+    public class RailwayBranchRepository
     {
         private static TextService text_service = new TextService("RailwayBranchService");
         private readonly AppDbContext context;
-        public RailwayBranchService(AppDbContext context)
+        public RailwayBranchRepository(AppDbContext context)
         {
             this.context = context;
         }

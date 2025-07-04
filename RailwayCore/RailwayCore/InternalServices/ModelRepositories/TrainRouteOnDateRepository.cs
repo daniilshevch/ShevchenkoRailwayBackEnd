@@ -8,12 +8,12 @@ using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.SystemServices;
 namespace RailwayCore.InternalServices.ModelServices
 {
-    public class TrainRouteOnDateService
+    public class TrainRouteOnDateRepository
     {
 
         private AppDbContext context;
-        private TrainRouteService train_route_service;
-        public TrainRouteOnDateService(AppDbContext context, TrainRouteService train_route_service)
+        private TrainRouteRepository train_route_service;
+        public TrainRouteOnDateRepository(AppDbContext context, TrainRouteRepository train_route_service)
         {
             this.context = context;
             this.train_route_service = train_route_service;

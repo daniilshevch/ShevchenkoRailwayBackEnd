@@ -6,13 +6,13 @@ using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.SystemServices;
 namespace RailwayCore.InternalServices.ModelServices
 {
-    public class TrainRouteOnDateOnStationService
+    public class TrainRouteOnDateOnStationRepository
     {
         private AppDbContext context;
-        private TrainRouteOnDateService train_route_on_date_service;
-        private StationService station_service;
-        public TrainRouteOnDateOnStationService(AppDbContext context, TrainRouteOnDateService train_route_on_date_service,
-            StationService station_service)
+        private TrainRouteOnDateRepository train_route_on_date_service;
+        private StationRepository station_service;
+        public TrainRouteOnDateOnStationRepository(AppDbContext context, TrainRouteOnDateRepository train_route_on_date_service,
+            StationRepository station_service)
         {
             this.context = context;
             this.train_route_on_date_service = train_route_on_date_service;

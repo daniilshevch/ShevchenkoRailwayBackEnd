@@ -8,12 +8,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RailwayCore.InternalServices.ModelServices
 {
-    public class PassengerCarriageService
+    public class PassengerCarriageRepository
     {
         private readonly AppDbContext context;
-        private readonly StationService station_service;
+        private readonly StationRepository station_service;
         private TextService text_service = new TextService("PassengerCarriageService");
-        public PassengerCarriageService(AppDbContext context, StationService station_service)
+        public PassengerCarriageRepository(AppDbContext context, StationRepository station_service)
         {
             this.context = context;
             this.station_service = station_service;
