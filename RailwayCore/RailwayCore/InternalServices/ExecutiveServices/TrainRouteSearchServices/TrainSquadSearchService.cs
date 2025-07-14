@@ -15,6 +15,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
             this.train_route_on_date_service = train_route_on_date_service;
         }
         [Refactored("v1", "18.04.2025")]
+        [Checked("04.07.2025")]
         [Executive]
         public async Task<List<PassengerCarriageOnTrainRouteOnDate>?> GetPassengerCarriageAssignmentsForTrainRouteOnDate(string train_route_on_date_id)
         {
@@ -34,6 +35,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
         }
 
         [Checked("18.04.2025")]
+        [Checked("04.07.2025")]
         [Peripheral]
         public async Task<List<PassengerCarriageOnTrainRouteOnDate>?> GetPassengerCarriageAssignmentsForTrainRouteOnDate(string train_route_id, DateOnly departure_date)
         {
@@ -42,6 +44,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
         }
 
         [Refactored("v1", "18.04.2025")]
+        [Checked("04.07.2025")]
         [Crucial]
         public async Task<List<PassengerCarriageOnTrainRouteOnDate>> GetPassengerCarriageAssignmentsForSeveralTrainRoutesOnDate(List<string> train_route_on_date_ids)
         {
@@ -55,7 +58,5 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
                 .ThenBy(carriage_assignment => carriage_assignment.Position_In_Squad).ToListAsync();
             return carriage_assignments;
         }
-
-
     }
 }

@@ -7,21 +7,7 @@ using System;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
 
-[Checked("18.04.2025")]
-public class InternalTrainRaceDto  //Внутрішній трансфер(використовується в подальшому на сторінці пошуку поїздів між станціями)
-{
-    public TrainRouteOnDate Train_Route_On_Date { get; set; } = null!;
-    public DateTime Departure_Time_From_Desired_Starting_Station { get; set; }
-    public TrainRouteOnDateOnStation Desired_Starting_Station { get; set; } = null!;
-    public DateTime Arrival_Time_For_Desired_Ending_Station { get; set; }
-    public TrainRouteOnDateOnStation Desired_Ending_Station { get; set; } = null!;
-    public double? Km_Point_Of_Desired_Starting_Station { get; set; }
-    public double? Km_Point_Of_Desired_Ending_Station { get; set; }
-    public TrainRouteOnDateOnStation Full_Route_Starting_Stop { get; set; } = null!;
-    public TrainRouteOnDateOnStation Full_Route_Ending_Stop { get; set; } = null!;
-    public List<TrainRouteOnDateOnStation> Full_Route_Stops_List { get; set; } = new List<TrainRouteOnDateOnStation>();
 
-}
 namespace RailwayCore.InternalServices.CoreServices
 {
     public class FullTrainRouteSearchService
@@ -38,7 +24,7 @@ namespace RailwayCore.InternalServices.CoreServices
             this.train_squad_search_service= train_squad_search_service;
         }
 
-        public async Task<QueryResult<List<InternalTrainRaceDto>>> SearchTrainRoutesBetweenStationsOnDate(string start_station_title, string end_station_title, DateOnly trip_departure_date)
+        public async Task<QueryResult<List<InternalTrainRaceBetweenStationsDto>>> SearchTrainRoutesBetweenStationsOnDate(string start_station_title, string end_station_title, DateOnly trip_departure_date)
         {
             return await train_trips_search_service.SearchTrainRoutesBetweenStationsOnDate(start_station_title, end_station_title, trip_departure_date);   
         }
@@ -88,7 +74,11 @@ namespace RailwayCore.InternalServices.CoreServices
             return await train_squad_search_service.GetPassengerCarriageAssignmentsForSeveralTrainRoutesOnDate(train_route_on_date_ids);
         }
 
-
+        public async Task<QueryResult<List<InternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStationOnDate(string station_title, DateTime time,
+            TimeSpan? left_interval = null, TimeSpan? right_interval = null)
+        {
+            return await train_trips_search_service.SearchTrainRoutesThroughStationOnDate(station_title, time, left_interval, right_interval);
+        }
 
 
 

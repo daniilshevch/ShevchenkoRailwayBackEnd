@@ -2,9 +2,9 @@
 using RailwayCore.InternalServices.CoreServices;
 using RailwayCore.Models;
 using System.Diagnostics;
-using RailwayCore.InternalDTO.CoreDTO;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using RailwayManagementSystemAPI.ExternalDTO;
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
     public class TrainRouteWithBookingsSearchService
@@ -24,13 +24,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
         {
             Stopwatch sw = Stopwatch.StartNew();
             //Отримуємо список поїздів, які проходять через дані станції в потрібному порядку в потрібну дату
-            QueryResult<List<InternalTrainRaceDto>> train_routes_list_result = await full_train_route_search_service.SearchTrainRoutesBetweenStationsOnDate(starting_station_title,
+            QueryResult<List<InternalTrainRaceBetweenStationsDto>> train_routes_list_result = await full_train_route_search_service.SearchTrainRoutesBetweenStationsOnDate(starting_station_title,
                 ending_station_title, departure_date);
             if (train_routes_list_result.Fail)
             {
                 return new FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(train_routes_list_result.Error);
             }
-            List<InternalTrainRaceDto> appropriate_train_routes_on_date = train_routes_list_result.Value;
+            List<InternalTrainRaceBetweenStationsDto> appropriate_train_routes_on_date = train_routes_list_result.Value;
 
             //Беремо список айді знайдених поїздів(потрібно для функції ядра сервера, яке перевіряє бронювання для поїздів)
             List<string> appropriate_train_routes_on_date_ids =
@@ -63,7 +63,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 in ticket_bookings_info_for_appropriate_train_routes)
             {
                 //Отримуємо азагальну інформацію про даний маршрут поїзда(поки без бронювання), воно буде в першу чергу показуватись на сторінці списку знайдених поїздів
-                InternalTrainRaceDto? current_train_route_trip_info = appropriate_train_routes_on_date.FirstOrDefault(train_race =>
+                InternalTrainRaceBetweenStationsDto? current_train_route_trip_info = appropriate_train_routes_on_date.FirstOrDefault(train_race =>
                 train_race.Train_Route_On_Date.Id == single_train_route_on_date_statistics.Key);
                 if (current_train_route_trip_info is null)
                 {
@@ -91,11 +91,24 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 //Ініціалізовуємо аналогічний список об'єктів-статистик бронювань в одном вагоні поїзда, але призначений для зовнішньої демонстрації
                 //Вся докладна інформація про вагон, включаючи номер в складі, тип, послуги та бронювання міститься тут (також вираховується ціна подорожі)
                 List<ExternalSinglePassengerCarriageBookingsInfoDto> external_carriage_statistics_for_current_train_route_on_date =
-                    internal_carriage_statistics_for_current_train_route_on_date.Select(single_carriage_info => new ExternalSinglePassengerCarriageBookingsInfoDto
+                    new List<ExternalSinglePassengerCarriageBookingsInfoDto>();
+
+                Dictionary<string, ExternalCarriageTypeGroupDto> external_carriage_type_groups =
+                    new Dictionary<string, ExternalCarriageTypeGroupDto>();
+
+                //Перетворюємо внутрішні трансферні об'єкти вагонів у зовнішні
+
+                foreach (InternalCarriageAssignmentRepresentationDto single_carriage_info in internal_carriage_statistics_for_current_train_route_on_date)
+                {
+                    string carriage_type = TextEnumConvertationService.
+                        GetCarriageTypeIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Type_Of);
+                    string quality_class = TextEnumConvertationService.
+                        GetCarriageQualityClassIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Quality_Class) ?? "default";
+                    ExternalSinglePassengerCarriageBookingsInfoDto external_single_carriage_info_dto = new ExternalSinglePassengerCarriageBookingsInfoDto()
                     {
                         Carriage_Position_In_Squad = single_carriage_info.Carriage_Assignment.Position_In_Squad,
-                        Carriage_Type = TextEnumConvertationService.GetCarriageTypeIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Type_Of),
-                        Quality_Class = TextEnumConvertationService.GetCarriageQualityClassIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Quality_Class),
+                        Carriage_Type = carriage_type,
+                        Quality_Class = quality_class,
                         Free_Places = single_carriage_info.Free_Places,
                         Total_Places = single_carriage_info.Total_Places,
                         Air_Conditioning = single_carriage_info.Carriage_Assignment.Factual_Air_Conditioning,
@@ -112,14 +125,75 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                             _train_race_coefficient: current_train_route_trip_info.Train_Route_On_Date.Train_Race_Coefficient,
                             departure_date: current_train_route_trip_info.Train_Route_On_Date.Departure_Date,
                             _average_speed: FullTrainAssignementService.
-                            FindSpeedOnSection(trip_starting_stop_km_point, trip_ending_stop_km_point, departure_time_from_trip_starting_station, arrival_time_to_trip_ending_station)
-                        ),
-                    }).ToList();
+                            FindSpeedOnSection(trip_starting_stop_km_point, trip_ending_stop_km_point, departure_time_from_trip_starting_station, arrival_time_to_trip_ending_station))
+                    };
+                    external_carriage_statistics_for_current_train_route_on_date.Add(external_single_carriage_info_dto);
 
-                //Знаходимо мінімальну ціну для кожного типу вагона
-                int min_platskart_price = 10000000;
-                int min_coupe_price = 10000000;
-                int min_sv_price = 1000000;
+                    if(!external_carriage_type_groups.TryGetValue(carriage_type, out ExternalCarriageTypeGroupDto? carriage_type_group))
+                    {
+                        carriage_type_group = new ExternalCarriageTypeGroupDto();
+                        external_carriage_type_groups[carriage_type] = carriage_type_group;
+                    }
+                    if (!carriage_type_group.Carriage_Quality_Class_Dictionary.TryGetValue(quality_class, 
+                        out ExternalCarriageTypeAndQualityGroupDto? carriage_type_and_quality_group))
+                    {
+                        carriage_type_and_quality_group = new ExternalCarriageTypeAndQualityGroupDto();
+                        carriage_type_group.Carriage_Quality_Class_Dictionary[quality_class] = carriage_type_and_quality_group;
+                    }
+                    carriage_type_and_quality_group.Carriage_Statistics_List.Add(external_single_carriage_info_dto);
+                }
+
+                foreach(KeyValuePair<string, ExternalCarriageTypeGroupDto> carriage_type_group in external_carriage_type_groups)
+                {
+                    Dictionary<string, ExternalCarriageTypeAndQualityGroupDto> carriage_quality_class_dictionary = 
+                        carriage_type_group.Value.Carriage_Quality_Class_Dictionary;
+                    int type_group_free_places = 0;
+                    int type_group_total_places = 0;
+                    int type_group_min_price = 10000000;
+                    int type_group_max_price = 0;
+                    foreach (KeyValuePair<string, ExternalCarriageTypeAndQualityGroupDto> carriage_type_and_quality_group in carriage_quality_class_dictionary)
+                    {
+                        int quality_class_free_places = 0;
+                        int quality_class_total_places = 0;
+                        int quality_class_min_price = 10000000;
+                        int quality_class_max_price = 0;
+                        List<ExternalSinglePassengerCarriageBookingsInfoDto> carriages_list = carriage_type_and_quality_group.Value.Carriage_Statistics_List;
+                        foreach(ExternalSinglePassengerCarriageBookingsInfoDto single_carriage in carriages_list)
+                        {
+                            quality_class_free_places += single_carriage.Free_Places;
+                            quality_class_total_places += single_carriage.Total_Places;
+                            if(single_carriage.Ticket_Price < quality_class_min_price)
+                            {
+                                quality_class_min_price = single_carriage.Ticket_Price;
+                            }
+                            if(single_carriage.Ticket_Price > quality_class_max_price)
+                            {
+                                quality_class_max_price = single_carriage.Ticket_Price;
+                            }
+                        }
+                        carriage_type_and_quality_group.Value.Free_Places = quality_class_free_places;
+                        carriage_type_and_quality_group.Value.Total_Places = quality_class_total_places;
+                        carriage_type_and_quality_group.Value.Min_Price = quality_class_min_price;
+                        carriage_type_and_quality_group.Value.Max_Price = quality_class_max_price;
+
+                        type_group_free_places += quality_class_free_places;
+                        type_group_total_places += quality_class_total_places;
+                        if(quality_class_min_price < type_group_min_price)
+                        {
+                            type_group_min_price = quality_class_min_price;
+                        }
+                        if(quality_class_max_price > type_group_max_price)
+                        {
+                            type_group_max_price = quality_class_max_price;
+                        }
+                    }
+                    carriage_type_group.Value.Free_Places = type_group_free_places;
+                    carriage_type_group.Value.Total_Places = type_group_total_places;
+                    carriage_type_group.Value.Min_Price = type_group_min_price;
+                    carriage_type_group.Value.Max_Price = type_group_max_price;
+                }
+
+                
 
 
                 //Отримуємо список всіх зупинок на маршруті в порядку слідування поїзда
@@ -173,16 +247,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                     Total_Trip_Duration = current_train_route_trip_info.Arrival_Time_For_Desired_Ending_Station - current_train_route_trip_info.Departure_Time_From_Desired_Starting_Station,
                     Full_Route_Starting_Station_Title = current_train_route_trip_info.Full_Route_Starting_Stop.Station.Title,
                     Full_Route_Ending_Station_Title = current_train_route_trip_info.Full_Route_Ending_Stop.Station.Title,
-                    Free_Platskart_Places = single_train_route_on_date_statistics.Value.Total_Place_Highlights.Platskart_Free,
-                    Total_Platskart_Places = single_train_route_on_date_statistics.Value.Total_Place_Highlights.Platskart_Total,
-                    Free_Coupe_Places = single_train_route_on_date_statistics.Value.Total_Place_Highlights.Coupe_Free,
-                    Total_Coupe_Places = single_train_route_on_date_statistics.Value.Total_Place_Highlights.Coupe_Total,
-                    Free_SV_Places = single_train_route_on_date_statistics.Value.Total_Place_Highlights.SV_Free,
-                    Total_SV_Places = single_train_route_on_date_statistics.Value.Total_Place_Highlights.SV_Total,
-                    Min_Platskart_Price = single_train_route_on_date_statistics.Value.Total_Place_Highlights.Min_Platskart_Price,
-                    Min_Coupe_Price = single_train_route_on_date_statistics.Value.Total_Place_Highlights.Min_Coupe_Price,
-                    Min_SV_Price = single_train_route_on_date_statistics.Value.Total_Place_Highlights.Min_SV_Price,
                     Carriage_Statistics_List = external_carriage_statistics_for_current_train_route_on_date,
+                    Grouped_Carriage_Statistics_List = external_carriage_type_groups,
                     Train_Stops_List = external_train_stops,
                     Average_Speed_On_Trip = FullTrainAssignementService.FindSpeedOnSection(trip_starting_stop_km_point, trip_ending_stop_km_point, departure_time_from_trip_starting_station, arrival_time_to_trip_ending_station)
 
@@ -191,13 +257,60 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 
             }
             sw.Stop();
-            Console.WriteLine(sw.ElapsedMilliseconds);
-            List<ExternalTrainRouteWithBookingsInfoDto> ordered_total_train_routes_with_bookings_and_stations_info = 
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write($"Train search time: ");
+            Console.ResetColor();
+            Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0} seconds");
+            List<ExternalTrainRouteWithBookingsInfoDto> ordered_total_train_routes_with_bookings_and_stations_info =
                 total_train_routes_with_bookings_and_stations_info.OrderBy(train_route_full_info => train_route_full_info.Trip_Starting_Station_Departure_Time).ToList();
             return new SuccessQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(ordered_total_train_routes_with_bookings_and_stations_info);
 
         }
-         
+        
+
+
+
+
+
+
+
+
+        public async Task<QueryResult<List<ExternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStation(string station_title, DateTime time,
+            TimeSpan? left_interval = null, TimeSpan? right_interval = null)
+        {
+            QueryResult<List<InternalTrainRaceThroughStationDto>> train_races_result = 
+                await full_train_route_search_service.SearchTrainRoutesThroughStationOnDate(station_title, time, left_interval, right_interval);
+            if(train_races_result.Fail)
+            {
+                return new FailQuery<List<ExternalTrainRaceThroughStationDto>>(train_races_result.Error);
+            }
+            List<InternalTrainRaceThroughStationDto> train_races = train_races_result.Value;
+            List<ExternalTrainRaceThroughStationDto> external_train_races = train_races.Select(train_race => new ExternalTrainRaceThroughStationDto()
+            {
+                Train_Route_On_Date_Id = train_race.Train_Route_On_Date.Id,
+                Train_Route_Id = train_race.Train_Route_On_Date.Train_Route_Id,
+                Arrival_Time_To_Current_Stop = train_race.Arrival_Time_To_Current_Stop,
+                Departure_Time_From_Current_Stop = train_race.Departure_Time_From_Current_Stop,
+                Full_Route_Starting_Station_Title = train_race.Full_Route_Starting_Stop.Station.Title,
+                Full_Route_Ending_Station_Title = train_race.Full_Route_Ending_Stop.Station.Title,
+                Full_Route_Stops_List = train_race.Full_Route_Stops_List.Select(train_stop => new ExternalSingleTrainStopDto()
+                {
+                    Arrival_Time = train_stop.Arrival_Time,
+                    Departure_Time = train_stop.Departure_Time,
+                    Is_Part_Of_Trip = false,
+                    Station_Title = train_stop.Station.Title,
+                    Stop_Duration = train_stop.Departure_Time - train_stop.Arrival_Time
+                }).ToList()
+            }).ToList();
+            return new SuccessQuery<List<ExternalTrainRaceThroughStationDto>>(external_train_races);
+        }
+
+
+
+
+
+
+
 
 
 
@@ -237,168 +350,18 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             }
             return output_result;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        [Archieved]
-        [NotInUse]
-        public async Task<List<ExternalTrainRouteWithBookingsInfoDto>?> SearchTrainRoutesBetweenStationsWithBookingsInfo_OLDVERSION
-           (string starting_station_title, string ending_station_title, DateOnly departure_date)
-        {
-            DateTime first = DateTime.Now;
-            Console.WriteLine(first);
-            List<ExternalTrainRouteWithBookingsInfoDto> result_list = new List<ExternalTrainRouteWithBookingsInfoDto>();
-            QueryResult<List<InternalTrainRaceDto>> appropriate_train_routes_on_date_result =
-                await full_train_route_search_service.SearchTrainRoutesBetweenStationsOnDate(starting_station_title, ending_station_title, departure_date);
-
-            List<InternalTrainRaceDto> appropriate_train_routes_on_date = appropriate_train_routes_on_date_result!.Value;
-            if (appropriate_train_routes_on_date == null)
-            {
-                return null;
-            }
-            List<string> appropriate_train_routes_on_date_ids = appropriate_train_routes_on_date
-                .Select(train_route_info => train_route_info.Train_Route_On_Date.Id).ToList();
-
-            QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>> ticket_bookings_info_for_appropriate_train_routes_result =
-          await full_ticket_management_service.GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDateWithPassengerInformationAnalytics
-          (appropriate_train_routes_on_date_ids, starting_station_title, ending_station_title);
-
-            /*QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>> ticket_bookings_info_for_appropriate_train_routes_result =
-                await ticket_booking_service.GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDate
-                (appropriate_train_routes_on_date_ids, starting_station_title, ending_station_title);*/
-            Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto> ticket_bookings_info_for_appropriate_train_routes =
-                ticket_bookings_info_for_appropriate_train_routes_result.Value!;
-            if (ticket_bookings_info_for_appropriate_train_routes == null)
-            {
-                return null;
-            }
-            foreach (KeyValuePair<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto> single_train_route in ticket_bookings_info_for_appropriate_train_routes)
-            {
-                InternalTrainRaceDto? current_train_route_info = appropriate_train_routes_on_date
-                    .FirstOrDefault(train_route_info => train_route_info.Train_Route_On_Date.Id == single_train_route.Key);
-                if (current_train_route_info == null)
-                {
-                    return null;
-                }
-                DateTime trip_starting_station_departure_time = current_train_route_info.Departure_Time_From_Desired_Starting_Station;
-                DateTime trip_ending_station_arrival_time = current_train_route_info.Arrival_Time_For_Desired_Ending_Station;
-
-                double? trip_starting_station_km_point = current_train_route_info.Km_Point_Of_Desired_Starting_Station;
-                double? trip_ending_station_km_point = current_train_route_info.Km_Point_Of_Desired_Ending_Station;
-                double trip_distance = 0;
-                if (trip_starting_station_km_point is not null && trip_ending_station_km_point is not null)
-                {
-                    trip_distance = (double)trip_ending_station_km_point - (double)trip_starting_station_km_point;
-                }
-                string full_route_starting_station_title = current_train_route_info.Full_Route_Starting_Stop.Station.Title;
-                string full_route_ending_station_title = current_train_route_info.Full_Route_Ending_Stop.Station.Title;
-
-
-
-                List<ExternalSinglePassengerCarriageBookingsInfoDto> carriage_bookings_info = single_train_route.Value.Carriage_Statistics_List
-                    .Select(single_carriage_info => new ExternalSinglePassengerCarriageBookingsInfoDto
-                    {
-                        Carriage_Position_In_Squad = single_carriage_info.Carriage_Assignment.Position_In_Squad,
-                        Carriage_Type = TextEnumConvertationService.GetCarriageTypeIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Type_Of),
-                        Quality_Class = TextEnumConvertationService.GetCarriageQualityClassIntoString(single_carriage_info.Carriage_Assignment.Passenger_Carriage.Quality_Class),
-                        Ticket_Price = PricingService.DefineTicketPrice(
-                            carriage_type: single_carriage_info.Carriage_Assignment.Passenger_Carriage.Type_Of,
-                            carriage_quality_class: single_carriage_info.Carriage_Assignment.Passenger_Carriage.Quality_Class,
-                            distance: trip_distance,
-                            _train_route_coefficient: current_train_route_info.Train_Route_On_Date.Train_Route.Train_Route_Coefficient,
-                            _train_race_coefficient: current_train_route_info.Train_Route_On_Date.Train_Race_Coefficient,
-                            departure_date: current_train_route_info.Train_Route_On_Date.Departure_Date,
-                            _average_speed: FullTrainAssignementService.FindSpeedOnSection(trip_starting_station_km_point, trip_ending_station_km_point, trip_starting_station_departure_time, trip_ending_station_arrival_time)
-                        ),
-                        Free_Places = single_carriage_info.Free_Places,
-                        Total_Places = single_carriage_info.Total_Places,
-                        Places_Availability = single_carriage_info.Places_Availability,
-                        Air_Conditioning = single_carriage_info.Carriage_Assignment.Factual_Air_Conditioning,
-                        Food_Availability = single_carriage_info.Carriage_Assignment.Food_Availability,
-                        Shower_Availability = single_carriage_info.Carriage_Assignment.Factual_Shower_Availability
-
-                    }).ToList();
-                List<TrainRouteOnDateOnStation> train_stops_full_info = current_train_route_info.Full_Route_Stops_List;
-                List<ExternalSingleTrainStopDto> train_stops_dto = new List<ExternalSingleTrainStopDto>();
-                foreach (TrainRouteOnDateOnStation train_stop in train_stops_full_info)
-                {
-                    DateTime? arrival_time = train_stop.Arrival_Time;
-                    DateTime? departure_time = train_stop.Departure_Time;
-                    TimeSpan? stop_duration;
-                    if (arrival_time == null || departure_time == null)
-                    {
-                        stop_duration = null;
-                    }
-                    else
-                    {
-                        stop_duration = (DateTime)departure_time - (DateTime)arrival_time;
-                    }
-                    bool is_part_of_trip;
-                    if (arrival_time != null && departure_time != null)
-                    {
-                        is_part_of_trip = departure_time >= trip_starting_station_departure_time && arrival_time <= trip_ending_station_arrival_time;
-                    }
-                    else if (arrival_time == null && departure_time != null)
-                    {
-                        is_part_of_trip = departure_time >= trip_starting_station_departure_time;
-                    }
-                    else
-                    {
-                        is_part_of_trip = arrival_time <= trip_ending_station_arrival_time;
-                    }
-                    train_stops_dto.Add(new ExternalSingleTrainStopDto()
-                    {
-                        Station_Title = train_stop.Station.Title,
-                        Arrival_Time = arrival_time,
-                        Departure_Time = departure_time,
-                        Stop_Duration = stop_duration,
-                        Is_Part_Of_Trip = is_part_of_trip
-                    });
-                }
-
-                result_list.Add(new ExternalTrainRouteWithBookingsInfoDto
-                {
-                    Train_Route_Id = single_train_route.Value.Train_Route_On_Date.Train_Route.Id,
-                    Train_Route_Branded_Name = single_train_route.Value.Train_Route_On_Date.Train_Route.Branded_Name,
-                    Train_Route_Class = TextEnumConvertationService.GetTrainQualityClassIntoString(single_train_route.Value.Train_Route_On_Date.Train_Route.Quality_Class),
-                    Free_Platskart_Places = single_train_route.Value.Total_Place_Highlights.Platskart_Free,
-                    Total_Platskart_Places = single_train_route.Value.Total_Place_Highlights.Platskart_Total,
-                    Free_Coupe_Places = single_train_route.Value.Total_Place_Highlights.Coupe_Free,
-                    Total_Coupe_Places = single_train_route.Value.Total_Place_Highlights.Coupe_Total,
-                    Free_SV_Places = single_train_route.Value.Total_Place_Highlights.SV_Free,
-                    Total_SV_Places = single_train_route.Value.Total_Place_Highlights.SV_Total,
-                    Min_Platskart_Price = single_train_route.Value.Total_Place_Highlights.Min_Platskart_Price,
-                    Min_Coupe_Price = single_train_route.Value.Total_Place_Highlights.Min_Coupe_Price,
-                    Min_SV_Price = single_train_route.Value.Total_Place_Highlights.Min_SV_Price,
-                    Trip_Starting_Station_Title = starting_station_title,
-                    Trip_Ending_Station_Title = ending_station_title,
-                    Trip_Starting_Station_Departure_Time = trip_starting_station_departure_time,
-                    Trip_Ending_Station_Arrival_Time = trip_ending_station_arrival_time,
-                    Full_Route_Starting_Station_Title = full_route_starting_station_title,
-                    Full_Route_Ending_Station_Title = full_route_ending_station_title,
-                    Total_Trip_Duration = trip_ending_station_arrival_time - trip_starting_station_departure_time,
-                    Carriage_Statistics_List = carriage_bookings_info,
-                    Train_Stops_List = train_stops_dto,
-                    Average_Speed_On_Trip = FullTrainAssignementService.
-                    FindSpeedOnSection(trip_starting_station_km_point, trip_ending_station_km_point, trip_starting_station_departure_time, trip_ending_station_arrival_time)
-
-                });
-
-            }
-            DateTime second = DateTime.Now;
-            TimeSpan third = second - first;
-            Console.WriteLine($"Time: {third.TotalSeconds}");
-            return result_list;
-
-        }
     }
 }
+    
+
+
+
+
+
+
+
+
+
+
+
+  

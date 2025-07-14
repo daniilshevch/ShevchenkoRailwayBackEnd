@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using RailwayCore.Context;
-using RailwayCore.InternalDTO.CoreDTO;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.ExecutiveServices;
 using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices;
@@ -11,29 +10,7 @@ using RailwayCore.Models;
 using System.Reflection.Metadata.Ecma335;
 namespace RailwayCore.InternalServices.CoreServices
 {
-    [Checked("19.04.2025")]
-    public class BookerInfo
-    {
-        public string Passenger_Name { get; set; } = null!;
-        public string Passenger_Surname { get; set; } = null!;
-        public User User_Booker { get; set; } = null!;
-        public string Starting_Station_Title { get; set; } = null!;
-        public string Ending_Station_Title { get; set; } = null!;
-    }
-    [Checked("19.04.2025")]
-    public class CarriageBookedPlace
-    {
-        public string Carriage_Id { get; set; } = null!;
-        public int Place { get; set; }
-    }
-    [Checked("19.04.2025")]
-    public class TrainRouteOnDateCarriageBookedPlace
-    {
-        public string Train_Route_On_Date_Id { get; set; } = null!;
-        public string Carriage_Id { get; set; } = null!;
-        public int Place { get; set; }
-        public  BookerInfo Booker_Info { get; set; } = null!;
-    }
+
     public class FullTicketManagementService
     {
         private readonly TicketAvailabilityCheckService ticket_availability_check_service;
@@ -97,11 +74,6 @@ namespace RailwayCore.InternalServices.CoreServices
         public async Task DeleteTicketBooking(TicketBooking ticket_booking)
         {
             await ticket_system_manipulation_service.DeleteTicketBooking(ticket_booking);
-        }
-
-        public async Task<InternalCarriageAssignmentRepresentationDto?> GetSinglePassengerCarriagePlacesReportForTrainRouteOnDate(PassengerCarriageOnTrainRouteOnDate carriage_assignment, string starting_station_title, string ending_station_title)
-        {
-            return await ticket_availability_check_service.GetSinglePassengerCarriagePlacesReportForTrainRouteOnDate(carriage_assignment, starting_station_title, ending_station_title);
         }
 
         public async Task<List<TicketBooking>> GetAllExpiredTicketBookings()

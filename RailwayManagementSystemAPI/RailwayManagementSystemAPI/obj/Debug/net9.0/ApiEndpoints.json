@@ -256,125 +256,6 @@
   },
   {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.TrainSearchController",
-    "Method": "GetBookingsInfoForAllCarriagesForSpecificTrainRouteOnDate",
-    "RelativePath": "ClientAPI/TrainSearch/Get-All-Carriages-Info",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "train_route_on_date",
-        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalTrainRouteWithBookingsInfoDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.ExternalSinglePassengerCarriageBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.TrainSearchController",
-    "Method": "GetBookingsInfoForPassengerCarriagesOfSpecificTypeForSpecificTrainRouteOnDate",
-    "RelativePath": "ClientAPI/TrainSearch/Get-Carriages-Of-Type-Info",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "train_route_on_date",
-        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalTrainRouteWithBookingsInfoDto",
-        "IsRequired": true
-      },
-      {
-        "Name": "carriage_type",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "quality_class",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.ExternalSinglePassengerCarriageBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.TrainSearchController",
-    "Method": "GetScheduleForSpecificTrainRouteOnDate",
-    "RelativePath": "ClientAPI/TrainSearch/Get-Train-Schedule",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "train_route_on_date",
-        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalTrainRouteWithBookingsInfoDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.ExternalSingleTrainStopDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.TrainSearchController",
-    "Method": "GetScheduleForSpecificTrainRouteOnDate",
-    "RelativePath": "ClientAPI/TrainSearch/Get-Train-Schedule2",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "train_routes_on_date_statistics_list",
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.ExternalTrainRouteWithBookingsInfoDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": true
-      },
-      {
-        "Name": "train_route_on_date_id",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.API_DTO.ExternalSingleTrainStopDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.TrainSearchController",
     "Method": "SearchTrainRoutesBetweenStationsWithBookingsInfo",
     "RelativePath": "ClientAPI/TrainSearch/Search-Train-Routes-Between-Stations-With-Bookings/{starting_station}/{ending_station}",
     "HttpMethod": "GET",
@@ -410,6 +291,47 @@
     ]
   },
   {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.TrainSearchController",
+    "Method": "SearchTrainRoutesThroughStation",
+    "RelativePath": "ClientAPI/TrainSearch/Search-Train-Routes-Through-Station/{station_title}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "station_title",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "time",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "left_interval",
+        "Type": "System.Nullable\u00601[[System.TimeSpan, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "right_interval",
+        "Type": "System.Nullable\u00601[[System.TimeSpan, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.ExternalTrainRaceThroughStationDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.SystemControllers.SystemTestingController",
     "Method": "GetAuthenticatedUser",
     "RelativePath": "get-authenticated-user",
@@ -432,7 +354,7 @@
   {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.UserTicketManagementController",
     "Method": "GetAllTicketBookingsForCurrentUser",
-    "RelativePath": "get-tickets-for-user",
+    "RelativePath": "get-tickets-for-current-user",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

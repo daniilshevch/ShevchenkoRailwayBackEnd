@@ -38,6 +38,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
 
         [Refactored("v1", "19.04.2025")]
         [Refactored("v2", "02.05.2025")]
+        [Checked("06.07.2025")]
         [Crucial]
         public async Task<QueryResult<TicketBooking>> CreateTicketBooking(InternalTicketBookingDto input)
         {
@@ -158,6 +159,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
 
         [Refactored("v1", "19.04.2025")]
         [Refactored("v2", "02.05.2025")]
+        [Checked("06.07.2025")]
         [Crucial]
         public async Task<QueryResult<TicketBooking>> CreateTicketBookingWithCarriagePositionInSquad(InternalTicketBookingDtoWithCarriagePosition input)
         {
@@ -195,166 +197,6 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             }
             TicketBooking ticket_booking = ticket_booking_result.Value;
             return new SuccessQuery<TicketBooking>(ticket_booking);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        [Archieved]
-        [NotInUse]
-        public async Task<TicketBooking?> CreateTicketBooking_OLDVERSION(InternalTicketBookingDto input)
-        {
-            User? user_from_ticket = await context.Users.FindAsync(input.User_Id);
-            if (user_from_ticket == null)
-            {
-                return null;
-            }
-            TrainRouteOnDate? train_route_on_date_from_ticket = await train_route_on_date_service.FindTrainRouteOnDateById(input.Train_Route_On_Date_Id);
-            if (train_route_on_date_from_ticket == null)
-            {
-               // text_service.FailPostInform("Fail in TrainRouteOnDateService");
-                return null;
-            }
-            PassengerCarriage? passenger_carriage_from_ticket = await passenger_carriage_service.FindPassengerCarriageById(input.Passenger_Carriage_Id);
-            if (passenger_carriage_from_ticket == null)
-            {
-               // text_service.FailPostInform("Fail in PassengerCarriageService");
-                return null;
-            }
-            Station? starting_station_from_ticket = await station_service.FindStationByTitle(input.Starting_Station_Title);
-            Station? ending_station_from_ticket = await station_service.FindStationByTitle(input.Ending_Station_Title);
-            if (starting_station_from_ticket == null || ending_station_from_ticket == null)
-            {
-             //   text_service.FailPostInform("Fail in StationService");
-                return null;
-            }
-            //Check if train route on date passes through the stations from ticket
-            List<TrainRouteOnDateOnStation>? train_stops_for_train_route_on_date_from_ticket = await
-                train_schedule_search_service.GetTrainStopsForTrainRouteOnDate(train_route_on_date_from_ticket.Id);
-            if (train_stops_for_train_route_on_date_from_ticket == null)
-            {
-                //text_service.FailPostInform("Fail in FullTrainRouteSearchService");
-                return null;
-            }
-            if (!train_stops_for_train_route_on_date_from_ticket.Any(train_stop => train_stop.Station_Id == starting_station_from_ticket.Id)
-                || !train_stops_for_train_route_on_date_from_ticket.Any(train_stop => train_stop.Station_Id == ending_station_from_ticket.Id))
-            {
-             //   text_service.FailPostInform("Train route on date doesn't pass through these stations");
-                return null;
-            }
-            int starting_station_from_ticket_number = train_stops_for_train_route_on_date_from_ticket.FindIndex(train_stop =>
-            train_stop.Station_Id == starting_station_from_ticket.Id);
-            int ending_station_from_ticket_number = train_stops_for_train_route_on_date_from_ticket.FindIndex(train_stop =>
-            train_stop.Station_Id == ending_station_from_ticket.Id);
-            if (starting_station_from_ticket_number >= ending_station_from_ticket_number)
-            {
-               // text_service.FailPostInform("Train route on date doesn't pass through these stations(in this order)");
-                return null;
-            }
-            //Check if train route on date contains this carriage in its squad
-            List<PassengerCarriageOnTrainRouteOnDate>? carriage_assignements_for_train_route_on_date_from_ticket =
-                await train_squad_search_service.GetPassengerCarriageAssignmentsForTrainRouteOnDate(train_route_on_date_from_ticket.Id);
-            if (carriage_assignements_for_train_route_on_date_from_ticket == null)
-            {
-                //text_service.FailPostInform("Fail in FullTrainRouteSearchService");
-                return null;
-            }
-            if (!carriage_assignements_for_train_route_on_date_from_ticket
-                .Any(carriage_assignement => carriage_assignement.Passenger_Carriage_Id == passenger_carriage_from_ticket.Id))
-            {
-               // text_service.FailPostInform("Train route on date doesn't contains these carriage in its squad");
-                return null;
-            }
-            if (input.Place_In_Carriage > passenger_carriage_from_ticket.Capacity || input.Place_In_Carriage <= 0)
-            {
-                //text_service.FailPostInform($"This carriage doesn't have place with ID: {input.Place_In_Carriage}");
-                return null;
-            }
-            //Check if the place in carriage is available for booking between these stations on train route on date
-            /*
-            bool? _ticket_booking_availability = await CheckTicketAvailabilityBetweenStationsForTrainRouteOnDate(train_route_on_date_from_ticket.Id,
-                starting_station_from_ticket.Title, ending_station_from_ticket.Title, passenger_carriage_from_ticket.Id,
-                input.Place_In_Carriage);
-            bool ticket_booking_availability;
-            if (_ticket_booking_availability == null)
-            {
-                text_service.FailPostInform("Fail in checking ticket availability");
-                return null;
-            }
-            else
-            {
-                ticket_booking_availability = (bool)_ticket_booking_availability;
-            }
-            if (ticket_booking_availability == false)
-            {
-                text_service.FailPostInform($"The place with ID: {input.Place_In_Carriage} in carriage {passenger_carriage_from_ticket.Id} has already been booked");
-                return null;
-            }*/
-            TicketBooking ticket_booking = new TicketBooking()
-            {
-                User = user_from_ticket,
-                Passenger_Carriage = passenger_carriage_from_ticket,
-                Train_Route_On_Date = train_route_on_date_from_ticket,
-                Starting_Station = starting_station_from_ticket,
-                Ending_Station = ending_station_from_ticket,
-                Place_In_Carriage = input.Place_In_Carriage,
-                Passenger_Name = input.Passenger_Name,
-                Passenger_Surname = input.Passenger_Surname,
-                Booking_Time = DateTime.Now,
-                Ticket_Status = input.Ticket_Status
-            };
-            await context.Ticket_Bookings.AddAsync(ticket_booking);
-            await context.SaveChangesAsync();
-            return ticket_booking;
-        }
-
-        [Archieved]
-        [NotInUse]
-        public async Task<TicketBooking?> CreateTicketBooking_OLDVERSION(InternalTicketBookingDtoWithCarriagePosition input)
-        {
-            PassengerCarriageOnTrainRouteOnDate? carriage_assignement = await
-                context.Passenger_Carriages_On_Train_Routes_On_Date
-                .Include(carriage_assignement => carriage_assignement.Passenger_Carriage)
-                .Include(carriage_assignement => carriage_assignement.Train_Route_On_Date)
-                .FirstOrDefaultAsync(carriage_assignement =>
-                carriage_assignement.Train_Route_On_Date_Id == input.Train_Route_On_Date_Id && carriage_assignement.Position_In_Squad == input.Passenger_Carriage_Position_In_Squad);
-            if (carriage_assignement is null)
-            {
-                //text_service.FailPostInform($"There is no carriage with number {input.Passenger_Carriage_Position_In_Squad} in train route on date squad");
-                return null;
-            }
-            PassengerCarriage passenger_carriage = carriage_assignement.Passenger_Carriage;
-            InternalTicketBookingDto ticket_booking_dto = new InternalTicketBookingDto()
-            {
-                Train_Route_On_Date_Id = input.Train_Route_On_Date_Id,
-                Passenger_Carriage_Id = passenger_carriage.Id,
-                Starting_Station_Title = input.Starting_Station_Title,
-                Ending_Station_Title = input.Ending_Station_Title,
-                Place_In_Carriage = input.Place_In_Carriage,
-                User_Id = input.User_Id,
-                Passenger_Name = input.Passenger_Name,
-                Passenger_Surname = input.Passenger_Surname,
-                Ticket_Status = input.Ticket_Status
-
-            };
-            /*
-            TicketBooking? ticket_booking = await CreateTicketBooking(ticket_booking_dto);
-            if (ticket_booking == null)
-            {
-                text_service.FailPostInform("Fail while booking ticket");
-                return null;
-            }
-            return ticket_booking;*/
-            return null;
         }
     }
 }

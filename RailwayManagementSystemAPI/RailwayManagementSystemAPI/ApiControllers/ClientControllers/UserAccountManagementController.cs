@@ -17,7 +17,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
         }
         [Refactored("v1", "02.05.2025")]
         [HttpPost("/register")]
-        public async Task<ActionResult<ExternalOutputRegisterUserDto>> Register(ExternalInputRegisterUserDto input)
+        public async Task<ActionResult<ExternalOutputRegisterUserDto>> Register([FromBody] ExternalInputRegisterUserDto input)
         {
             QueryResult<User> user_registration_result = await user_account_management_service.Register(input);
             if (user_registration_result.Fail)
@@ -29,7 +29,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             return Created($"/users/{output_user.Id}", output_user);
         }
         [HttpPost("/login")]
-        public async Task<ActionResult<ExternalOutputLoginUserDto>> Login(ExternaInputlLoginUserDto input)
+        public async Task<ActionResult<ExternalOutputLoginUserDto>> Login([FromBody] ExternaInputlLoginUserDto input)
         {
             QueryResult<ExternalOutputLoginUserDto> user_login_result = await user_account_management_service.Login(input);
             if (user_login_result.Fail)

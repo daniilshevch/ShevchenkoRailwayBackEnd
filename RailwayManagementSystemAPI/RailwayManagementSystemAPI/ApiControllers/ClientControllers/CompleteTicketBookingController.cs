@@ -19,7 +19,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             this.complete_ticket_booking_service = complete_ticket_booking_service;
         }
         [HttpPost("Initialize-Ticket-Booking")]
-        public async Task<ActionResult<ExternalOutputMediatorTicketBookingDto>> InitializeTicketBookingProcess(ExternalInputInitialTicketBookingDto input)
+        public async Task<ActionResult<ExternalOutputMediatorTicketBookingDto>> InitializeTicketBookingProcess([FromBody] ExternalInputInitialTicketBookingDto input)
         {
             QueryResult<ExternalOutputMediatorTicketBookingDto> ticket_booking_initialization_result =
                 await complete_ticket_booking_service.InitializeTicketBookingProcessForAuthenticatedUser(input);
@@ -32,7 +32,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             return Created($"/tickets/{mediator_ticket_booking_dto.Id}", mediator_ticket_booking_dto);
         }
         [HttpPost("Complete-Ticket-Booking")]
-        public async Task<ActionResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcess(ExternalInputCompletedTicketBookingWithPassengerInfoDto input)
+        public async Task<ActionResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcess([FromBody] ExternalInputCompletedTicketBookingWithPassengerInfoDto input)
         {
             QueryResult<ExternalOutputCompletedTicketBookingDto> ticket_booking_completion_result =
                 await complete_ticket_booking_service.CompleteTicketBookingProcessForAuthenticatedUser(input.ticket_booking_dto, input.user_info_dto);

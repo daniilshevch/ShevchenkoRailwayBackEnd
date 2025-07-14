@@ -1,5 +1,4 @@
-﻿using RailwayCore.InternalDTO.CoreDTO;
-using RailwayCore.Models;
+﻿using RailwayCore.Models;
 using RailwayCore.InternalServices.CoreServices;
 using System.Text.Json.Serialization;
 namespace RailwayManagementSystemAPI.API_DTO
@@ -33,6 +32,35 @@ namespace RailwayManagementSystemAPI.API_DTO
         public List<InternalSinglePlaceDto> Places_Availability { get; set; } = new List<InternalSinglePlaceDto>();
 
     }
+    public class ExternalCarriageTypeGroupDto
+    {
+        [JsonPropertyName("free_places")]
+        public int Free_Places { get; set; }
+        [JsonPropertyName("total_places")]
+        public int Total_Places { get; set; }
+        [JsonPropertyName("min_price")]
+        public double Min_Price { get; set; }
+        [JsonPropertyName("max_price")]
+        public double Max_Price { get; set; }
+        [JsonPropertyName("carriage_quality_class_dictionary")]
+        public Dictionary<string, ExternalCarriageTypeAndQualityGroupDto> Carriage_Quality_Class_Dictionary { get; set; } =
+            new Dictionary<string, ExternalCarriageTypeAndQualityGroupDto>();
+    }
+    public class ExternalCarriageTypeAndQualityGroupDto
+    {
+        [JsonPropertyName("free_places")]
+        public int Free_Places { get; set; }
+        [JsonPropertyName("total_places")]
+        public int Total_Places { get; set; }
+        [JsonPropertyName("min_price")]
+        public double Min_Price { get; set; }
+        [JsonPropertyName("max_price")]
+        public double Max_Price { get; set; }
+        [JsonPropertyName("carriage_statistics_list")]
+        public List<ExternalSinglePassengerCarriageBookingsInfoDto> Carriage_Statistics_List { get; set; } = new List<ExternalSinglePassengerCarriageBookingsInfoDto>();
+
+    }
+
     [Checked("19.04.2025")]
     public class ExternalSingleTrainStopDto
     {
@@ -74,29 +102,15 @@ namespace RailwayManagementSystemAPI.API_DTO
         public string Full_Route_Starting_Station_Title { get; set; } = null!;  //Початкова станція всього маршруту даного поїзда
         [JsonPropertyName("full_route_ending_station_title")]
         public string Full_Route_Ending_Station_Title { get; set; } = null!;  //Кінцева станція всього маршруту даного поїзда
-        [JsonPropertyName("free_platskart_places")]
-        public int Free_Platskart_Places { get; set; }  //Кількість вільних місць в плацкарті
-        [JsonPropertyName("total_plastskart_places")]
-        public int Total_Platskart_Places { get; set; }  //Загальна кількість місць в плацкарті
-        [JsonPropertyName("free_coupe_places")]
-        public int Free_Coupe_Places { get; set; }  //Кількість вільних місць в купе
-        [JsonPropertyName("total_coupe_places")]
-        public int Total_Coupe_Places { get; set; }  //Загальна кількість місць в купе
-        [JsonPropertyName("free_sv_places")]
-        public int Free_SV_Places { get; set; }  //Кількість вільних місць в СВ
-        [JsonPropertyName("total_sv_places")]
-        public int Total_SV_Places { get; set; }  //Загальна кількість місць в СВ
-        [JsonPropertyName("min_platskart_price")]
-        public int Min_Platskart_Price { get; set; }  //Мінімальна ціна квикту в плацкарт
-        [JsonPropertyName("min_coupe_price")]
-        public int Min_Coupe_Price { get; set; }  //Мінімальна ціна квитку в купе
-        [JsonPropertyName("min_sv_price")]
-        public int Min_SV_Price { get; set; }  //Мінімальна ціна квитку в СВ
         [JsonPropertyName("average_speed_on_trip")]
         public double? Average_Speed_On_Trip { get; set; }  //Середня швидкість на маршруті поїздки
         [JsonPropertyName("carriage_statistics_list")]
         //Список об'єктів, що містять інформацію про кожен конкретний вагон в складі поїзда зі статистикою бронювань
-        public List<ExternalSinglePassengerCarriageBookingsInfoDto> Carriage_Statistics_List { get; set; } = new List<ExternalSinglePassengerCarriageBookingsInfoDto>();
+        public List<ExternalSinglePassengerCarriageBookingsInfoDto> Carriage_Statistics_List { get; set; } = 
+            new List<ExternalSinglePassengerCarriageBookingsInfoDto>();
+        [JsonPropertyName("grouped_carriage_statistics_list")]
+        public Dictionary<string, ExternalCarriageTypeGroupDto> Grouped_Carriage_Statistics_List { get; set; } =
+            new Dictionary<string, ExternalCarriageTypeGroupDto>();
         [JsonPropertyName("train_schedule")]
         //Список станцій поїзда на маршруті прямування
         public List<ExternalSingleTrainStopDto> Train_Stops_List { get; set; } = new List<ExternalSingleTrainStopDto>();
