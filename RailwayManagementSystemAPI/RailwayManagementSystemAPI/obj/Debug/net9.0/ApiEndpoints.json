@@ -205,7 +205,7 @@
   {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers.CarriageAssignmentRepositoryController",
     "Method": "CreatePassengerCarriageOnTrainRouteOnDate",
-    "RelativePath": "assign-carriage",
+    "RelativePath": "assign-carriage-to-train-race-squad",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -218,7 +218,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "RailwayCore.Models.PassengerCarriageOnTrainRouteOnDate",
+        "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -466,6 +466,42 @@
     "ReturnTypes": [
       {
         "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalProfileTicketBookingDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers.CarriageAssignmentRepositoryController",
+    "Method": "UpdatePassengerCarriageOnTrainRouteOnDate",
+    "RelativePath": "update-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_on_date_id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "passenger_carriage_id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalCarriageAssignmentUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto",
         "MediaTypes": [
           "text/plain",
           "application/json",

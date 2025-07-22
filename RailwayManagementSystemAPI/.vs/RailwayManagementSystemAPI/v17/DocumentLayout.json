@@ -3,11 +3,37 @@
   "WorkspaceRootPath": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\apicontrollers\\modelrepositorycontrollers\\carriageassignmentrepositorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\apicontrollers\\modelrepositorycontrollers\\carriageassignmentrepositorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\externalservices\\modelrepositoryservices\\carriageassignmentrepositoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\externalservices\\modelrepositoryservices\\carriageassignmentrepositoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\internalservices\\modelrepositories\\passengercarriageontrainrouteondaterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\externalservices\\clientservices\\userticketmanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\externalservices\\clientservices\\userticketmanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\internaldto\\modeldto\\passengercarriageontrainrouteondatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\apicontrollers\\modelrepositorycontrollers\\carriageassignmentrepositorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\apicontrollers\\modelrepositorycontrollers\\carriageassignmentrepositorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\railwaymanagementsystemapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\railwaymanagementsystemapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\externaldto\\externalcarriageassignmentupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\externaldto\\externalcarriageassignmentupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\internalservices\\modelrepositories\\passengercarriagerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\apicontrollers\\clientcontrollers\\userticketmanagementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -20,13 +46,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\apicontrollers\\clientcontrollers\\completeticketbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\apicontrollers\\clientcontrollers\\completeticketbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\externalservices\\modelrepositoryservices\\carriageassignmentrepositoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\externalservices\\modelrepositoryservices\\carriageassignmentrepositoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\internalservices\\modelrepositories\\passengercarriageontrainrouteondaterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\internalservices\\systemservices\\queryresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -61,10 +80,6 @@
       "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\externalservices\\clientservices\\completeticketbookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\externalservices\\clientservices\\userticketmanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\externalservices\\clientservices\\userticketmanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\externalservices\\systemservices\\systemauthenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\externalservices\\systemservices\\systemauthenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -74,10 +89,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\models\\station.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\models\\image.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -213,9 +224,6 @@
       "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\internalservices\\modelrepositories\\railwaybranchrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\internalservices\\modelrepositories\\passengercarriagerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\models\\trainrouteondateonstation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -273,10 +281,6 @@
       "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\internaldto\\modeldto\\ticketbookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|d:\\shevchenkorailwaysystemcore\\railwaymanagementsystemapi\\railwaymanagementsystemapi\\railwaymanagementsystemapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{0F324B15-9005-41CA-9901-A387EAA3057A}|RailwayManagementSystemAPI\\RailwayManagementSystemAPI.csproj|solutionrelative:railwaymanagementsystemapi\\railwaymanagementsystemapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D5D324F6-4606-4EE9-8BE8-AAD9F4C2ED69}|..\\RailwayCore\\RailwayCore\\RailwayCore.csproj|d:\\shevchenkorailwaysystemcore\\railwaycore\\railwaycore\\internaldto\\modeldto\\trainrouteondateonstationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -309,42 +313,123 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "CarriageAssignmentRepositoryService.cs",
+              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\ModelRepositoryServices\\CarriageAssignmentRepositoryService.cs",
+              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\ModelRepositoryServices\\CarriageAssignmentRepositoryService.cs",
+              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\ModelRepositoryServices\\CarriageAssignmentRepositoryService.cs",
+              "RelativeToolTip": "RailwayManagementSystemAPI\\ExternalServices\\ModelRepositoryServices\\CarriageAssignmentRepositoryService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T12:30:10.623Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PassengerCarriageOnTrainRouteOnDateRepository.cs",
+              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageOnTrainRouteOnDateRepository.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageOnTrainRouteOnDateRepository.cs",
+              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageOnTrainRouteOnDateRepository.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageOnTrainRouteOnDateRepository.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAzwBwAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T17:40:43.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PassengerCarriageOnTrainRouteOnDateDto.cs",
+              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\PassengerCarriageOnTrainRouteOnDateDto.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\PassengerCarriageOnTrainRouteOnDateDto.cs",
+              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\PassengerCarriageOnTrainRouteOnDateDto.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\PassengerCarriageOnTrainRouteOnDateDto.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAcwCsAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-27T08:16:31.604Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserTicketManagementService.cs",
+              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\UserTicketManagementService.cs",
+              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\UserTicketManagementService.cs",
+              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\UserTicketManagementService.cs",
+              "RelativeToolTip": "RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\UserTicketManagementService.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAApwEoAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T16:39:01.37Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "CarriageAssignmentRepositoryController.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ModelRepositoryControllers\\CarriageAssignmentRepositoryController.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ApiControllers\\ModelRepositoryControllers\\CarriageAssignmentRepositoryController.cs",
               "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ModelRepositoryControllers\\CarriageAssignmentRepositoryController.cs",
               "RelativeToolTip": "RailwayManagementSystemAPI\\ApiControllers\\ModelRepositoryControllers\\CarriageAssignmentRepositoryController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAuwAwAAACBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T12:50:11.234Z"
+              "WhenOpened": "2025-07-22T12:50:11.234Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserTicketManagementController.cs",
-              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\UserTicketManagementController.cs",
-              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\UserTicketManagementController.cs",
-              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\UserTicketManagementController.cs",
-              "RelativeToolTip": "RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\UserTicketManagementController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAoAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\Program.cs",
+              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\Program.cs",
+              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\Program.cs",
+              "RelativeToolTip": "RailwayManagementSystemAPI\\Program.cs",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAQwHgAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-02T18:12:20.286Z"
+              "WhenOpened": "2025-04-21T19:13:51.589Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CompleteTicketBookingController.cs",
-              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\CompleteTicketBookingController.cs",
-              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\CompleteTicketBookingController.cs",
-              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\CompleteTicketBookingController.cs",
-              "RelativeToolTip": "RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\CompleteTicketBookingController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAB4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T07:42:48.525Z"
+              "DocumentIndex": 6,
+              "Title": "RailwayManagementSystemAPI.http",
+              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.http",
+              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\RailwayManagementSystemAPI.http",
+              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.http",
+              "RelativeToolTip": "RailwayManagementSystemAPI\\RailwayManagementSystemAPI.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-04-28T17:26:08.007Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
+              "Title": "ExternalCarriageAssignmentUpdateDto.cs",
+              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalDTO\\ExternalCarriageAssignmentUpdateDto.cs",
+              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalDTO\\ExternalCarriageAssignmentUpdateDto.cs",
+              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalDTO\\ExternalCarriageAssignmentUpdateDto.cs",
+              "RelativeToolTip": "RailwayManagementSystemAPI\\ExternalDTO\\ExternalCarriageAssignmentUpdateDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T13:25:57.447Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PassengerCarriageRepository.cs",
+              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageRepository.cs",
+              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageRepository.cs",
+              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageRepository.cs",
+              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T17:41:01.784Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "TrainSearchController.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\TrainSearchController.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\TrainSearchController.cs",
@@ -356,44 +441,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PassengerCarriageOnTrainRouteOnDateDto.cs",
-              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\PassengerCarriageOnTrainRouteOnDateDto.cs",
-              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\PassengerCarriageOnTrainRouteOnDateDto.cs",
-              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\PassengerCarriageOnTrainRouteOnDateDto.cs",
-              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\PassengerCarriageOnTrainRouteOnDateDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAABGAAAAAAAAAA==",
+              "DocumentIndex": 11,
+              "Title": "CompleteTicketBookingController.cs",
+              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\CompleteTicketBookingController.cs",
+              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\CompleteTicketBookingController.cs",
+              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\CompleteTicketBookingController.cs",
+              "RelativeToolTip": "RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\CompleteTicketBookingController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAB4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T08:16:31.604Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-27T07:42:48.525Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "CarriageAssignmentRepositoryService.cs",
-              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\ModelRepositoryServices\\CarriageAssignmentRepositoryService.cs",
-              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\ModelRepositoryServices\\CarriageAssignmentRepositoryService.cs",
-              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\ModelRepositoryServices\\CarriageAssignmentRepositoryService.cs",
-              "RelativeToolTip": "RailwayManagementSystemAPI\\ExternalServices\\ModelRepositoryServices\\CarriageAssignmentRepositoryService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAACjAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "UserTicketManagementController.cs",
+              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\UserTicketManagementController.cs",
+              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\UserTicketManagementController.cs",
+              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\UserTicketManagementController.cs",
+              "RelativeToolTip": "RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\UserTicketManagementController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T12:30:10.623Z"
+              "WhenOpened": "2025-05-02T18:12:20.286Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "PassengerCarriageOnTrainRouteOnDateRepository.cs",
-              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageOnTrainRouteOnDateRepository.cs",
-              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageOnTrainRouteOnDateRepository.cs",
-              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageOnTrainRouteOnDateRepository.cs",
-              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageOnTrainRouteOnDateRepository.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAYwDcAAABHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T17:40:43.891Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 13,
               "Title": "TrainScheduleSearchService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TrainRouteSearchServices\\TrainScheduleSearchService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TrainRouteSearchServices\\TrainScheduleSearchService.cs",
@@ -405,7 +477,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "FullTrainAssignementService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\CoreServices\\FullTrainAssignementService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\CoreServices\\FullTrainAssignementService.cs",
@@ -417,7 +489,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "QueryResults.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\SystemServices\\QueryResults.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\SystemServices\\QueryResults.cs",
@@ -429,7 +501,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 17,
               "Title": "PassengerCarriage.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\PassengerCarriage.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\PassengerCarriage.cs",
@@ -441,7 +513,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "TextEnumConvertationService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\TextEnumConvertationService.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\TextEnumConvertationService.cs",
@@ -453,7 +525,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 18,
               "Title": "TrainStopWithArrivalAndDepartureTimeDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalDTO\\TrainStopWithArrivalAndDepartureTimeDto.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalDTO\\TrainStopWithArrivalAndDepartureTimeDto.cs",
@@ -465,7 +537,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 20,
               "Title": "CompleteTicketBookingService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\CompleteTicketBookingService.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\CompleteTicketBookingService.cs",
@@ -477,7 +549,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "TrainRouteWithBookingSearchService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\TrainRouteWithBookingSearchService.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\TrainRouteWithBookingSearchService.cs",
@@ -489,7 +561,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 19,
               "Title": "UserManagementService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\UserManagementService.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\UserManagementService.cs",
@@ -501,19 +573,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "UserTicketManagementService.cs",
-              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\UserTicketManagementService.cs",
-              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\UserTicketManagementService.cs",
-              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\UserTicketManagementService.cs",
-              "RelativeToolTip": "RailwayManagementSystemAPI\\ExternalServices\\ClientServices\\UserTicketManagementService.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAD4v0oAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-02T16:39:01.37Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "SystemAuthenticationService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\SystemAuthenticationService.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\SystemAuthenticationService.cs",
@@ -525,7 +585,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "TrainRouteWithBookingsInfoDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalDTO\\TrainRouteWithBookingsInfoDto.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalDTO\\TrainRouteWithBookingsInfoDto.cs",
@@ -537,7 +597,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 85,
               "Title": "20250715075315_Images_And_Ukrainian_Station_Titles.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Migrations\\20250715075315_Images_And_Ukrainian_Station_Titles.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Migrations\\20250715075315_Images_And_Ukrainian_Station_Titles.cs",
@@ -549,19 +609,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\Program.cs",
-              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\Program.cs",
-              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\Program.cs",
-              "RelativeToolTip": "RailwayManagementSystemAPI\\Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAH4AAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-21T19:13:51.589Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "Image.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\Image.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\Image.cs",
@@ -573,7 +621,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "UserProfile.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\UserProfile.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\UserProfile.cs",
@@ -585,7 +633,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Context\\AppDbContext.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Context\\AppDbContext.cs",
@@ -597,7 +645,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "TicketAvailabilityCheckService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketAvailabilityCheckService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketAvailabilityCheckService.cs",
@@ -609,7 +657,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "Station.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\Station.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\Station.cs",
@@ -621,7 +669,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "ConsoleRepresentationService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\SystemServices\\ConsoleRepresentationService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\SystemServices\\ConsoleRepresentationService.cs",
@@ -633,7 +681,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TicketManagementDTO\\InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TicketManagementDTO\\InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto.cs",
@@ -645,7 +693,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "TicketAdditionalServicesManager.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketAdditionalServicesManager.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketAdditionalServicesManager.cs",
@@ -657,7 +705,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 31,
               "Title": "TrainRouteAssignmentDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalDTO\\TrainRouteAssignmentDto.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalDTO\\TrainRouteAssignmentDto.cs",
@@ -669,7 +717,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 32,
               "Title": "InternalCarriageAssignmentRepresentationDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TicketManagementDTO\\InternalCarriageAssignmentRepresentationDto.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TicketManagementDTO\\InternalCarriageAssignmentRepresentationDto.cs",
@@ -681,7 +729,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 33,
               "Title": "FullTicketManagementService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\CoreServices\\FullTicketManagementService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\CoreServices\\FullTicketManagementService.cs",
@@ -693,7 +741,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 34,
               "Title": "FullTrainRouteSearchService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\CoreServices\\FullTrainRouteSearchService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\CoreServices\\FullTrainRouteSearchService.cs",
@@ -705,7 +753,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 36,
               "Title": "InternalSinglePlaceDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TicketManagementDTO\\InternalSinglePlaceDto.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TicketManagementDTO\\InternalSinglePlaceDto.cs",
@@ -717,7 +765,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 35,
               "Title": "InternalTicketAdditionalServicesDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TicketManagementDTO\\InternalTicketAdditionalServicesDto.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TicketManagementDTO\\InternalTicketAdditionalServicesDto.cs",
@@ -729,7 +777,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 38,
               "Title": "RouteAlgorithmService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\RouteAlgorithmService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\RouteAlgorithmService.cs",
@@ -741,7 +789,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 37,
               "Title": "TicketAllocationService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketAllocationService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketAllocationService.cs",
@@ -753,7 +801,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 40,
               "Title": "TrainTripsSearchService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TrainRouteSearchServices\\TrainTripsSearchService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TrainRouteSearchServices\\TrainTripsSearchService.cs",
@@ -765,7 +813,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 39,
               "Title": "TicketBooking.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\TicketBooking.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\TicketBooking.cs",
@@ -777,7 +825,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 41,
               "Title": "ExternalTrainRaceThroughStationDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalDTO\\ExternalTrainRaceThroughStationDto.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalDTO\\ExternalTrainRaceThroughStationDto.cs",
@@ -789,7 +837,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 42,
               "Title": "User.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\User.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\User.cs",
@@ -801,7 +849,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 43,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Program.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Program.cs",
@@ -813,7 +861,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 44,
               "Title": "CompletedTicketBookingDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalDTO\\CompletedTicketBookingDto.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalDTO\\CompletedTicketBookingDto.cs",
@@ -825,7 +873,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 45,
               "Title": "InternalTrainRaceThroughStationDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TrainRouteSearchDTO\\InternalTrainRaceThroughStationDto.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TrainRouteSearchDTO\\InternalTrainRaceThroughStationDto.cs",
@@ -837,7 +885,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 46,
               "Title": "UserAccountManagementController.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\UserAccountManagementController.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ApiControllers\\ClientControllers\\UserAccountManagementController.cs",
@@ -849,7 +897,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 47,
               "Title": "TrainRouteOnDate.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\TrainRouteOnDate.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\TrainRouteOnDate.cs",
@@ -861,7 +909,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 48,
               "Title": "TrainRouteOnDateDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\TrainRouteOnDateDto.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\TrainRouteOnDateDto.cs",
@@ -873,7 +921,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 49,
               "Title": "InternalTrainRaceBetweenStationsDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TrainRouteSearchDTO\\InternalTrainRaceBetweenStationsDto.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TrainRouteSearchDTO\\InternalTrainRaceBetweenStationsDto.cs",
@@ -885,7 +933,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 50,
               "Title": "TicketUserManipulationService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketUserManipulationService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketUserManipulationService.cs",
@@ -897,7 +945,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 51,
               "Title": "TicketSystemManipulationService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketSystemManipulationService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketSystemManipulationService.cs",
@@ -909,7 +957,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 52,
               "Title": "TicketBookingTimerService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketBookingTimerService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TicketManagementServices\\TicketBookingTimerService.cs",
@@ -921,7 +969,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 53,
               "Title": "InternalPassengerTripInfoDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TicketManagementDTO\\InternalPassengerTripInfoDto.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\ExecutiveDTO\\TicketManagementDTO\\InternalPassengerTripInfoDto.cs",
@@ -933,7 +981,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 54,
               "Title": "ExpiredTicketBookingsRemovingService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\ExpiredTicketBookingsRemovingService.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\ExpiredTicketBookingsRemovingService.cs",
@@ -945,7 +993,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 55,
               "Title": "TrainSquadSearchService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TrainRouteSearchServices\\TrainSquadSearchService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ExecutiveServices\\TrainRouteSearchServices\\TrainSquadSearchService.cs",
@@ -957,7 +1005,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 56,
               "Title": "MetaDataAttributes.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\SystemServices\\MetaDataAttributes.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\SystemServices\\MetaDataAttributes.cs",
@@ -969,7 +1017,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 58,
               "Title": "TrainRouteOnDateRepository.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\TrainRouteOnDateRepository.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\TrainRouteOnDateRepository.cs",
@@ -981,7 +1029,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 57,
               "Title": "TrainRouteRepository.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\TrainRouteRepository.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\TrainRouteRepository.cs",
@@ -993,7 +1041,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 59,
               "Title": "StationRepository.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\StationRepository.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\StationRepository.cs",
@@ -1005,7 +1053,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 60,
               "Title": "PassengerCarriageDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\PassengerCarriageDto.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\PassengerCarriageDto.cs",
@@ -1017,7 +1065,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 61,
               "Title": "SystemTestingController.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\SystemControllers\\SystemTestingController.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ApiControllers\\SystemControllers\\SystemTestingController.cs",
@@ -1029,7 +1077,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 62,
               "Title": "ApiTrainAssignmentService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\AdminServices\\ApiTrainAssignmentService.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\AdminServices\\ApiTrainAssignmentService.cs",
@@ -1041,7 +1089,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 63,
               "Title": "TextService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\SystemServices\\TextService.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\SystemServices\\TextService.cs",
@@ -1053,7 +1101,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 64,
               "Title": "TrainRouteOnDateOnStationRepository.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\TrainRouteOnDateOnStationRepository.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\TrainRouteOnDateOnStationRepository.cs",
@@ -1065,7 +1113,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 65,
               "Title": "RailwayBranchRepository.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\RailwayBranchRepository.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\RailwayBranchRepository.cs",
@@ -1077,19 +1125,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
-              "Title": "PassengerCarriageRepository.cs",
-              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageRepository.cs",
-              "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageRepository.cs",
-              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageRepository.cs",
-              "RelativeToolTip": "..\\RailwayCore\\RailwayCore\\InternalServices\\ModelRepositories\\PassengerCarriageRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T17:41:01.784Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 67,
               "Title": "TrainRoute.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\TrainRoute.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\TrainRoute.cs",
@@ -1101,7 +1137,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 68,
               "Title": "TicketInSelling.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\TicketInSelling.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\TicketInSelling.cs",
@@ -1113,7 +1149,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 69,
               "Title": "RailwayBranch.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\RailwayBranch.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\RailwayBranch.cs",
@@ -1125,7 +1161,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 66,
               "Title": "TrainRouteOnDateOnStation.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\TrainRouteOnDateOnStation.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\TrainRouteOnDateOnStation.cs",
@@ -1137,7 +1173,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 70,
               "Title": "PassengerCarriageOnTrainRouteOnDate.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Models\\PassengerCarriageOnTrainRouteOnDate.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Models\\PassengerCarriageOnTrainRouteOnDate.cs",
@@ -1149,7 +1185,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 71,
               "Title": "RailwayCore.csproj",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\RailwayCore.csproj",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\RailwayCore.csproj",
@@ -1161,7 +1197,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 73,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\appsettings.json",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\appsettings.json",
@@ -1173,7 +1209,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 72,
               "Title": "PricingService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\PricingService.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\PricingService.cs",
@@ -1185,7 +1221,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 74,
               "Title": "WebSocketHandler.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\WebSocketHandler.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\WebSocketHandler.cs",
@@ -1197,7 +1233,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 75,
               "Title": "MediatorTicketBookingDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalDTO\\MediatorTicketBookingDto.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalDTO\\MediatorTicketBookingDto.cs",
@@ -1209,7 +1245,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 76,
               "Title": "UserDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalDTO\\UserDto.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalDTO\\UserDto.cs",
@@ -1221,7 +1257,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 77,
               "Title": "ErrorMessageService.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\ErrorMessageService.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalServices\\SystemServices\\ErrorMessageService.cs",
@@ -1233,7 +1269,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 78,
               "Title": "TrainAssignmentController.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ApiControllers\\AdminControllers\\TrainAssignmentController.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ApiControllers\\AdminControllers\\TrainAssignmentController.cs",
@@ -1245,7 +1281,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
+              "DocumentIndex": 79,
               "Title": "ProfileTicketBookingDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalDTO\\ProfileTicketBookingDto.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalDTO\\ProfileTicketBookingDto.cs",
@@ -1257,7 +1293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 80,
               "Title": "InitialTicketBookingDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\ExternalDTO\\InitialTicketBookingDto.cs",
               "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\ExternalDTO\\InitialTicketBookingDto.cs",
@@ -1269,7 +1305,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
+              "DocumentIndex": 81,
               "Title": "TicketBookingDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\TicketBookingDto.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\TicketBookingDto.cs",
@@ -1281,7 +1317,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 83,
               "Title": "20250502124046_Ticket_Expiration_Time_In_Database.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Migrations\\20250502124046_Ticket_Expiration_Time_In_Database.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Migrations\\20250502124046_Ticket_Expiration_Time_In_Database.cs",
@@ -1293,7 +1329,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 84,
               "Title": "20250502102909_UserRole.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\Migrations\\20250502102909_UserRole.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\Migrations\\20250502102909_UserRole.cs",
@@ -1305,19 +1341,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 80,
-              "Title": "RailwayManagementSystemAPI.http",
-              "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.http",
-              "RelativeDocumentMoniker": "RailwayManagementSystemAPI\\RailwayManagementSystemAPI.http",
-              "ToolTip": "D:\\ShevchenkoRailwaySystemCore\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI\\RailwayManagementSystemAPI.http",
-              "RelativeToolTip": "RailwayManagementSystemAPI\\RailwayManagementSystemAPI.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-04-28T17:26:08.007Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 82,
               "Title": "TrainRouteOnDateOnStationDto.cs",
               "DocumentMoniker": "D:\\ShevchenkoRailwaySystemCore\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\TrainRouteOnDateOnStationDto.cs",
               "RelativeDocumentMoniker": "..\\RailwayCore\\RailwayCore\\InternalDTO\\ModelDTO\\TrainRouteOnDateOnStationDto.cs",

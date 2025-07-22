@@ -5,7 +5,7 @@
     "version": "v1"
   },
   "paths": {
-    "/assign-carriage": {
+    "/assign-carriage-to-train-race-squad": {
       "post": {
         "tags": [
           "CarriageAssignmentRepository"
@@ -35,17 +35,83 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDate"
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDate"
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDate"
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}": {
+      "patch": {
+        "tags": [
+          "CarriageAssignmentRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "passenger_carriage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalCarriageAssignmentUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalCarriageAssignmentUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalCarriageAssignmentUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
                 }
               }
             }
@@ -848,16 +914,6 @@
   },
   "components": {
     "schemas": {
-      "AssignementType": {
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "CarriageAssignementWithoutRouteDTO": {
         "type": "object",
         "properties": {
@@ -890,10 +946,6 @@
         },
         "additionalProperties": false
       },
-      "Exemption": {
-        "type": "integer",
-        "format": "int32"
-      },
       "ExternaInputlLoginUserDto": {
         "type": "object",
         "properties": {
@@ -903,6 +955,41 @@
           },
           "password": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalCarriageAssignmentUpdateDto": {
+        "type": "object",
+        "properties": {
+          "position_in_squad": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "is_for_woman": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "is_for_children": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "factual_air_conditioning": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "factual_shower_availability": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "factual_is_inclusive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "food_availability": {
+            "type": "boolean",
             "nullable": true
           }
         },
@@ -1506,15 +1593,6 @@
         },
         "additionalProperties": false
       },
-      "FrequencyType": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "InternalPassengerTripInfoDto": {
         "type": "object",
         "properties": {
@@ -1562,160 +1640,6 @@
         },
         "additionalProperties": false
       },
-      "PassengerCarriage": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "maxLength": 8,
-            "type": "string",
-            "nullable": true
-          },
-          "type_Of": {
-            "$ref": "#/components/schemas/PassengerCarriageType"
-          },
-          "capacity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "production_Year": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "manufacturer": {
-            "$ref": "#/components/schemas/PassengerCarriageManufacturer"
-          },
-          "quality_Class": {
-            "$ref": "#/components/schemas/PassengerCarriageQualityClass"
-          },
-          "renewal_Fact": {
-            "type": "boolean"
-          },
-          "renewal_Year": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "renewal_Performer": {
-            "$ref": "#/components/schemas/PassengerCarriageManufacturer"
-          },
-          "renewal_Info": {
-            "maxLength": 60,
-            "type": "string",
-            "nullable": true
-          },
-          "air_Conditioning": {
-            "type": "boolean"
-          },
-          "is_Inclusive": {
-            "type": "boolean"
-          },
-          "is_For_Train_Chief": {
-            "type": "boolean"
-          },
-          "shower_Availability": {
-            "type": "boolean"
-          },
-          "in_Current_Use": {
-            "type": "boolean"
-          },
-          "appearence": {
-            "maxLength": 30,
-            "type": "string",
-            "nullable": true
-          },
-          "station_Depot": {
-            "$ref": "#/components/schemas/Station"
-          },
-          "station_Depot_Id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "train_Routes_On_Date": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TrainRouteOnDate"
-            },
-            "nullable": true
-          },
-          "carriage_Assignements": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDate"
-            },
-            "nullable": true
-          },
-          "ticket_Bookings": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TicketBooking"
-            },
-            "nullable": true
-          },
-          "opened_Tickets": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TicketInSelling"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "PassengerCarriageManufacturer": {
-        "enum": [
-          0,
-          1
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "PassengerCarriageOnTrainRouteOnDate": {
-        "type": "object",
-        "properties": {
-          "passenger_Carriage": {
-            "$ref": "#/components/schemas/PassengerCarriage"
-          },
-          "passenger_Carriage_Id": {
-            "type": "string",
-            "nullable": true
-          },
-          "train_Route_On_Date": {
-            "$ref": "#/components/schemas/TrainRouteOnDate"
-          },
-          "train_Route_On_Date_Id": {
-            "type": "string",
-            "nullable": true
-          },
-          "position_In_Squad": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "is_For_Woman": {
-            "type": "boolean"
-          },
-          "is_For_Children": {
-            "type": "boolean"
-          },
-          "factual_Air_Conditioning": {
-            "type": "boolean"
-          },
-          "factual_Shower_Availability": {
-            "type": "boolean"
-          },
-          "factual_Is_Inclusive": {
-            "type": "boolean"
-          },
-          "factual_Wifi_Availability": {
-            "type": "boolean"
-          },
-          "food_Availability": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
       "PassengerCarriageOnTrainRouteOnDateDto": {
         "type": "object",
         "properties": {
@@ -1752,232 +1676,6 @@
         },
         "additionalProperties": false
       },
-      "PassengerCarriageQualityClass": {
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "PassengerCarriageType": {
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "RailwayBranch": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "maxLength": 40,
-            "type": "string",
-            "nullable": true
-          },
-          "office_Location": {
-            "maxLength": 30,
-            "type": "string",
-            "nullable": true
-          },
-          "stations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Station"
-            },
-            "nullable": true
-          },
-          "train_Routes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TrainRoute"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Region": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16,
-          17,
-          18,
-          19,
-          20,
-          21,
-          22
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "Role": {
-        "enum": [
-          0,
-          1
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "Sex": {
-        "enum": [
-          0,
-          1
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "SpeedType": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "Station": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "register_Id": {
-            "type": "string",
-            "nullable": true
-          },
-          "title": {
-            "maxLength": 30,
-            "type": "string",
-            "nullable": true
-          },
-          "ukrainian_Title": {
-            "maxLength": 30,
-            "type": "string",
-            "nullable": true
-          },
-          "location": {
-            "maxLength": 30,
-            "type": "string",
-            "nullable": true
-          },
-          "type_Of": {
-            "$ref": "#/components/schemas/StationType"
-          },
-          "region": {
-            "$ref": "#/components/schemas/Region"
-          },
-          "locomotive_Depot": {
-            "maxLength": 20,
-            "type": "string",
-            "nullable": true
-          },
-          "carriage_Depot": {
-            "maxLength": 20,
-            "type": "string",
-            "nullable": true
-          },
-          "railway_Branch": {
-            "$ref": "#/components/schemas/RailwayBranch"
-          },
-          "railway_Branch_Id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "carriages_In_Depot": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PassengerCarriage"
-            },
-            "nullable": true
-          },
-          "train_Routes_On_Date": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TrainRouteOnDate"
-            },
-            "nullable": true
-          },
-          "train_Stops": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TrainRouteOnDateOnStation"
-            },
-            "nullable": true
-          },
-          "ticket_Bookings_With_Station_As_Starting": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TicketBooking"
-            },
-            "nullable": true
-          },
-          "ticket_Bookings_With_Station_As_Ending": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TicketBooking"
-            },
-            "nullable": true
-          },
-          "opened_Tickets_With_Station_As_Starting": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TicketInSelling"
-            },
-            "nullable": true
-          },
-          "opened_Tickets_With_Station_As_Ending": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TicketInSelling"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "StationType": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "StopType": {
-        "enum": [
-          0,
-          1
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "SystemUserDemonstrationDto": {
         "type": "object",
         "properties": {
@@ -1995,316 +1693,6 @@
           },
           "token": {
             "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TicketBooking": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "full_Ticket_Id": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          },
-          "user_Id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "train_Route_On_Date": {
-            "$ref": "#/components/schemas/TrainRouteOnDate"
-          },
-          "train_Route_On_Date_Id": {
-            "type": "string",
-            "nullable": true
-          },
-          "passenger_Carriage": {
-            "$ref": "#/components/schemas/PassengerCarriage"
-          },
-          "passenger_Carriage_Id": {
-            "type": "string",
-            "nullable": true
-          },
-          "passenger_Carriage_Position_In_Squad": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "starting_Station": {
-            "$ref": "#/components/schemas/Station"
-          },
-          "starting_Station_Id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "ending_Station": {
-            "$ref": "#/components/schemas/Station"
-          },
-          "ending_Station_Id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "place_In_Carriage": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "passenger_Name": {
-            "maxLength": 30,
-            "type": "string",
-            "nullable": true
-          },
-          "passenger_Surname": {
-            "maxLength": 30,
-            "type": "string",
-            "nullable": true
-          },
-          "booking_Time": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "booking_Expiration_Time": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "ticket_Status": {
-            "$ref": "#/components/schemas/TicketStatus"
-          },
-          "additional_Services": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TicketInSelling": {
-        "type": "object",
-        "properties": {
-          "passenger_Carriage": {
-            "$ref": "#/components/schemas/PassengerCarriage"
-          },
-          "passenger_Carriage_Id": {
-            "type": "string",
-            "nullable": true
-          },
-          "train_Route_On_Date": {
-            "$ref": "#/components/schemas/TrainRouteOnDate"
-          },
-          "train_Route_On_Date_Id": {
-            "type": "string",
-            "nullable": true
-          },
-          "starting_Station": {
-            "$ref": "#/components/schemas/Station"
-          },
-          "starting_Station_Id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "ending_Station": {
-            "$ref": "#/components/schemas/Station"
-          },
-          "ending_Station_Id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "extra_Coefficient": {
-            "type": "number",
-            "format": "double"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TicketStatus": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "TrainQualityClass": {
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "TrainRoute": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "maxLength": 8,
-            "type": "string",
-            "nullable": true
-          },
-          "is_Branded": {
-            "type": "boolean"
-          },
-          "quality_Class": {
-            "$ref": "#/components/schemas/TrainQualityClass"
-          },
-          "branded_Name": {
-            "maxLength": 30,
-            "type": "string",
-            "nullable": true
-          },
-          "trip_Type": {
-            "$ref": "#/components/schemas/TripType"
-          },
-          "speed_Type": {
-            "$ref": "#/components/schemas/SpeedType"
-          },
-          "frequency_Type": {
-            "$ref": "#/components/schemas/FrequencyType"
-          },
-          "assignement_Type": {
-            "$ref": "#/components/schemas/AssignementType"
-          },
-          "railway_Branch": {
-            "$ref": "#/components/schemas/RailwayBranch"
-          },
-          "railway_Branch_Id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "train_Route_Coefficient": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "train_Assignements": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TrainRouteOnDate"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TrainRouteOnDate": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "maxLength": 20,
-            "type": "string",
-            "nullable": true
-          },
-          "train_Route": {
-            "$ref": "#/components/schemas/TrainRoute"
-          },
-          "train_Route_Id": {
-            "type": "string",
-            "nullable": true
-          },
-          "departure_Date": {
-            "type": "string",
-            "format": "date"
-          },
-          "train_Race_Coefficient": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "stations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Station"
-            },
-            "nullable": true
-          },
-          "train_Stops": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TrainRouteOnDateOnStation"
-            },
-            "nullable": true
-          },
-          "passenger_Carriages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PassengerCarriage"
-            },
-            "nullable": true
-          },
-          "carriage_Assignements": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDate"
-            },
-            "nullable": true
-          },
-          "ticket_Bookings": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TicketBooking"
-            },
-            "nullable": true
-          },
-          "opened_Tickets": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TicketInSelling"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TrainRouteOnDateOnStation": {
-        "type": "object",
-        "properties": {
-          "train_Route_On_Date": {
-            "$ref": "#/components/schemas/TrainRouteOnDate"
-          },
-          "train_Route_On_Date_Id": {
-            "type": "string",
-            "nullable": true
-          },
-          "station": {
-            "$ref": "#/components/schemas/Station"
-          },
-          "station_Id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "arrival_Time": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "departure_Time": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "stop_Type": {
-            "$ref": "#/components/schemas/StopType"
-          },
-          "distance_From_Starting_Station": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "speed_On_Section": {
-            "type": "number",
-            "format": "double",
             "nullable": true
           }
         },
@@ -2414,80 +1802,6 @@
             "type": "number",
             "format": "double",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TripType": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "surname": {
-            "maxLength": 30,
-            "type": "string",
-            "nullable": true
-          },
-          "user_Name": {
-            "maxLength": 30,
-            "type": "string",
-            "nullable": true
-          },
-          "name": {
-            "maxLength": 30,
-            "type": "string",
-            "nullable": true
-          },
-          "sex": {
-            "$ref": "#/components/schemas/Sex"
-          },
-          "exemption": {
-            "$ref": "#/components/schemas/Exemption"
-          },
-          "discount": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "email": {
-            "maxLength": 30,
-            "type": "string",
-            "format": "email",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone_Number": {
-            "type": "string",
-            "format": "tel",
-            "nullable": true
-          },
-          "ticket_Bookings": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TicketBooking"
-            },
-            "nullable": true
-          },
-          "role": {
-            "$ref": "#/components/schemas/Role"
           }
         },
         "additionalProperties": false

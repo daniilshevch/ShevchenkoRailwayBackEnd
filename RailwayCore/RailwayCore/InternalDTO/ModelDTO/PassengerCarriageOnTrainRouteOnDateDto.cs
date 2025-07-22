@@ -28,6 +28,21 @@ namespace RailwayCore.InternalDTO.ModelDTO
         public bool Factual_Is_Inclusive { get; set; } = false;
         [JsonPropertyName("food_availability")]
         public bool Food_Availability { get; set; } = false;
+        public static explicit operator PassengerCarriageOnTrainRouteOnDateDto(PassengerCarriageOnTrainRouteOnDate input)
+        {
+            return new PassengerCarriageOnTrainRouteOnDateDto()
+            {
+                Passenger_Carriage_Id = input.Passenger_Carriage_Id,
+                Train_Route_On_Date_Id = input.Train_Route_On_Date_Id,
+                Position_In_Squad = input.Position_In_Squad,
+                Is_For_Woman = input.Is_For_Woman,
+                Is_For_Children = input.Is_For_Children,
+                Factual_Air_Conditioning = input.Factual_Air_Conditioning,
+                Factual_Is_Inclusive = input.Factual_Is_Inclusive,
+                Factual_Shower_Availability = input.Factual_Shower_Availability,
+                Food_Availability = input.Food_Availability
+            };
+        }
     }
     public class PassengerCarriageOnTrainRouteOnDateUpdateDto
     {

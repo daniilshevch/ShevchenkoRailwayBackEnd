@@ -13,6 +13,7 @@ using System.Net;
 using RailwayCore.InternalServices.ExecutiveServices;
 using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices;
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
+using RailwayManagementSystemAPI.ExternalServices.ModelRepositoryServices;
 
 class Server
 {
@@ -60,6 +61,7 @@ class Server
         services.AddSingleton<FullTrainRouteSearchService>();
         services.AddSingleton<FullTicketManagementService>();
         //ApiServices
+        services.AddScoped<CarriageAssignmentRepositoryService>();
         services.AddScoped<TrainRouteWithBookingsSearchService>();
         services.AddScoped<CompleteTicketBookingService>();
         services.AddScoped<ApiTrainAssignmentService>();
@@ -112,30 +114,30 @@ class Server
         app.UseAuthorization();
         app.UseCors("AllowFrontend");
         ////////////////////////////////// Sockets
-        app.UseWebSockets();
-        app.Use(async (HttpContext context, RequestDelegate next) =>
-        {
-            HttpRequest request = context.Request;
-            HttpResponse response = context.Response;
-            PathString path = request.Path;
-            if (path == "/ws/seat-status")
-            {
-                if (context.WebSockets.IsWebSocketRequest)
-                {
-                    WebSocket web_socket = await context.WebSockets.AcceptWebSocketAsync();
-                    await WebSocketHandler.Handle(context, web_socket);
-                }
-                else
-                {
-                    response.StatusCode = 400;
-                }
-            }
-            else
-            {
-                await next.Invoke(context);
-            }
+        //app.UseWebSockets();
+        //app.Use(async (HttpContext context, RequestDelegate next) =>
+        //{
+        //    HttpRequest request = context.Request;
+        //    HttpResponse response = context.Response;
+        //    PathString path = request.Path;
+        //    if (path == "/ws/seat-status")
+        //    {
+        //        if (context.WebSockets.IsWebSocketRequest)
+        //        {
+        //            WebSocket web_socket = await context.WebSockets.AcceptWebSocketAsync();
+        //            await WebSocketHandler.Handle(context, web_socket);
+        //        }
+        //        else
+        //        {
+        //            response.StatusCode = 400;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        await next.Invoke(context);
+        //    }
 
-        });
+        //});
         //////////////////
         if (app.Environment.IsDevelopment())
         {
