@@ -3,7 +3,7 @@ using RailwayCore.InternalServices.ModelServices;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO;
 
-namespace RailwayManagementSystemAPI.ExternalServices.ModelRepositoryServices
+namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
 {
     public class CarriageAssignmentRepositoryService
     {
@@ -16,7 +16,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ModelRepositoryServices
         {
             return await carriage_assignment_repository.CreatePassengerCarriageOnTrainRouteOnDate(input);
         }
-        public async Task<QueryResult<PassengerCarriageOnTrainRouteOnDate>> UpdatePassengerCarriageOnTrainRouteOnDate(string passenger_carriage_id, 
+        public async Task<QueryResult<PassengerCarriageOnTrainRouteOnDate>> UpdatePassengerCarriageOnTrainRouteOnDate(string passenger_carriage_id,
             string train_route_on_date_id, ExternalCarriageAssignmentUpdateDto input)
         {
             PassengerCarriageOnTrainRouteOnDateUpdateDto update_dto = new PassengerCarriageOnTrainRouteOnDateUpdateDto()

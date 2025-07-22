@@ -9,6 +9,7 @@ using System.Security.Claims;
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
     [ApiController]
+    [ApiExplorerSettings(GroupName = "Client Controllers")]
     [Route("Client-API/[controller]")]
     public class CompleteTicketBookingController : ControllerBase
     {

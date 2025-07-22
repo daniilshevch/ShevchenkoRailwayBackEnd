@@ -15,6 +15,7 @@ public class SystemUserDemonstrationDto
 }
 namespace RailwayManagementSystemAPI.ApiControllers.SystemControllers
 {
+    [ApiExplorerSettings(GroupName = "System Controllers")]
     public class SystemTestingController : ControllerBase
     {
         private readonly SystemAuthenticationService system_authentication_service;

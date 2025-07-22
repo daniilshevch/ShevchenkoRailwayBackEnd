@@ -8,7 +8,8 @@ using RailwayManagementSystemAPI.ExternalDTO;
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
     [ApiController]
-    [Route("ClientAPI/[controller]")]
+    [ApiExplorerSettings(GroupName = "Client Controllers")]
+    [Route("Client-API/[controller]")]
     public class TrainSearchController : ControllerBase
     {
         private readonly TrainRouteWithBookingsSearchService train_route_with_booking_search_service;

@@ -2,11 +2,17 @@
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO;
-using RailwayManagementSystemAPI.ExternalServices.ModelRepositoryServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers
 {
+    [ApiController]
+    [Route("Admin-API")]
+    [ApiExplorerSettings(GroupName = "Admin Controllers")]
+    [SwaggerTag("Контролер для призначення пасажирських вагонів до поїздів")]
+    
     public class CarriageAssignmentRepositoryController: ControllerBase
     {
         private readonly CarriageAssignmentRepositoryService carriage_assignment_repository_service;

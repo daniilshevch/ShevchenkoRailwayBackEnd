@@ -426,6 +426,22 @@
           }
         }
       },
+      "Swashbuckle.AspNetCore.Annotations/7.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Swashbuckle.AspNetCore.SwaggerGen": "7.2.0"
+        },
+        "compile": {
+          "lib/net9.0/Swashbuckle.AspNetCore.Annotations.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Swashbuckle.AspNetCore.Annotations.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore.Swagger/7.2.0": {
         "type": "package",
         "dependencies": {
@@ -1181,6 +1197,30 @@
         "pomelo.entityframeworkcore.mysql.nuspec"
       ]
     },
+    "Swashbuckle.AspNetCore.Annotations/7.2.0": {
+      "sha512": "lWJ1+Pfks8T16dC2H1v41ZYPFs9iPZD/aRkpkPWoXjQ3zPaaEImdIUTdY5RRtoZJj6NeaL6mywMBIiJ5R0gH/g==",
+      "type": "package",
+      "path": "swashbuckle.aspnetcore.annotations/7.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net6.0/Swashbuckle.AspNetCore.Annotations.dll",
+        "lib/net6.0/Swashbuckle.AspNetCore.Annotations.pdb",
+        "lib/net6.0/Swashbuckle.AspNetCore.Annotations.xml",
+        "lib/net8.0/Swashbuckle.AspNetCore.Annotations.dll",
+        "lib/net8.0/Swashbuckle.AspNetCore.Annotations.pdb",
+        "lib/net8.0/Swashbuckle.AspNetCore.Annotations.xml",
+        "lib/net9.0/Swashbuckle.AspNetCore.Annotations.dll",
+        "lib/net9.0/Swashbuckle.AspNetCore.Annotations.pdb",
+        "lib/net9.0/Swashbuckle.AspNetCore.Annotations.xml",
+        "lib/netstandard2.0/Swashbuckle.AspNetCore.Annotations.dll",
+        "lib/netstandard2.0/Swashbuckle.AspNetCore.Annotations.pdb",
+        "lib/netstandard2.0/Swashbuckle.AspNetCore.Annotations.xml",
+        "package-readme.md",
+        "swashbuckle.aspnetcore.annotations.7.2.0.nupkg.sha512",
+        "swashbuckle.aspnetcore.annotations.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore.Swagger/7.2.0": {
       "sha512": "y27fNDfIh1vGhJjXYynLcZjl7DLOW1bSO2MDsY9wB4Zm1fdxpPsuBSiR4U+0acWlAqLmnuOPKr/OeOgwRUkBlw==",
       "type": "package",
@@ -1361,6 +1401,7 @@
       "Microsoft.AspNetCore.OpenApi >= 9.0.1",
       "Newtonsoft.Json >= 13.0.3",
       "RailwayCore >= 1.0.0",
+      "Swashbuckle.AspNetCore.Annotations >= 7.2.0",
       "Swashbuckle.AspNetCore.Swagger >= 7.2.0",
       "Swashbuckle.AspNetCore.SwaggerGen >= 7.2.0",
       "Swashbuckle.AspNetCore.SwaggerUI >= 7.2.0"
@@ -1431,6 +1472,10 @@
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
+          },
+          "Swashbuckle.AspNetCore.Annotations": {
+            "target": "Package",
+            "version": "[7.2.0, )"
           },
           "Swashbuckle.AspNetCore.Swagger": {
             "target": "Package",

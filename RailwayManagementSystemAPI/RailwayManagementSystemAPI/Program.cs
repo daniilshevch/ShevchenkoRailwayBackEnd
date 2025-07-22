@@ -13,7 +13,9 @@ using System.Net;
 using RailwayCore.InternalServices.ExecutiveServices;
 using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices;
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
-using RailwayManagementSystemAPI.ExternalServices.ModelRepositoryServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 class Server
 {
@@ -72,7 +74,23 @@ class Server
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Shevchenko Railway Management System", Version = "v1" });
+            options.EnableAnnotations();
+            //options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Shevchenko Railway Management System", Version = "v1" });
+            options.SwaggerDoc("Admin Controllers", new OpenApiInfo
+            {
+                Title = "Admin Controllers",
+                Version = "v1"
+            });
+            options.SwaggerDoc("Client Controllers", new OpenApiInfo
+            {
+                Title = "Client Controllers",
+                Version = "v1"
+            });
+            options.SwaggerDoc("System Controllers", new OpenApiInfo
+            {
+                Title = "System Controllers",
+                Version = "v1"
+            });
             options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
             {
                 Name = "Authorization",
@@ -142,7 +160,14 @@ class Server
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            //app.UseSwaggerUI();
+            app.UseSwaggerUI(options =>
+            {
+                //options.SwaggerEndpoint("/swagger/v1/swagger.json", "Shevchenko Railway Management System");
+                options.SwaggerEndpoint("/swagger/Admin Controllers/swagger.json", "Admin Controllers");
+                options.SwaggerEndpoint("/swagger/Client Controllers/swagger.json", "Client Controllers");
+                options.SwaggerEndpoint("/swagger/System Controllers/swagger.json", "System Controllers");
+            });
         }
         app.UseHttpsRedirection();
         app.MapControllers();

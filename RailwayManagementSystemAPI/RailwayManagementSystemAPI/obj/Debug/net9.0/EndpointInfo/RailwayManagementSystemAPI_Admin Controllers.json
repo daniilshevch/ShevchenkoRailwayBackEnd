@@ -1,0 +1,715 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Admin Controllers",
+    "version": "v1"
+  },
+  "paths": {
+    "/Admin-API/assign-carriage-to-train-race-squad": {
+      "post": {
+        "tags": [
+          "CarriageAssignmentRepository"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/update-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}": {
+      "patch": {
+        "tags": [
+          "CarriageAssignmentRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "passenger_carriage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalCarriageAssignmentUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalCarriageAssignmentUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalCarriageAssignmentUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/TrainAssignment/Assign-Train-With-Schedule": {
+      "post": {
+        "tags": [
+          "TrainAssignment"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteWithScheduleAssignmentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteWithScheduleAssignmentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteWithScheduleAssignmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Admin-API/TrainAssignment/Assign-Train-With-Squad": {
+      "post": {
+        "tags": [
+          "TrainAssignment"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteWithSquadAssignmentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteWithSquadAssignmentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteWithSquadAssignmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Admin-API/TrainAssignment/Assign-Train-With-Schedule-And-Squad": {
+      "post": {
+        "tags": [
+          "TrainAssignment"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteWithScheduleAndSquadAssignmentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteWithScheduleAndSquadAssignmentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteWithScheduleAndSquadAssignmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Admin-API/TrainAssignment/Copy-Train-With-Schedule": {
+      "post": {
+        "tags": [
+          "TrainAssignment"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "prototype_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "new_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "creation_option",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Admin-API/TrainAssignment/Copy-Train-With-Squad": {
+      "post": {
+        "tags": [
+          "TrainAssignment"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "prototype_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "new_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "creation_option",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Admin-API/TrainAssignment/Copy-Train-With-Schedule-And-Squad": {
+      "post": {
+        "tags": [
+          "TrainAssignment"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "prototype_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "new_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "creation_option",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Admin-API/TrainAssignment/Change-Train-Schedule": {
+      "put": {
+        "tags": [
+          "TrainAssignment"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "departure_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "deletion_option",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TrainStopWithArrivalAndDepartureTimeDto"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TrainStopWithArrivalAndDepartureTimeDto"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TrainStopWithArrivalAndDepartureTimeDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Admin-API/TrainAssignment/Change-Train-Squad": {
+      "put": {
+        "tags": [
+          "TrainAssignment"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "departure_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "deletion_option",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CarriageAssignementWithoutRouteDTO"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CarriageAssignementWithoutRouteDTO"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CarriageAssignementWithoutRouteDTO"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CarriageAssignementWithoutRouteDTO": {
+        "type": "object",
+        "properties": {
+          "passenger_Carriage_Id": {
+            "type": "string",
+            "nullable": true
+          },
+          "position_In_Squad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "is_For_Woman": {
+            "type": "boolean"
+          },
+          "is_For_Children": {
+            "type": "boolean"
+          },
+          "factual_Air_Conditioning": {
+            "type": "boolean"
+          },
+          "factual_Shower_Availability": {
+            "type": "boolean"
+          },
+          "factual_Is_Inclusive": {
+            "type": "boolean"
+          },
+          "food_Availability": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalCarriageAssignmentUpdateDto": {
+        "type": "object",
+        "properties": {
+          "position_in_squad": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "is_for_woman": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "is_for_children": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "factual_air_conditioning": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "factual_shower_availability": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "factual_is_inclusive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "food_availability": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PassengerCarriageOnTrainRouteOnDateDto": {
+        "type": "object",
+        "properties": {
+          "passenger_carriage_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "train_route_on_date_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "position_in_squad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "is_for_woman": {
+            "type": "boolean"
+          },
+          "is_for_children": {
+            "type": "boolean"
+          },
+          "factual_air_conditioning": {
+            "type": "boolean"
+          },
+          "factual_shower_availability": {
+            "type": "boolean"
+          },
+          "factual_is_inclusive": {
+            "type": "boolean"
+          },
+          "food_availability": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TrainRouteWithScheduleAndSquadAssignmentDto": {
+        "type": "object",
+        "properties": {
+          "train_route_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "departure_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "creation_option": {
+            "type": "boolean"
+          },
+          "train_stops": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TrainStopWithArrivalAndDepartureTimeDto"
+            },
+            "nullable": true
+          },
+          "carriage_assignments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CarriageAssignementWithoutRouteDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TrainRouteWithScheduleAssignmentDto": {
+        "type": "object",
+        "properties": {
+          "train_route_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "departure_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "creation_option": {
+            "type": "boolean"
+          },
+          "train_stops": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TrainStopWithArrivalAndDepartureTimeDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TrainRouteWithSquadAssignmentDto": {
+        "type": "object",
+        "properties": {
+          "train_route_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "departure_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "creation_option": {
+            "type": "boolean"
+          },
+          "carriage_assignments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CarriageAssignementWithoutRouteDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TrainStopWithArrivalAndDepartureTimeDto": {
+        "type": "object",
+        "properties": {
+          "station_Title": {
+            "type": "string",
+            "nullable": true
+          },
+          "arrival_Time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "departure_Time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "stop_Type": {
+            "type": "string",
+            "nullable": true
+          },
+          "distance_From_Starting_Station": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Enter jwt-token",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "CarriageAssignmentRepository",
+      "description": "Контролер для призначення пасажирських вагонів до поїздів"
+    }
+  ]
+}

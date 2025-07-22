@@ -7,6 +7,7 @@ using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
     [ApiController]
+    [ApiExplorerSettings(GroupName = "Client Controllers")]
     [Route("Client-API/[controller]")]
     public class UserAccountManagementController : ControllerBase
     {

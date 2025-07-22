@@ -7,6 +7,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers
 {
     [ApiController]
     [Route("Admin-API/[controller]")]
+    [ApiExplorerSettings(GroupName = "Admin Controllers")]
     public class TrainAssignmentController : ControllerBase
     {
         private readonly ApiTrainAssignmentService api_train_assignment_service;

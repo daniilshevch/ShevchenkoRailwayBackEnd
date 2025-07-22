@@ -5,6 +5,7 @@ using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
+    [ApiExplorerSettings(GroupName = "Client Controllers")]
     public class UserTicketManagementController: ControllerBase
     {
         private readonly UserTicketManagementService user_ticket_management_service;
