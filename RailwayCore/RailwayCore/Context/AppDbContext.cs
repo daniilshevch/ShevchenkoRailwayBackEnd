@@ -18,6 +18,7 @@ namespace RailwayCore.Context
         public DbSet<TicketBooking> Ticket_Bookings { get; set; }
         public DbSet<TicketInSelling> Tickets_In_Selling { get; set; }
         public DbSet<UserProfile> User_Profiles { get; set; }
+        public DbSet<Image> Images { get; set; }
         public AppDbContext()
         {
 
@@ -249,6 +250,8 @@ namespace RailwayCore.Context
             model_builder.Entity<User>().Property(user => user.Role).HasConversion<string>();
             //11. User_Profile
             model_builder.Entity<UserProfile>().ToTable("User_Profile");
+            //12. Image
+            model_builder.Entity<Image>().Property(image => image.Image_Data).HasColumnType("MEDIUMBLOB");
 
         }
     }

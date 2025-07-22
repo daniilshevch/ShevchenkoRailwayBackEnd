@@ -102,7 +102,7 @@ class Server
             options.AddPolicy("AllowFrontend",
                 policy =>
                 {
-                    policy.WithOrigins("http://localhost:52859")
+                    policy.WithOrigins("http://localhost:50994")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                 });

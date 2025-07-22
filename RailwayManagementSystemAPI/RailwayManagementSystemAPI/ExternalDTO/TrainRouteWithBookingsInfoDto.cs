@@ -90,8 +90,12 @@ namespace RailwayManagementSystemAPI.API_DTO
         public string? Train_Route_Class { get; set; } = null!; //Клас поїзда
         [JsonPropertyName("trip_starting_station_title")]
         public string Trip_Starting_Station_Title { get; set; } = null!;  //Назва початкової станції маршруту поїздки
+        [JsonPropertyName("trip_starting_station_ukrainian_title")]
+        public string? Trip_Starting_Station_Ukrainian_Title { get; set; } = null!;  //Назва початкової станції маршруту поїздки
         [JsonPropertyName("trip_ending_station_title")]
         public string Trip_Ending_Station_Title { get; set; } = null!;  //Назва кінцевої станції маршруту поїздки
+        [JsonPropertyName("trip_ending_station_ukrainian_title")]
+        public string? Trip_Ending_Station_Ukrainian_Title { get; set; } = null!;
         [JsonPropertyName("trip_starting_station_departure_time")]
         public DateTime Trip_Starting_Station_Departure_Time { get; set; }  //Час відправлення з початкової станції поїздки
         [JsonPropertyName("trip_ending_station_arrival_time")]
@@ -100,8 +104,12 @@ namespace RailwayManagementSystemAPI.API_DTO
         public TimeSpan Total_Trip_Duration { get; set; } //Загальний час поїздки 
         [JsonPropertyName("full_route_starting_station_title")]
         public string Full_Route_Starting_Station_Title { get; set; } = null!;  //Початкова станція всього маршруту даного поїзда
+        [JsonPropertyName("full_route_starting_station_ukrainian_title")]
+        public string? Full_Route_Starting_Station_Ukrainian_Title { get; set; } = null!;
         [JsonPropertyName("full_route_ending_station_title")]
         public string Full_Route_Ending_Station_Title { get; set; } = null!;  //Кінцева станція всього маршруту даного поїзда
+        [JsonPropertyName("full_route_ending_station_ukrainian_title")]
+        public string? Full_Route_Ending_Station_Ukrainian_Title { get; set; } = null!;
         [JsonPropertyName("average_speed_on_trip")]
         public double? Average_Speed_On_Trip { get; set; }  //Середня швидкість на маршруті поїздки
         [JsonPropertyName("carriage_statistics_list")]

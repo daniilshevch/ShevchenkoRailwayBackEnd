@@ -7,6 +7,26 @@ using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using RailwayManagementSystemAPI.ExternalDTO;
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
+    public class CarriageTypeComparer: IComparer<string>
+    {
+        private static readonly List<string> CorrectTypesOrder = new List<string> { "Platskart", "Coupe", "SV" };
+        public int Compare(string? x, string? y)
+        {
+            int indexX = CorrectTypesOrder.IndexOf(x ?? "");
+            int indexY = CorrectTypesOrder.IndexOf(y ?? "");
+            return indexX.CompareTo(indexY);
+        }
+    }
+    public class QualityClassComparer : IComparer<string>
+    {
+        private static readonly List<string> CorrectQualtiyClassesOrder = new List<string> { "C", "B", "A" };
+        public int Compare(string? x, string? y)
+        {
+            int indexX = CorrectQualtiyClassesOrder.IndexOf(x ?? "");
+            int indexY = CorrectQualtiyClassesOrder.IndexOf(y ?? "");
+            return indexX.CompareTo(indexY);
+        }
+    }
     public class TrainRouteWithBookingsSearchService
     {
         private readonly FullTrainRouteSearchService full_train_route_search_service;
@@ -191,10 +211,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                     carriage_type_group.Value.Total_Places = type_group_total_places;
                     carriage_type_group.Value.Min_Price = type_group_min_price;
                     carriage_type_group.Value.Max_Price = type_group_max_price;
+
+                    carriage_type_group.Value.Carriage_Quality_Class_Dictionary = carriage_quality_class_dictionary
+                        .OrderBy(quality_class_group => quality_class_group.Key, new QualityClassComparer()).ToDictionary();
                 }
 
+                external_carriage_type_groups = external_carriage_type_groups.OrderBy(type_group => type_group.Key, new CarriageTypeComparer()).ToDictionary();
                 
-
 
                 //Отримуємо список всіх зупинок на маршруті в порядку слідування поїзда
                 List<TrainRouteOnDateOnStation> train_stops_for_current_train_route_on_date = current_train_route_trip_info.Full_Route_Stops_List;
@@ -241,12 +264,16 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                     Train_Route_Branded_Name = current_train_route_trip_info.Train_Route_On_Date.Train_Route.Branded_Name,
                     Train_Route_Class = TextEnumConvertationService.GetTrainQualityClassIntoString(current_train_route_trip_info.Train_Route_On_Date.Train_Route.Quality_Class),
                     Trip_Starting_Station_Title = current_train_route_trip_info.Desired_Starting_Station.Station.Title,
+                    Trip_Starting_Station_Ukrainian_Title = current_train_route_trip_info.Desired_Starting_Station.Station.Ukrainian_Title,
                     Trip_Ending_Station_Title = current_train_route_trip_info.Desired_Ending_Station.Station.Title,
+                    Trip_Ending_Station_Ukrainian_Title = current_train_route_trip_info.Desired_Ending_Station.Station.Ukrainian_Title,
                     Trip_Starting_Station_Departure_Time = current_train_route_trip_info.Departure_Time_From_Desired_Starting_Station,
                     Trip_Ending_Station_Arrival_Time = current_train_route_trip_info.Arrival_Time_For_Desired_Ending_Station,
                     Total_Trip_Duration = current_train_route_trip_info.Arrival_Time_For_Desired_Ending_Station - current_train_route_trip_info.Departure_Time_From_Desired_Starting_Station,
                     Full_Route_Starting_Station_Title = current_train_route_trip_info.Full_Route_Starting_Stop.Station.Title,
+                    Full_Route_Starting_Station_Ukrainian_Title = current_train_route_trip_info.Full_Route_Starting_Stop.Station.Ukrainian_Title,
                     Full_Route_Ending_Station_Title = current_train_route_trip_info.Full_Route_Ending_Stop.Station.Title,
+                    Full_Route_Ending_Station_Ukrainian_Title = current_train_route_trip_info.Full_Route_Ending_Stop.Station.Ukrainian_Title,
                     Carriage_Statistics_List = external_carriage_statistics_for_current_train_route_on_date,
                     Grouped_Carriage_Statistics_List = external_carriage_type_groups,
                     Train_Stops_List = external_train_stops,

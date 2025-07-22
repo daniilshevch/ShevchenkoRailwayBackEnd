@@ -203,6 +203,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers.CarriageAssignmentRepositoryController",
+    "Method": "CreatePassengerCarriageOnTrainRouteOnDate",
+    "RelativePath": "assign-carriage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayCore.Models.PassengerCarriageOnTrainRouteOnDate",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.CompleteTicketBookingController",
     "Method": "CompleteTicketBookingProcess",
     "RelativePath": "Client-API/CompleteTicketBooking/Complete-Ticket-Booking",

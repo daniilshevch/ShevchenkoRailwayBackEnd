@@ -12,7 +12,8 @@ namespace RailwayCore.Models
     {
         Platskart,
         Coupe,
-        SV
+        SV,
+        Sitting
     };
     public enum PassengerCarriageQualityClass
     {

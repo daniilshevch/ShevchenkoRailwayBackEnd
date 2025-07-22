@@ -15,6 +15,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
                     return "Coupe";
                 case PassengerCarriageType.SV:
                     return "SV";
+                case PassengerCarriageType.Sitting:
+                    return "Sitting";
                 default:
                     return "";
             }

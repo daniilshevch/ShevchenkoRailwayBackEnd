@@ -11,6 +11,7 @@ namespace RailwayCore.Models
     {
         [Key]
         public int Id { get; set; }
+        public List<Image> Images { get; set; } = null!;
 
     }
 }
