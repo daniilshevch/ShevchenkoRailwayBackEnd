@@ -20,6 +20,8 @@ namespace RailwayCore.InternalDTO.ModelDTO
         public bool Is_For_Woman { get; set; } = false;
         [JsonPropertyName("is_for_children")]
         public bool Is_For_Children { get; set; } = false;
+        [JsonPropertyName("factual_wi_fi")]
+        public bool Factual_Wi_Fi { get; set; } = false;
         [JsonPropertyName("factual_air_conditioning")]
         public bool Factual_Air_Conditioning { get; set; } = false;
         [JsonPropertyName("factual_shower_availability")]
@@ -36,6 +38,7 @@ namespace RailwayCore.InternalDTO.ModelDTO
                 Train_Route_On_Date_Id = input.Train_Route_On_Date_Id,
                 Position_In_Squad = input.Position_In_Squad,
                 Is_For_Woman = input.Is_For_Woman,
+                Factual_Wi_Fi = input.Factual_Wi_Fi,
                 Is_For_Children = input.Is_For_Children,
                 Factual_Air_Conditioning = input.Factual_Air_Conditioning,
                 Factual_Is_Inclusive = input.Factual_Is_Inclusive,
@@ -54,6 +57,8 @@ namespace RailwayCore.InternalDTO.ModelDTO
         public int? Position_In_Squad { get; set; }
         [JsonPropertyName("is_for_woman")]
         public bool? Is_For_Woman { get; set; } = false;
+        [JsonPropertyName("factual_wi_fi")]
+        public bool? Factual_Wi_Fi { get; set; } = false;
         [JsonPropertyName("is_for_children")]
         public bool? Is_For_Children { get; set; } = false;
         [JsonPropertyName("factual_air_conditioning")]

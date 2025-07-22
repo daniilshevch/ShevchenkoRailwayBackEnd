@@ -53,6 +53,54 @@
         }
       }
     },
+    "/Admin-API/get-carriage-assignments-for-train-race/{train_route_on_date_id}": {
+      "get": {
+        "tags": [
+          "CarriageAssignmentRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Admin-API/update-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}": {
       "patch": {
         "tags": [
@@ -115,6 +163,36 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/Admin-API/delete-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}": {
+      "delete": {
+        "tags": [
+          "CarriageAssignmentRepository"
+        ],
+        "parameters": [
+          {
+            "name": "passenger_carriage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -476,6 +554,198 @@
           }
         }
       }
+    },
+    "/Admin-API/add-train-stop-for-train-race": {
+      "post": {
+        "tags": [
+          "TrainStopRepository"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/get-train-stops-for-train-race/{train_route_on_date_id}": {
+      "get": {
+        "tags": [
+          "TrainStopRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/update-train-stop/{train_route_on_date_id}/{station_title}": {
+      "patch": {
+        "tags": [
+          "TrainStopRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "station_title",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalTrainStopUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalTrainStopUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalTrainStopUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainRouteOnDateOnStationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/delete-train-stop/{train_route_on_date_id}/{station_title}": {
+      "delete": {
+        "tags": [
+          "TrainStopRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "station_title",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -528,6 +798,10 @@
             "type": "boolean",
             "nullable": true
           },
+          "factual_wi_fi": {
+            "type": "boolean",
+            "nullable": true
+          },
           "factual_air_conditioning": {
             "type": "boolean",
             "nullable": true
@@ -542,6 +816,43 @@
           },
           "food_availability": {
             "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalTrainStopUpdateDto": {
+        "type": "object",
+        "properties": {
+          "arrival_time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "arrival_time_change": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "departure_time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "departure_time_change": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "stop_type": {
+            "$ref": "#/components/schemas/StopType"
+          },
+          "distance_from_starting_station": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "speed_on_section": {
+            "type": "number",
+            "format": "double",
             "nullable": true
           }
         },
@@ -568,6 +879,9 @@
           "is_for_children": {
             "type": "boolean"
           },
+          "factual_wi_fi": {
+            "type": "boolean"
+          },
           "factual_air_conditioning": {
             "type": "boolean"
           },
@@ -579,6 +893,51 @@
           },
           "food_availability": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StopType": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TrainRouteOnDateOnStationDto": {
+        "type": "object",
+        "properties": {
+          "train_route_on_date_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "station_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "arrival_time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "departure_time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "stop_type": {
+            "$ref": "#/components/schemas/StopType"
+          },
+          "distance_from_starting_station": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "speed_on_section": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false

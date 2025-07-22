@@ -15,6 +15,7 @@ namespace RailwayCore.Models
         public int Position_In_Squad { get; set; } //Позиція в складі, на яку ставиться даний вагон, на даний рейс
         public bool Is_For_Woman { get; set; } = false; //Чи є тільки для жінок
         public bool Is_For_Children { get; set; } = false; //Чи є тільки для дітей
+        public bool Factual_Wi_Fi { get; set; } = false; //Чи є в вагоні вай фай
         public bool Factual_Air_Conditioning { get; set; } = false; //Чи фактично буде працювати кондиціонер на даному рейсі
         public bool Factual_Shower_Availability { get; set; } = false; //Чи фактично буде працювати душ на даному рейсі
         public bool Factual_Is_Inclusive { get; set; } = false; //Чи фактично вагон зможе перевозити людей з відхиленнями на даному рейсі

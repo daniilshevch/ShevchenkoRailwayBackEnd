@@ -10,6 +10,8 @@ namespace RailwayManagementSystemAPI.ExternalDTO
         public bool? Is_For_Woman { get; set; } = false;
         [JsonPropertyName("is_for_children")]
         public bool? Is_For_Children { get; set; } = false;
+        [JsonPropertyName("factual_wi_fi")]
+        public bool? Factual_Wi_Fi { get; set; } = false;
         [JsonPropertyName("factual_air_conditioning")]
         public bool? Factual_Air_Conditioning { get; set; } = false;
         [JsonPropertyName("factual_shower_availability")]

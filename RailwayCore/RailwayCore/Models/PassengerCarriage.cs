@@ -47,6 +47,7 @@ namespace RailwayCore.Models
         public PassengerCarriageManufacturer? Renewal_Performer { get; set; } //Завод,який проводив КВР(в разі якщо вагон його проходив)
         [MaxLength(60)]
         public string? Renewal_Info { get; set; } //Інформація про КВР
+        public bool Wi_Fi { get; set; }
         public bool Air_Conditioning { get; set; } = false; //Наявність кондиціонеру
         public bool Is_Inclusive { get; set; } = false; //Здатність перевозити пасажирів з відхиленнями
         public bool Is_For_Train_Chief { get; set; } = false; //Здатність перевозити начальника поїзда
