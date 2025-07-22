@@ -1,0 +1,26 @@
+# Від Visual Studio
+.vs/
+*.user
+*.suo
+
+# Збірка
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+
+# Конфігураційні/відлагувальні файли
+*.cache
+*.log
+*.vsidx
+
+# Пакети
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+
+# OS
+.DS_Store
+Thumbs.db
