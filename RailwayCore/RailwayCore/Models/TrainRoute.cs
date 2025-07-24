@@ -9,40 +9,40 @@ namespace RailwayCore.Models
 {
     public enum SpeedType
     {
-        Express,
-        Fast,
-        General
+        Express = 0,
+        Fast = 1,
+        General = 2
     }
     public enum FrequencyType
     {
-        Daily,
-        One_To_One,
-        Specific_Dates
+        Daily = 0,
+        One_To_One = 1,
+        Specific_Dates = 2
     }
     public enum TripType
     {
-        Night_Long_Distance,
-        Day_Long_Distance,
-        Night_Intercity,
-        Day_Intercity,
-        Night_Regional,
-        Day_Regional,
-        Local
+        Night_Long_Distance = 0,
+        Day_Long_Distance = 1,
+        Night_Intercity = 2,
+        Day_Intercity = 3,
+        Night_Regional = 4,
+        Day_Regional = 5,
+        Local = 6
 
     };
     public enum AssignementType
     {
-        Whole_Year,
-        Seasonal,
-        Additional,
-        Special
+        Whole_Year = 0,
+        Seasonal = 1,
+        Additional = 2,
+        Special = 3
     }
     public enum TrainQualityClass
     {
-        S,
-        A,
-        B,
-        C
+        S = 0,
+        A = 1,
+        B = 2,
+        C = 3
     }
     public class TrainRoute //Маршрут поїзда
     {
@@ -59,7 +59,7 @@ namespace RailwayCore.Models
         public AssignementType? Assignement_Type { get; set; } //Тип призначення маршруту
         public RailwayBranch? Railway_Branch { get; set; } //Філія, яка обслуговує маршрут
         public int? Railway_Branch_Id { get; set; } //вище
-        public int? Train_Route_Coefficient { get; set; } = 1; //Коефіцієнт вартості маршруту
+        public double? Train_Route_Coefficient { get; set; } = 1; //Коефіцієнт вартості маршруту
         public List<TrainRouteOnDate> Train_Assignements { get; set; } = new List<TrainRouteOnDate>(); //Конкретні рейси даного маршруту
 
     }

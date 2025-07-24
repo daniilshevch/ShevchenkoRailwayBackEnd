@@ -13,10 +13,12 @@ namespace RailwayCore.InternalDTO.ModelDTO
         public string Id { get; set; } = null!;
         public bool Is_Branded { get; set; } = false;
         public TrainQualityClass? Quality_Class { get; set; }
+        public TripType? Trip_Type { get; set; }
         public string? Branded_Name { get; set; }
         public SpeedType? Speed_Type { get; set; }
         public FrequencyType? Frequency_Type { get; set; }
         public AssignementType? Assignement_Type { get; set; }
         public string Railway_Branch_Title { get; set; } = null!;
+        public double? Train_Route_Coefficient { get; set; } = 1;
     }
 }

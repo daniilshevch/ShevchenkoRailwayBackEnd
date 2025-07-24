@@ -31,7 +31,7 @@ namespace RailwayCore.InternalServices.ModelServices
                 return already_in_memory;
             }
             TrainRoute? train_route
-            = await train_route_service.FindTrainRouteById(input.Train_Route_Id);
+            = await train_route_service.GetTrainRouteById(input.Train_Route_Id);
             if (train_route == null)
             {
                 text_service.FailPostInform("Fail in TrainRouteService");

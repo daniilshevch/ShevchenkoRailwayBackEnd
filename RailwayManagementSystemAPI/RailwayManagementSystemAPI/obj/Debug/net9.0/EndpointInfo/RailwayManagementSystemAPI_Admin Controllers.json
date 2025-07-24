@@ -555,6 +555,221 @@
         }
       }
     },
+    "/Admin-API/add-train-route/{id}": {
+      "post": {
+        "tags": [
+          "TrainRouteRepository"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/get-train-routes": {
+      "get": {
+        "tags": [
+          "TrainRouteRepository"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/get-train-route/{id}": {
+      "get": {
+        "tags": [
+          "TrainRouteRepository"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/update-train-route/{id}": {
+      "put": {
+        "tags": [
+          "TrainRouteRepository"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalTrainRouteDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/delete-train-route/{id}": {
+      "delete": {
+        "tags": [
+          "TrainRouteRepository"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Admin-API/add-train-stop-for-train-race": {
       "post": {
         "tags": [
@@ -750,6 +965,16 @@
   },
   "components": {
     "schemas": {
+      "AssignementType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "CarriageAssignementWithoutRouteDTO": {
         "type": "object",
         "properties": {
@@ -821,6 +1046,84 @@
         },
         "additionalProperties": false
       },
+      "ExternalTrainRouteDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "is_branded": {
+            "type": "boolean"
+          },
+          "quality_class": {
+            "$ref": "#/components/schemas/TrainQualityClass"
+          },
+          "trip_type": {
+            "$ref": "#/components/schemas/TripType"
+          },
+          "branded_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "speed_type": {
+            "$ref": "#/components/schemas/SpeedType"
+          },
+          "frequency_type": {
+            "$ref": "#/components/schemas/FrequencyType"
+          },
+          "assignment_type": {
+            "$ref": "#/components/schemas/AssignementType"
+          },
+          "railway_branch_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "train_route_coefficient": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalTrainRouteUpdateDto": {
+        "type": "object",
+        "properties": {
+          "is_branded": {
+            "type": "boolean"
+          },
+          "quality_class": {
+            "$ref": "#/components/schemas/TrainQualityClass"
+          },
+          "trip_type": {
+            "$ref": "#/components/schemas/TripType"
+          },
+          "branded_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "speed_type": {
+            "$ref": "#/components/schemas/SpeedType"
+          },
+          "frequency_type": {
+            "$ref": "#/components/schemas/FrequencyType"
+          },
+          "assignment_type": {
+            "$ref": "#/components/schemas/AssignementType"
+          },
+          "railway_branch_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "train_route_coefficient": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ExternalTrainStopUpdateDto": {
         "type": "object",
         "properties": {
@@ -857,6 +1160,15 @@
           }
         },
         "additionalProperties": false
+      },
+      "FrequencyType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "PassengerCarriageOnTrainRouteOnDateDto": {
         "type": "object",
@@ -897,10 +1209,29 @@
         },
         "additionalProperties": false
       },
+      "SpeedType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "StopType": {
         "enum": [
           0,
           1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TrainQualityClass": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
         ],
         "type": "integer",
         "format": "int32"
@@ -1049,6 +1380,19 @@
           }
         },
         "additionalProperties": false
+      },
+      "TripType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
       }
     },
     "securitySchemes": {

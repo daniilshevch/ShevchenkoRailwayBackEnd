@@ -1,5 +1,36 @@
 [
   {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRouteRepositoryController",
+    "Method": "AddTrainRoute",
+    "RelativePath": "Admin-API/add-train-route/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalTrainRouteUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalTrainRouteDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainStopRepositoryController",
     "Method": "CreateTrainStop",
     "RelativePath": "Admin-API/add-train-stop-for-train-race",
@@ -73,6 +104,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRouteRepositoryController",
+    "Method": "DeleteTrainRouteById",
+    "RelativePath": "Admin-API/delete-train-route/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainStopRepositoryController",
     "Method": "DeleteTrainStop",
     "RelativePath": "Admin-API/delete-train-stop/{train_route_on_date_id}/{station_title}",
@@ -110,6 +157,52 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto, RailwayCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRouteRepositoryController",
+    "Method": "GetTrainRouteById",
+    "RelativePath": "Admin-API/get-train-route/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalTrainRouteDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRouteRepositoryController",
+    "Method": "GetTrainRoutes",
+    "RelativePath": "Admin-API/get-train-routes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.ExternalTrainRouteDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -375,6 +468,37 @@
     "ReturnTypes": [
       {
         "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRouteRepositoryController",
+    "Method": "UpdateTrainRoute",
+    "RelativePath": "Admin-API/update-train-route/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalTrainRouteUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalTrainRouteDto",
         "MediaTypes": [
           "text/plain",
           "application/json",

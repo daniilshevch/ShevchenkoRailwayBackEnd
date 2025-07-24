@@ -65,6 +65,8 @@ class Server
         //ApiServices
         services.AddScoped<CarriageAssignmentRepositoryService>();
         services.AddScoped<TrainStopRepositoryService>();
+        services.AddScoped<TrainRouteRepositoryService>();
+
         services.AddScoped<TrainRouteWithBookingsSearchService>();
         services.AddScoped<CompleteTicketBookingService>();
         services.AddScoped<ApiTrainAssignmentService>();
