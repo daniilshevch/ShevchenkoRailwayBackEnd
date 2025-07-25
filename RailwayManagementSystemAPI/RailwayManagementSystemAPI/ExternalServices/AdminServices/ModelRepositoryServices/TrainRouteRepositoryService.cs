@@ -13,11 +13,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         {
             this.train_route_repository = train_route_repository;
         }
-        public async Task<QueryResult<ExternalTrainRouteDto>> AddTrainRoute(string id, ExternalTrainRouteUpdateDto input)
+        public async Task<QueryResult<ExternalTrainRouteDto>> CreateTrainRoute(string id, ExternalTrainRouteUpdateDto input)
         {
             TrainRouteDto train_route_dto = (TrainRouteDto)input;
             train_route_dto.Id = id;
-            QueryResult<TrainRoute> train_creation_result =  await train_route_repository.AddTrainRoute(train_route_dto);
+            QueryResult<TrainRoute> train_creation_result =  await train_route_repository.CreateTrainRoute(train_route_dto);
             if(train_creation_result.Fail)
             {
                 return new FailQuery<ExternalTrainRouteDto>(train_creation_result.Error);

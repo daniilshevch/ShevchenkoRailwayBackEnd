@@ -48,7 +48,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             {
                 return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find user with ID: {input.User_Id}"));
             }
-            TrainRouteOnDate? train_route_on_date_from_ticket = await train_route_on_date_service.FindTrainRouteOnDateById(input.Train_Route_On_Date_Id);
+            TrainRouteOnDate? train_route_on_date_from_ticket = await train_route_on_date_service.GetTrainRouteOnDateById(input.Train_Route_On_Date_Id);
             if (train_route_on_date_from_ticket is null)
             {
                 return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find train route on date with ID: {input.Train_Route_On_Date_Id}"));

@@ -10,22 +10,22 @@ namespace RailwayCore.InternalServices.ModelServices
     public class TrainRouteRepository
     {
         private readonly AppDbContext context;
-        private readonly RailwayBranchRepository railway_branch_service;
-        public TrainRouteRepository(AppDbContext context, RailwayBranchRepository railway_branch_service)
+        private readonly RailwayBranchRepository railway_branch_repository;
+        public TrainRouteRepository(AppDbContext context, RailwayBranchRepository railway_branch_repository)
         {
             this.context = context;
-            this.railway_branch_service = railway_branch_service;
+            this.railway_branch_repository = railway_branch_repository;
         }
 
 
-        public async Task<QueryResult<TrainRoute>> AddTrainRoute(TrainRouteDto input)
+        public async Task<QueryResult<TrainRoute>> CreateTrainRoute(TrainRouteDto input)
         {
             TrainRoute? already_in_memory = await context.Train_Routes.FirstOrDefaultAsync(train_route => train_route.Id == input.Id);
             if (already_in_memory is not null)
             {
                 return new FailQuery<TrainRoute>(new Error(ErrorType.BadRequest, $"Train route with ID: {input.Id} already exists"));
             }
-            RailwayBranch? railway_branch = await railway_branch_service.FindRailwayBranchByTitle(input.Railway_Branch_Title);
+            RailwayBranch? railway_branch = await railway_branch_repository.FindRailwayBranchByTitle(input.Railway_Branch_Title);
             if (railway_branch == null)
             {
                 return new FailQuery<TrainRoute>(new Error(ErrorType.BadRequest, $"Railway branch {input.Railway_Branch_Title} doesn't exist"));

@@ -39,7 +39,7 @@ namespace RailwayCore.InternalServices.CoreServices
             else
             {
                 train_route_on_date = await train_route_on_date_service
-                    .FindTrainRouteOnDateById(train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, departure_date));
+                    .GetTrainRouteOnDateById(train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, departure_date));
             }
             if (train_route_on_date == null)
             {
@@ -104,7 +104,7 @@ namespace RailwayCore.InternalServices.CoreServices
             else
             {
                 train_route_on_date = await train_route_on_date_service
-                    .FindTrainRouteOnDateById(train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, departure_date));
+                    .GetTrainRouteOnDateById(train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, departure_date));
             }
             if (train_route_on_date == null)
             {
@@ -157,7 +157,7 @@ namespace RailwayCore.InternalServices.CoreServices
         public async Task CopyTrainRouteOnDateWithSchedule(string train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
         {
             string prototype_train_route_on_date_id = train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, prototype_date);
-            TrainRouteOnDate? prototype_train_route_on_date = await train_route_on_date_service.FindTrainRouteOnDateById(prototype_train_route_on_date_id);
+            TrainRouteOnDate? prototype_train_route_on_date = await train_route_on_date_service.GetTrainRouteOnDateById(prototype_train_route_on_date_id);
             if (prototype_train_route_on_date == null)
             {
                 text_service.FailPostInform("Fail in TrainRouteOnDateService");
@@ -176,7 +176,7 @@ namespace RailwayCore.InternalServices.CoreServices
             else
             {
                 new_train_route_on_date = await train_route_on_date_service
-                    .FindTrainRouteOnDateById(train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, new_date));
+                    .GetTrainRouteOnDateById(train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, new_date));
                 if (new_train_route_on_date == null)
                 {
                     text_service.FailPostInform("Fail in TrainRouteOnDateService");
@@ -237,7 +237,7 @@ namespace RailwayCore.InternalServices.CoreServices
         public async Task CopyTrainRouteOnDateWithSquad(string train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
         {
             string prototype_train_route_on_date_id = train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, prototype_date);
-            TrainRouteOnDate? prototype_train_route_on_date = await train_route_on_date_service.FindTrainRouteOnDateById(prototype_train_route_on_date_id);
+            TrainRouteOnDate? prototype_train_route_on_date = await train_route_on_date_service.GetTrainRouteOnDateById(prototype_train_route_on_date_id);
             if (prototype_train_route_on_date == null)
             {
                 text_service.FailPostInform("Fail in TrainRouteOnDateService");
@@ -256,7 +256,7 @@ namespace RailwayCore.InternalServices.CoreServices
             else
             {
                 new_train_route_on_date = await train_route_on_date_service
-                    .FindTrainRouteOnDateById(train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, new_date));
+                    .GetTrainRouteOnDateById(train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, new_date));
                 if (new_train_route_on_date == null)
                 {
                     text_service.FailPostInform("Fail in TrainRouteOnDateService");

@@ -36,7 +36,7 @@ namespace RailwayCore.InternalServices.ModelServices
                 return new FailQuery<PassengerCarriageOnTrainRouteOnDate>(new Error(ErrorType.NotFound,
                     $"Can't find passenger carriage with ID: {input.Passenger_Carriage_Id}"));
             }
-            TrainRouteOnDate? train_route_on_date = await train_route_on_date_repository.FindTrainRouteOnDateById(input.Train_Route_On_Date_Id);
+            TrainRouteOnDate? train_route_on_date = await train_route_on_date_repository.GetTrainRouteOnDateById(input.Train_Route_On_Date_Id);
             if (train_route_on_date == null)
             {
                 return new FailQuery<PassengerCarriageOnTrainRouteOnDate>(new Error(ErrorType.NotFound,
@@ -151,7 +151,7 @@ namespace RailwayCore.InternalServices.ModelServices
             {
                 return null;
             }
-            TrainRouteOnDate? train_route_on_date = await train_route_on_date_repository.FindTrainRouteOnDateById(input.Train_Route_On_Date.Id);
+            TrainRouteOnDate? train_route_on_date = await train_route_on_date_repository.GetTrainRouteOnDateById(input.Train_Route_On_Date.Id);
             if (train_route_on_date == null)
             {
                 return null;

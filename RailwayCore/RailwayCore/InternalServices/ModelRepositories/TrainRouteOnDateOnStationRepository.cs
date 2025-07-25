@@ -30,7 +30,7 @@ namespace RailwayCore.InternalServices.ModelServices
                 return new FailQuery<TrainRouteOnDateOnStation>(new Error(ErrorType.BadRequest, $"Station {input.Station_Title} already exists" +
                     $"in schedule of train {input.Train_Route_On_Date_Id}"));
             }
-            TrainRouteOnDate? train_route_on_date = await train_route_on_date_service.FindTrainRouteOnDateById(input.Train_Route_On_Date_Id);
+            TrainRouteOnDate? train_route_on_date = await train_route_on_date_service.GetTrainRouteOnDateById(input.Train_Route_On_Date_Id);
             if (train_route_on_date == null)
             {
                 return new FailQuery<TrainRouteOnDateOnStation>(new Error(ErrorType.NotFound, $"Can't find train race with id: {input.Train_Route_On_Date_Id}"));
@@ -139,7 +139,7 @@ namespace RailwayCore.InternalServices.ModelServices
             {
                 return already_in_memory;
             }
-            TrainRouteOnDate? train_route_on_date = await train_route_on_date_service.FindTrainRouteOnDateById(input.Train_Route_On_Date.Id);
+            TrainRouteOnDate? train_route_on_date = await train_route_on_date_service.GetTrainRouteOnDateById(input.Train_Route_On_Date.Id);
             if (train_route_on_date == null)
             {
                 return null;

@@ -555,6 +555,171 @@
         }
       }
     },
+    "/Admin-API/create-train-race": {
+      "post": {
+        "tags": [
+          "TrainRaceRepository"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteOnDateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteOnDateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainRouteOnDateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalSimpleTrainRaceDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalSimpleTrainRaceDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalSimpleTrainRaceDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/get-races-for-train-route/{train_route_id}": {
+      "get": {
+        "tags": [
+          "TrainRaceRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalSimpleTrainRaceDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalSimpleTrainRaceDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalSimpleTrainRaceDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/update-train-race-price-coefficient/{train_route_on_date_id}": {
+      "patch": {
+        "tags": [
+          "TrainRaceRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "train_race_coefficient",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalSimpleTrainRaceDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalSimpleTrainRaceDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalSimpleTrainRaceDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/delete-train-race/{train_route_on_date_id}": {
+      "delete": {
+        "tags": [
+          "TrainRaceRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Admin-API/add-train-route/{id}": {
       "post": {
         "tags": [
@@ -1046,6 +1211,29 @@
         },
         "additionalProperties": false
       },
+      "ExternalSimpleTrainRaceDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "train_Route_Id": {
+            "type": "string",
+            "nullable": true
+          },
+          "departure_Date": {
+            "type": "string",
+            "format": "date"
+          },
+          "train_Race_Coefficient": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ExternalTrainRouteDto": {
         "type": "object",
         "properties": {
@@ -1235,6 +1423,25 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "TrainRouteOnDateDto": {
+        "type": "object",
+        "properties": {
+          "train_Route_Id": {
+            "type": "string",
+            "nullable": true
+          },
+          "departure_Date": {
+            "type": "string",
+            "format": "date"
+          },
+          "train_Race_Coefficient": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "TrainRouteOnDateOnStationDto": {
         "type": "object",

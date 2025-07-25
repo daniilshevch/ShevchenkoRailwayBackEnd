@@ -1,7 +1,7 @@
 [
   {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRouteRepositoryController",
-    "Method": "AddTrainRoute",
+    "Method": "CreateTrainRoute",
     "RelativePath": "Admin-API/add-train-route/{id}",
     "HttpMethod": "POST",
     "IsController": true,
@@ -83,6 +83,32 @@
     ]
   },
   {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRaceRepositoryController",
+    "Method": "CreateTrainRouteOnDate",
+    "RelativePath": "Admin-API/create-train-race",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "RailwayCore.InternalDTO.ModelDTO.TrainRouteOnDateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalSimpleTrainRaceDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers.CarriageAssignmentRepositoryController",
     "Method": "DeletePassengerCarriageOnTrainRouteOnDate",
     "RelativePath": "Admin-API/delete-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}",
@@ -95,6 +121,22 @@
         "Type": "System.String",
         "IsRequired": true
       },
+      {
+        "Name": "train_route_on_date_id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRaceRepositoryController",
+    "Method": "DeleteTrainRouteOnDate",
+    "RelativePath": "Admin-API/delete-train-race/{train_route_on_date_id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
         "Name": "train_route_on_date_id",
         "Type": "System.String",
@@ -157,6 +199,32 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto, RailwayCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRaceRepositoryController",
+    "Method": "GetTrainRoutesOnDateForTrainRoute",
+    "RelativePath": "Admin-API/get-races-for-train-route/{train_route_id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.ExternalSimpleTrainRaceDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -468,6 +536,37 @@
     "ReturnTypes": [
       {
         "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRaceRepositoryController",
+    "Method": "ChangeTrainRaceCoefficientForTrainRouteOnDate",
+    "RelativePath": "Admin-API/update-train-race-price-coefficient/{train_route_on_date_id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_on_date_id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "train_race_coefficient",
+        "Type": "System.Double",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalSimpleTrainRaceDto",
         "MediaTypes": [
           "text/plain",
           "application/json",

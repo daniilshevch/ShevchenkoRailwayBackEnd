@@ -87,7 +87,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
         public async Task<QueryResult<bool>> CheckTicketAvailabilityBetweenStationsForTrainRouteOnDate(string train_route_on_date_id, string desired_starting_station_title,
            string desired_ending_station_title, string passenger_carriage_id, int place_in_carrriage)
         {
-            TrainRouteOnDate? train_route_on_date = await train_route_on_date_service.FindTrainRouteOnDateById(train_route_on_date_id);
+            TrainRouteOnDate? train_route_on_date = await train_route_on_date_service.GetTrainRouteOnDateById(train_route_on_date_id);
             if (train_route_on_date is null)
             {
                 return new FailQuery<bool>(new Error(ErrorType.NotFound, $"Can't find train route on date with ID: {train_route_on_date_id}"));

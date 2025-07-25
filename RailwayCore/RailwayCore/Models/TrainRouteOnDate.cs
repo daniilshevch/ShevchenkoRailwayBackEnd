@@ -15,7 +15,7 @@ namespace RailwayCore.Models
         public TrainRoute Train_Route { get; set; } = null!; //Маршрут, за яким проводиться рейс поїзда
         public string Train_Route_Id { get; set; } = null!; //вище
         public DateOnly Departure_Date { get; set; } //Дата відправлення рейсу
-        public int? Train_Race_Coefficient { get; set; } = 1; //Коефіцієнт вартості рейсу
+        public double? Train_Race_Coefficient { get; set; } = 1; //Коефіцієнт вартості рейсу
         public List<Station> Stations { get; set; } = new List<Station>(); //Станції, через які проходить рейс(без додаткової інформації)
         public List<TrainRouteOnDateOnStation> Train_Stops { get; set; } = new List<TrainRouteOnDateOnStation>(); //Зупинки, через які проходить рейс
         //(станції з конкретною інформацію про час прибуття і так далі)

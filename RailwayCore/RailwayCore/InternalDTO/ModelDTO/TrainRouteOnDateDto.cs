@@ -10,5 +10,6 @@ namespace RailwayCore.InternalDTO.ModelDTO
     {
         public string Train_Route_Id { get; set; } = null!;
         public DateOnly Departure_Date { get; set; }
+        public double? Train_Race_Coefficient { get; set; } = 1;
     }
 }
