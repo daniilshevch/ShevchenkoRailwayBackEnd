@@ -42,7 +42,8 @@ namespace RailwayCore.InternalServices.ModelServices
             {
                 Id = train_route_on_date_id,
                 Departure_Date = departure_date,
-                Train_Route = train_route
+                Train_Route = train_route,
+                Train_Race_Coefficient = input.Train_Race_Coefficient
             };
 
             context.Train_Routes_On_Date.Add(train_route_on_date);

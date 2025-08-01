@@ -555,7 +555,7 @@
         }
       }
     },
-    "/Admin-API/create-train-race": {
+    "/Admin-API/add-train-race": {
       "post": {
         "tags": [
           "TrainRaceRepository"
@@ -1218,15 +1218,15 @@
             "type": "string",
             "nullable": true
           },
-          "train_Route_Id": {
+          "train_route_id": {
             "type": "string",
             "nullable": true
           },
-          "departure_Date": {
+          "departure_date": {
             "type": "string",
             "format": "date"
           },
-          "train_Race_Coefficient": {
+          "train_race_coefficient": {
             "type": "number",
             "format": "double",
             "nullable": true
@@ -1427,15 +1427,15 @@
       "TrainRouteOnDateDto": {
         "type": "object",
         "properties": {
-          "train_Route_Id": {
+          "train_route_id": {
             "type": "string",
             "nullable": true
           },
-          "departure_Date": {
+          "departure_date": {
             "type": "string",
             "format": "date"
           },
-          "train_Race_Coefficient": {
+          "train_race_coefficient": {
             "type": "number",
             "format": "double",
             "nullable": true

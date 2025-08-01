@@ -16,7 +16,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
         {
             this.train_race_repository_service = train_race_repository_service;
         }
-        [HttpPost("create-train-race")]
+        [HttpPost("add-train-race")]
         public async Task<ActionResult<ExternalSimpleTrainRaceDto>> CreateTrainRouteOnDate([FromBody] TrainRouteOnDateDto input)
         {
             ExternalSimpleTrainRaceDto? train_race = await train_race_repository_service.CreateTrainRouteOnDate(input);

@@ -1,5 +1,31 @@
 [
   {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRaceRepositoryController",
+    "Method": "CreateTrainRouteOnDate",
+    "RelativePath": "Admin-API/add-train-race",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "RailwayCore.InternalDTO.ModelDTO.TrainRouteOnDateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalSimpleTrainRaceDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRouteRepositoryController",
     "Method": "CreateTrainRoute",
     "RelativePath": "Admin-API/add-train-route/{id}",
@@ -73,32 +99,6 @@
     "ReturnTypes": [
       {
         "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRaceRepositoryController",
-    "Method": "CreateTrainRouteOnDate",
-    "RelativePath": "Admin-API/create-train-race",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "input",
-        "Type": "RailwayCore.InternalDTO.ModelDTO.TrainRouteOnDateDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalSimpleTrainRaceDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
