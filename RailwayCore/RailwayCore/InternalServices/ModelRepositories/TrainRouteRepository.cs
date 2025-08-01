@@ -58,7 +58,9 @@ namespace RailwayCore.InternalServices.ModelServices
         }
         public async Task<List<TrainRoute>> GetTrainRoutes()
         {
-            return await context.Train_Routes.Include(train_route => train_route.Railway_Branch).ToListAsync();
+            List<TrainRoute> train_routes = await context.Train_Routes.Include(train_route => train_route.Railway_Branch).ToListAsync();
+            List<TrainRoute> sorted_train_routes = train_routes.OrderBy(train_route => GetTrainRouteNumericNumber(train_route.Id)).ToList();
+            return sorted_train_routes;
         }
         public async Task<QueryResult<TrainRoute>> UpdateTrainRoute(TrainRouteDto input)
         {
@@ -95,6 +97,27 @@ namespace RailwayCore.InternalServices.ModelServices
             context.Train_Routes.Remove(train_route);
             await context.SaveChangesAsync();
             return true;
+        }
+
+        public static int GetTrainRouteNumericNumber(string train_route_id)
+        {
+            string string_result = string.Empty;
+            foreach(char c in train_route_id)
+            {
+                if(char.IsDigit(c))
+                {
+                    string_result += c;
+                }
+            }
+            bool successful_convertion = int.TryParse(string_result, out int int_result);
+            if (successful_convertion)
+            {
+                return int_result;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }
