@@ -114,7 +114,7 @@ namespace RailwayCore.InternalServices.CoreServices
             foreach (CarriageAssignementWithoutRouteDTO carriage_assignement in carriage_assignements)
             {
                 PassengerCarriage? passenger_carriage = await passenger_carriage_service
-                    .FindPassengerCarriageById(carriage_assignement.Passenger_Carriage_Id);
+                    .GetPassengerCarriageById(carriage_assignement.Passenger_Carriage_Id);
                 if (passenger_carriage == null)
                 {
                     text_service.FailPostInform("Fail in PassengerCarriageService");

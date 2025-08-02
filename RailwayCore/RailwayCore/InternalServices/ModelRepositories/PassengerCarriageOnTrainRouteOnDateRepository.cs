@@ -30,7 +30,7 @@ namespace RailwayCore.InternalServices.ModelServices
                 return new FailQuery<PassengerCarriageOnTrainRouteOnDate>(new Error(ErrorType.BadRequest, $"This carriage is already in squad " +
                     $"by number {already_in_memory.Position_In_Squad}"));
             }
-            PassengerCarriage? passenger_carriage = await passenger_carriage_repository.FindPassengerCarriageById(input.Passenger_Carriage_Id);
+            PassengerCarriage? passenger_carriage = await passenger_carriage_repository.GetPassengerCarriageById(input.Passenger_Carriage_Id);
             if (passenger_carriage == null)
             {
                 return new FailQuery<PassengerCarriageOnTrainRouteOnDate>(new Error(ErrorType.NotFound,
@@ -98,6 +98,10 @@ namespace RailwayCore.InternalServices.ModelServices
             {
                 existing_carriage_assignment.Is_For_Woman = is_for_woman;
             }
+            if(input.Factual_Wi_Fi is bool factual_wi_fi)
+            {
+                existing_carriage_assignment.Factual_Wi_Fi = factual_wi_fi;
+            }    
             if (input.Factual_Air_Conditioning is bool factual_air_conditioning)
             {
                 existing_carriage_assignment.Factual_Air_Conditioning = factual_air_conditioning;
@@ -146,7 +150,7 @@ namespace RailwayCore.InternalServices.ModelServices
             {
                 return already_in_memory;
             }
-            PassengerCarriage? passenger_carriage = await passenger_carriage_repository.FindPassengerCarriageById(input.Passenger_Carriage.Id);
+            PassengerCarriage? passenger_carriage = await passenger_carriage_repository.GetPassengerCarriageById(input.Passenger_Carriage.Id);
             if (passenger_carriage == null)
             {
                 return null;

@@ -33,6 +33,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
                 Passenger_Carriage_Id = passenger_carriage_id,
                 Train_Route_On_Date_Id = train_route_on_date_id,
                 Position_In_Squad = input.Position_In_Squad,
+                Factual_Wi_Fi = input.Factual_Wi_Fi,
                 Factual_Air_Conditioning = input.Factual_Air_Conditioning,
                 Factual_Is_Inclusive = input.Factual_Is_Inclusive,
                 Factual_Shower_Availability = input.Factual_Shower_Availability,

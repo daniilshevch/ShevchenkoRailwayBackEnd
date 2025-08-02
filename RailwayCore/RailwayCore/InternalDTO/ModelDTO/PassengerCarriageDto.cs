@@ -23,5 +23,5 @@ public class PassengerCarriageDto
     public bool Shower_Availability { get; set; } = false;
     public bool In_Current_Use { get; set; } = true;
     public string? Appearence { get; set; }
-    public int? Station_Depot_Id { get; set; }
+    public string? Station_Depot_Title { get; set; }
 }

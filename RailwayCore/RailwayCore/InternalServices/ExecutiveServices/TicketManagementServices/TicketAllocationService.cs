@@ -53,7 +53,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             {
                 return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find train route on date with ID: {input.Train_Route_On_Date_Id}"));
             }
-            PassengerCarriage? passenger_carriage_from_ticket = await passenger_carriage_service.FindPassengerCarriageById(input.Passenger_Carriage_Id);
+            PassengerCarriage? passenger_carriage_from_ticket = await passenger_carriage_service.GetPassengerCarriageById(input.Passenger_Carriage_Id);
             if (passenger_carriage_from_ticket is null)
             {
                 return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find passenger carriage with ID: {input.Passenger_Carriage_Id}"));
