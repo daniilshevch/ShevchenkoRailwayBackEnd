@@ -77,7 +77,7 @@ namespace RailwayCore.InternalServices.ModelServices
         }
 
         [Refactored("22.07.2025", "v1")]
-        public async Task<QueryResult<PassengerCarriageOnTrainRouteOnDate>> UpdatePassengerCarriageOnTrainRouteOnDate(PassengerCarriageOnTrainRouteOnDateUpdateDto input)
+        public async Task<QueryResult<PassengerCarriageOnTrainRouteOnDate>> UpdatePassengerCarriageOnTrainRouteOnDate(PassengerCarriageOnTrainRouteOnDateDto input)
         {
             PassengerCarriageOnTrainRouteOnDate? existing_carriage_assignment = await context.Passenger_Carriages_On_Train_Routes_On_Date
                 .FirstOrDefaultAsync(carriage_assignement => carriage_assignement.Train_Route_On_Date_Id == input.Train_Route_On_Date_Id
@@ -86,38 +86,16 @@ namespace RailwayCore.InternalServices.ModelServices
             {
                 return new FailQuery<PassengerCarriageOnTrainRouteOnDate>(new Error(ErrorType.NotFound, "Can't find this carriage assignment"));
             }
-            if (input.Position_In_Squad is int position_in_squad)
-            {
-                existing_carriage_assignment.Position_In_Squad = position_in_squad;
-            }
-            if (input.Is_For_Children is bool is_for_children)
-            {
-                existing_carriage_assignment.Is_For_Children = is_for_children;
-            }
-            if (input.Is_For_Woman is bool is_for_woman)
-            {
-                existing_carriage_assignment.Is_For_Woman = is_for_woman;
-            }
-            if(input.Factual_Wi_Fi is bool factual_wi_fi)
-            {
-                existing_carriage_assignment.Factual_Wi_Fi = factual_wi_fi;
-            }    
-            if (input.Factual_Air_Conditioning is bool factual_air_conditioning)
-            {
-                existing_carriage_assignment.Factual_Air_Conditioning = factual_air_conditioning;
-            }
-            if (input.Factual_Shower_Availability is bool factual_shower_availability)
-            {
-                existing_carriage_assignment.Factual_Shower_Availability = factual_shower_availability;
-            }
-            if (input.Factual_Is_Inclusive is bool factual_is_inclusive)
-            {
-                existing_carriage_assignment.Factual_Is_Inclusive = factual_is_inclusive;
-            }
-            if (input.Food_Availability is bool food_availability)
-            {
-                existing_carriage_assignment.Food_Availability = food_availability;
-            }
+
+            existing_carriage_assignment.Position_In_Squad = input.Position_In_Squad;
+            existing_carriage_assignment.Is_For_Children = input.Is_For_Children;
+            existing_carriage_assignment.Is_For_Woman = input.Is_For_Woman;
+            existing_carriage_assignment.Factual_Wi_Fi = input.Factual_Wi_Fi;
+            existing_carriage_assignment.Factual_Air_Conditioning = input.Factual_Air_Conditioning;
+            existing_carriage_assignment.Factual_Shower_Availability = input.Factual_Shower_Availability;
+            existing_carriage_assignment.Factual_Is_Inclusive = input.Factual_Is_Inclusive;
+            existing_carriage_assignment.Food_Availability = input.Food_Availability;
+            
             context.Passenger_Carriages_On_Train_Routes_On_Date.Update(existing_carriage_assignment);
             await context.SaveChangesAsync();
             return new SuccessQuery<PassengerCarriageOnTrainRouteOnDate>(existing_carriage_assignment);

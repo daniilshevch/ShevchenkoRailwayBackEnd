@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace RailwayManagementSystemAPI.ExternalDTO
 {
-    public class ExternalTrainRouteUpdateDto
+    public class ExternalTrainRouteCreateAndUpdateDto
     {
         [JsonPropertyName("is_branded")]
         public bool Is_Branded { get; set; } = false;
@@ -25,7 +25,7 @@ namespace RailwayManagementSystemAPI.ExternalDTO
         public string Railway_Branch_Title { get; set; } = null!;
         [JsonPropertyName("train_route_coefficient")]
         public double? Train_Route_Coefficient { get; set; } = 1;
-        public static explicit operator TrainRouteDto(ExternalTrainRouteUpdateDto input)
+        public static explicit operator TrainRouteDto(ExternalTrainRouteCreateAndUpdateDto input)
         {
             return new TrainRouteDto()
             {

@@ -36,14 +36,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         public async Task<QueryResult<TrainRouteOnDateOnStationDto>> UpdateTrainStop(string train_route_on_date_id, string station_title, 
             ExternalTrainStopUpdateDto input)
         {
-            TrainRouteOnDateOnStationUpdateDto update_dto = new TrainRouteOnDateOnStationUpdateDto()
+            TrainRouteOnDateOnStationDto update_dto = new TrainRouteOnDateOnStationDto()
             {
                 Train_Route_On_Date_Id = train_route_on_date_id,
                 Station_Title = station_title,
                 Arrival_Time = input.Arrival_Time,
                 Departure_Time = input.Departure_Time,
-                Departure_Time_Change = input.Departure_Time_Change,
-                Arrival_Time_Change = input.Arrival_Time_Change,
                 Distance_From_Starting_Station = input.Distance_From_Starting_Station,
                 Speed_On_Section = input.Speed_On_Section,
                 Stop_Type = input.Stop_Type

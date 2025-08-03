@@ -13,7 +13,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         {
             this.train_route_repository = train_route_repository;
         }
-        public async Task<QueryResult<ExternalTrainRouteDto>> CreateTrainRoute(string id, ExternalTrainRouteUpdateDto input)
+        public async Task<QueryResult<ExternalTrainRouteDto>> CreateTrainRoute(string id, ExternalTrainRouteCreateAndUpdateDto input)
         {
             TrainRouteDto train_route_dto = (TrainRouteDto)input;
             train_route_dto.Id = id;
@@ -39,7 +39,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             List<TrainRoute> train_routes_list = await train_route_repository.GetTrainRoutes();
             return train_routes_list.Select(train_route => (ExternalTrainRouteDto)train_route).ToList();
         }
-        public async Task<QueryResult<ExternalTrainRouteDto>> UpdateTrainRoute(string id, ExternalTrainRouteUpdateDto input)
+        public async Task<QueryResult<ExternalTrainRouteDto>> UpdateTrainRoute(string id, ExternalTrainRouteCreateAndUpdateDto input)
         {
             TrainRouteDto train_route_dto = (TrainRouteDto)input;
             train_route_dto.Id = id;

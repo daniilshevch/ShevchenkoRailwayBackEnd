@@ -40,7 +40,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
             }
             return Ok(train_stops_get_result.Value);
         }
-        [HttpPatch("update-train-stop/{train_route_on_date_id}/{station_title}")]
+        [HttpPut("update-train-stop/{train_route_on_date_id}/{station_title}")]
         public async Task<ActionResult<TrainRouteOnDateOnStationDto>> UpdateTrainStop([FromRoute] string train_route_on_date_id, 
             [FromRoute] string station_title, [FromBody] ExternalTrainStopUpdateDto input)
         {

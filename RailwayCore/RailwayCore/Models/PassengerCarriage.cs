@@ -10,22 +10,22 @@ namespace RailwayCore.Models
 {
     public enum PassengerCarriageType
     {
-        Platskart,
-        Coupe,
-        SV,
-        Sitting
+        Platskart = 0,
+        Coupe = 1,
+        SV = 2,
+        Sitting = 3
     };
     public enum PassengerCarriageQualityClass
     {
-        S,
-        A,
-        B,
-        C
+        S = 0,
+        A = 1,
+        B = 2,
+        C = 3
     }
     public enum PassengerCarriageManufacturer
     {
-        KVBZ,
-        Amendorf
+        KVBZ = 0,
+        Amendorf = 1
     }
     public class PassengerCarriage //Пасажирський вагон
     {

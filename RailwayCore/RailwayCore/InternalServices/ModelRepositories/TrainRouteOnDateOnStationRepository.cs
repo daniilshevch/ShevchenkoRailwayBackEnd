@@ -77,7 +77,7 @@ namespace RailwayCore.InternalServices.ModelServices
             return new SuccessQuery<List<TrainRouteOnDateOnStation>>(train_stops);
         }
         [Refactored("22.07.2025", "v1")]
-        public async Task<QueryResult<TrainRouteOnDateOnStation>> UpdateTrainStop(TrainRouteOnDateOnStationUpdateDto input)
+        public async Task<QueryResult<TrainRouteOnDateOnStation>> UpdateTrainStop(TrainRouteOnDateOnStationDto input)
         {
             TrainRouteOnDateOnStation? existing_train_stop = await context.Train_Routes_On_Date_On_Stations
                 .Include(train_stop => train_stop.Train_Route_On_Date).Include(train_stop => train_stop.Station)
@@ -87,26 +87,12 @@ namespace RailwayCore.InternalServices.ModelServices
             {
                 return new FailQuery<TrainRouteOnDateOnStation>(new Error(ErrorType.NotFound, $"Can't find this train stop"));
             }
-            if(input.Stop_Type is StopType stop_type)
-            {
-                existing_train_stop.Stop_Type = stop_type;
-            }
-            if(input.Arrival_Time is not null || (input.Arrival_Time is null && input.Arrival_Time_Change == true))
-            {
-                existing_train_stop.Arrival_Time = input.Arrival_Time;
-            }
-            if(input.Departure_Time is not null || (input.Departure_Time is null && input.Departure_Time_Change == true))
-            {
-                existing_train_stop.Departure_Time = input.Departure_Time;
-            }
-            if(input.Distance_From_Starting_Station is double distance_from_starting_station)
-            {
-                existing_train_stop.Distance_From_Starting_Station = distance_from_starting_station;
-            }
-            if(input.Speed_On_Section is double speed_on_section)
-            {
-                existing_train_stop.Speed_On_Section = speed_on_section;
-            }
+
+            existing_train_stop.Stop_Type = input.Stop_Type;
+            existing_train_stop.Arrival_Time = input.Arrival_Time;
+            existing_train_stop.Departure_Time = input.Departure_Time;
+            existing_train_stop.Distance_From_Starting_Station = input.Distance_From_Starting_Station;
+            existing_train_stop.Speed_On_Section = input.Speed_On_Section;
             context.Train_Routes_On_Date_On_Stations.Update(existing_train_stop);
             await context.SaveChangesAsync();
             return new SuccessQuery<TrainRouteOnDateOnStation>(existing_train_stop);

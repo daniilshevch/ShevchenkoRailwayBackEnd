@@ -19,7 +19,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
             this.train_route_repository_service = train_route_repository_service;
         }
         [HttpPost("add-train-route/{id}")]
-        public async Task<ActionResult<ExternalTrainRouteDto>> CreateTrainRoute([FromRoute] string id, [FromBody] ExternalTrainRouteUpdateDto input)
+        public async Task<ActionResult<ExternalTrainRouteDto>> CreateTrainRoute([FromRoute] string id, [FromBody] ExternalTrainRouteCreateAndUpdateDto input)
         {
             QueryResult<ExternalTrainRouteDto> train_route_creation_result = await train_route_repository_service.CreateTrainRoute(id, input);
             if(train_route_creation_result.Fail)
@@ -45,7 +45,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
             return Ok(train_route);
         }
         [HttpPut("update-train-route/{id}")]
-        public async Task<ActionResult<ExternalTrainRouteDto>> UpdateTrainRoute([FromRoute] string id, [FromBody] ExternalTrainRouteUpdateDto input)
+        public async Task<ActionResult<ExternalTrainRouteDto>> UpdateTrainRoute([FromRoute] string id, [FromBody] ExternalTrainRouteCreateAndUpdateDto input)
         {
             QueryResult<ExternalTrainRouteDto> train_route_update_result = await train_route_repository_service.UpdateTrainRoute(id, input);
             if (train_route_update_result.Fail)

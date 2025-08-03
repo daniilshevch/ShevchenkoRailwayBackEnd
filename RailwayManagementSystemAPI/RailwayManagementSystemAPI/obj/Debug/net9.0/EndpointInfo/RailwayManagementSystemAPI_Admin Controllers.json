@@ -102,7 +102,7 @@
       }
     },
     "/Admin-API/update-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}": {
-      "patch": {
+      "put": {
         "tags": [
           "CarriageAssignmentRepository"
         ],
@@ -183,6 +183,221 @@
           },
           {
             "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Admin-API/add-passenger-carriage/{passenger_carriage_id}": {
+      "post": {
+        "tags": [
+          "PassengerCarriageRepository"
+        ],
+        "parameters": [
+          {
+            "name": "passenger_carriage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalPassengerCarriageCreateAndUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalPassengerCarriageCreateAndUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalPassengerCarriageCreateAndUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/get-passenger-carriage/{passenger_carriage_id}": {
+      "get": {
+        "tags": [
+          "PassengerCarriageRepository"
+        ],
+        "parameters": [
+          {
+            "name": "passenger_carriage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/get-passenger-carriages": {
+      "get": {
+        "tags": [
+          "PassengerCarriageRepository"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerCarriageDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerCarriageDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PassengerCarriageDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/update-passenger-carriage/{passenger_carriage_id}": {
+      "put": {
+        "tags": [
+          "PassengerCarriageRepository"
+        ],
+        "parameters": [
+          {
+            "name": "passenger_carriage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalPassengerCarriageCreateAndUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalPassengerCarriageCreateAndUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalPassengerCarriageCreateAndUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassengerCarriageDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/delete-passenger-carriage/{passenger_carriage_id}": {
+      "delete": {
+        "tags": [
+          "PassengerCarriageRepository"
+        ],
+        "parameters": [
+          {
+            "name": "passenger_carriage_id",
             "in": "path",
             "required": true,
             "schema": {
@@ -739,17 +954,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteCreateAndUpdateDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteCreateAndUpdateDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteCreateAndUpdateDto"
               }
             }
           }
@@ -874,17 +1089,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteCreateAndUpdateDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteCreateAndUpdateDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalTrainRouteUpdateDto"
+                "$ref": "#/components/schemas/ExternalTrainRouteCreateAndUpdateDto"
               }
             }
           }
@@ -1032,7 +1247,7 @@
       }
     },
     "/Admin-API/update-train-stop/{train_route_on_date_id}/{station_title}": {
-      "patch": {
+      "put": {
         "tags": [
           "TrainStopRepository"
         ],
@@ -1177,35 +1392,89 @@
         "properties": {
           "position_in_squad": {
             "type": "integer",
+            "format": "int32"
+          },
+          "is_for_woman": {
+            "type": "boolean"
+          },
+          "is_for_children": {
+            "type": "boolean"
+          },
+          "factual_wi_fi": {
+            "type": "boolean"
+          },
+          "factual_air_conditioning": {
+            "type": "boolean"
+          },
+          "factual_shower_availability": {
+            "type": "boolean"
+          },
+          "factual_is_inclusive": {
+            "type": "boolean"
+          },
+          "food_availability": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalPassengerCarriageCreateAndUpdateDto": {
+        "type": "object",
+        "properties": {
+          "type_Of": {
+            "$ref": "#/components/schemas/PassengerCarriageType"
+          },
+          "capacity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "production_Year": {
+            "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "is_for_woman": {
-            "type": "boolean",
+          "manufacturer": {
+            "$ref": "#/components/schemas/PassengerCarriageManufacturer"
+          },
+          "quality_Class": {
+            "$ref": "#/components/schemas/PassengerCarriageQualityClass"
+          },
+          "renewal_Fact": {
+            "type": "boolean"
+          },
+          "renewal_Year": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
-          "is_for_children": {
-            "type": "boolean",
+          "renewal_Performer": {
+            "$ref": "#/components/schemas/PassengerCarriageManufacturer"
+          },
+          "renewal_Info": {
+            "type": "string",
             "nullable": true
           },
-          "factual_wi_fi": {
-            "type": "boolean",
+          "air_Conditioning": {
+            "type": "boolean"
+          },
+          "is_Inclusive": {
+            "type": "boolean"
+          },
+          "is_For_Train_Chief": {
+            "type": "boolean"
+          },
+          "shower_Availability": {
+            "type": "boolean"
+          },
+          "in_Current_Use": {
+            "type": "boolean"
+          },
+          "appearence": {
+            "type": "string",
             "nullable": true
           },
-          "factual_air_conditioning": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "factual_shower_availability": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "factual_is_inclusive": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "food_availability": {
-            "type": "boolean",
+          "station_Depot_Title": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -1227,6 +1496,43 @@
             "format": "date"
           },
           "train_race_coefficient": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalTrainRouteCreateAndUpdateDto": {
+        "type": "object",
+        "properties": {
+          "is_branded": {
+            "type": "boolean"
+          },
+          "quality_class": {
+            "$ref": "#/components/schemas/TrainQualityClass"
+          },
+          "trip_type": {
+            "$ref": "#/components/schemas/TripType"
+          },
+          "branded_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "speed_type": {
+            "$ref": "#/components/schemas/SpeedType"
+          },
+          "frequency_type": {
+            "$ref": "#/components/schemas/FrequencyType"
+          },
+          "assignment_type": {
+            "$ref": "#/components/schemas/AssignementType"
+          },
+          "railway_branch_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "train_route_coefficient": {
             "type": "number",
             "format": "double",
             "nullable": true
@@ -1275,43 +1581,6 @@
         },
         "additionalProperties": false
       },
-      "ExternalTrainRouteUpdateDto": {
-        "type": "object",
-        "properties": {
-          "is_branded": {
-            "type": "boolean"
-          },
-          "quality_class": {
-            "$ref": "#/components/schemas/TrainQualityClass"
-          },
-          "trip_type": {
-            "$ref": "#/components/schemas/TripType"
-          },
-          "branded_name": {
-            "type": "string",
-            "nullable": true
-          },
-          "speed_type": {
-            "$ref": "#/components/schemas/SpeedType"
-          },
-          "frequency_type": {
-            "$ref": "#/components/schemas/FrequencyType"
-          },
-          "assignment_type": {
-            "$ref": "#/components/schemas/AssignementType"
-          },
-          "railway_branch_title": {
-            "type": "string",
-            "nullable": true
-          },
-          "train_route_coefficient": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "ExternalTrainStopUpdateDto": {
         "type": "object",
         "properties": {
@@ -1320,17 +1589,9 @@
             "format": "date-time",
             "nullable": true
           },
-          "arrival_time_change": {
-            "type": "boolean",
-            "nullable": true
-          },
           "departure_time": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
-          },
-          "departure_time_change": {
-            "type": "boolean",
             "nullable": true
           },
           "stop_type": {
@@ -1354,6 +1615,80 @@
           0,
           1,
           2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "PassengerCarriageDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "type_Of": {
+            "$ref": "#/components/schemas/PassengerCarriageType"
+          },
+          "capacity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "production_Year": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "manufacturer": {
+            "$ref": "#/components/schemas/PassengerCarriageManufacturer"
+          },
+          "quality_Class": {
+            "$ref": "#/components/schemas/PassengerCarriageQualityClass"
+          },
+          "renewal_Fact": {
+            "type": "boolean"
+          },
+          "renewal_Year": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "renewal_Performer": {
+            "$ref": "#/components/schemas/PassengerCarriageManufacturer"
+          },
+          "renewal_Info": {
+            "type": "string",
+            "nullable": true
+          },
+          "air_Conditioning": {
+            "type": "boolean"
+          },
+          "is_Inclusive": {
+            "type": "boolean"
+          },
+          "is_For_Train_Chief": {
+            "type": "boolean"
+          },
+          "shower_Availability": {
+            "type": "boolean"
+          },
+          "in_Current_Use": {
+            "type": "boolean"
+          },
+          "appearence": {
+            "type": "string",
+            "nullable": true
+          },
+          "station_Depot_Title": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PassengerCarriageManufacturer": {
+        "enum": [
+          0,
+          1
         ],
         "type": "integer",
         "format": "int32"
@@ -1396,6 +1731,26 @@
           }
         },
         "additionalProperties": false
+      },
+      "PassengerCarriageQualityClass": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "PassengerCarriageType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "SpeedType": {
         "enum": [

@@ -1,5 +1,36 @@
 [
   {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.PassengerCarriageRepositoryController",
+    "Method": "CreatePassengerCarriage",
+    "RelativePath": "Admin-API/add-passenger-carriage/{passenger_carriage_id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "passenger_carriage_id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalPassengerCarriageCreateAndUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRaceRepositoryController",
     "Method": "CreateTrainRouteOnDate",
     "RelativePath": "Admin-API/add-train-race",
@@ -40,7 +71,7 @@
       },
       {
         "Name": "input",
-        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalTrainRouteUpdateDto",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalTrainRouteCreateAndUpdateDto",
         "IsRequired": true
       }
     ],
@@ -130,6 +161,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.PassengerCarriageRepositoryController",
+    "Method": "DeletePassengerCarriage",
+    "RelativePath": "Admin-API/delete-passenger-carriage/{passenger_carriage_id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "passenger_carriage_id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRaceRepositoryController",
     "Method": "DeleteTrainRouteOnDate",
     "RelativePath": "Admin-API/delete-train-race/{train_route_on_date_id}",
@@ -199,6 +246,52 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto, RailwayCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.PassengerCarriageRepositoryController",
+    "Method": "GetPassengerCarriageById",
+    "RelativePath": "Admin-API/get-passenger-carriage/{passenger_carriage_id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "passenger_carriage_id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.PassengerCarriageRepositoryController",
+    "Method": "GetAllPassengerCarriages",
+    "RelativePath": "Admin-API/get-passenger-carriages",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayCore.InternalDTO.ModelDTO.PassengerCarriageDto, RailwayCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -513,7 +606,7 @@
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers.CarriageAssignmentRepositoryController",
     "Method": "UpdatePassengerCarriageOnTrainRouteOnDate",
     "RelativePath": "Admin-API/update-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}",
-    "HttpMethod": "PATCH",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -536,6 +629,37 @@
     "ReturnTypes": [
       {
         "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.PassengerCarriageRepositoryController",
+    "Method": "UpdatePassengerCarriage",
+    "RelativePath": "Admin-API/update-passenger-carriage/{passenger_carriage_id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "passenger_carriage_id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalPassengerCarriageCreateAndUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -591,7 +715,7 @@
       },
       {
         "Name": "input",
-        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalTrainRouteUpdateDto",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalTrainRouteCreateAndUpdateDto",
         "IsRequired": true
       }
     ],
@@ -611,7 +735,7 @@
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainStopRepositoryController",
     "Method": "UpdateTrainStop",
     "RelativePath": "Admin-API/update-train-stop/{train_route_on_date_id}/{station_title}",
-    "HttpMethod": "PATCH",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [

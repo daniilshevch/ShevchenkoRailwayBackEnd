@@ -9,36 +9,36 @@ namespace RailwayCore.Models
 {
     public enum StationType
     {
-        Mixed,
-        Passenger,
-        Cargo
+        Mixed = 0,
+        Passenger = 1,
+        Cargo = 2
     }
     public enum Region
     {
-        Lvivska,
-        Odeska,
-        Ternopilska,
-        Khmelnytska,
-        Zakarpatska,
-        Vinnytska,
-        Rivnenska,
-        Volynska,
-        Ivano_Frankivska,
-        Chernivetska,
-        Zhytomyrska,
-        Kyivska,
-        Mykolaivska,
-        Khersonska,
-        Kyrovogradska,
-        Dnipropetrovska,
-        Kharkivska,
-        Chernihivska,
-        Sumska,
-        Donetska,
-        Zaporizka,
-        Luhanska,
-        Poltavska,
-
+        Lvivska = 0,
+        Odeska = 1,
+        Ternopilska = 2,
+        Khmelnytska = 3,
+        Zakarpatska = 4,
+        Vinnytska = 5,
+        Rivnenska = 6,
+        Volynska = 7,
+        Ivano_Frankivska = 8,
+        Chernivetska = 9,
+        Zhytomyrska = 10,
+        Kyivska = 11,
+        Mykolaivska = 12,
+        Khersonska = 13,
+        Kyrovogradska = 14,
+        Dnipropetrovska = 15,
+        Kharkivska = 16,
+        Chernihivska = 17,
+        Sumska = 18,
+        Donetska = 19,
+        Zaporizka = 20,
+        Luhanska = 21,
+        Poltavska = 22,
+        Cherkaska = 23
     }
     public class Station //Станція
     {

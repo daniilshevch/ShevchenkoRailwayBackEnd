@@ -45,7 +45,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers
 
             
         }
-        [HttpPatch("update-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}")]
+        [HttpPut("update-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}")]
         public async Task<ActionResult<PassengerCarriageOnTrainRouteOnDateDto>> UpdatePassengerCarriageOnTrainRouteOnDate(
     [FromRoute] string train_route_on_date_id, [FromRoute] string passenger_carriage_id, [FromBody] ExternalCarriageAssignmentUpdateDto input)
         {

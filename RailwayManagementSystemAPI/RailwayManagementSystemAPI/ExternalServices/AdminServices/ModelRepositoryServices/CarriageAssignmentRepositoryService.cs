@@ -28,7 +28,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         public async Task<QueryResult<PassengerCarriageOnTrainRouteOnDateDto>> UpdatePassengerCarriageOnTrainRouteOnDate(string passenger_carriage_id,
             string train_route_on_date_id, ExternalCarriageAssignmentUpdateDto input)
         {
-            PassengerCarriageOnTrainRouteOnDateUpdateDto update_dto = new PassengerCarriageOnTrainRouteOnDateUpdateDto()
+            PassengerCarriageOnTrainRouteOnDateDto update_dto = new PassengerCarriageOnTrainRouteOnDateDto()
             {
                 Passenger_Carriage_Id = passenger_carriage_id,
                 Train_Route_On_Date_Id = train_route_on_date_id,
