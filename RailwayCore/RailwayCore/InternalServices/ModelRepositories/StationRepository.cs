@@ -10,7 +10,6 @@ namespace RailwayCore.InternalServices.ModelServices
 
     public class StationRepository
     {
-        private static TextService text_service = new TextService("StationService");
         private readonly AppDbContext context;
         private readonly RailwayBranchRepository railway_branch_service;
         public StationRepository(AppDbContext context, RailwayBranchRepository railway_branch_service)
@@ -18,19 +17,17 @@ namespace RailwayCore.InternalServices.ModelServices
             this.context = context;
             this.railway_branch_service = railway_branch_service;
         }
-        public async Task<Station?> CreateStation(StationDto input)
+        public async Task<QueryResult<Station>> CreateStation(StationDto input)
         {
             Station? already_in_memory = await context.Stations.FirstOrDefaultAsync(station => station.Id == input.Id);
             if (already_in_memory is not null)
             {
-                text_service.DuplicateGetInform($"Station with ID: {input.Id} already exists");
-                return already_in_memory;
+                return new FailQuery<Station>(new Error(ErrorType.BadRequest, $"Station with ID: {input.Id} already exists"));
             }
             RailwayBranch? railway_branch = await railway_branch_service.FindRailwayBranchByTitle(input.Railway_Branch_Title);
-            if (railway_branch == null)
+            if (railway_branch is null)
             {
-                text_service.FailPostInform($"Fail in RailwayBranchService");
-                return null;
+                return new FailQuery<Station>(new Error(ErrorType.NotFound, $"Can't find railway branch with title: {input.Railway_Branch_Title}"));
             }
             Station station = new Station()
             {
@@ -46,32 +43,61 @@ namespace RailwayCore.InternalServices.ModelServices
             };
             context.Stations.Add(station);
             await context.SaveChangesAsync();
-            text_service.SuccessPostInform($"Station {station.Title}({station.Id}) has been added successfully");
-            return station;
+            return new SuccessQuery<Station>(station);
         }
         [Checked("18.04.2025")]
-        public async Task<Station?> FindStationById(int id)
+        public async Task<Station?> GetStationById(int id)
         {
             Station? station = await context.Stations.FirstOrDefaultAsync(station => station.Id == id);
-            if (station == null)
+            if (station is null)
             {
-                text_service.FailGetInform($"Can't find station with ID: {id}");
                 return null;
             }
-            text_service.SuccessGetInform($"Successfully got station with ID: {id}");
             return station;
         }
         [Checked("18.04.2025")]
-        public async Task<Station?> FindStationByTitle(string title)
+        public async Task<Station?> GetStationByTitle(string title)
         {
             Station? station = await context.Stations.FirstOrDefaultAsync(station => station.Title == title);
             if (station == null)
             {
-                text_service.FailGetInform($"Can't find station {title}");
                 return null;
             }
-            text_service.SuccessGetInform($"Successfully got station with title: {title}");
             return station;
+        }
+        public async Task<List<Station>> GetStations()
+        {
+            List<Station> stations = await context.Stations.ToListAsync();
+            return stations;
+        }
+        public async Task<QueryResult<Station>> UpdateStation(StationDto input)
+        {
+            Station? existing_station = await context.Stations.FirstOrDefaultAsync(station => station.Id == input.Id);
+            if(existing_station is null)
+            {
+                return new FailQuery<Station>(new Error(ErrorType.NotFound, $"Can't find station with ID: {input.Id}"));
+            }
+            existing_station.Register_Id = input.Register_Id;
+            existing_station.Title = input.Title;
+            existing_station.Location = input.Location;
+            existing_station.Type_Of = input.Type_Of;
+            existing_station.Region = input.Region;
+            existing_station.Register_Id = input.Register_Id;
+            context.Stations.Update(existing_station);
+            await context.SaveChangesAsync();
+            return new SuccessQuery<Station>(existing_station);
+        }
+        public async Task<bool> DeleteStation(int id)
+        {
+            Station? station = await context.Stations.FirstOrDefaultAsync(station => station.Id == id);
+            if (station is null)
+            {
+                return false;
+            }
+            context.Stations.Remove(station);
+            await context.SaveChangesAsync();
+            return true;
+
         }
 
     }

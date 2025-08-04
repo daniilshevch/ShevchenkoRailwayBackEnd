@@ -58,8 +58,8 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             {
                 return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find passenger carriage with ID: {input.Passenger_Carriage_Id}"));
             }
-            Station? starting_station_from_ticket = await station_service.FindStationByTitle(input.Starting_Station_Title);
-            Station? ending_station_from_ticket = await station_service.FindStationByTitle(input.Ending_Station_Title);
+            Station? starting_station_from_ticket = await station_service.GetStationByTitle(input.Starting_Station_Title);
+            Station? ending_station_from_ticket = await station_service.GetStationByTitle(input.Ending_Station_Title);
             if (starting_station_from_ticket is null)
             {
                 return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find station with title: {input.Starting_Station_Title}"));

@@ -129,7 +129,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalCarriageAssignmentDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -245,7 +245,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto, RailwayCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.ExternalCarriageAssignmentDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -628,7 +628,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageOnTrainRouteOnDateDto",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalCarriageAssignmentDto",
         "MediaTypes": [
           "text/plain",
           "application/json",

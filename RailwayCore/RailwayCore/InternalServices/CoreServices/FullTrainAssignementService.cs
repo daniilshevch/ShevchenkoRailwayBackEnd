@@ -4,6 +4,7 @@ using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
 using RailwayCore.InternalServices.ModelServices;
+using RailwayCore.InternalServices.ExecutiveServices;
 
 namespace RailwayCore.InternalServices.CoreServices
 {
@@ -15,6 +16,8 @@ namespace RailwayCore.InternalServices.CoreServices
         private readonly PassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service;
         private readonly StationRepository station_service;
         private readonly PassengerCarriageRepository passenger_carriage_service;
+        private readonly TrainSquadCopyService train_squad_copy_service;
+        private readonly TrainScheduleCopyService train_schedule_copy_service;
         private static TextService text_service = new TextService("FullTrainAssignementService");
         public FullTrainAssignementService(AppDbContext context, TrainRouteOnDateRepository train_route_on_date_service,
             TrainRouteOnDateOnStationRepository train_route_on_date_on_station_service,
@@ -58,7 +61,7 @@ namespace RailwayCore.InternalServices.CoreServices
                 {
                     next_station_dto = null;
                 }
-                Station? current_station = await station_service.FindStationByTitle(current_station_dto.Station_Title);
+                Station? current_station = await station_service.GetStationByTitle(current_station_dto.Station_Title);
                 if (current_station == null)
                 {
                     text_service.FailPostInform("Fail in StationService");
@@ -66,7 +69,7 @@ namespace RailwayCore.InternalServices.CoreServices
                 }
                 if (next_station_dto != null)
                 {
-                    Station? next_station = await station_service.FindStationByTitle(next_station_dto.Station_Title);
+                    Station? next_station = await station_service.GetStationByTitle(next_station_dto.Station_Title);
                     if (next_station == null)
                     {
                         text_service.FailPostInform("Fail in StationService");

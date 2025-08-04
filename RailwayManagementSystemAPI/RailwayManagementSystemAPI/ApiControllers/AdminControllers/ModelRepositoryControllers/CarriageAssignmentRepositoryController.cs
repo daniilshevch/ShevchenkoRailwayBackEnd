@@ -21,41 +21,41 @@ namespace RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers
             this.carriage_assignment_repository_service = carriage_assignment_repository_service;
         }
         [HttpPost("assign-carriage-to-train-race-squad")]
-        public async Task<ActionResult<PassengerCarriageOnTrainRouteOnDateDto>> CreatePassengerCarriageOnTrainRouteOnDate([FromBody] PassengerCarriageOnTrainRouteOnDateDto input)
+        public async Task<ActionResult<ExternalCarriageAssignmentDto>> CreatePassengerCarriageOnTrainRouteOnDate([FromBody] PassengerCarriageOnTrainRouteOnDateDto input)
         {
-            QueryResult<PassengerCarriageOnTrainRouteOnDateDto> carriage_assignment_creation_result = 
+            QueryResult<ExternalCarriageAssignmentDto> carriage_assignment_creation_result = 
                 await carriage_assignment_repository_service.CreatePassengerCarriageOnTrainRouteOnDate(input);
             if(carriage_assignment_creation_result.Fail)
             {
                 return carriage_assignment_creation_result
-                    .GetErrorFromQueryResult<PassengerCarriageOnTrainRouteOnDateDto, PassengerCarriageOnTrainRouteOnDateDto>();
+                    .GetErrorFromQueryResult<ExternalCarriageAssignmentDto, ExternalCarriageAssignmentDto>();
             }
             return Ok(carriage_assignment_creation_result.Value);
         }
         [HttpGet("get-carriage-assignments-for-train-race/{train_route_on_date_id}")]
-        public async Task<ActionResult<List<PassengerCarriageOnTrainRouteOnDateDto>>> GetPassengerCarriagesForTrainRouteOnDate([FromRoute] string train_route_on_date_id)
+        public async Task<ActionResult<List<ExternalCarriageAssignmentDto>>> GetPassengerCarriagesForTrainRouteOnDate([FromRoute] string train_route_on_date_id)
         {
-            QueryResult<List<PassengerCarriageOnTrainRouteOnDateDto>> carriage_assignments_get_result =
+            QueryResult<List<ExternalCarriageAssignmentDto>> carriage_assignments_get_result =
                 await carriage_assignment_repository_service.GetPassengerCarriagesForTrainRouteOnDate(train_route_on_date_id);
             if(carriage_assignments_get_result.Fail)
             {
-                return carriage_assignments_get_result.GetErrorFromQueryResult<List<PassengerCarriageOnTrainRouteOnDateDto>, List<PassengerCarriageOnTrainRouteOnDateDto>>();
+                return carriage_assignments_get_result.GetErrorFromQueryResult<List<ExternalCarriageAssignmentDto>, List<ExternalCarriageAssignmentDto>>();
             }
             return Ok(carriage_assignments_get_result.Value);
 
             
         }
         [HttpPut("update-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}")]
-        public async Task<ActionResult<PassengerCarriageOnTrainRouteOnDateDto>> UpdatePassengerCarriageOnTrainRouteOnDate(
+        public async Task<ActionResult<ExternalCarriageAssignmentDto>> UpdatePassengerCarriageOnTrainRouteOnDate(
     [FromRoute] string train_route_on_date_id, [FromRoute] string passenger_carriage_id, [FromBody] ExternalCarriageAssignmentUpdateDto input)
         {
-            QueryResult<PassengerCarriageOnTrainRouteOnDateDto> carriage_assignment_update_result =
+            QueryResult<ExternalCarriageAssignmentDto> carriage_assignment_update_result =
                 await carriage_assignment_repository_service
                 .UpdatePassengerCarriageOnTrainRouteOnDate(passenger_carriage_id, train_route_on_date_id, input);
             if (carriage_assignment_update_result.Fail)
             {
                 return carriage_assignment_update_result
-                    .GetErrorFromQueryResult<PassengerCarriageOnTrainRouteOnDateDto, PassengerCarriageOnTrainRouteOnDateDto>();
+                    .GetErrorFromQueryResult<ExternalCarriageAssignmentDto, ExternalCarriageAssignmentDto>();
             }
             return Ok(carriage_assignment_update_result.Value);
 

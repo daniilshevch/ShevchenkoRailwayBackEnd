@@ -35,7 +35,7 @@ namespace RailwayCore.InternalServices.ModelServices
             {
                 return new FailQuery<TrainRouteOnDateOnStation>(new Error(ErrorType.NotFound, $"Can't find train race with id: {input.Train_Route_On_Date_Id}"));
             }
-            Station? station = await station_service.FindStationByTitle(input.Station_Title);
+            Station? station = await station_service.GetStationByTitle(input.Station_Title);
             if (station == null)
             {
                 return new FailQuery<TrainRouteOnDateOnStation>(new Error(ErrorType.NotFound, $"Can't find station: {input.Station_Title}"));
@@ -130,7 +130,7 @@ namespace RailwayCore.InternalServices.ModelServices
             {
                 return null;
             }
-            Station? station = await station_service.FindStationById(input.Station.Id);
+            Station? station = await station_service.GetStationById(input.Station.Id);
             if (station == null)
             {
                 return null;

@@ -35,17 +35,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                  "$ref": "#/components/schemas/ExternalCarriageAssignmentDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                  "$ref": "#/components/schemas/ExternalCarriageAssignmentDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                  "$ref": "#/components/schemas/ExternalCarriageAssignmentDto"
                 }
               }
             }
@@ -76,7 +76,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                    "$ref": "#/components/schemas/ExternalCarriageAssignmentDto"
                   }
                 }
               },
@@ -84,7 +84,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                    "$ref": "#/components/schemas/ExternalCarriageAssignmentDto"
                   }
                 }
               },
@@ -92,7 +92,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                    "$ref": "#/components/schemas/ExternalCarriageAssignmentDto"
                   }
                 }
               }
@@ -149,17 +149,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                  "$ref": "#/components/schemas/ExternalCarriageAssignmentDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                  "$ref": "#/components/schemas/ExternalCarriageAssignmentDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PassengerCarriageOnTrainRouteOnDateDto"
+                  "$ref": "#/components/schemas/ExternalCarriageAssignmentDto"
                 }
               }
             }
@@ -1387,6 +1387,48 @@
         },
         "additionalProperties": false
       },
+      "ExternalCarriageAssignmentDto": {
+        "type": "object",
+        "properties": {
+          "passenger_carriage_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "passenger_carriage_info": {
+            "$ref": "#/components/schemas/PassengerCarriageDto"
+          },
+          "train_route_on_date_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "position_in_squad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "is_for_woman": {
+            "type": "boolean"
+          },
+          "is_for_children": {
+            "type": "boolean"
+          },
+          "factual_wi_fi": {
+            "type": "boolean"
+          },
+          "factual_air_conditioning": {
+            "type": "boolean"
+          },
+          "factual_shower_availability": {
+            "type": "boolean"
+          },
+          "factual_is_inclusive": {
+            "type": "boolean"
+          },
+          "food_availability": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "ExternalCarriageAssignmentUpdateDto": {
         "type": "object",
         "properties": {
@@ -1626,14 +1668,14 @@
             "type": "string",
             "nullable": true
           },
-          "type_Of": {
+          "type_of": {
             "$ref": "#/components/schemas/PassengerCarriageType"
           },
           "capacity": {
             "type": "integer",
             "format": "int32"
           },
-          "production_Year": {
+          "production_year": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -1641,44 +1683,44 @@
           "manufacturer": {
             "$ref": "#/components/schemas/PassengerCarriageManufacturer"
           },
-          "quality_Class": {
+          "quality_class": {
             "$ref": "#/components/schemas/PassengerCarriageQualityClass"
           },
-          "renewal_Fact": {
+          "renewal_fact": {
             "type": "boolean"
           },
-          "renewal_Year": {
+          "renewal_year": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "renewal_Performer": {
+          "renewal_performer": {
             "$ref": "#/components/schemas/PassengerCarriageManufacturer"
           },
-          "renewal_Info": {
+          "renewal_info": {
             "type": "string",
             "nullable": true
           },
-          "air_Conditioning": {
+          "air_conditioning": {
             "type": "boolean"
           },
-          "is_Inclusive": {
+          "is_inclusive": {
             "type": "boolean"
           },
-          "is_For_Train_Chief": {
+          "is_for_train_chief": {
             "type": "boolean"
           },
-          "shower_Availability": {
+          "shower_availability": {
             "type": "boolean"
           },
-          "in_Current_Use": {
+          "in_current_use": {
             "type": "boolean"
           },
-          "appearence": {
+          "appearance": {
             "type": "string",
             "nullable": true
           },
-          "station_Depot_Title": {
+          "station_depot_title": {
             "type": "string",
             "nullable": true
           }
@@ -1696,37 +1738,37 @@
       "PassengerCarriageOnTrainRouteOnDateDto": {
         "type": "object",
         "properties": {
-          "passenger_carriage_id": {
+          "passenger_Carriage_Id": {
             "type": "string",
             "nullable": true
           },
-          "train_route_on_date_id": {
+          "train_Route_On_Date_Id": {
             "type": "string",
             "nullable": true
           },
-          "position_in_squad": {
+          "position_In_Squad": {
             "type": "integer",
             "format": "int32"
           },
-          "is_for_woman": {
+          "is_For_Woman": {
             "type": "boolean"
           },
-          "is_for_children": {
+          "is_For_Children": {
             "type": "boolean"
           },
-          "factual_wi_fi": {
+          "factual_Wi_Fi": {
             "type": "boolean"
           },
-          "factual_air_conditioning": {
+          "factual_Air_Conditioning": {
             "type": "boolean"
           },
-          "factual_shower_availability": {
+          "factual_Shower_Availability": {
             "type": "boolean"
           },
-          "factual_is_inclusive": {
+          "factual_Is_Inclusive": {
             "type": "boolean"
           },
-          "food_availability": {
+          "food_Availability": {
             "type": "boolean"
           }
         },

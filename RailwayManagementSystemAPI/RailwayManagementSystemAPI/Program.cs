@@ -38,36 +38,41 @@ class Server
         services.AddAuthorization();
         services.AddHttpContextAccessor();
         services.AddControllers();
-        services.AddSingleton<AppDbContext>();
-        services.AddSingleton<ConsoleRepresentationService>();
+        //AddSingleton
+        services.AddScoped<AppDbContext>();
+        //services.AddSingleton<ConsoleRepresentationService>();
         //ModelServices
-        services.AddSingleton<RailwayBranchRepository>();
-        services.AddSingleton<StationRepository>();
-        services.AddSingleton<TrainRouteRepository>();
-        services.AddSingleton<TrainRouteOnDateRepository>();
-        services.AddSingleton<TrainRouteOnDateOnStationRepository>();
-        services.AddSingleton<PassengerCarriageRepository>();
-        services.AddSingleton<PassengerCarriageOnTrainRouteOnDateRepository>();
+        services.AddScoped<RailwayBranchRepository>();
+        services.AddScoped<StationRepository>();
+        services.AddScoped<TrainRouteRepository>();
+        services.AddScoped<TrainRouteOnDateRepository>();
+        services.AddScoped<TrainRouteOnDateOnStationRepository>();
+        services.AddScoped<PassengerCarriageRepository>();
+        services.AddScoped<PassengerCarriageOnTrainRouteOnDateRepository>();
         //ExecutiveServices
-        services.AddSingleton<TicketAvailabilityCheckService>();
-        services.AddSingleton<TicketAllocationService>();
-        services.AddSingleton<TicketBookingTimerService>();
-        services.AddSingleton<TicketSystemManipulationService>();
-        services.AddSingleton<TicketUserManipulationService>();
+        services.AddScoped<TicketAvailabilityCheckService>();
+        services.AddScoped<TicketAllocationService>();
+        services.AddScoped<TicketBookingTimerService>();
+        services.AddScoped<TicketSystemManipulationService>();
+        services.AddScoped<TicketUserManipulationService>();
 
-        services.AddSingleton<TrainTripsSearchService>();
-        services.AddSingleton<TrainScheduleSearchService>();
-        services.AddSingleton<TrainSquadSearchService>();
+        services.AddScoped<TrainTripsSearchService>();
+        services.AddScoped<TrainScheduleSearchService>();
+        services.AddScoped<TrainSquadSearchService>();
+
+        services.AddScoped<TrainSquadCopyService>();
+        services.AddScoped<TrainScheduleCopyService>();
         //CoreServices
-        services.AddSingleton<FullTrainAssignementService>();
-        services.AddSingleton<FullTrainRouteSearchService>();
-        services.AddSingleton<FullTicketManagementService>();
+        services.AddScoped<FullTrainAssignementService>();
+        services.AddScoped<FullTrainRouteSearchService>();
+        services.AddScoped<FullTicketManagementService>();
         //ApiServices
         services.AddScoped<CarriageAssignmentRepositoryService>();
         services.AddScoped<TrainStopRepositoryService>();
         services.AddScoped<TrainRouteRepositoryService>();
         services.AddScoped<TrainRaceRepositoryService>();
         services.AddScoped<PassengerCarriageRepositoryService>();
+        services.AddScoped<StationRepositoryService>();
 
         services.AddScoped<TrainRouteWithBookingsSearchService>();
         services.AddScoped<CompleteTicketBookingService>();

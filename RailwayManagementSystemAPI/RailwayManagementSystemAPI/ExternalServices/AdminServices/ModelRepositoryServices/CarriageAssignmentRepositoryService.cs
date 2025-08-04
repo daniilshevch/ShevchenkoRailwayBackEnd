@@ -13,19 +13,19 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         {
             this.carriage_assignment_repository = carriage_assignment_repository;
         }
-        public async Task<QueryResult<PassengerCarriageOnTrainRouteOnDateDto>> CreatePassengerCarriageOnTrainRouteOnDate(PassengerCarriageOnTrainRouteOnDateDto input)
+        public async Task<QueryResult<ExternalCarriageAssignmentDto>> CreatePassengerCarriageOnTrainRouteOnDate(PassengerCarriageOnTrainRouteOnDateDto input)
         {
             QueryResult<PassengerCarriageOnTrainRouteOnDate> carriage_assignment_creation_result =  
                 await carriage_assignment_repository.CreatePassengerCarriageOnTrainRouteOnDate(input);
             if(carriage_assignment_creation_result.Fail)
             {
-                return new FailQuery<PassengerCarriageOnTrainRouteOnDateDto>(carriage_assignment_creation_result.Error);
+                return new FailQuery<ExternalCarriageAssignmentDto>(carriage_assignment_creation_result.Error);
             }
-            return new SuccessQuery<PassengerCarriageOnTrainRouteOnDateDto>
-                ((PassengerCarriageOnTrainRouteOnDateDto)carriage_assignment_creation_result.Value);
+            return new SuccessQuery<ExternalCarriageAssignmentDto>
+                ((ExternalCarriageAssignmentDto)carriage_assignment_creation_result.Value);
         }
 
-        public async Task<QueryResult<PassengerCarriageOnTrainRouteOnDateDto>> UpdatePassengerCarriageOnTrainRouteOnDate(string passenger_carriage_id,
+        public async Task<QueryResult<ExternalCarriageAssignmentDto>> UpdatePassengerCarriageOnTrainRouteOnDate(string passenger_carriage_id,
             string train_route_on_date_id, ExternalCarriageAssignmentUpdateDto input)
         {
             PassengerCarriageOnTrainRouteOnDateDto update_dto = new PassengerCarriageOnTrainRouteOnDateDto()
@@ -45,22 +45,22 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
                 await carriage_assignment_repository.UpdatePassengerCarriageOnTrainRouteOnDate(update_dto);
             if (carriage_assignment_update_result.Fail)
             {
-                return new FailQuery<PassengerCarriageOnTrainRouteOnDateDto>(carriage_assignment_update_result.Error);
+                return new FailQuery<ExternalCarriageAssignmentDto>(carriage_assignment_update_result.Error);
             }
-            return new SuccessQuery<PassengerCarriageOnTrainRouteOnDateDto>
-                ((PassengerCarriageOnTrainRouteOnDateDto)carriage_assignment_update_result.Value);
+            return new SuccessQuery<ExternalCarriageAssignmentDto>
+                ((ExternalCarriageAssignmentDto)carriage_assignment_update_result.Value);
         }
-        public async Task<QueryResult<List<PassengerCarriageOnTrainRouteOnDateDto>>> GetPassengerCarriagesForTrainRouteOnDate(string train_route_on_date_id)
+        public async Task<QueryResult<List<ExternalCarriageAssignmentDto>>> GetPassengerCarriagesForTrainRouteOnDate(string train_route_on_date_id)
         {
             QueryResult<List<PassengerCarriageOnTrainRouteOnDate>> carriage_assignment_get_result = 
                 await carriage_assignment_repository.GetPassengerCarriagesForTrainRouteOnDate(train_route_on_date_id);
             if(carriage_assignment_get_result.Fail)
             {
-                return new FailQuery<List<PassengerCarriageOnTrainRouteOnDateDto>>(carriage_assignment_get_result.Error);
+                return new FailQuery<List<ExternalCarriageAssignmentDto>>(carriage_assignment_get_result.Error);
             }
-            List<PassengerCarriageOnTrainRouteOnDateDto> carriage_assignments = carriage_assignment_get_result.Value.Select(single_carriage_assignment =>
-            (PassengerCarriageOnTrainRouteOnDateDto)single_carriage_assignment).ToList();
-            return new SuccessQuery<List<PassengerCarriageOnTrainRouteOnDateDto>>(carriage_assignments);
+            List<ExternalCarriageAssignmentDto> carriage_assignments = carriage_assignment_get_result.Value.Select(single_carriage_assignment =>
+            (ExternalCarriageAssignmentDto)single_carriage_assignment).ToList();
+            return new SuccessQuery<List<ExternalCarriageAssignmentDto>>(carriage_assignments);
 
         }
         public async Task<bool> DeletePassengerCarriageOnTrainRouteOnDate(string passenger_carriage_id, string train_route_on_date_id)

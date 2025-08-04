@@ -74,8 +74,8 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
                 return null;
             }
             //Отримуємо початкову та кінцеву станції, між якими ми хочемо знайти всі зупинки
-            Station? starting_station = await station_repository.FindStationByTitle(first_station_title);
-            Station? ending_station = await station_repository.FindStationByTitle(second_station_title);
+            Station? starting_station = await station_repository.GetStationByTitle(first_station_title);
+            Station? ending_station = await station_repository.GetStationByTitle(second_station_title);
             if (starting_station is null || ending_station is null)
             {
                 return null;

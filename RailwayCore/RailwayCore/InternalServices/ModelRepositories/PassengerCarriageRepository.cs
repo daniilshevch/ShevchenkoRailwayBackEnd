@@ -29,7 +29,7 @@ namespace RailwayCore.InternalServices.ModelServices
             Station? station_depot = null;
             if (input.Station_Depot_Title is not null)
             {
-                station_depot = await station_service.FindStationByTitle(input.Station_Depot_Title);
+                station_depot = await station_service.GetStationByTitle(input.Station_Depot_Title);
                 if (station_depot == null)
                 {
                     return new FailQuery<PassengerCarriage>(new Error(ErrorType.NotFound, $"Can't find station depot with title: {input.Station_Depot_Title}"));
@@ -84,7 +84,7 @@ namespace RailwayCore.InternalServices.ModelServices
             Station? station_depot = null;
             if (input.Station_Depot_Title is not null)
             {
-                station_depot = await station_service.FindStationByTitle(input.Station_Depot_Title);
+                station_depot = await station_service.GetStationByTitle(input.Station_Depot_Title);
                 if (station_depot == null)
                 {
                     return new FailQuery<PassengerCarriage>(new Error(ErrorType.NotFound, $"Can't find station depot with title: {input.Station_Depot_Title}"));

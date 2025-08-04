@@ -19,8 +19,8 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
         [Crucial]
         public async Task<QueryResult<List<InternalTrainRaceBetweenStationsDto>>> SearchTrainRoutesBetweenStationsOnDate(string start_station_title, string end_station_title, DateOnly trip_departure_date)
         {
-            Station? start_station = await station_repository.FindStationByTitle(start_station_title); // Пошук стартової зупинки
-            Station? end_station = await station_repository.FindStationByTitle(end_station_title); // Пошук кінцевої зупинки
+            Station? start_station = await station_repository.GetStationByTitle(start_station_title); // Пошук стартової зупинки
+            Station? end_station = await station_repository.GetStationByTitle(end_station_title); // Пошук кінцевої зупинки
             if (start_station is null)
             {
                 return new FailQuery<List<InternalTrainRaceBetweenStationsDto>>(new Error(ErrorType.NotFound, $"Can't find starting station with title: {start_station_title}"));
@@ -105,7 +105,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
             {
                 right_interval = TimeSpan.FromHours(3);
             }
-            Station? station = await station_repository.FindStationByTitle(station_title);
+            Station? station = await station_repository.GetStationByTitle(station_title);
             if(station is null)
             {
                 return new FailQuery<List<InternalTrainRaceThroughStationDto>>(new Error(ErrorType.NotFound, $"Station {station_title} has not been found"));
