@@ -2,6 +2,7 @@
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayManagementSystemAPI.API_DTO;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Net;
 namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers
 {
@@ -34,21 +35,36 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers
             return Ok();
         }
         [HttpPost("Copy-Train-With-Schedule")]
-        public async Task<IActionResult> CopyTrainRouteOnDateWithSchedule(string train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
+        public async Task<IActionResult> CopyTrainRouteOnDateWithSchedule([FromQuery] string prototype_train_route_id, [FromQuery] string new_train_route_id,
+            [FromQuery] DateOnly prototype_date, [FromQuery] DateOnly new_date, [FromQuery] bool creation_option = true)
         {
-            await api_train_assignment_service.CopyTrainRouteOnDateWithSchedule(train_route_id, prototype_date, new_date, creation_option);
+            QueryResult schedule_copy_result = await api_train_assignment_service.CopyTrainRouteOnDateWithSchedule(prototype_train_route_id, new_train_route_id, prototype_date, new_date, creation_option);
+            if(schedule_copy_result.Fail)
+            {
+                return schedule_copy_result.GetErrorFromNonGenericQueryResult();
+            }    
             return Ok();
         }
         [HttpPost("Copy-Train-With-Squad")]
-        public async Task<IActionResult> CopyTrainRouteOnDateWithSquad(string train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
+        public async Task<IActionResult> CopyTrainRouteOnDateWithSquad([FromQuery] string prototype_train_route_id, [FromQuery] string new_train_route_id,
+            [FromQuery] DateOnly prototype_date, [FromQuery] DateOnly new_date, [FromQuery] bool creation_option = true)
         {
-            await api_train_assignment_service.CopyTrainRouteOnDateWithSquad(train_route_id, prototype_date, new_date, creation_option);
+            QueryResult squad_copy_result = await api_train_assignment_service.CopyTrainRouteOnDateWithSquad(prototype_train_route_id, new_train_route_id, prototype_date, new_date, creation_option);
+            if(squad_copy_result.Fail)
+            {
+                return squad_copy_result.GetErrorFromNonGenericQueryResult();
+            }
             return Ok();
         }
         [HttpPost("Copy-Train-With-Schedule-And-Squad")]
-        public async Task<IActionResult> CopyTrainRouteOnDateWithScheduleAndSquad(string train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
+        public async Task<IActionResult> CopyTrainRouteOnDateWithScheduleAndSquad([FromQuery] string prototype_train_route_id, 
+            [FromQuery] string new_train_route_id, [FromQuery] DateOnly prototype_date, [FromQuery] DateOnly new_date, [FromQuery] bool creation_option = true)
         {
-            await api_train_assignment_service.CopyTrainRouteOnDateWithScheduleAndSquad(train_route_id, prototype_date, new_date, creation_option);
+            QueryResult schedule_and_squad_copy_result =await api_train_assignment_service.CopyTrainRouteOnDateWithScheduleAndSquad(prototype_train_route_id, new_train_route_id, prototype_date, new_date, creation_option);
+            if(schedule_and_squad_copy_result.Fail)
+            {
+                return schedule_and_squad_copy_result.GetErrorFromNonGenericQueryResult();
+            }
             return Ok();
         }
         [HttpPut("Change-Train-Schedule")]

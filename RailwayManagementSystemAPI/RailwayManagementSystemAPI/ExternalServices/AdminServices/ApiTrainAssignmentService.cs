@@ -62,17 +62,17 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices
             List<CarriageAssignementWithoutRouteDTO> carriage_assignments = input.Carriage_Assignments;
             await full_train_assignment_service.CreateTrainRouteOnDateWithScheduleAndSquad(train_route_id, departure_date, train_stops_list, carriage_assignments, creation_option);
         }
-        public async Task CopyTrainRouteOnDateWithSchedule(string train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
+        public async Task<QueryResult> CopyTrainRouteOnDateWithSchedule(string prototype_train_route_id, string new_train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
         {
-            await full_train_assignment_service.CopyTrainRouteOnDateWithSchedule(train_route_id, prototype_date, new_date, creation_option);
+            return await full_train_assignment_service.CopyTrainRouteOnDateWithSchedule(prototype_train_route_id, new_train_route_id, prototype_date, new_date, creation_option);
         }
-        public async Task CopyTrainRouteOnDateWithSquad(string train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
+        public async Task<QueryResult> CopyTrainRouteOnDateWithSquad(string prototype_train_route_id, string new_train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
         {
-            await full_train_assignment_service.CopyTrainRouteOnDateWithSquad(train_route_id, prototype_date, new_date, creation_option);
+            return await full_train_assignment_service.CopyTrainRouteOnDateWithSquad(prototype_train_route_id, new_train_route_id, prototype_date, new_date, creation_option);
         }
-        public async Task CopyTrainRouteOnDateWithScheduleAndSquad(string train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
+        public async Task<QueryResult> CopyTrainRouteOnDateWithScheduleAndSquad(string prototype_train_route_id, string new_train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
         {
-            await full_train_assignment_service.CopyTrainRouteOnDateWithScheduleAndSquad(train_route_id, prototype_date, new_date, creation_option);
+            return await full_train_assignment_service.CopyTrainRouteOnDateWithScheduleAndSquad(prototype_train_route_id, new_train_route_id, prototype_date, new_date, creation_option);
         }
         public async Task ChangeTrainRouteOnDateSchedule(string train_route_id, DateOnly departure_date, List<TrainStopWithArrivalAndDepartureTimeDto> train_stops, bool deletion_option = true)
         {

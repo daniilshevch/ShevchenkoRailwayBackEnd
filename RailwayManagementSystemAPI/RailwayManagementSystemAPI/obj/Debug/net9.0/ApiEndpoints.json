@@ -518,7 +518,12 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "train_route_id",
+        "Name": "prototype_train_route_id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "new_train_route_id",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -549,7 +554,12 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "train_route_id",
+        "Name": "prototype_train_route_id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "new_train_route_id",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -580,7 +590,12 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "train_route_id",
+        "Name": "prototype_train_route_id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "new_train_route_id",
         "Type": "System.String",
         "IsRequired": false
       },

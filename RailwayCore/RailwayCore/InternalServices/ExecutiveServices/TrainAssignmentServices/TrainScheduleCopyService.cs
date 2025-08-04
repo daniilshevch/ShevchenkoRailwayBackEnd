@@ -25,37 +25,40 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             this.station_service = station_service;
         }
 
-        public async Task CopyTrainRouteOnDateWithSchedule(string train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
+        public async Task<QueryResult> CopyTrainRouteOnDateWithSchedule(string prototype_train_route_id, string new_train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
         {
-            string prototype_train_route_on_date_id = train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, prototype_date);
+            string prototype_train_route_on_date_id = train_route_on_date_service.BuildTrainRouteOnDateIdentificator(prototype_train_route_id, prototype_date);
             TrainRouteOnDate? prototype_train_route_on_date = await train_route_on_date_service.GetTrainRouteOnDateById(prototype_train_route_on_date_id);
-            if (prototype_train_route_on_date == null)
+            if (prototype_train_route_on_date is null)
             {
-                return;
+                return new FailQuery(new Error(ErrorType.NotFound, $"Can't find prototype with ID: {prototype_train_route_on_date_id}"));
             }
             TrainRouteOnDate? new_train_route_on_date = null;
             if (creation_option)
             {
-                new_train_route_on_date = await train_route_on_date_service.CreateTrainRouteOnDate(train_route_id, new_date);
-                if (new_train_route_on_date == null)
+                new_train_route_on_date = await train_route_on_date_service.CreateTrainRouteOnDate(new_train_route_id, new_date);
+                if (new_train_route_on_date is null)
                 {
-                    return;
+                    return new FailQuery(new Error(ErrorType.BadRequest, "Problems while creating train race"));
                 }
             }
             else
             {
+                string new_train_route_on_date_id = train_route_on_date_service.BuildTrainRouteOnDateIdentificator(new_train_route_id, new_date);
                 new_train_route_on_date = await train_route_on_date_service
-                    .GetTrainRouteOnDateById(train_route_on_date_service.BuildTrainRouteOnDateIdentificator(train_route_id, new_date));
+                    .GetTrainRouteOnDateById(new_train_route_on_date_id);
+
                 if (new_train_route_on_date == null)
                 {
-                    return;
+                    return new FailQuery(new Error(ErrorType.NotFound, $"Can't find train race with ID: {new_train_route_on_date_id}"));
                 }
             }
+
             int days_difference = new_date.DayNumber - prototype_date.DayNumber;
             List<TrainRouteOnDateOnStation> prototype_train_route_on_date_stations = context.Train_Routes_On_Date_On_Stations
                 .Include(train_stop => train_stop.Train_Route_On_Date)
                 .Include(train_stop => train_stop.Station)
-                .Where(train_stop => train_stop.Train_Route_On_Date_Id == prototype_train_route_on_date_id).ToList(); //REDUNDANT
+                .Where(train_stop => train_stop.Train_Route_On_Date_Id == prototype_train_route_on_date_id).ToList(); 
             List<TrainRouteOnDateOnStation> new_train_route_on_date_stations = new List<TrainRouteOnDateOnStation>();
             foreach (TrainRouteOnDateOnStation old_train_stop in prototype_train_route_on_date_stations)
             {
@@ -101,6 +104,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
                 await train_route_on_date_on_station_service.CreateTrainStop(new_train_stop);
             }
             await context.SaveChangesAsync();
+            return new SuccessQuery();
         }
     }
 }

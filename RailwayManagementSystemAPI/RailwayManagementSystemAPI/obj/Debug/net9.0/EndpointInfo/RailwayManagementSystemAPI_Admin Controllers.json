@@ -512,7 +512,14 @@
         ],
         "parameters": [
           {
-            "name": "train_route_id",
+            "name": "prototype_train_route_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "new_train_route_id",
             "in": "query",
             "schema": {
               "type": "string"
@@ -557,7 +564,14 @@
         ],
         "parameters": [
           {
-            "name": "train_route_id",
+            "name": "prototype_train_route_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "new_train_route_id",
             "in": "query",
             "schema": {
               "type": "string"
@@ -602,7 +616,14 @@
         ],
         "parameters": [
           {
-            "name": "train_route_id",
+            "name": "prototype_train_route_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "new_train_route_id",
             "in": "query",
             "schema": {
               "type": "string"

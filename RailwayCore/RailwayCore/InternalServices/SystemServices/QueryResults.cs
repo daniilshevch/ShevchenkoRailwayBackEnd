@@ -28,6 +28,11 @@ public abstract class QueryResult<T>
     public bool Fail { get; set; }
     public Error Error { get; set; } = new Error(ErrorType.NoError, string.Empty);
 }
+public abstract class QueryResult
+{
+    public bool Fail { get; set; }
+    public Error Error { get; set; } = new Error(ErrorType.NoError, string.Empty);
+}
 public class SuccessQuery<T> : QueryResult<T>
 {
     public SuccessQuery(T value) : base()
@@ -41,12 +46,28 @@ public class SuccessQuery<T> : QueryResult<T>
         Error = new Error(ErrorType.NoError, string.Empty);
     }
 }
+public class SuccessQuery: QueryResult
+{
+    public SuccessQuery()
+    {
+        Fail = false;
+        Error = new Error(ErrorType.NoError, string.Empty);
+    }
+}
 public class FailQuery<T> : QueryResult<T>
 {
     public FailQuery(Error error) : base()
     {
         Fail = true;
         Value = default;
+        Error = error;
+    }
+}
+public class FailQuery: QueryResult
+{
+    public FailQuery(Error error)
+    {
+        Fail = true;
         Error = error;
     }
 }
