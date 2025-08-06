@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RailwayCore.Context;
 
@@ -11,9 +12,11 @@ using RailwayCore.Context;
 namespace RailwayCore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250805201254_image_changing")]
+    partial class image_changing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +34,7 @@ namespace RailwayCore.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("File_Name")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<byte[]>("Image_Data")
@@ -455,7 +459,8 @@ namespace RailwayCore.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Exemption")
                         .HasColumnType("longtext");
@@ -502,13 +507,7 @@ namespace RailwayCore.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("User_Id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("User_Id")
-                        .IsUnique();
 
                     b.ToTable("User_Profile", (string)null);
                 });
@@ -697,17 +696,6 @@ namespace RailwayCore.Migrations
                     b.Navigation("Train_Route_On_Date");
                 });
 
-            modelBuilder.Entity("RailwayCore.Models.UserProfile", b =>
-                {
-                    b.HasOne("RailwayCore.Models.User", "User")
-                        .WithOne("User_Profile")
-                        .HasForeignKey("RailwayCore.Models.UserProfile", "User_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("RailwayCore.Models.PassengerCarriage", b =>
                 {
                     b.Navigation("Carriage_Assignements");
@@ -758,9 +746,6 @@ namespace RailwayCore.Migrations
             modelBuilder.Entity("RailwayCore.Models.User", b =>
                 {
                     b.Navigation("Ticket_Bookings");
-
-                    b.Navigation("User_Profile")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("RailwayCore.Models.UserProfile", b =>

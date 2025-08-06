@@ -250,8 +250,17 @@ namespace RailwayCore.Context
             model_builder.Entity<User>().Property(user => user.Role).HasConversion<string>();
             //11. User_Profile
             model_builder.Entity<UserProfile>().ToTable("User_Profile");
+            model_builder.Entity<UserProfile>()
+                .HasOne(user_profile => user_profile.User)
+                .WithOne(user => user.User_Profile)
+                .HasForeignKey<UserProfile>(user_profile => user_profile.User_Id);
             //12. Image
+            model_builder.Entity<Image>().ToTable("Image");
             model_builder.Entity<Image>().Property(image => image.Image_Data).HasColumnType("MEDIUMBLOB");
+            model_builder.Entity<Image>()
+                .HasOne(image => image.User_Profile)
+                .WithMany(user_profile => user_profile.Images)
+                .HasForeignKey(image => image.User_Profile_Id);
 
         }
     }

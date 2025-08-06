@@ -237,7 +237,7 @@
         }
       }
     },
-    "/register": {
+    "/Client-API/register": {
       "post": {
         "tags": [
           "UserAccountManagement"
@@ -285,7 +285,7 @@
         }
       }
     },
-    "/login": {
+    "/Client-API/login": {
       "post": {
         "tags": [
           "UserAccountManagement"
@@ -329,6 +329,50 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/Client-API/upload-profile-image-for-current-user": {
+      "post": {
+        "tags": [
+          "UserAccountManagement"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image_file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "image_file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Client-API/get-profile-image-for-current-user": {
+      "get": {
+        "tags": [
+          "UserAccountManagement"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -371,7 +415,7 @@
         }
       }
     },
-    "/return-ticket-for-user/{ticket_id}": {
+    "/return-ticket-for-current-user/{ticket_id}": {
       "delete": {
         "tags": [
           "UserTicketManagement"

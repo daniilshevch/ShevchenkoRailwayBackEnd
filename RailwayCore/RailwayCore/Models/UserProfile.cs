@@ -11,6 +11,8 @@ namespace RailwayCore.Models
     {
         [Key]
         public int Id { get; set; }
+        public int User_Id { get; set; }
+        public User User { get; set; } = null!;
         public List<Image> Images { get; set; } = null!;
 
     }

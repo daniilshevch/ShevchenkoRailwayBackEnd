@@ -51,6 +51,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
         {
             return GetError<OutputModel>(query_result.Error.Type, query_result.Error.Message);
         }
+        public static ActionResult GetErrorFromQueryResultWithoutOutput<InternalModel>(this QueryResult<InternalModel> query_result)
+        {
+            return GetErrorFromNonGeneric(query_result.Error.Type, query_result.Error.Message);
+        }
         public static ActionResult GetErrorFromNonGenericQueryResult(this QueryResult query_result)
         {
             return GetErrorFromNonGeneric(query_result.Error.Type, query_result.Error.Message);

@@ -16,6 +16,7 @@ using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Annotations;
+using RailwayCore.InternalServices.ModelRepositories;
 
 class Server
 {
@@ -41,7 +42,7 @@ class Server
         //AddSingleton
         services.AddScoped<AppDbContext>();
         //services.AddSingleton<ConsoleRepresentationService>();
-        //ModelServices
+        //ModelRepositories
         services.AddScoped<RailwayBranchRepository>();
         services.AddScoped<StationRepository>();
         services.AddScoped<TrainRouteRepository>();
@@ -49,6 +50,7 @@ class Server
         services.AddScoped<TrainRouteOnDateOnStationRepository>();
         services.AddScoped<PassengerCarriageRepository>();
         services.AddScoped<PassengerCarriageOnTrainRouteOnDateRepository>();
+        services.AddScoped<ImageRepository>();
         //ExecutiveServices
         services.AddScoped<TicketAvailabilityCheckService>();
         services.AddScoped<TicketAllocationService>();
@@ -77,7 +79,8 @@ class Server
         services.AddScoped<TrainRouteWithBookingsSearchService>();
         services.AddScoped<CompleteTicketBookingService>();
         services.AddScoped<ApiTrainAssignmentService>();
-        services.AddScoped<UserAccountManagementService>();
+        services.AddScoped<UserAccountAuthenticationService>();
+        services.AddScoped<UserProfileManagementService>();
         services.AddScoped<UserTicketManagementService>();
         services.AddScoped<SystemAuthenticationService>();
         services.AddHostedService<ExpiredTicketBookingsRemovingService>();

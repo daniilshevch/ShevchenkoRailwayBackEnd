@@ -26,7 +26,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             List<ExternalProfileTicketBookingDto> tickets_for_user = ticket_selection_result.Value;
             return tickets_for_user;
         }
-        [HttpDelete("return-ticket-for-user/{ticket_id}")]
+        [HttpDelete("return-ticket-for-current-user/{ticket_id}")]
         public async Task<ActionResult<ExternalProfileTicketBookingDto>> ReturnTicketBookingForUserById([FromRoute] string ticket_id)
         {
             QueryResult<ExternalProfileTicketBookingDto> ticket_returning_result = await user_ticket_management_service.ReturnTicketBookingForCurrentUserById(ticket_id);

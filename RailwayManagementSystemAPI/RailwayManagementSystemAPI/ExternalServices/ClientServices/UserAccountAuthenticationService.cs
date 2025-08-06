@@ -11,13 +11,13 @@ using RailwayManagementSystemAPI.ExternalServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
-    public class UserAccountManagementService
+    public class UserAccountAuthenticationService
     {
         private readonly AppDbContext db_context;
         private readonly IConfiguration configuration;
         private readonly IHttpContextAccessor http_context_accessor;
         private readonly PasswordHasher<User> password_hasher = new PasswordHasher<User>();
-        public UserAccountManagementService(AppDbContext db_context, IConfiguration configuration, IHttpContextAccessor http_context_accessor)
+        public UserAccountAuthenticationService(AppDbContext db_context, IConfiguration configuration, IHttpContextAccessor http_context_accessor)
         {
             this.db_context = db_context;
             this.configuration = configuration;
@@ -57,6 +57,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             }
             new_user.Password = password_hasher.HashPassword(new_user, input.Password);
             await db_context.Users.AddAsync(new_user);
+            await db_context.SaveChangesAsync();
+            UserProfile user_profile = new UserProfile
+            {
+                Id = new_user.Id,
+                User_Id = new_user.Id,
+            };
+            await db_context.User_Profiles.AddAsync(user_profile);
             await db_context.SaveChangesAsync();
             return new SuccessQuery<User>(new_user);
         }

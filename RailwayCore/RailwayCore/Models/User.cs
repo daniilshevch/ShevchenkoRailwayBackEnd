@@ -33,13 +33,13 @@ namespace RailwayCore.Models
         public Sex? Sex { get; set; }
         public Exemption? Exemption { get; set; }
         public double? Discount { get; set; }
-        [MaxLength(30)]
         [EmailAddress]
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
         [Phone]
         public string? Phone_Number { get; set; }
         public List<TicketBooking> Ticket_Bookings { get; set; } = new List<TicketBooking>();
+        public UserProfile User_Profile { get; set; } = null!;
         public Role Role { get; set; } = Role.General_User;
     }
 }
