@@ -42,7 +42,7 @@ namespace RailwayCore.InternalServices.ModelRepositories
             {
                 return new FailQuery<Image>(new Error(ErrorType.NotFound, $"Can't find user with ID: {user_id} or profile for this user"));
             }
-            Image? profile_image = await context.Images.FirstOrDefaultAsync(image => image.User_Profile_Id == user_profile.Id &&
+            Image? profile_image = await context.Images.OrderBy(image => image.Id).LastOrDefaultAsync(image => image.User_Profile_Id == user_profile.Id &&
             image.Type == ImageType.Profile);
             if (profile_image is null)
             {

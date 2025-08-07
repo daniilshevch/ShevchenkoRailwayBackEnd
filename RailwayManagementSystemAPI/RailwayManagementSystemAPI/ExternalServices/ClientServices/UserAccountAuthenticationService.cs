@@ -60,7 +60,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             await db_context.SaveChangesAsync();
             UserProfile user_profile = new UserProfile
             {
-                Id = new_user.Id,
                 User_Id = new_user.Id,
             };
             await db_context.User_Profiles.AddAsync(user_profile);

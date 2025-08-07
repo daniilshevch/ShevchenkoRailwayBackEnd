@@ -241,9 +241,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                         stop_duration = (DateTime)departure_time_from_stop - (DateTime)arrival_time_to_stop;
                     }
                     bool is_part_of_trip = false;
+                    bool is_final_stop = false;
                     if (current_stop_index >= trip_start_stop_index && current_stop_index <= trip_end_stop_index)
                     {
                         is_part_of_trip = true;
+                    }
+                    if(current_stop_index == trip_end_stop_index)
+                    {
+                        is_final_stop = true;
                     }
                     current_stop_index++;
                     //Додаємо зупинку в список зовнішніх трансферів
@@ -254,6 +259,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                         Departure_Time = departure_time_from_stop,
                         Stop_Duration = stop_duration,
                         Is_Part_Of_Trip = is_part_of_trip,
+                        Is_Final_Trip_Stop = is_final_stop
                     });
                 }
                 //Додаємо в список статистик по кожному поїзду статистику для даного поїзда
