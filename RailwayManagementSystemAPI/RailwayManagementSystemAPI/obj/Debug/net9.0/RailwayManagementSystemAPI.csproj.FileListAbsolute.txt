@@ -83,12 +83,6 @@ D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSyste
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets.build.json
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets.development.json
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets\msbuild.RailwayManagementSystemAPI.Microsoft.AspNetCore.StaticWebAssets.props
-D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets\msbuild.RailwayManagementSystemAPI.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets\msbuild.build.RailwayManagementSystemAPI.props
-D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.RailwayManagementSystemAPI.props
-D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.RailwayManagementSystemAPI.props
-D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets.pack.json
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\RailwayM.9063389B.Up2Date
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\RailwayManagementSystemAPI.genruntimeconfig.cache
@@ -103,3 +97,8 @@ D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSyste
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Newtonsoft.Json.dll
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.Annotations.dll
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\rjimswa.dswa.cache.json
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets.build.json.cache
