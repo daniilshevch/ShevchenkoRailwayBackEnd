@@ -1048,6 +1048,12 @@
             "format": "double",
             "nullable": true
           },
+          "is_cheapest": {
+            "type": "boolean"
+          },
+          "is_fastest": {
+            "type": "boolean"
+          },
           "carriage_statistics_list": {
             "type": "array",
             "items": {

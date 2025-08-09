@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RailwayManagementSystemAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b674d16030429b48963cee63a8f613e9a6c9d709")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+adc7e9a11b8c60c751d4d8e83e1171144719aab2")]
 [assembly: System.Reflection.AssemblyProductAttribute("RailwayManagementSystemAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RailwayManagementSystemAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

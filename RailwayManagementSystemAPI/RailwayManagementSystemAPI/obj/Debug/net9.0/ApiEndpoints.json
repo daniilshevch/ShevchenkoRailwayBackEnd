@@ -328,6 +328,63 @@
     ]
   },
   {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TicketBookingRepositoryController",
+    "Method": "GetTicketBookingsForCarriageAssignment",
+    "RelativePath": "Admin-API/get-ticket-bookings-for-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_on_date_id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "passenger_carriage_id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.ExternalTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TicketBookingRepositoryController",
+    "Method": "GetTicketBookingsForTrainRouteOnDate",
+    "RelativePath": "Admin-API/get-ticket-bookings-for-train-race/{train_route_on_date_id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_on_date_id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.ExternalTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TrainRouteRepositoryController",
     "Method": "GetTrainRouteById",
     "RelativePath": "Admin-API/get-train-route/{id}",

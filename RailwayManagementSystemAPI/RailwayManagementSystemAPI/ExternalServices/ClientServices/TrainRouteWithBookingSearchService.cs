@@ -289,6 +289,20 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 
 
             }
+            ExternalTrainRouteWithBookingsInfoDto? fastest_train_race = total_train_routes_with_bookings_and_stations_info.MinBy(train_route_on_date =>
+                train_route_on_date.Total_Trip_Duration);
+            if(fastest_train_race is not null)
+            {
+                fastest_train_race.Is_Fastest = true;
+            }
+            ExternalTrainRouteWithBookingsInfoDto? cheapest_train_race = total_train_routes_with_bookings_and_stations_info.MinBy(train_route_on_date =>
+                train_route_on_date.Carriage_Statistics_List.Min(carriage_assignment => carriage_assignment.Ticket_Price));
+            if(cheapest_train_race is not null)
+            {
+                cheapest_train_race.Is_Cheapest = true;
+            }
+
+
             sw.Stop();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write($"Train search time: ");

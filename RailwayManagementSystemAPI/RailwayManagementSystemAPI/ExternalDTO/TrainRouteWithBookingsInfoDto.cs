@@ -114,6 +114,10 @@ namespace RailwayManagementSystemAPI.API_DTO
         public string? Full_Route_Ending_Station_Ukrainian_Title { get; set; } = null!;
         [JsonPropertyName("average_speed_on_trip")]
         public double? Average_Speed_On_Trip { get; set; }  //Середня швидкість на маршруті поїздки
+        [JsonPropertyName("is_cheapest")]
+        public bool Is_Cheapest { get; set; } = false;
+        [JsonPropertyName("is_fastest")]
+        public bool Is_Fastest { get; set; } = false;
         [JsonPropertyName("carriage_statistics_list")]
         //Список об'єктів, що містять інформацію про кожен конкретний вагон в складі поїзда зі статистикою бронювань
         public List<ExternalSinglePassengerCarriageBookingsInfoDto> Carriage_Statistics_List { get; set; } = 

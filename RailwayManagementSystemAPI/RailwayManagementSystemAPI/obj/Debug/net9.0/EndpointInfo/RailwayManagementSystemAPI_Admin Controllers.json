@@ -412,6 +412,110 @@
         }
       }
     },
+    "/Admin-API/get-ticket-bookings-for-train-race/{train_route_on_date_id}": {
+      "get": {
+        "tags": [
+          "TicketBookingRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketBookingDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketBookingDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketBookingDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/get-ticket-bookings-for-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}": {
+      "get": {
+        "tags": [
+          "TicketBookingRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "passenger_carriage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketBookingDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketBookingDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketBookingDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Admin-API/TrainAssignment/Assign-Train-With-Schedule": {
       "post": {
         "tags": [
@@ -1566,6 +1670,74 @@
         },
         "additionalProperties": false
       },
+      "ExternalTicketBookingDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "full_Ticket_Id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "user_Id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "train_Route_On_Date_Id": {
+            "type": "string",
+            "nullable": true
+          },
+          "passenger_Carriage_Id": {
+            "type": "string",
+            "nullable": true
+          },
+          "passenger_Carriage_Position_In_Squad": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "starting_Station_Title": {
+            "type": "string",
+            "nullable": true
+          },
+          "ending_Station_Title": {
+            "type": "string",
+            "nullable": true
+          },
+          "place_In_Carriage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "passenger_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "passenger_Surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "booking_Time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "booking_Expiration_Time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ticket_Status": {
+            "$ref": "#/components/schemas/TicketStatus"
+          },
+          "additional_Services": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ExternalTrainRouteCreateAndUpdateDto": {
         "type": "object",
         "properties": {
@@ -1828,6 +2000,17 @@
         "enum": [
           0,
           1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TicketStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
         ],
         "type": "integer",
         "format": "int32"

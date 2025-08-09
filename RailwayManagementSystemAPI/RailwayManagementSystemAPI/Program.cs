@@ -51,6 +51,7 @@ class Server
         services.AddScoped<PassengerCarriageRepository>();
         services.AddScoped<PassengerCarriageOnTrainRouteOnDateRepository>();
         services.AddScoped<ImageRepository>();
+        services.AddScoped<TicketBookingRepository>();
         //ExecutiveServices
         services.AddScoped<TicketAvailabilityCheckService>();
         services.AddScoped<TicketAllocationService>();
@@ -75,6 +76,7 @@ class Server
         services.AddScoped<TrainRaceRepositoryService>();
         services.AddScoped<PassengerCarriageRepositoryService>();
         services.AddScoped<StationRepositoryService>();
+        services.AddScoped<TicketBookingRepositoryService>();
 
         services.AddScoped<TrainRouteWithBookingsSearchService>();
         services.AddScoped<CompleteTicketBookingService>();
