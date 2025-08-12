@@ -329,6 +329,37 @@
   },
   {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TicketBookingRepositoryController",
+    "Method": "GetGroupedTicketBookingsForTrainRouteOnDateOrderedByStartingStation",
+    "RelativePath": "Admin-API/get-ticket-bookings-for-carriage-assignment-grouped-by-starting-station/{train_route_on_date_id}/{passenger_carriage_id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_on_date_id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "passenger_carriage_id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.ExternalTicketGroupByStartingStationDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TicketBookingRepositoryController",
     "Method": "GetTicketBookingsForCarriageAssignment",
     "RelativePath": "Admin-API/get-ticket-bookings-for-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}",
     "HttpMethod": "GET",
@@ -349,6 +380,58 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.ExternalTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TicketBookingRepositoryController",
+    "Method": "GetGroupedTicketBookingsForTrainRouteOnDateOrderedByEndingStation",
+    "RelativePath": "Admin-API/get-ticket-bookings-for-train-race-grouped-by-ending-station/{train_route_on_date_id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_on_date_id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.ExternalTicketGroupByEndingStationDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TicketBookingRepositoryController",
+    "Method": "GetGroupedTicketBookingsForTrainRouteOnDateOrderedByStartingStation",
+    "RelativePath": "Admin-API/get-ticket-bookings-for-train-race-grouped-by-starting-station/{train_route_on_date_id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_on_date_id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.ExternalTicketGroupByStartingStationDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

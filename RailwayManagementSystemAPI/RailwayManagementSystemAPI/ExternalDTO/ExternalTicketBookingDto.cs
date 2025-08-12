@@ -1,24 +1,40 @@
 ﻿using RailwayCore.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace RailwayManagementSystemAPI.ExternalDTO
 {
     public class ExternalTicketBookingDto
     {
-        public int Id { get; set; } 
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+        [JsonPropertyName("full_ticket_id")]
         public Guid? Full_Ticket_Id { get; set; }
-        public int User_Id { get; set; } 
-        public string Train_Route_On_Date_Id { get; set; } = null!; 
-        public string Passenger_Carriage_Id { get; set; } = null!; 
+        [JsonPropertyName("user_id")]
+        public int User_Id { get; set; }
+        [JsonPropertyName("train_route_on_date_id")]
+        public string Train_Route_On_Date_Id { get; set; } = null!;
+        [JsonPropertyName("passenger_carriage_id")]
+        public string Passenger_Carriage_Id { get; set; } = null!;
+        [JsonPropertyName("passenger_carriage_position_in_squad")]
         public int? Passenger_Carriage_Position_In_Squad { get; set; }
+        [JsonPropertyName("starting_station_title")]
         public string Starting_Station_Title { get; set; } = null!;
+        [JsonPropertyName("ending_station_title")]
         public string Ending_Station_Title { get; set; } = null!;
-        public int Place_In_Carriage { get; set; } 
-        public string Passenger_Name { get; set; } = null!; 
-        public string Passenger_Surname { get; set; } = null!; 
-        public DateTime Booking_Time { get; set; } 
-        public DateTime? Booking_Expiration_Time { get; set; } 
-        public TicketStatus Ticket_Status { get; set; } = TicketStatus.Booked_And_Active; 
+        [JsonPropertyName("place_in_carriage")]
+        public int Place_In_Carriage { get; set; }
+        [JsonPropertyName("passenger_name")] 
+        public string Passenger_Name { get; set; } = null!;
+        [JsonPropertyName("passenger_surname")]
+        public string Passenger_Surname { get; set; } = null!;
+        [JsonPropertyName("booking_time")]
+        public DateTime Booking_Time { get; set; }
+        [JsonPropertyName("booking_expiration_time")]
+        public DateTime? Booking_Expiration_Time { get; set; }
+        [JsonPropertyName("ticket_status")]
+        public TicketStatus Ticket_Status { get; set; } = TicketStatus.Booked_And_Active;
+        [JsonPropertyName("additional_services")]        
         public string? Additional_Services { get; set; } 
         public static explicit operator ExternalTicketBookingDto(TicketBooking input)
         {

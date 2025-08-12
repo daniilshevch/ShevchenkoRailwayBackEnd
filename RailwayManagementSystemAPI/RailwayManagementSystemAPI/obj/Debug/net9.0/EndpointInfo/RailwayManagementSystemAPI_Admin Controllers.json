@@ -516,6 +516,158 @@
         }
       }
     },
+    "/Admin-API/get-ticket-bookings-for-train-race-grouped-by-starting-station/{train_route_on_date_id}": {
+      "get": {
+        "tags": [
+          "TicketBookingRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByStartingStationDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByStartingStationDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByStartingStationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/get-ticket-bookings-for-train-race-grouped-by-ending-station/{train_route_on_date_id}": {
+      "get": {
+        "tags": [
+          "TicketBookingRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByEndingStationDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByEndingStationDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByEndingStationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin-API/get-ticket-bookings-for-carriage-assignment-grouped-by-starting-station/{train_route_on_date_id}/{passenger_carriage_id}": {
+      "get": {
+        "tags": [
+          "TicketBookingRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "passenger_carriage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByStartingStationDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByStartingStationDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByStartingStationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Admin-API/TrainAssignment/Assign-Train-With-Schedule": {
       "post": {
         "tags": [
@@ -1677,62 +1829,117 @@
             "type": "integer",
             "format": "int32"
           },
-          "full_Ticket_Id": {
+          "full_ticket_id": {
             "type": "string",
             "format": "uuid",
             "nullable": true
           },
-          "user_Id": {
+          "user_id": {
             "type": "integer",
             "format": "int32"
           },
-          "train_Route_On_Date_Id": {
+          "train_route_on_date_id": {
             "type": "string",
             "nullable": true
           },
-          "passenger_Carriage_Id": {
+          "passenger_carriage_id": {
             "type": "string",
             "nullable": true
           },
-          "passenger_Carriage_Position_In_Squad": {
+          "passenger_carriage_position_in_squad": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "starting_Station_Title": {
+          "starting_station_title": {
             "type": "string",
             "nullable": true
           },
-          "ending_Station_Title": {
+          "ending_station_title": {
             "type": "string",
             "nullable": true
           },
-          "place_In_Carriage": {
+          "place_in_carriage": {
             "type": "integer",
             "format": "int32"
           },
-          "passenger_Name": {
+          "passenger_name": {
             "type": "string",
             "nullable": true
           },
-          "passenger_Surname": {
+          "passenger_surname": {
             "type": "string",
             "nullable": true
           },
-          "booking_Time": {
+          "booking_time": {
             "type": "string",
             "format": "date-time"
           },
-          "booking_Expiration_Time": {
+          "booking_expiration_time": {
             "type": "string",
             "format": "date-time",
             "nullable": true
           },
-          "ticket_Status": {
+          "ticket_status": {
             "$ref": "#/components/schemas/TicketStatus"
           },
-          "additional_Services": {
+          "additional_services": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalTicketGroupByEndingStationDto": {
+        "type": "object",
+        "properties": {
+          "ending_station_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "ticket_groups_list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalTicketGroupDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalTicketGroupByStartingStationDto": {
+        "type": "object",
+        "properties": {
+          "starting_station_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "ticket_groups_list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalTicketGroupDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalTicketGroupDto": {
+        "type": "object",
+        "properties": {
+          "starting_station_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "ending_station_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "ticket_bookings_list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalTicketBookingDto"
+            },
             "nullable": true
           }
         },
