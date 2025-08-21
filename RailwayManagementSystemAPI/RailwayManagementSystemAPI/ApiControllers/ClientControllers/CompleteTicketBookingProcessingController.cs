@@ -11,19 +11,19 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
     [ApiController]
     [ApiExplorerSettings(GroupName = "Client Controllers")]
     [Route("Client-API/[controller]")]
-    public class CompleteTicketBookingController : ControllerBase
+    public class CompleteTicketBookingProcessingController : ControllerBase
     {
 
-        private readonly CompleteTicketBookingService complete_ticket_booking_service;
-        public CompleteTicketBookingController(CompleteTicketBookingService complete_ticket_booking_service)
+        private readonly CompleteTicketBookingProcessingService complete_ticket_booking_processing_service;
+        public CompleteTicketBookingProcessingController(CompleteTicketBookingProcessingService complete_ticket_booking_processing_service)
         {
-            this.complete_ticket_booking_service = complete_ticket_booking_service;
+            this.complete_ticket_booking_processing_service = complete_ticket_booking_processing_service;
         }
         [HttpPost("Initialize-Ticket-Booking")]
         public async Task<ActionResult<ExternalOutputMediatorTicketBookingDto>> InitializeTicketBookingProcess([FromBody] ExternalInputInitialTicketBookingDto input)
         {
             QueryResult<ExternalOutputMediatorTicketBookingDto> ticket_booking_initialization_result =
-                await complete_ticket_booking_service.InitializeTicketBookingProcessForAuthenticatedUser(input);
+                await complete_ticket_booking_processing_service.InitializeTicketBookingProcessForAuthenticatedUser(input);
             if(ticket_booking_initialization_result.Fail)
             {
                 return ticket_booking_initialization_result.GetErrorFromQueryResult<ExternalOutputMediatorTicketBookingDto, ExternalOutputMediatorTicketBookingDto>();
@@ -36,7 +36,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
         public async Task<ActionResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcess([FromBody] ExternalInputCompletedTicketBookingWithPassengerInfoDto input)
         {
             QueryResult<ExternalOutputCompletedTicketBookingDto> ticket_booking_completion_result =
-                await complete_ticket_booking_service.CompleteTicketBookingProcessForAuthenticatedUser(input.ticket_booking_dto, input.user_info_dto);
+                await complete_ticket_booking_processing_service.CompleteTicketBookingProcessForAuthenticatedUser(input.ticket_booking_dto, input.user_info_dto);
             if(ticket_booking_completion_result.Fail)
             {
                 return ticket_booking_completion_result.GetErrorFromQueryResult<ExternalOutputCompletedTicketBookingDto, ExternalOutputCompletedTicketBookingDto>();

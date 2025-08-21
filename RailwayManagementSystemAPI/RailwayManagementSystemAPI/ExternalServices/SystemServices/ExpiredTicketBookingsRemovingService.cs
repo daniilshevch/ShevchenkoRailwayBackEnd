@@ -20,7 +20,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
                 {
                     using IServiceScope scope = scope_factory.CreateScope();
                     IServiceProvider service_provider = scope.ServiceProvider;
-                    CompleteTicketBookingService ticket_booking_service = service_provider.GetRequiredService<CompleteTicketBookingService>();
+                    CompleteTicketBookingProcessingService ticket_booking_service = service_provider.GetRequiredService<CompleteTicketBookingProcessingService>();
                     await ticket_booking_service.DeleteAllExpiredBookings();
                 }
                 catch (Exception ex)

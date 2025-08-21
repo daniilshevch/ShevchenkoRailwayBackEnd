@@ -5,10 +5,10 @@
     "version": "v1"
   },
   "paths": {
-    "/Client-API/CompleteTicketBooking/Initialize-Ticket-Booking": {
+    "/Client-API/CompleteTicketBookingProcessing/Initialize-Ticket-Booking": {
       "post": {
         "tags": [
-          "CompleteTicketBooking"
+          "CompleteTicketBookingProcessing"
         ],
         "requestBody": {
           "content": {
@@ -53,10 +53,10 @@
         }
       }
     },
-    "/Client-API/CompleteTicketBooking/Complete-Ticket-Booking": {
+    "/Client-API/CompleteTicketBookingProcessing/Complete-Ticket-Booking": {
       "post": {
         "tags": [
-          "CompleteTicketBooking"
+          "CompleteTicketBookingProcessing"
         ],
         "requestBody": {
           "content": {

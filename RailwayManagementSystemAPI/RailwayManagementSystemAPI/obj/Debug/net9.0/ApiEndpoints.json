@@ -329,7 +329,38 @@
   },
   {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TicketBookingRepositoryController",
-    "Method": "GetGroupedTicketBookingsForTrainRouteOnDateOrderedByStartingStation",
+    "Method": "GetGroupedTicketBookingsForCarriageAssignmentrderedByEndingStation",
+    "RelativePath": "Admin-API/get-ticket-bookings-for-carriage-assignment-grouped-by-ending-station/{train_route_on_date_id}/{passenger_carriage_id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "train_route_on_date_id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "passenger_carriage_id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.ExternalTicketGroupByEndingStationDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.TicketBookingRepositoryController",
+    "Method": "GetGroupedTicketBookingsForCarriageAssignmentOrderedByStartingStation",
     "RelativePath": "Admin-API/get-ticket-bookings-for-carriage-assignment-grouped-by-starting-station/{train_route_on_date_id}/{passenger_carriage_id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -923,9 +954,9 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.CompleteTicketBookingController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.CompleteTicketBookingProcessingController",
     "Method": "CompleteTicketBookingProcess",
-    "RelativePath": "Client-API/CompleteTicketBooking/Complete-Ticket-Booking",
+    "RelativePath": "Client-API/CompleteTicketBookingProcessing/Complete-Ticket-Booking",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -949,9 +980,9 @@
     ]
   },
   {
-    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.CompleteTicketBookingController",
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.CompleteTicketBookingProcessingController",
     "Method": "InitializeTicketBookingProcess",
-    "RelativePath": "Client-API/CompleteTicketBooking/Initialize-Ticket-Booking",
+    "RelativePath": "Client-API/CompleteTicketBookingProcessing/Initialize-Ticket-Booking",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

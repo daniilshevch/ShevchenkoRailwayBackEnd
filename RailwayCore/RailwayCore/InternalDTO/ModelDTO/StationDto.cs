@@ -18,7 +18,23 @@ namespace RailwayCore.InternalDTO.ModelDTO
         public string? Locomotive_Depot { get; set; }
         public string? Carriage_Depot { get; set; }
         public string Railway_Branch_Title { get; set; } = null!;
-        public Region Region { get; set; }
+        public Region? Region { get; set; }
 
+        public static explicit operator StationDto(Station input)
+        {
+            return new StationDto()
+            {
+                Id = input.Id,
+                Register_Id = input.Register_Id,
+                Title = input.Title,
+                Location = input.Location,
+                Type_Of = input.Type_Of,
+                Locomotive_Depot = input.Locomotive_Depot,
+                Carriage_Depot = input.Carriage_Depot,
+                Railway_Branch_Title = input.Railway_Branch.Title,
+                Region = input.Region
+            };
+        }
     }
+            
 }

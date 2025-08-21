@@ -11,11 +11,11 @@ namespace RailwayCore.InternalServices.ModelServices
     public class StationRepository
     {
         private readonly AppDbContext context;
-        private readonly RailwayBranchRepository railway_branch_service;
-        public StationRepository(AppDbContext context, RailwayBranchRepository railway_branch_service)
+        private readonly RailwayBranchRepository railway_branch_repository;
+        public StationRepository(AppDbContext context, RailwayBranchRepository railway_branch_repository)
         {
             this.context = context;
-            this.railway_branch_service = railway_branch_service;
+            this.railway_branch_repository = railway_branch_repository;
         }
         public async Task<QueryResult<Station>> CreateStation(StationDto input)
         {
@@ -24,7 +24,7 @@ namespace RailwayCore.InternalServices.ModelServices
             {
                 return new FailQuery<Station>(new Error(ErrorType.BadRequest, $"Station with ID: {input.Id} already exists"));
             }
-            RailwayBranch? railway_branch = await railway_branch_service.FindRailwayBranchByTitle(input.Railway_Branch_Title);
+            RailwayBranch? railway_branch = await railway_branch_repository.FindRailwayBranchByTitle(input.Railway_Branch_Title);
             if (railway_branch is null)
             {
                 return new FailQuery<Station>(new Error(ErrorType.NotFound, $"Can't find railway branch with title: {input.Railway_Branch_Title}"));
@@ -77,12 +77,18 @@ namespace RailwayCore.InternalServices.ModelServices
             {
                 return new FailQuery<Station>(new Error(ErrorType.NotFound, $"Can't find station with ID: {input.Id}"));
             }
+            RailwayBranch? railway_branch = await railway_branch_repository.FindRailwayBranchByTitle(input.Railway_Branch_Title);
+            if (railway_branch is null)
+            {
+                return new FailQuery<Station>(new Error(ErrorType.NotFound, $"Can't find railway branch with title: {input.Railway_Branch_Title}"));
+            }
             existing_station.Register_Id = input.Register_Id;
             existing_station.Title = input.Title;
             existing_station.Location = input.Location;
             existing_station.Type_Of = input.Type_Of;
             existing_station.Region = input.Region;
             existing_station.Register_Id = input.Register_Id;
+            existing_station.Railway_Branch = railway_branch;
             context.Stations.Update(existing_station);
             await context.SaveChangesAsync();
             return new SuccessQuery<Station>(existing_station);
@@ -99,6 +105,5 @@ namespace RailwayCore.InternalServices.ModelServices
             return true;
 
         }
-
     }
 }

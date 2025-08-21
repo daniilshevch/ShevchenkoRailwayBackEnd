@@ -9,12 +9,12 @@ using Newtonsoft.Json;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
-    public class CompleteTicketBookingService
+    public class CompleteTicketBookingProcessingService
     {
         private readonly FullTicketManagementService full_ticket_management_service;
         private readonly SystemAuthenticationService system_authentication_service;
         private readonly IConfiguration configuration;
-        public CompleteTicketBookingService(FullTicketManagementService full_ticket_management_service, SystemAuthenticationService system_authentication_service, IConfiguration configuration)
+        public CompleteTicketBookingProcessingService(FullTicketManagementService full_ticket_management_service, SystemAuthenticationService system_authentication_service, IConfiguration configuration)
         {
             this.full_ticket_management_service = full_ticket_management_service;
             this.system_authentication_service = system_authentication_service;

@@ -64,7 +64,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
             return Ok(grouped_ticket_bookings_result.Value);
         }
         [HttpGet("get-ticket-bookings-for-carriage-assignment-grouped-by-starting-station/{train_route_on_date_id}/{passenger_carriage_id}")]
-        public async Task<ActionResult<List<ExternalTicketGroupByStartingStationDto>>> GetGroupedTicketBookingsForTrainRouteOnDateOrderedByStartingStation([FromRoute] string train_route_on_date_id,
+        public async Task<ActionResult<List<ExternalTicketGroupByStartingStationDto>>> GetGroupedTicketBookingsForCarriageAssignmentOrderedByStartingStation([FromRoute] string train_route_on_date_id,
             [FromRoute] string passenger_carriage_id)
         {
             QueryResult<List<ExternalTicketGroupByStartingStationDto>> grouped_ticket_bookings_result = await
@@ -73,6 +73,19 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
             {
                 return grouped_ticket_bookings_result
                 .GetErrorFromQueryResult<List<ExternalTicketGroupByStartingStationDto>, List<ExternalTicketGroupByStartingStationDto>>();
+            }
+            return Ok(grouped_ticket_bookings_result.Value);
+        }
+        [HttpGet("get-ticket-bookings-for-carriage-assignment-grouped-by-ending-station/{train_route_on_date_id}/{passenger_carriage_id}")]
+        public async Task<ActionResult<List<ExternalTicketGroupByEndingStationDto>>> GetGroupedTicketBookingsForCarriageAssignmentrderedByEndingStation([FromRoute] string train_route_on_date_id,
+    [FromRoute] string passenger_carriage_id)
+        {
+            QueryResult<List<ExternalTicketGroupByEndingStationDto>> grouped_ticket_bookings_result = await
+                ticket_booking_repository_service.GetGroupedTicketBookingsForCarriageAssignmentOrderedByEndingStation(train_route_on_date_id, passenger_carriage_id);
+            if (grouped_ticket_bookings_result.Fail)
+            {
+                return grouped_ticket_bookings_result
+                .GetErrorFromQueryResult<List<ExternalTicketGroupByEndingStationDto>, List<ExternalTicketGroupByEndingStationDto>>();
             }
             return Ok(grouped_ticket_bookings_result.Value);
         }

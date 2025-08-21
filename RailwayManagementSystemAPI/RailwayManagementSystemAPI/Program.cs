@@ -79,7 +79,7 @@ class Server
         services.AddScoped<TicketBookingRepositoryService>();
 
         services.AddScoped<TrainRouteWithBookingsSearchService>();
-        services.AddScoped<CompleteTicketBookingService>();
+        services.AddScoped<CompleteTicketBookingProcessingService>();
         services.AddScoped<ApiTrainAssignmentService>();
         services.AddScoped<UserAccountAuthenticationService>();
         services.AddScoped<UserProfileManagementService>();

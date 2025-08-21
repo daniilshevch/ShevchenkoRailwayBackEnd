@@ -668,6 +668,62 @@
         }
       }
     },
+    "/Admin-API/get-ticket-bookings-for-carriage-assignment-grouped-by-ending-station/{train_route_on_date_id}/{passenger_carriage_id}": {
+      "get": {
+        "tags": [
+          "TicketBookingRepository"
+        ],
+        "parameters": [
+          {
+            "name": "train_route_on_date_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "passenger_carriage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByEndingStationDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByEndingStationDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalTicketGroupByEndingStationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Admin-API/TrainAssignment/Assign-Train-With-Schedule": {
       "post": {
         "tags": [

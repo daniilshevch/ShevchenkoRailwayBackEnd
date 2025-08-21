@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RailwayCore")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c6c8b6978b21f092d8f7345d4b40d3dc623c0f9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96fb593bf2ccef5bf0966273da54a257140d4720")]
 [assembly: System.Reflection.AssemblyProductAttribute("RailwayCore")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RailwayCore")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

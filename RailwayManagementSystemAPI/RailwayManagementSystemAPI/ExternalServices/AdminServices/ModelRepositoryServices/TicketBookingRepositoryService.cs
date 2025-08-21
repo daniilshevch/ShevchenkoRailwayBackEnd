@@ -140,5 +140,18 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             List<ExternalTicketGroupByStartingStationDto> grouped_ticket_bookings = GroupTicketBookingsByStartingStation(ticket_bookings);
             return new SuccessQuery<List<ExternalTicketGroupByStartingStationDto>>(grouped_ticket_bookings);
         }
+        public async Task<QueryResult<List<ExternalTicketGroupByEndingStationDto>>>
+    GetGroupedTicketBookingsForCarriageAssignmentOrderedByEndingStation(string train_route_on_date_id, string passenger_carriage_id)
+        {
+            QueryResult<List<TicketBooking>> ticket_bookings_get_result =
+    await ticket_booking_repository.GetTicketBookingsForCarriageAssignment(train_route_on_date_id, passenger_carriage_id);
+            if (ticket_bookings_get_result.Fail)
+            {
+                return new FailQuery<List<ExternalTicketGroupByEndingStationDto>>(ticket_bookings_get_result.Error);
+            }
+            List<TicketBooking> ticket_bookings = ticket_bookings_get_result.Value;
+            List<ExternalTicketGroupByEndingStationDto> grouped_ticket_bookings = GroupTicketBookingsByEndingStation(ticket_bookings);
+            return new SuccessQuery<List<ExternalTicketGroupByEndingStationDto>>(grouped_ticket_bookings);
+        }
     }
 }
