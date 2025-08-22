@@ -1,25 +1,30 @@
-﻿using RailwayCore.InternalDTO.ModelDTO;
+﻿using Newtonsoft.Json;
+using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace RailwayManagementSystemAPI.ExternalDTO
 {
     public class ExternalInputStationDto
     {
+        [JsonPropertyName("register_id")]
         public string? Register_Id { get; set; } 
-        [MaxLength(30)]
+        [JsonProperty("title")]
         public string Title { get; set; } = null!; 
-        [MaxLength(30)]
+        [JsonPropertyName("ukrainian_title")]
         public string? Ukrainian_Title { get; set; }
-        [MaxLength(30)]
+        [JsonPropertyName("location")]
         public string? Location { get; set; } 
-        [MaxLength(20)]
-        public StationType Type_Of { get; set; } = StationType.Mixed; 
+        [JsonPropertyName("type_of")]
+        public StationType Type_Of { get; set; } = StationType.Mixed;
+        [JsonPropertyName("region")]
         public Region Region { get; set; } 
-        [MaxLength(20)]
+        [JsonPropertyName("locomotive_depot")]
         public string? Locomotive_Depot { get; set; } 
-        [MaxLength(20)]
-        public string? Carriage_Depot { get; set; } 
+        [JsonPropertyName("carriage_depot")]
+        public string? Carriage_Depot { get; set; }
+        [JsonPropertyName("railway_branch_title")]
         public string Railway_Branch_Title { get; set; } = null!; 
 
         public static explicit operator StationDto(ExternalInputStationDto input)
@@ -33,6 +38,7 @@ namespace RailwayManagementSystemAPI.ExternalDTO
                 Region = input.Region,
                 Locomotive_Depot = input.Locomotive_Depot,
                 Carriage_Depot = input.Carriage_Depot,
+                Railway_Branch_Title = input.Railway_Branch_Title
             };
         }
     }

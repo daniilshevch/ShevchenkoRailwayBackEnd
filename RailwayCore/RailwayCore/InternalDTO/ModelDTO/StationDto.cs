@@ -4,20 +4,30 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace RailwayCore.InternalDTO.ModelDTO
 {
     public class StationDto
     {
+        [JsonPropertyName("id")]
         public int Id { get; set; }
+        [JsonPropertyName("register_id")]
         public string? Register_Id { get; set; }
+        [JsonPropertyName("title")]
         public string Title { get; set; } = null!;
+        [JsonPropertyName("location")]
         public string? Location { get; set; }
+        [JsonPropertyName("type_of")]
         public StationType Type_Of { get; set; } = StationType.Mixed;
+        [JsonPropertyName("locomotive_depot")]
         public string? Locomotive_Depot { get; set; }
+        [JsonPropertyName("carriage_depot")]
         public string? Carriage_Depot { get; set; }
+        [JsonPropertyName("railway_branch_title")]
         public string Railway_Branch_Title { get; set; } = null!;
+        [JsonPropertyName("region")]
         public Region? Region { get; set; }
 
         public static explicit operator StationDto(Station input)

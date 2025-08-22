@@ -48,7 +48,7 @@ namespace RailwayCore.InternalServices.ModelServices
         [Checked("18.04.2025")]
         public async Task<Station?> GetStationById(int id)
         {
-            Station? station = await context.Stations.FirstOrDefaultAsync(station => station.Id == id);
+            Station? station = await context.Stations.Include(station => station.Railway_Branch).FirstOrDefaultAsync(station => station.Id == id);
             if (station is null)
             {
                 return null;
@@ -58,7 +58,7 @@ namespace RailwayCore.InternalServices.ModelServices
         [Checked("18.04.2025")]
         public async Task<Station?> GetStationByTitle(string title)
         {
-            Station? station = await context.Stations.FirstOrDefaultAsync(station => station.Title == title);
+            Station? station = await context.Stations.Include(station => station.Railway_Branch).FirstOrDefaultAsync(station => station.Title == title);
             if (station == null)
             {
                 return null;
@@ -67,7 +67,7 @@ namespace RailwayCore.InternalServices.ModelServices
         }
         public async Task<List<Station>> GetStations()
         {
-            List<Station> stations = await context.Stations.ToListAsync();
+            List<Station> stations = await context.Stations.Include(station => station.Railway_Branch).ToListAsync();
             return stations;
         }
         public async Task<QueryResult<Station>> UpdateStation(StationDto input)

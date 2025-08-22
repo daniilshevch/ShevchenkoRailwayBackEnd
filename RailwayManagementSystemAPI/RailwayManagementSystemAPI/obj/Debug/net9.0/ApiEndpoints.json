@@ -140,6 +140,37 @@
     ]
   },
   {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.StationRepositoryController",
+    "Method": "CreateStation",
+    "RelativePath": "Admin-API/create-station/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalInputStationDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayCore.InternalDTO.ModelDTO.StationDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers.CarriageAssignmentRepositoryController",
     "Method": "DeletePassengerCarriageOnTrainRouteOnDate",
     "RelativePath": "Admin-API/delete-carriage-assignment/{train_route_on_date_id}/{passenger_carriage_id}",
@@ -171,6 +202,22 @@
       {
         "Name": "passenger_carriage_id",
         "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.StationRepositoryController",
+    "Method": "DeleteStation",
+    "RelativePath": "Admin-API/delete-station/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -318,6 +365,78 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.ExternalSimpleTrainRaceDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.StationRepositoryController",
+    "Method": "GetStationById",
+    "RelativePath": "Admin-API/get-station-by-id/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayCore.InternalDTO.ModelDTO.StationDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.StationRepositoryController",
+    "Method": "GetStationByTitle",
+    "RelativePath": "Admin-API/get-station-by-title/{title}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "title",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayCore.InternalDTO.ModelDTO.StationDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.StationRepositoryController",
+    "Method": "GetStations",
+    "RelativePath": "Admin-API/get-stations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayCore.InternalDTO.ModelDTO.StationDto, RailwayCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -846,6 +965,37 @@
     "ReturnTypes": [
       {
         "Type": "RailwayCore.InternalDTO.ModelDTO.PassengerCarriageDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers.StationRepositoryController",
+    "Method": "UpdateStation",
+    "RelativePath": "Admin-API/update-station/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.ExternalInputStationDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayCore.InternalDTO.ModelDTO.StationDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
