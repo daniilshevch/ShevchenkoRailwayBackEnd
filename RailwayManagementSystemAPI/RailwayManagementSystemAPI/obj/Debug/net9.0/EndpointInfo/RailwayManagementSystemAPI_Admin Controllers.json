@@ -2492,37 +2492,37 @@
       "PassengerCarriageOnTrainRouteOnDateDto": {
         "type": "object",
         "properties": {
-          "passenger_Carriage_Id": {
+          "passenger_carriage_id": {
             "type": "string",
             "nullable": true
           },
-          "train_Route_On_Date_Id": {
+          "train_route_on_date_id": {
             "type": "string",
             "nullable": true
           },
-          "position_In_Squad": {
+          "position_in_squad": {
             "type": "integer",
             "format": "int32"
           },
-          "is_For_Woman": {
+          "is_for_woman": {
             "type": "boolean"
           },
-          "is_For_Children": {
+          "is_for_children": {
             "type": "boolean"
           },
-          "factual_Wi_Fi": {
+          "factual_wi_fi": {
             "type": "boolean"
           },
-          "factual_Air_Conditioning": {
+          "factual_air_conditioning": {
             "type": "boolean"
           },
-          "factual_Shower_Availability": {
+          "factual_shower_availability": {
             "type": "boolean"
           },
-          "factual_Is_Inclusive": {
+          "factual_is_inclusive": {
             "type": "boolean"
           },
-          "food_Availability": {
+          "food_availability": {
             "type": "boolean"
           }
         },

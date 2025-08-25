@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RailwayCore.Context;
 using RailwayCore.InternalDTO.ModelDTO;
-using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,6 @@ namespace RailwayCore.InternalServices.ModelServices
 {
     public class RailwayBranchRepository
     {
-        private static TextService text_service = new TextService("RailwayBranchService");
         private readonly AppDbContext context;
         public RailwayBranchRepository(AppDbContext context)
         {
@@ -25,7 +23,6 @@ namespace RailwayCore.InternalServices.ModelServices
             RailwayBranch? already_in_memory = await context.Railway_Branches.FirstOrDefaultAsync(railway_branch => railway_branch.Id == input.Id);
             if (already_in_memory is not null)
             {
-                text_service.DuplicateGetInform($"Railway branch with ID: {input.Id} already exists");
                 return already_in_memory;
             }
             RailwayBranch railway_branch = new RailwayBranch()
@@ -36,7 +33,6 @@ namespace RailwayCore.InternalServices.ModelServices
             };
             context.Railway_Branches.Add(railway_branch);
             await context.SaveChangesAsync();
-            text_service.SuccessPostInform("Succesfully created railway branch");
             return railway_branch;
         }
         public async Task<RailwayBranch?> FindRailwayBranchById(int id)
@@ -44,10 +40,8 @@ namespace RailwayCore.InternalServices.ModelServices
             RailwayBranch? railway_branch = await context.Railway_Branches.FirstOrDefaultAsync(railway_branch => railway_branch.Id == id);
             if (railway_branch == null)
             {
-                text_service.FailGetInform($"Can't find railway branch with ID: {id}");
                 return null;
             }
-            text_service.SuccessGetInform($"Successfully got railway branch with ID: {id}");
             return railway_branch;
         }
         public async Task<RailwayBranch?> FindRailwayBranchByTitle(string title)
@@ -55,10 +49,8 @@ namespace RailwayCore.InternalServices.ModelServices
             RailwayBranch? railway_branch = await context.Railway_Branches.FirstOrDefaultAsync(railway_branch => railway_branch.Title == title);
             if (railway_branch == null)
             {
-                text_service.FailGetInform($"Can't find railway branch with Title: {title}");
                 return null;
             }
-            text_service.SuccessGetInform($"Successfully got railway branch with Title: {title}");
             return railway_branch;
         }
 

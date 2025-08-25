@@ -2,7 +2,6 @@
 using RailwayCore.InternalServices.CoreServices;
 using RailwayCore.Models;
 using System.Diagnostics;
-using RailwayCore.InternalServices.SystemServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using RailwayManagementSystemAPI.ExternalDTO;
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
@@ -296,13 +295,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 fastest_train_race.Is_Fastest = true;
             }
             ExternalTrainRouteWithBookingsInfoDto? cheapest_train_race = total_train_routes_with_bookings_and_stations_info.MinBy(train_route_on_date =>
-                train_route_on_date.Carriage_Statistics_List.Min(carriage_assignment => carriage_assignment.Ticket_Price));
+               train_route_on_date.Carriage_Statistics_List.Count > 0 ?  train_route_on_date.Carriage_Statistics_List.Min(carriage_assignment => carriage_assignment.Ticket_Price): 0);
             if(cheapest_train_race is not null)
             {
                 cheapest_train_race.Is_Cheapest = true;
             }
-
-
             sw.Stop();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write($"Train search time: ");

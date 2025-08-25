@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RailwayCore.Context;
 using RailwayCore.InternalDTO.ModelDTO;
-using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
 using RailwayCore.InternalServices.ModelServices;
 using RailwayCore.InternalServices.ExecutiveServices;
@@ -18,7 +17,6 @@ namespace RailwayCore.InternalServices.CoreServices
         private readonly PassengerCarriageRepository passenger_carriage_service;
         private readonly TrainSquadCopyService train_squad_copy_service;
         private readonly TrainScheduleCopyService train_schedule_copy_service;
-        private static TextService text_service = new TextService("FullTrainAssignementService");
         public FullTrainAssignementService(AppDbContext context, TrainRouteOnDateRepository train_route_on_date_service,
             TrainRouteOnDateOnStationRepository train_route_on_date_on_station_service,
             PassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service,
@@ -49,7 +47,6 @@ namespace RailwayCore.InternalServices.CoreServices
             }
             if (train_route_on_date == null)
             {
-                text_service.FailPostInform("Fail in TrainRouteOnDateService");
                 return;
             }
             for (int i = 0; i < train_stops.Count(); i++)
@@ -67,7 +64,6 @@ namespace RailwayCore.InternalServices.CoreServices
                 Station? current_station = await station_service.GetStationByTitle(current_station_dto.Station_Title);
                 if (current_station == null)
                 {
-                    text_service.FailPostInform("Fail in StationService");
                     return;
                 }
                 if (next_station_dto != null)
@@ -75,12 +71,10 @@ namespace RailwayCore.InternalServices.CoreServices
                     Station? next_station = await station_service.GetStationByTitle(next_station_dto.Station_Title);
                     if (next_station == null)
                     {
-                        text_service.FailPostInform("Fail in StationService");
                         return;
                     }
                     if (next_station_dto.Arrival_Time < current_station_dto.Departure_Time)
                     {
-                        text_service.FailPostInform("Incorrect time for stations");
                     }
                 }
                 TrainRouteOnDateOnStation train_stop = new TrainRouteOnDateOnStation
@@ -114,7 +108,6 @@ namespace RailwayCore.InternalServices.CoreServices
             }
             if (train_route_on_date == null)
             {
-                text_service.FailPostInform("Fail in TrainRouteOnDateService");
                 return;
             }
             foreach (CarriageAssignementWithoutRouteDTO carriage_assignement in carriage_assignements)
@@ -123,7 +116,6 @@ namespace RailwayCore.InternalServices.CoreServices
                     .GetPassengerCarriageById(carriage_assignement.Passenger_Carriage_Id);
                 if (passenger_carriage == null)
                 {
-                    text_service.FailPostInform("Fail in PassengerCarriageService");
                     return;
                 }
                 PassengerCarriageOnTrainRouteOnDate final_carriage_assignement = new PassengerCarriageOnTrainRouteOnDate

@@ -4,7 +4,6 @@ using RailwayCore.InternalServices.ModelServices;
 using RailwayCore.InternalServices.CoreServices;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using RailwayCore.InternalServices.SystemServices;
 class Program
 {
     public static void PrintList(List<InternalSinglePlaceDto> places)
@@ -29,8 +28,7 @@ class Program
                 .AddSingleton<PassengerCarriageOnTrainRouteOnDateRepository>()
                 .AddSingleton<FullTrainAssignementService>()
                 .AddSingleton<FullTrainRouteSearchService>()
-                .AddSingleton<FullTicketManagementService>()
-                .AddSingleton<ConsoleRepresentationService>();
+                .AddSingleton<FullTicketManagementService>();
             IServiceProvider provider = services.BuildServiceProvider();
 
             RailwayBranchRepository? railway_branch_service = provider.GetService<RailwayBranchRepository>();
@@ -46,12 +44,11 @@ class Program
                 provider.GetService<FullTrainAssignementService>();
             FullTrainRouteSearchService? full_train_route_search_service = provider.GetService<FullTrainRouteSearchService>();
             FullTicketManagementService? ticket_booking_service = provider.GetService<FullTicketManagementService>();
-            ConsoleRepresentationService? console_representation_service = provider.GetService<ConsoleRepresentationService>();
             if (railway_branch_service == null || station_service == null || train_route_service == null ||
                 train_route_on_date_service == null || train_route_on_date_on_station_service == null ||
                 passenger_carriage_service == null || passenger_carriage_on_train_route_on_date_service == null ||
                 full_train_assignement_service == null || full_train_route_search_service == null ||
-                ticket_booking_service == null || console_representation_service == null)
+                ticket_booking_service == null)
             {
                 Console.WriteLine("Fail while initializing services");
                 return;
