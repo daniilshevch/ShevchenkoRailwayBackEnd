@@ -7,74 +7,51 @@ public enum ErrorType
     Unauthorized, //401
     Forbidden, //403
     NotFound, //404
-    MethodNotAllowed, //405
     Conflict, //409
     InternalServerError, //500
     NoError //помилки нема
-}
-public class SuccessMessage
-{
-    public string Message { get; set; }
-    public Type? Service_Type { get; set; }
-    public SuccessMessage(string message, Type? service_type = null)
-    {
-        Message = message;
-        Service_Type = service_type;
-    }
 }
 public class Error
 {
     public ErrorType Type { get; set; }
     public string Message { get; set; }
-    public Type? Service_Type { get; set; }
-    public Error(ErrorType type, string message, Type? service_type = null)
+    public Error(ErrorType type, string message)
     {
         Type = type;
         Message = message;
-        Service_Type = service_type;
     }
 }
-public abstract class QueryResult<T> 
+public abstract class QueryResult<T>
 {
     public T? Value { get; set; }
     [MemberNotNullWhen(false, nameof(Value))] //Цей атрибут показує системі, що якщо Fail = false, то Value != null
     public bool Fail { get; set; }
-    public SuccessMessage Success_Message { get; set; } = new SuccessMessage(string.Empty, null);
-    public Error Error { get; set; } = new Error(ErrorType.NoError, string.Empty, null);
+    public Error Error { get; set; } = new Error(ErrorType.NoError, string.Empty);
 }
 public abstract class QueryResult
 {
     public bool Fail { get; set; }
-    public SuccessMessage Success_Message { get; set; } = new SuccessMessage(string.Empty, null);
-    public Error Error { get; set; } = new Error(ErrorType.NoError, string.Empty, null);
+    public Error Error { get; set; } = new Error(ErrorType.NoError, string.Empty);
 }
 public class SuccessQuery<T> : QueryResult<T>
 {
-    public SuccessQuery(T value, SuccessMessage? success_message = null) : base()
+    public SuccessQuery(T value) : base()
     {
         Fail = false;
-        if(value == null)
+        if (value == null)
         {
-            throw new ArgumentNullException("Value in SuccessQuery can't be null(Internal Error)");
+            throw new ArgumentNullException("Value in success query can't be null(Internal Error)");
         }
         Value = value;
-        if(success_message is not null)
-        {
-            Success_Message = success_message;
-        }
-        Error = new Error(ErrorType.NoError, string.Empty, null);
+        Error = new Error(ErrorType.NoError, string.Empty);
     }
 }
-public class SuccessQuery: QueryResult
+public class SuccessQuery : QueryResult
 {
-    public SuccessQuery(SuccessMessage? success_message = null)
+    public SuccessQuery()
     {
         Fail = false;
-        if(success_message is not null)
-        {
-            Success_Message = success_message;
-        }
-        Error = new Error(ErrorType.NoError, string.Empty, null);
+        Error = new Error(ErrorType.NoError, string.Empty);
     }
 }
 public class FailQuery<T> : QueryResult<T>
@@ -86,7 +63,7 @@ public class FailQuery<T> : QueryResult<T>
         Error = error;
     }
 }
-public class FailQuery: QueryResult
+public class FailQuery : QueryResult
 {
     public FailQuery(Error error)
     {

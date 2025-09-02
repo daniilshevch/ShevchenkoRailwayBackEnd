@@ -9,8 +9,8 @@ namespace RailwayCore.Models
 {
     public enum StopType
     {
-        Boarding,
-        Technical
+        Boarding = 0,
+        Technical = 1
     }
     public class TrainRouteOnDateOnStation  //Зупинка рейса поїзда
     {
@@ -18,7 +18,6 @@ namespace RailwayCore.Models
         public string Train_Route_On_Date_Id { get; set; } = null!; //вище
         public Station Station { get; set; } = null!; //Станція, на якій робить зупинку рейс поїзда
         public int Station_Id { get; set; } //вище
-
         public DateTime? Arrival_Time { get; set; } //Час прибуття(якщо станція стартова, то null)  
         public DateTime? Departure_Time { get; set; }  //Час відправлення(якщо станція кінцева, то null)
         [MaxLength(20)]

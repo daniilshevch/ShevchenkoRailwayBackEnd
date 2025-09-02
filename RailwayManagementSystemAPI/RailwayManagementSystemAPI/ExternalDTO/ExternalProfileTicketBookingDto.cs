@@ -37,6 +37,6 @@ namespace RailwayManagementSystemAPI.ExternalDTO
         [JsonPropertyName("passenger_surname")]
         public string Passenger_Surname { get; set; } = null!;
         [JsonPropertyName("ticket_status")]
-        public string Ticket_Status { get; set; } 
+        public string Ticket_Status { get; set; } = null!;
     }
 }

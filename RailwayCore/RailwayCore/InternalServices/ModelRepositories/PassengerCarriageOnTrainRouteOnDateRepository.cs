@@ -50,6 +50,7 @@ namespace RailwayCore.InternalServices.ModelServices
                 Is_For_Woman = input.Is_For_Woman,
                 Factual_Air_Conditioning = input.Factual_Air_Conditioning,
                 Factual_Shower_Availability = input.Factual_Shower_Availability,
+                Factual_Wi_Fi = input.Factual_Wi_Fi,
                 Factual_Is_Inclusive = input.Factual_Is_Inclusive,
                 Food_Availability = input.Food_Availability
             };

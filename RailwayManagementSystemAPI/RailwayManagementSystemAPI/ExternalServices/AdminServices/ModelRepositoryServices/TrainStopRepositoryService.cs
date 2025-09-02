@@ -31,6 +31,19 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             List<TrainRouteOnDateOnStationDto> train_stops = train_stops_get_result.Value.Select(single_train_stop =>
                 (TrainRouteOnDateOnStationDto)single_train_stop).ToList();
 
+            TrainRouteOnDateOnStationDto? previous_stop = null;
+            foreach(TrainRouteOnDateOnStationDto current_stop in train_stops)
+            {
+                double? speed_on_section = null;
+                if(previous_stop is not null)
+                {
+                    double distance_between_stations = (double)(current_stop.Distance_From_Starting_Station - previous_stop.Distance_From_Starting_Station)!;
+                    double trip_duration_between_station = ((DateTime)current_stop.Arrival_Time! - (DateTime)previous_stop.Departure_Time!).TotalHours;
+                    speed_on_section = distance_between_stations / trip_duration_between_station;
+                    previous_stop.Speed_On_Section = speed_on_section;
+                }
+                previous_stop = current_stop;
+            }
             return new SuccessQuery<List<TrainRouteOnDateOnStationDto>>(train_stops);
         }
         public async Task<QueryResult<TrainRouteOnDateOnStationDto>> UpdateTrainStop(string train_route_on_date_id, string station_title, 
