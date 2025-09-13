@@ -21,16 +21,9 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             this.configuration = configuration;
         }
         [Refactored("v1", "02.05.2025")]
-        public async Task<QueryResult<ExternalOutputMediatorTicketBookingDto>> InitializeTicketBookingProcessForAuthenticatedUser
-            (ExternalInputInitialTicketBookingDto input)
+        public async Task<QueryResult<ExternalOutputMediatorTicketBookingDto>> InitializeTicketBookingProcessForUser
+    (ExternalInputInitialTicketBookingDto input, User user)
         {
-            //Отримуємо аутентифікованого користувача
-            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
-            if (user_authentication_result.Fail)
-            {
-                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(user_authentication_result.Error);
-            }
-            User user = user_authentication_result.Value;
             //Робимо ініціалізацію квитка, виставляючи всі дані бажаної подорожі і прив'язуючи квиток до акаунту, але не вказуємо ім'я пасажира
             //Статус квитка - Booking_In_Progress
             InternalTicketBookingDtoWithCarriagePosition internal_ticket_dto = new InternalTicketBookingDtoWithCarriagePosition
@@ -81,6 +74,53 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             };
             return new SuccessQuery<ExternalOutputMediatorTicketBookingDto>(mediator_ticket_booking_dto);
 
+        }
+        public async Task<QueryResult<ExternalOutputMediatorTicketBookingDto>> InitializeTicketBookingProcessForAuthenticatedUser
+            (ExternalInputInitialTicketBookingDto input)
+        {
+            //Отримуємо аутентифікованого користувача
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
+            if (user_authentication_result.Fail)
+            {
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(user_authentication_result.Error);
+            }
+            User user = user_authentication_result.Value;
+            return await InitializeTicketBookingProcessForUser(input, user);
+        }
+        public async Task<QueryResult<List<ExternalOutputMediatorTicketBookingDto>>> InitializeMultipleTicketBookingProcessForAuthenticatedUser(
+            List<ExternalInputInitialTicketBookingDto> ticket_bookings_list)
+        {
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
+            if (user_authentication_result.Fail)
+            {
+                return new FailQuery<List<ExternalOutputMediatorTicketBookingDto>>(user_authentication_result.Error);
+            }
+            User user = user_authentication_result.Value;
+            List<ExternalOutputMediatorTicketBookingDto> ticket_bookings = new List<ExternalOutputMediatorTicketBookingDto>();
+            foreach(ExternalInputInitialTicketBookingDto ticket_booking_dto in ticket_bookings_list)
+            {
+                QueryResult<ExternalOutputMediatorTicketBookingDto> ticket_booking_result = 
+                    await InitializeTicketBookingProcessForUser(ticket_booking_dto, user);
+                if(ticket_booking_result.Fail)
+                {
+                    ticket_bookings.Add(new ExternalOutputMediatorTicketBookingDto()
+                    {
+                        User_Id = user.Id,
+                        Train_Route_On_Date_Id = ticket_booking_dto.Train_Route_On_Date_Id,
+                        Passenger_Carriage_Position_In_Squad = ticket_booking_dto.Passenger_Carriage_Position_In_Squad,
+                        Place_In_Carriage = ticket_booking_dto.Place_In_Carriage,
+                        Starting_Station_Title = ticket_booking_dto.Starting_Station_Title,
+                        Ending_Station_Title = ticket_booking_dto.Ending_Station_Title,
+                        TicketStatus = TextEnumConvertationService.GetTicketBookingStatusIntoString(TicketStatus.Booking_Failed)
+                    });
+                }
+                else
+                {
+                    ExternalOutputMediatorTicketBookingDto successfully_booked_ticket = ticket_booking_result.Value;
+                    ticket_bookings.Add(successfully_booked_ticket);
+                }
+            }
+            return new SuccessQuery<List<ExternalOutputMediatorTicketBookingDto>>(ticket_bookings);
         }
         /*
         public async Task<QueryResult<ExternalOutputMediatorTicketBookingDto> CancelTicketBookingProcessForAuthenticatedUser

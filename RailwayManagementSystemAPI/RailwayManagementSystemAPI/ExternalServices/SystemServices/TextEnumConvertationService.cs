@@ -121,6 +121,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
                     return "Returned";
                 case TicketStatus.Archieved:
                     return "Archieved";
+                case TicketStatus.Booking_Failed:
+                    return "Booking_Failed";
                 default:
                     return "";
             }

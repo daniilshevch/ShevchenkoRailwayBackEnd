@@ -6,7 +6,8 @@ public enum TicketStatus
     Booked_And_Active,
     Booked_And_Used,
     Archieved,
-    Returned
+    Returned,
+    Booking_Failed
 }
 namespace RailwayCore.Models
 {
