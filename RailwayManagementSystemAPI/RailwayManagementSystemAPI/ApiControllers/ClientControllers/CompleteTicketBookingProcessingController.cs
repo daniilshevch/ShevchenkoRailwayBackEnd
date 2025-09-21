@@ -57,6 +57,18 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             ExternalOutputCompletedTicketBookingDto completed_ticket_booking_dto = ticket_booking_completion_result.Value;
             return Created($"/tickets/{completed_ticket_booking_dto.Id}", completed_ticket_booking_dto);
         }
+        [HttpDelete("Cancel-Ticket-Booking-Reservation")]
+        public async Task<ActionResult<ExternalOutputMediatorTicketBookingDto>> CancelTicketBookingReservationForUser(ExternalOutputMediatorTicketBookingDto input_unfinished_ticket)
+        {
+            QueryResult<ExternalOutputMediatorTicketBookingDto> booking_cancellation_result = await
+                complete_ticket_booking_processing_service.CancelTicketBookingReservationForUser(input_unfinished_ticket);
+            if(booking_cancellation_result.Fail)
+            {
+                return booking_cancellation_result
+                    .GetErrorFromQueryResult<ExternalOutputMediatorTicketBookingDto, ExternalOutputMediatorTicketBookingDto>();
+            }
+            return Ok(booking_cancellation_result.Value);
+        }
 
     }
 }

@@ -58,7 +58,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>? train_routes_on_date_bookings_statistics_result = null;
             //Отримуємо інформацію про всі бронювання для всіх рейсів поїздів зі списку(ми отримали вище їх айді)
             if (admin_mode == false) //В залежності від того, який режим, включаємо чи не включаємо інформацію про пасажирів
-            {
+            {   
                 train_routes_on_date_bookings_statistics_result = await full_ticket_management_service.
                     GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDate(appropriate_train_routes_on_date_ids, starting_station_title, ending_station_title);
             }
@@ -310,15 +310,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             return new SuccessQuery<List<ExternalTrainRouteWithBookingsInfoDto>>(ordered_total_train_routes_with_bookings_and_stations_info);
 
         }
-        
-
-
-
-
-
-
-
-
+       
         public async Task<QueryResult<List<ExternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStation(string station_title, DateTime time,
             TimeSpan? left_interval = null, TimeSpan? right_interval = null)
         {

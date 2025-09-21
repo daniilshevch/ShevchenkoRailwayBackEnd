@@ -176,7 +176,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             {
                 return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Booking reservation time has expired"));
             }
-            if(ticket_booking.Ticket_Status != TicketStatus.Booking_In_Progress)
+            if (ticket_booking.Ticket_Status != TicketStatus.Booking_In_Progress)
             {
                 return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.BadRequest, "This place has already been booked"));
             }
@@ -208,6 +208,41 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             };
             return new SuccessQuery<ExternalOutputCompletedTicketBookingDto>(finished_ticket_booking_dto);
         }
+        public async Task<QueryResult<ExternalOutputMediatorTicketBookingDto>> CancelTicketBookingReservationForUser(ExternalOutputMediatorTicketBookingDto input_unfinished_ticket)
+        {
+            //Отримуємо аутентифікованого користувача
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
+            if (user_authentication_result.Fail)
+            {
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(user_authentication_result.Error);
+            }
+            User user = user_authentication_result.Value;
+            //Отримуємо з бази запис про поточне бронювання
+            TicketBooking? ticket_booking = await full_ticket_management_service.FindTicketBookingById(input_unfinished_ticket.Id);
+            //Перевірка, чи квиток є в базі
+            if (ticket_booking is null)
+            {
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.InternalServerError, "System can't find the ticket to complete booking"));
+            }
+            //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка
+            if (user.Id != input_unfinished_ticket.User_Id)
+            {
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed"));
+            }
+            //Перевірка,чи не сплив час бронювання
+            if (DateTime.Now > ticket_booking.Booking_Expiration_Time)
+            {
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Booking reservation time has expired"));
+            }
+            if (ticket_booking.Ticket_Status != TicketStatus.Booking_In_Progress)
+            {
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.BadRequest, "This place has already been booked"));
+            }
+            await full_ticket_management_service.DeleteTicketBooking(ticket_booking);
+            return new SuccessQuery<ExternalOutputMediatorTicketBookingDto>(input_unfinished_ticket);
+
+        }
+        
 
         public async Task DeleteAllExpiredBookings()
         {

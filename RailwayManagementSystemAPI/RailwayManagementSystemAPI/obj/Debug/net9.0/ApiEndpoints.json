@@ -1105,6 +1105,32 @@
   },
   {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.CompleteTicketBookingProcessingController",
+    "Method": "CancelTicketBookingReservationForUser",
+    "RelativePath": "Client-API/CompleteTicketBookingProcessing/Cancel-Ticket-Booking-Reservation",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input_unfinished_ticket",
+        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalOutputMediatorTicketBookingDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RailwayManagementSystemAPI.API_DTO.ExternalOutputMediatorTicketBookingDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.CompleteTicketBookingProcessingController",
     "Method": "CompleteTicketBookingProcess",
     "RelativePath": "Client-API/CompleteTicketBookingProcessing/Complete-Ticket-Booking",
     "HttpMethod": "POST",
