@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using RailwayManagementSystemAPI.ExternalDTO;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using System.Collections.Generic;
 
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
@@ -25,6 +27,18 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             }
             List<ExternalProfileTicketBookingDto> tickets_for_user = ticket_selection_result.Value;
             return tickets_for_user;
+        }
+        [HttpGet("get-grouped-tickets-for-current-user")]
+        public async Task<ActionResult<List<ExternalTicketBookingGroupDto>>> GetAllBookedTicketsInGroupsForCurrentUser()
+        {
+            QueryResult<List<ExternalTicketBookingGroupDto>> ticket_bookings_get_result = 
+                await user_ticket_management_service.GetAllBookedTicketsInGroupsForCurrentUser();
+            if(ticket_bookings_get_result.Fail)
+            {
+                return ticket_bookings_get_result.GetErrorFromQueryResult<List<ExternalTicketBookingGroupDto>, List<ExternalTicketBookingGroupDto>>();
+            }
+            List<ExternalTicketBookingGroupDto> ticket_groups = ticket_bookings_get_result.Value;
+            return Ok(ticket_groups);
         }
         [HttpDelete("return-ticket-for-current-user/{ticket_id}")]
         public async Task<ActionResult<ExternalProfileTicketBookingDto>> ReturnTicketBookingForUserById([FromRoute] string ticket_id)

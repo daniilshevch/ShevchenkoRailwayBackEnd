@@ -1384,6 +1384,26 @@
   },
   {
     "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.UserTicketManagementController",
+    "Method": "GetAllBookedTicketsInGroupsForCurrentUser",
+    "RelativePath": "get-grouped-tickets-for-current-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.ExternalTicketBookingGroupDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RailwayManagementSystemAPI.ApiControllers.ClientControllers.UserTicketManagementController",
     "Method": "GetAllTicketBookingsForCurrentUser",
     "RelativePath": "get-tickets-for-current-user",
     "HttpMethod": "GET",

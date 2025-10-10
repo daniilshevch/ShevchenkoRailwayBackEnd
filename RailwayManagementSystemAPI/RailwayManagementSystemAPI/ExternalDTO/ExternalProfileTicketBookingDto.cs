@@ -8,6 +8,8 @@ namespace RailwayManagementSystemAPI.ExternalDTO
     {
         [JsonPropertyName("full_ticket_id")]
         public Guid? Full_Ticket_Id { get; set; }
+        [JsonPropertyName("train_race_id")]
+        public string Train_Route_On_Date_Id { get; set; } = null!;
         [JsonPropertyName("train_route_id")]
         public string Train_Route_Id { get; set; } = null!;
         [JsonPropertyName("full_route_starting_station_title")]

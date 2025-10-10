@@ -4,6 +4,8 @@ namespace RailwayManagementSystemAPI.ExternalDTO
 {
     public class ExternalTicketBookingGroupDto
     {
+        [JsonPropertyName("train_route_on_date_id")]
+        public string Train_Route_On_Date_Id { get; set; } = null!;
         [JsonPropertyName("train_route_id")]
         public string Train_Route_Id { get; set; } = null!;
         [JsonPropertyName("full_route_starting_station_title")]
