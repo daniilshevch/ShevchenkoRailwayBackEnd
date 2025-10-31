@@ -2,7 +2,7 @@
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.ModelServices;
 using RailwayCore.Models;
-using RailwayManagementSystemAPI.ExternalDTO;
+using RailwayManagementSystemAPI.ExternalDTO.TrainRouteDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 

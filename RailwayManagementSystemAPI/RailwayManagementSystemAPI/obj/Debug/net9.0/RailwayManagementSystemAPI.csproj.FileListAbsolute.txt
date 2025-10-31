@@ -102,3 +102,5 @@ D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSyste
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
 D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\staticwebassets.build.json.cache
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\bin\Debug\net9.0\RailwayManagementSystemAPI.xml
+D:\ShevchenkoRailwaySystemCore\RailwayManagementSystemAPI\RailwayManagementSystemAPI\obj\Debug\net9.0\RailwayManagementSystemAPI.xml

@@ -1,18 +1,26 @@
 ﻿using RailwayCore.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RailwayCore.InternalServices.ExecutiveServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices
 {
     public static class RouteAlgorithmService
     {
+        /// <summary>
+        /// Дана функція приймає в якості аргументу список зупинок одного рейсу та дві станції майбутньої поїздки(початкову та кінцеву), а далі
+        /// ділить список всіх зупинок рейсу на 3 секції(ліву, центральну та праву).
+        /// Ліва секція містить всі зупинки до початкової станції поїздки включно.
+        /// Центральна секція містить всі станції майбутньої поїздки, НЕ включаючи початкову та кінцеву зупинку поїздки
+        /// Права секція містить всі станції після кінцевої станції поїздки і включно з самою кінцевою станцією поїздки
+        /// Дана функція потрібна для коректного визначення вільних місць між двома зупинками для певного рейсу поїзда.
+        /// </summary>
+        /// <param name="all_sorted_train_stops_of_train_route_on_date"></param>
+        /// <param name="desired_starting_station_title"></param>
+        /// <param name="desired_ending_station_title"></param>
+        /// <returns></returns>
         [Crucial]
         [Algorithm("АЛГОРИТМ ТРЬОХ СЕКЦІЙ")]
         [Refactored("v1", "18.04.2025")]
         [Checked("11.05.2025")]
+        [PartialLogicMethod]
+        //На вхід в метод треба подавати відсортовані станції рейсу поїзда, інакше він буде працювати некоректно
         public static (List<int>, List<int>, List<int>) DivideSectionIntoThreeParts(List<TrainRouteOnDateOnStation> all_sorted_train_stops_of_train_route_on_date,
     string desired_starting_station_title, string desired_ending_station_title)
         {
@@ -40,11 +48,21 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             //Індекси в списку станцій можна брати до уваги, бо метод приймає посортований список станцій поїзда(це треба враховувати при виклику методу)
             return (left_part, central_part, right_part);
         }
-
+        /// <summary>
+        /// Даний метож є логічним продовженням попередньої функції, але працює одразу для декількох поїздів. Приймає на вхід список списків, де 
+        /// кожен вкладений список є посортованим списком станцій одного рейсу поїзда. Ліва частина буде містити всі станції до початкової зупинки поїздки 
+        /// включно з нею для кожного з поїздів списку(об'єднання лівих секцій для декількох поїздів), і аналогічно центральна частина - об'єднання центральних 
+        /// секцій для кожного окремого поїзда, і аналогічно права частина - консолідація правих секцій для окремих поїздів.
+        /// </summary>
+        /// <param name="all_sorted_train_stops_of_several_train_routes_on_date"></param>
+        /// <param name="desired_starting_station_title"></param>
+        /// <param name="desired_ending_station_title"></param>
+        /// <returns></returns>
         [Crucial]
         [Algorithm("МОДИФІКОВАНИЙ АЛГОРИТМ ТРЬОХ СЕКЦІЙ ДЛЯ ДЕКІЛЬКОХ ПОЇЗДІВ")]
         [Refactored("v1", "18.04.2025")]
         [Checked("11.05.2025")]
+        [PartialLogicMethod]
         public static (List<int>, List<int>, List<int>) DivideSectionIntoThreePartsForSeveralTrains(List<List<TrainRouteOnDateOnStation>> all_sorted_train_stops_of_several_train_routes_on_date,
             string desired_starting_station_title, string desired_ending_station_title)
         {

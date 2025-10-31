@@ -1,7 +1,7 @@
 ﻿using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.ModelServices;
 using RailwayCore.Models;
-using RailwayManagementSystemAPI.ExternalDTO;
+using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO;
 namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
 {
     public class TrainStopRepositoryService

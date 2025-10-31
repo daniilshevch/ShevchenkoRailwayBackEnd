@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
-using RailwayManagementSystemAPI.ExternalDTO;
+using RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
 
 namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers

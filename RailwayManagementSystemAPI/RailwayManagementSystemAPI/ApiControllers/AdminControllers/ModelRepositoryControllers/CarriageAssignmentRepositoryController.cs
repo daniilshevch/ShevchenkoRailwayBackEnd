@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
-using RailwayManagementSystemAPI.ExternalDTO;
+using RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using Swashbuckle.AspNetCore.Annotations;

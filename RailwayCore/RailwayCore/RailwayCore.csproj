@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="InternalDTO\CoreDTO\" />
     <Folder Include="Migrations\" />
     <Folder Include="Script Patterns\" />
   </ItemGroup>

@@ -1,10 +1,10 @@
-﻿using RailwayManagementSystemAPI.ExternalDTO;
-using RailwayCore.Models;
+﻿using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using RailwayCore.InternalServices.CoreServices;
 using System.Net;
 using Microsoft.Extensions.Primitives;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
@@ -154,12 +154,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 DateTime? arrival_time_to_trip_ending_station = trip_ending_station?.Arrival_Time;
                 TimeSpan? trip_duration = arrival_time_to_trip_ending_station - departure_time_from_trip_starting_station;
                 string train_route_id = trip_starting_station!.Train_Route_On_Date.Train_Route_Id;
-
-
+                string train_route_class = TextEnumConvertationService.GetTrainQualityClassIntoString(trip_starting_station!.Train_Route_On_Date.Train_Route.Quality_Class)!;
+                string train_branded_name = trip_starting_station!.Train_Route_On_Date.Train_Route.Branded_Name!;
                 ExternalTicketBookingGroupDto output_group = new ExternalTicketBookingGroupDto()
                 {
                     Train_Route_On_Date_Id = ticket_group_header.Train_Route_On_Date_Id,
                     Train_Route_Id = train_route_id,
+                    Train_Route_Class = train_route_class,
+                    Train_Route_Branded_Name = train_branded_name,
                     Full_Route_Starting_Station_Title = full_route_starting_station_title,
                     Full_Route_Ending_Station_Title = full_route_ending_station_title,
                     Trip_Starting_Station_Title = trip_starting_station_title!,
@@ -176,7 +178,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                         Passenger_Carriage_Position_In_Squad = ticket_booking.Passenger_Carriage_Position_In_Squad,
                         Place_In_Carriage = ticket_booking.Place_In_Carriage,
                         Carriage_Type = TextEnumConvertationService.GetCarriageTypeIntoString(ticket_booking.Passenger_Carriage.Type_Of),
-                        Carriage_Quality_Class = TextEnumConvertationService.GetCarriageTypeIntoString(ticket_booking.Passenger_Carriage.Type_Of),
+                        Carriage_Quality_Class = TextEnumConvertationService.GetCarriageQualityClassIntoString(ticket_booking.Passenger_Carriage.Quality_Class),
                         Full_Route_Starting_Station_Title = full_route_starting_station_title,
                         Full_Route_Ending_Station_Title = full_route_ending_station_title,
                         Trip_Starting_Station_Title = ticket_booking.Starting_Station.Title,

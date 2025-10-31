@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.InternalDTO.ModelDTO;
-using RailwayManagementSystemAPI.API_DTO;
+using RailwayManagementSystemAPI.ExternalDTO.TrainRouteDTO.AdminDTO;
+using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Net;

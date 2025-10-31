@@ -1,11 +1,14 @@
 ﻿using RailwayCore.Context;
 using RailwayCore.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.Json;
+using RailwayCore.InternalServices.SystemServices;
 
 namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices
 {
     public class TicketSystemManipulationService
     {
+        private readonly string service_name = "TicketSystemManipulationService";
         private readonly AppDbContext context;
         public TicketSystemManipulationService(AppDbContext context)
         {
@@ -29,11 +32,18 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
             TicketBooking? ticket_booking = await context.Ticket_Bookings.FirstOrDefaultAsync(ticket_booking => ticket_booking.Id == ticket_booking_id);
             return ticket_booking;
         }
-        [Checked("02.05.2025")]
-        public async Task UpdateTicketBooking(TicketBooking ticket_booking)
+        /// <summary>
+        /// Оновлює квиток в базі новими даними
+        /// </summary>
+        /// <param name="ticket_booking"></param>
+        /// <returns></returns>
+        [ExecutiveMethod]
+        public async Task<QueryResult<TicketBooking>> UpdateTicketBooking(TicketBooking ticket_booking)
         {
             context.Ticket_Bookings.Update(ticket_booking);
             await context.SaveChangesAsync();
+            return new SuccessQuery<TicketBooking>(ticket_booking, new SuccessMessage($"Ticket was successfully updated. Info:\n" +
+                $"{ConsoleLogService.PrintTicketBooking(ticket_booking)}", annotation: service_name, unit: ProgramUnit.Core));
         }
         public async Task DeleteTicketBooking(TicketBooking ticket_booking)
         {

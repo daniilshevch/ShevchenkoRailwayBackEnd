@@ -4,6 +4,15 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +27,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\RailwayCore\RailwayCore\RailwayCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ExternalDTO\PassengerCarriageDTO\ClientDTO\" />
+    <Folder Include="ExternalDTO\StationDTO\ClientDTO\" />
+    <Folder Include="ExternalDTO\TicketBookingDTO\AdminDTO\" />
+    <Folder Include="ExternalDTO\TrainRouteDTO\ClientDTO\" />
+    <Folder Include="ExternalServices\AdminServices\TrainAssignmentServices\" />
   </ItemGroup>
 
 </Project>

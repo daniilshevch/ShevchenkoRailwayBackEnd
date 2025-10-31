@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
-using RailwayManagementSystemAPI.API_DTO;
 using RailwayCore.InternalServices.CoreServices;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
-using RailwayManagementSystemAPI.ExternalDTO;
+using RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.ClientDTO;
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
     [ApiController]
@@ -17,11 +16,11 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             this.train_route_with_booking_search_service = train_route_with_booking_search_service;
         }
         [HttpGet("Search-Train-Routes-Between-Stations-With-Bookings/{starting_station}/{ending_station}")]
-        public async Task<ActionResult<List<ExternalTrainRouteWithBookingsInfoDto>>> SearchTrainRoutesBetweenStationsWithBookingsInfo([FromRoute] string starting_station, [FromRoute] string ending_station, [FromQuery] DateOnly departure_date)
+        public async Task<ActionResult<List<ExternalTrainRaceWithBookingsInfoDto>>> SearchTrainRoutesBetweenStationsWithBookingsInfo([FromRoute] string starting_station, [FromRoute] string ending_station, [FromQuery] DateOnly departure_date)
         {
-            QueryResult<List<ExternalTrainRouteWithBookingsInfoDto>>? train_routes_with_bookings_info_result =
+            QueryResult<List<ExternalTrainRaceWithBookingsInfoDto>>? train_routes_with_bookings_info_result =
                 await train_route_with_booking_search_service.SearchTrainRoutesBetweenStationsWithBookingsInfo(starting_station, ending_station, departure_date, admin_mode: true);
-            if (train_routes_with_bookings_info_result is FailQuery<List<ExternalTrainRouteWithBookingsInfoDto>>)
+            if (train_routes_with_bookings_info_result is FailQuery<List<ExternalTrainRaceWithBookingsInfoDto>>)
             {
                 return NotFound(train_routes_with_bookings_info_result.Error!.Message);
             }

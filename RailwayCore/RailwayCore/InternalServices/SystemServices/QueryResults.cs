@@ -1,4 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using RailwayCore.InternalServices.SystemServices;
+using System.Diagnostics.CodeAnalysis;
+public enum ProgramUnit
+{
+    Core,
+    ClientAPI,
+    AdminAPI
+}
 
 public enum ErrorType
 {
@@ -15,10 +22,24 @@ public class Error
 {
     public ErrorType Type { get; set; }
     public string Message { get; set; }
-    public Error(ErrorType type, string message)
+    public Error(ErrorType type, string message, string? annotation = null, ProgramUnit? unit = null)
     {
+        ConsoleLogService.PrintUnit(unit);
+        ConsoleLogService.PrintAnnotationForFailQuery(annotation);
+        ConsoleLogService.PrintMessage(message);
         Type = type;
         Message = message;
+    }
+}
+public class SuccessMessage
+{
+    public string Text { get; set; }
+    public SuccessMessage(string text, string? annotation = null, ProgramUnit? unit = null)
+    {
+        ConsoleLogService.PrintUnit(unit);
+        ConsoleLogService.PrintAnnotationForSuccessQuery(annotation);
+        ConsoleLogService.PrintMessage(text);
+        Text = text;
     }
 }
 public abstract class QueryResult<T>
@@ -26,16 +47,18 @@ public abstract class QueryResult<T>
     public T? Value { get; set; }
     [MemberNotNullWhen(false, nameof(Value))] //Цей атрибут показує системі, що якщо Fail = false, то Value != null
     public bool Fail { get; set; }
+    public SuccessMessage Success_Message { get; set; } = new SuccessMessage(string.Empty);
     public Error Error { get; set; } = new Error(ErrorType.NoError, string.Empty);
 }
 public abstract class QueryResult
 {
     public bool Fail { get; set; }
+    public SuccessMessage Success_Message { get; set; } = new SuccessMessage(string.Empty);
     public Error Error { get; set; } = new Error(ErrorType.NoError, string.Empty);
 }
 public class SuccessQuery<T> : QueryResult<T>
 {
-    public SuccessQuery(T value) : base()
+    public SuccessQuery(T value, SuccessMessage? success_message = null) : base()
     {
         Fail = false;
         if (value == null)
@@ -43,14 +66,22 @@ public class SuccessQuery<T> : QueryResult<T>
             throw new ArgumentNullException("Value in success query can't be null(Internal Error)");
         }
         Value = value;
+        if(success_message != null)
+        {
+            Success_Message = success_message;
+        }
         Error = new Error(ErrorType.NoError, string.Empty);
     }
 }
 public class SuccessQuery : QueryResult
 {
-    public SuccessQuery()
+    public SuccessQuery(SuccessMessage? success_message = null)
     {
         Fail = false;
+        if (success_message != null)
+        {
+            Success_Message = success_message;
+        }
         Error = new Error(ErrorType.NoError, string.Empty);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using RailwayCore.Models;
-
 public class InternalTrainRaceThroughStationDto
 {
     public TrainRouteOnDate Train_Route_On_Date { get; set; } = null!;

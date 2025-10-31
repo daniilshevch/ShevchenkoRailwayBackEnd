@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
-using RailwayManagementSystemAPI.API_DTO;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Security.Claims;

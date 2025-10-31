@@ -6,7 +6,18 @@
         Description = description;
     }
 }
-public class NotInUseAttribute : ImportanceAttribute { }
+
+
+public class ServiceHierarchyAttribute: Attribute {}
+public class CoreServiceAttribute: ServiceHierarchyAttribute { }
+public class ExecutiveServiceAttribute: ServiceHierarchyAttribute { }
+
+public class MethodHierarchyAttribute: Attribute { }
+public class CoreMethodAttribute: MethodHierarchyAttribute { }
+public class ExecutiveMethodAttribute: MethodHierarchyAttribute { }
+public class PartialLogicMethodAttribute: MethodHierarchyAttribute { }
+
+
 public class CrucialAttribute : ImportanceAttribute
 {
     public CrucialAttribute(string description = "") : base(description) { }
@@ -64,4 +75,8 @@ public class ReengineeredAttribute : StatusAttribute
 public class OptimizedAttribute : StatusAttribute
 {
     public OptimizedAttribute(string version, string date) : base(version, date) { }
+}
+class VerifiedAttribute: StatusAttribute
+{
+    public VerifiedAttribute(string date) : base("v1.0", date) { }
 }

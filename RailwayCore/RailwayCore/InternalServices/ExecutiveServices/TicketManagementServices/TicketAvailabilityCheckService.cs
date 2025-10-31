@@ -3,7 +3,12 @@ using RailwayCore.Models;
 using RailwayCore.Context;
 using Microsoft.EntityFrameworkCore;
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
+using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices;
+using RailwayCore.InternalServices.SystemServices;
 
+/// <summary>
+/// Допоміжній клас, який містить докладну інформацію про пасажира та характеристики його поїздки
+/// </summary>
 [Checked("19.04.2025")]
 public class BookingInfo
 {
@@ -14,6 +19,11 @@ public class BookingInfo
     public string Ending_Station_Title { get; set; } = null!;
 }
 
+/// <summary>
+/// Допомоміжний клас, який містить інформацію про рейс, вагон та місце в цьому вагоні, 
+/// а також може містити інформацію про пасажира та докладну інформацію про його поїздку, 
+/// в тому числі початкову та кінцеву зупинки поїздки
+/// </summary>
 [Checked("19.04.2025")]
 public class TrainRouteOnDateCarriageBookedPlace
 {
@@ -55,8 +65,13 @@ public class PlaceAccumulator
 }
 namespace RailwayCore.InternalServices.ExecutiveServices
 {
+    /// <summary>
+    /// Даний сервіс займається пошуком бронювань в вагонах(тобто займається пошуком квитків для рейсів(між станціями))
+    /// </summary>
+    [ExecutiveService]
     public class TicketAvailabilityCheckService
     {
+        private readonly string service_name = "TicketAvailabilityCheckService";
         private readonly AppDbContext context;
         private readonly TrainRouteOnDateRepository train_route_on_date_service;
         private readonly PassengerCarriageRepository passenger_carriage_service;
@@ -79,36 +94,41 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             
         }
 
-        [Crucial("Перевірка броні на одне конкретне місце в одному конкретному вагоні в рейсі на машруті між двома станціями")]
-        [Refactored("v1", "19.04.2025")]
-        [Checked("02.05.2025")]
-        [Reengineered("v2", "08.06.2025")]
-        [Checked("06.07.2025")]
+        /// <summary>
+        /// Даний метод перевіряє, чи є вільним або заброньованим одне конкретне місце, в одному конкретному вагоні в одному конкретному рейсі поїзда між двома станціями
+        /// </summary>
+        /// <param name="train_route_on_date_id"></param>
+        /// <param name="desired_starting_station_title"></param>
+        /// <param name="desired_ending_station_title"></param>
+        /// <param name="passenger_carriage_id"></param>
+        /// <param name="place_in_carrriage"></param>
+        /// <returns></returns>
+        [ExecutiveMethod]
         public async Task<QueryResult<bool>> CheckTicketAvailabilityBetweenStationsForTrainRouteOnDate(string train_route_on_date_id, string desired_starting_station_title,
            string desired_ending_station_title, string passenger_carriage_id, int place_in_carrriage)
         {
             TrainRouteOnDate? train_route_on_date = await train_route_on_date_service.GetTrainRouteOnDateById(train_route_on_date_id);
             if (train_route_on_date is null)
             {
-                return new FailQuery<bool>(new Error(ErrorType.NotFound, $"Can't find train route on date with ID: {train_route_on_date_id}"));
+                return new FailQuery<bool>(new Error(ErrorType.NotFound, $"Can't find train route on date with ID: {train_route_on_date_id}", annotation: service_name, unit: ProgramUnit.Core));
             }
             PassengerCarriage? passenger_carriage = await passenger_carriage_service.GetPassengerCarriageById(passenger_carriage_id);
             if (passenger_carriage is null)
             {
-                return new FailQuery<bool>(new Error(ErrorType.NotFound, $"Can't find passenger carriage with ID: {passenger_carriage_id}"));
+                return new FailQuery<bool>(new Error(ErrorType.NotFound, $"Can't find passenger carriage with ID: {passenger_carriage_id}", annotation: service_name, unit: ProgramUnit.Core));
             }
             Station? desired_starting_station = await station_service.GetStationByTitle(desired_starting_station_title);
             Station? desired_ending_station = await station_service.GetStationByTitle(desired_ending_station_title);
             if (desired_starting_station is null || desired_ending_station is null)
             {
-                return new FailQuery<bool>(new Error(ErrorType.NotFound, $"Can't find one of the stations"));
+                return new FailQuery<bool>(new Error(ErrorType.NotFound, $"Can't find one of the stations", annotation: service_name, unit: ProgramUnit.Core));
             }
 
             //Знаходимо всі зупинки для поїзда, в якому ми потенційно хочемо купити квиток(в порядку слідування поїзда)
             List<TrainRouteOnDateOnStation>? all_train_stops_of_train_route_on_date = await train_schedule_search_service.GetTrainStopsForTrainRouteOnDate(train_route_on_date_id, order_mode: true);
             if (all_train_stops_of_train_route_on_date is null)
             {
-                return new FailQuery<bool>(new Error(ErrorType.BadRequest, $"Fail while searching stations for train route on date"));
+                return new FailQuery<bool>(new Error(ErrorType.BadRequest, $"Fail while searching stations for train route on date", annotation: service_name, unit: ProgramUnit.Core));
             }
             //Ділимо зупинки на 3 секції згідно з алгоритмом
             (List<int> left_part, List<int> central_part, List<int> right_part) =
@@ -121,18 +141,28 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             central_part.Contains(ticket.Starting_Station_Id) || central_part.Contains(ticket.Ending_Station_Id))
                 && ticket.Ticket_Status != TicketStatus.Returned);
 
-            return new SuccessQuery<bool>(is_available);
+            return new SuccessQuery<bool>(is_available, new SuccessMessage($"Successfully checked status for place # {place_in_carrriage} in carriage with " +
+                $"id: {passenger_carriage_id} in race {train_route_on_date_id} between stations {desired_starting_station_title} and {desired_ending_station_title}. " +
+                $"Status: {(is_available ? "FREE" : "RESERVED")}", annotation: service_name, unit: ProgramUnit.Core));
         }
 
 
-        [Crucial]
-        [Refactored("v1", "19.04.2025")]
-        [Checked("11.05.2025")]
-        [Reengineered("v2", "08.06.2025")]
-        [Checked("04.07.2025")]
+
+
+        /// <summary>
+        /// Даний метод знаходить всі заброньовані місця в усіх вагонах декількох рейсів різних поїздів в контексті поїздки між деякими двома станціями
+        /// </summary>
+        /// <param name="train_route_on_date_ids"></param>
+        /// <param name="starting_station_title"></param>
+        /// <param name="ending_station_title"></param>
+        /// <returns></returns>
+        [ExecutiveMethod] 
         public async Task<QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>> GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDate
            (List<string> train_route_on_date_ids, string starting_station_title, string ending_station_title)
         {
+
+            /////////////////////////////////////////////////ПІДГОТОВЧА ЧАСТИНА//////////////////////////////////////////////////////////
+
             //Знаходимо список тих поїздів, айді яких надано в списку
             List<TrainRouteOnDate> train_routes_on_date_list = await context.Train_Routes_On_Date.Where(train_route_on_date =>
             train_route_on_date_ids.Contains(train_route_on_date.Id)).ToListAsync();
@@ -150,11 +180,26 @@ namespace RailwayCore.InternalServices.ExecutiveServices
                     train_stops_from_all_train_routes_on_date.Where(train_stop => train_stop.Train_Route_On_Date_Id == current_train_route_on_date_id).ToList();
                 train_stops_for_train_route_on_date_list.Add(train_stops_for_current_train_route_on_date);
             }
+
             //Збираємо станції всіх поїздів зі списку і ділимо їх на 3 зони(ліва зона, центральна зона, права зона) - подробиці в Алгоритмі Трьох Секцій
             (List<int> consolidated_left_part, List<int> consolidated_central_part, List<int> consolidated_right_part)
                 = RouteAlgorithmService.DivideSectionIntoThreePartsForSeveralTrains(train_stops_for_train_route_on_date_list, starting_station_title, ending_station_title);
 
+
+            /////////////////////////////////////////////////ОТРИМАННЯ КВИТКІВ В РЕЙСІ МІЖ СТАНЦІЯМИ//////////////////////////////////////////////////////////
+
             //Збираємо всі бронювання квитків в усіх вагонах в усіх поїздах зі списку між обраними станціями поїздки
+            //Тут ми шукаємо в базі всі квитки, які грають роль при пошуку вільних місць між поїздкою саме між початковою та кінцевою станцією, які ми задавали
+            //при пошуку. Для того, щоб квиток перекривав якесь місце в вагоні, мають виконуватись одна з двох умов:
+            
+            //1) Початкова або кінцева станція знаходяться в центральній зоні поїздки(з алгоритму 3 секцій, всі зупинки між початковою та
+            //кінцевою станцією поїздки, обидві не включно)
+            //2) Початкова станція поїздки знаходиться в лівій зоні(з алгоритму 3 секцій, всі зупинки до початкової станції поїздки, включно з нею) і 
+            //кінцева станція поїздки знаходиться в правій зоні(з алгоритму 3 секцій, кінцева зупинка поїздки і всі зупинки після неї)
+
+            //При чому ми проводимо цей пошук для всіх поїздів з того списку, який ми отримали під час пошуку доступних поїздів, між станціями, і для 
+            //всіх вагонів цих поїздів. Нам важливо просто отримати всі квитки, які були викуплені в цих поїздах і які перекриваються з бажаною поїздкою.
+
             List<TicketBooking> booked_tickets = await context.Ticket_Bookings
                 .Include(ticket_booking => ticket_booking.User)
                 .Include(ticket_booking => ticket_booking.Passenger_Carriage)
@@ -174,6 +219,10 @@ namespace RailwayCore.InternalServices.ExecutiveServices
                     Carriage_Id = ticket.Passenger_Carriage_Id,
                     Place = ticket.Place_In_Carriage,
                 }).ToList();
+
+
+            /////////////////////////////////////////КОНСОЛІДАЦІЯ ЗІБРАНОЇ ІНФОРМАЦІЇ В СТАТИСТИЧНІ ОБ'ЄКТИ//////////////////////////////////////////////
+
 
             //Словник статистичних-трансферів для всіх поїздів зі списку, де кожен окремий трансфер містить статистику по одному поїзду, включаючи бронювання в усіх його вагонах
             //ключ - ідентифікатор рейсу поїзда в дату, значення - об'єкт трансферу для конкретного рейсу
@@ -246,7 +295,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
                     int free_places_amount = capacity - booked_places_amount;
 
                     //Додаємо в загальну статистику поїзда статистику одного конкретного вагона
-                    train_route_on_date_carriage_booking_statistics_dictionary[current_train_route_on_date_id].Carriage_Statistics_List.Add(new InternalCarriageAssignmentRepresentationDto
+                    train_route_on_date_carriage_booking_statistics_dictionary[current_train_route_on_date_id].Carriage_Statistics_List.Add(new InternalSinglePassengerCarriageAssignmentRepresentationDto
                     {
                         Carriage_Assignment = current_carriage_assignment,
                         Free_Places = free_places_amount,
@@ -255,14 +304,20 @@ namespace RailwayCore.InternalServices.ExecutiveServices
                     });
                 }
             }
-            return new SuccessQuery<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>(train_route_on_date_carriage_booking_statistics_dictionary);
+            return new SuccessQuery<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>(train_route_on_date_carriage_booking_statistics_dictionary,
+                new SuccessMessage($"Successfully got information about all booked places for races: {ConsoleLogService.PrintRaces(train_route_on_date_ids)} " +
+                $"between {starting_station_title} and {ending_station_title}", annotation: service_name, unit: ProgramUnit.Core));
         }
 
-        [Crucial]
-        [Refactored("v1", "19.04.2025")]
-        [Checked("11.05.2025")]
-        [Checked("06.07.2025")]
-        //Метод додатково вертає інформацію про те, хто бронював місце
+        /// <summary>
+        /// Даний метод знаходить всі заброньовані місця в усіх вагонах декількох рейсів різних поїздів в контексті поїздки між деякими двома станціями, а також
+        /// отримує інформацію про те, хто бронював ці місця і між якими станціями ці пасажири здійснюватимуть поїздку
+        /// </summary>
+        /// <param name="train_route_on_date_ids"></param>
+        /// <param name="starting_station_title"></param>
+        /// <param name="ending_station_title"></param>
+        /// <returns></returns>
+        [ExecutiveMethod]
         public async Task<QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>> GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDateWithPassengerInformationAnalytics
   (List<string> train_route_on_date_ids, string starting_station_title, string ending_station_title)
         {
@@ -400,7 +455,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
                     int free_places_amount = capacity - booked_places_amount;
 
                     //Додаємо в загальну статистику поїзда статистику одного конкретного вагона
-                    train_route_on_date_carriage_booking_statistics_dictionary[current_train_route_on_date_id].Carriage_Statistics_List.Add(new InternalCarriageAssignmentRepresentationDto
+                    train_route_on_date_carriage_booking_statistics_dictionary[current_train_route_on_date_id].Carriage_Statistics_List.Add(new InternalSinglePassengerCarriageAssignmentRepresentationDto
                     {
                         Carriage_Assignment = current_carriage_assignment,
                         Free_Places = free_places_amount,
@@ -409,7 +464,9 @@ namespace RailwayCore.InternalServices.ExecutiveServices
                     });
                 }
             }
-            return new SuccessQuery<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>(train_route_on_date_carriage_booking_statistics_dictionary);
+            return new SuccessQuery<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>(train_route_on_date_carriage_booking_statistics_dictionary,
+                 new SuccessMessage($"Successfully got information about all booked places for races: {ConsoleLogService.PrintRaces(train_route_on_date_ids)} " +
+                $"between {starting_station_title} and {ending_station_title}", annotation: service_name, unit: ProgramUnit.Core));
         }
     }
 }

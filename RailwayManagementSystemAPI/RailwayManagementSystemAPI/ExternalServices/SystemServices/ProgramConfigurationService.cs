@@ -129,7 +129,9 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
                     new string[] {}
                 }
             });
-
+                string xml_file = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                string xml_path = Path.Combine(AppContext.BaseDirectory, xml_file);
+                options.IncludeXmlComments(xml_path);
             });
         }
         public void UseSwagger(WebApplication app)

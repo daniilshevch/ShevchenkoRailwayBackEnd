@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RailwayManagementSystemAPI</name>
+    </assembly>
+    <members>
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.ClientDTO.ExternalCarriageTypeAndQualityGroupDto">
+            <summary>
+            Цей клас представляє групу вагонів одного типу та класу якості. В кожній такій групі є список об'єктів 
+            ExternalSinglePassengerCarriageBookingsInfoDto, кожен з яких представляє собою один вагон і інформацію про броні в ньому
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.ClientDTO.ExternalCarriageTypeGroupDto">
+            <summary>
+            Представдяє собою групу вагонів одного типу в рейсі певного поїзда. Містить в собі словник груп, в кожній з яких містяться
+            список вагони одного типу та класу якості
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.ClientDTO.ExternalSinglePassengerCarriageBookingsInfoDto">
+            <summary>
+            Представляє собою один вагон в складі рейса поїзда: докладну інформацію про нього, а також інформацію
+            про бронювання місць в даному вагоні в даному рейсі
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputInitialTicketBookingDto">
+            <summary>
+            Даний клас представляє собою інформацію про квиток, яка потрібна для його первинного резервування. Тут є лише загальна інформація про поїздку на цьому
+            місці(поїзд, вагон, місце, станції прибуття та відправлення), але не конкретна інформація про пасажира та його подорож
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalOutputMediatorTicketBookingDto">
+            <summary>
+            Даний клас повертає проміжну інформацію про ініціалізацію бронювання квитка. Це етап, коли користувач вже натиснув на місце в вагоні
+            і вже почав заповнювати інформацію про пасажира, але ще в процесі. Квиток перебуває в статусі Booking_In_Progress. 
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.ClientDTO.ExternalTrainRaceWithBookingsInfoDto">
+            <summary>
+            Зовнішній трансферний об'єкт, який консолідує всю інформацію про рейс поїзда між станціями бажаної поїздки пасажира. Сюди входить інформація
+            про саме курсування рейсу між станціями поїздки, склад поїзда з докладною інформацією про всі вагони, а також інформацію про вільні та заброньовані
+            місця в вагонах в контексті поїздки пасажира. Також містить список всіх станцій рейса.
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.ClientDTO.ExternalSingleTrainStopDto">
+            <summary>
+            Даний клас представляє собою трансферний об'єкт для відображення одної зупинки 
+            в розкладі руху рейсу поїзда між станціями поїздки пасажира. Список цих об'єктів входить в клас ExternalTrainRaceWithBookingsInfoDto
+            </summary>
+        </member>
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.InitializeTicketBookingProcessForUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputInitialTicketBookingDto,RailwayCore.Models.User)">
+            <summary>
+            Даний метод має спрацьовувати, коли користувач обирає місце в вагоні в певному рейсі і починає процес заповнення інформації про себе та поїздку.
+            Фактично, він розпочинає процес бронювання і резервує дане місце за даним користувачем на певний час. При цьому прізвище, ім'я та конкретна інфомрація про 
+            пасажира та поїздку не вводяться, але місце тимчасово позначене, як зайняте.
+            </summary>
+            <param name="input"></param>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.InitializeTicketBookingProcessForAuthenticatedUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputInitialTicketBookingDto)">
+            <summary>
+            Ініціалізовує процес бронювання квитка для користувача, який аутентифікований.
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.InitializeMultipleTicketBookingProcessForAuthenticatedUser(System.Collections.Generic.List{RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputInitialTicketBookingDto})">
+            <summary>
+            Проводить ініціалізацію бронювання одразу декількох квитків
+            </summary>
+            <param name="ticket_bookings_list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.CompleteTicketBookingProcessForAuthenticatedUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalOutputMediatorTicketBookingDto,RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputPassengerInfoForCompletedTicketBookingDto)">
+            <summary>
+            Даний метод завершує процес бронювання квитка для користувача. Коли бронь вже була ініціалізована і користувач заповнює інформацію про пасажира та 
+            додаткову інформацію про поїздку.
+            </summary>
+            <param name="input_unfinished_ticket"></param>
+            <param name="passenger_info"></param>
+            <returns></returns>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalServices.ClientServices.CarriageTypeComparer">
+            <summary>
+            Клас потрібен для коректного сортування груп вагонів різних типів(чисто косметичний ефект)
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalServices.ClientServices.QualityClassComparer">
+            <summary>
+            Клас потрібен для коректного сортування груп вагонів різних класів в межах одного типу(чисто косметичний ефект)
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalServices.ClientServices.TrainRouteWithBookingsSearchService">
+            <summary>
+            Цей клас проводить пошук доступних рейсів поїздів між двома станціями в певну дату. З одного боку він шукає самі рейси,
+            які доступні для поїздки користувача, а з іншого - одразу і видає всю інформацію про склад цих поїздів та наявні місця в 
+            них. Виконує роль агрегації функції декількох сервісів з RailwayCore і кінцевий функціонал пошуку поїздів для користувачів.
+            </summary>
+        </member>
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.TrainRouteWithBookingsSearchService.SearchTrainRoutesBetweenStationsWithBookingsInfo(System.String,System.String,System.DateOnly,System.Boolean)">
+            <summary>
+            Цей метод проводить пошук доступних рейсів поїздів між станціями в певну дату, а також вертає склад поїзда і інформацію
+            про доступні місця в вагонах
+            </summary>
+            <param name="starting_station_title"></param>
+            <param name="ending_station_title"></param>
+            <param name="departure_date"></param>
+            <param name="admin_mode"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

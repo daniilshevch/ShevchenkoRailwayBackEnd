@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices
 {
+    [ExecutiveService]
     public class TrainSquadSearchService
     {
         private readonly AppDbContext context;
@@ -17,6 +18,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
         [Refactored("v1", "18.04.2025")]
         [Checked("04.07.2025")]
         [Executive]
+        [ExecutiveMethod]
         public async Task<List<PassengerCarriageOnTrainRouteOnDate>?> GetPassengerCarriageAssignmentsForTrainRouteOnDate(string train_route_on_date_id)
         {
             //Отримуємо рейс поїзда з інформацією про вагони
@@ -36,6 +38,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
 
         [Checked("18.04.2025")]
         [Checked("04.07.2025")]
+        [ExecutiveService]
         [Peripheral]
         public async Task<List<PassengerCarriageOnTrainRouteOnDate>?> GetPassengerCarriageAssignmentsForTrainRouteOnDate(string train_route_id, DateOnly departure_date)
         {
@@ -46,6 +49,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
         [Refactored("v1", "18.04.2025")]
         [Checked("04.07.2025")]
         [Crucial]
+        [ExecutiveService]
         public async Task<List<PassengerCarriageOnTrainRouteOnDate>> GetPassengerCarriageAssignmentsForSeveralTrainRoutesOnDate(List<string> train_route_on_date_ids)
         {
             //Отримуємо вагони в складі декількох рейсів поїздів в певні дати разом, 

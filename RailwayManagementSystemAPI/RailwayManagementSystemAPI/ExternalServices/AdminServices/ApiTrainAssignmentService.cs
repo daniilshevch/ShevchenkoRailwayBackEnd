@@ -1,7 +1,8 @@
 ﻿using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
 using RailwayCore.InternalServices.CoreServices;
-using RailwayManagementSystemAPI.API_DTO;
+using RailwayManagementSystemAPI.ExternalDTO.TrainRouteDTO.AdminDTO;
+using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO;
 namespace RailwayManagementSystemAPI.ExternalServices.AdminServices
 {
     public class ApiTrainAssignmentService

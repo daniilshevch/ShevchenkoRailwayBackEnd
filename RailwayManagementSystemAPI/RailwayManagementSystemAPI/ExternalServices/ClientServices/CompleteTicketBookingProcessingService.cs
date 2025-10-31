@@ -1,16 +1,17 @@
 ﻿using RailwayCore.Models;
-using RailwayManagementSystemAPI.API_DTO;
 using RailwayCore.InternalServices.CoreServices;
-using RailwayCore.InternalDTO.ModelDTO;
+using RailwayCore.InternalServices.ExecutiveServices.ExecutiveDTO.TicketManagementDTO;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using RailwayCore.Migrations;
 using Newtonsoft.Json;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO;
+using System.Diagnostics;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
+    [ClientApiService]
     public class CompleteTicketBookingProcessingService
     {
+        private readonly string service_name = "CompleteTicketBookingProcessingService";
         private readonly FullTicketManagementService full_ticket_management_service;
         private readonly SystemAuthenticationService system_authentication_service;
         private readonly IConfiguration configuration;
@@ -20,13 +21,25 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             this.system_authentication_service = system_authentication_service;
             this.configuration = configuration;
         }
-        [Refactored("v1", "02.05.2025")]
+        /// <summary>
+        /// Даний метод має спрацьовувати, коли користувач обирає місце в вагоні в певному рейсі і починає процес заповнення інформації про себе та поїздку.
+        /// Фактично, він розпочинає процес бронювання і резервує дане місце за даним користувачем на певний час. При цьому прізвище, ім'я та конкретна інфомрація про 
+        /// пасажира та поїздку не вводяться, але місце тимчасово позначене, як зайняте.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [ClientApiMethod]
         public async Task<QueryResult<ExternalOutputMediatorTicketBookingDto>> InitializeTicketBookingProcessForUser
     (ExternalInputInitialTicketBookingDto input, User user)
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("-------------------BOOKING INITIALIZATION PROCESS------------------------");
+            Console.ResetColor();
+            Stopwatch sw = Stopwatch.StartNew();
             //Робимо ініціалізацію квитка, виставляючи всі дані бажаної подорожі і прив'язуючи квиток до акаунту, але не вказуємо ім'я пасажира
             //Статус квитка - Booking_In_Progress
-            InternalTicketBookingDtoWithCarriagePosition internal_ticket_dto = new InternalTicketBookingDtoWithCarriagePosition
+            InternalTicketBookingWithCarriagePositionDto internal_ticket_dto = new InternalTicketBookingWithCarriagePositionDto
             {
                 User_Id = user.Id,
                 Train_Route_On_Date_Id = input.Train_Route_On_Date_Id,
@@ -48,19 +61,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             //Додаємо квитку інформацію про те, коли буде спливати бронь(актуально, адже квиток перебуває в статусі бронювання)
             current_ticket_booking.Booking_Expiration_Time = DateTime.Now.AddMinutes(Convert.ToDouble(configuration["RailwaySystemFunctioning:BookingExpirationTimeInMinutes"]));
             await full_ticket_management_service.UpdateTicketBooking(current_ticket_booking);
-            ///////////////Sockets
-            await WebSocketHandler.BroadcastAsync(JsonConvert.SerializeObject(new
-            {
-                train_route_id = input.Train_Route_On_Date_Id,
-                carriage_position = input.Passenger_Carriage_Position_In_Squad,
-                place_in_carriage = input.Place_In_Carriage,
-                is_free = false
-            }));
-            /////////////////////
+
             //Видаємо проміжну інформацію про квиток на даний момент(бронювання вже ініціалізоване і перебуває в процесі)
             ExternalOutputMediatorTicketBookingDto mediator_ticket_booking_dto = new ExternalOutputMediatorTicketBookingDto
             {
                 Id = current_ticket_booking.Id,
+                Full_Ticket_Id = current_ticket_booking.Full_Ticket_Id.ToString()!,
                 User_Id = current_ticket_booking.User_Id,
                 Train_Route_On_Date_Id = current_ticket_booking.Train_Route_On_Date_Id,
                 Passenger_Carriage_Id = current_ticket_booking.Passenger_Carriage_Id,
@@ -72,9 +78,21 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 Booking_Expiration_Time = current_ticket_booking.Booking_Expiration_Time,
                 TicketStatus = TextEnumConvertationService.GetTicketBookingStatusIntoString(current_ticket_booking.Ticket_Status)
             };
-            return new SuccessQuery<ExternalOutputMediatorTicketBookingDto>(mediator_ticket_booking_dto);
+            sw.Stop();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"Booking time: ");
+            Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0} seconds");
+            Console.ResetColor();
+            return new SuccessQuery<ExternalOutputMediatorTicketBookingDto>(mediator_ticket_booking_dto, new SuccessMessage($"Booking reservation successfully " +
+                $"initialized\nBooking Id: {current_ticket_booking.Full_Ticket_Id}\nBooking expiration time: {mediator_ticket_booking_dto.Booking_Expiration_Time}", annotation: service_name, unit: ProgramUnit.ClientAPI));
 
         }
+        /// <summary>
+        /// Ініціалізовує процес бронювання квитка для користувача, який аутентифікований.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [ClientApiMethod]
         public async Task<QueryResult<ExternalOutputMediatorTicketBookingDto>> InitializeTicketBookingProcessForAuthenticatedUser
             (ExternalInputInitialTicketBookingDto input)
         {
@@ -87,9 +105,16 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             User user = user_authentication_result.Value;
             return await InitializeTicketBookingProcessForUser(input, user);
         }
+        /// <summary>
+        /// Проводить ініціалізацію бронювання одразу декількох квитків
+        /// </summary>
+        /// <param name="ticket_bookings_list"></param>
+        /// <returns></returns>
+        [ClientApiMethod]
         public async Task<QueryResult<List<ExternalOutputMediatorTicketBookingDto>>> InitializeMultipleTicketBookingProcessForAuthenticatedUser(
             List<ExternalInputInitialTicketBookingDto> ticket_bookings_list)
         {
+            //Отримуємо аутентифікованого користувача
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
             if (user_authentication_result.Fail)
             {
@@ -97,12 +122,16 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             }
             User user = user_authentication_result.Value;
             List<ExternalOutputMediatorTicketBookingDto> ticket_bookings = new List<ExternalOutputMediatorTicketBookingDto>();
+            //Проводимо процес бронювання декількох квитків
             foreach(ExternalInputInitialTicketBookingDto ticket_booking_dto in ticket_bookings_list)
             {
+                //Пробуємо ініціалізувати бронювання кожного окремо взятого квитка
                 QueryResult<ExternalOutputMediatorTicketBookingDto> ticket_booking_result = 
                     await InitializeTicketBookingProcessForUser(ticket_booking_dto, user);
                 if(ticket_booking_result.Fail)
                 {
+                    //Якщо для певного квитка не вдалась ініціалізація броні, не вертаємо FailQuery, як в випадку одного квитка, а вертаємо цей квиток зі статусом
+                    //Booking Failed.
                     ticket_bookings.Add(new ExternalOutputMediatorTicketBookingDto()
                     {
                         User_Id = user.Id,
@@ -114,44 +143,31 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                         TicketStatus = TextEnumConvertationService.GetTicketBookingStatusIntoString(TicketStatus.Booking_Failed)
                     });
                 }
-                else
+                else //Якщо бронь пройшла успішно, вертаємо квиток зі статусом Booking_In_Progress
                 {
                     ExternalOutputMediatorTicketBookingDto successfully_booked_ticket = ticket_booking_result.Value;
                     ticket_bookings.Add(successfully_booked_ticket);
                 }
             }
-            return new SuccessQuery<List<ExternalOutputMediatorTicketBookingDto>>(ticket_bookings);
+            return new SuccessQuery<List<ExternalOutputMediatorTicketBookingDto>>(ticket_bookings, new SuccessMessage("$Multiple ticket booking reservation attempt" +
+                " has been performed. Results may be observed above", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
-        /*
-        public async Task<QueryResult<ExternalOutputMediatorTicketBookingDto> CancelTicketBookingProcessForAuthenticatedUser
-            (ExternalOutputMediatorTicketBookingDto input_unfinished_ticket)
-        {
-            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
-            if(user_authentication_result.Fail)
-            {
-                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(user_authentication_result.Error);
-            }
-            User user = user_authentication_result.Value;
-            TicketBooking? ticket_booking = await full_ticket_management_service.FindTicketBookingById(input_unfinished_ticket.Id);
-            if(ticket_booking is null)
-            {
-                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.NotFound, "System can't find the ticket to cancel booking"));
-            }
-            if(user.Id != input_unfinished_ticket.User_Id)
-            {
-                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed"));
-            }
-            if(ticket_booking.Ticket_Status != TicketStatus.Booking_In_Progress)
-            {
-                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Ticket booking proccess has already been completed"));
-            }
 
-        }*/
-
-        [Refactored("v1", "02.05.2025")]
+        /// <summary>
+        /// Даний метод завершує процес бронювання квитка для користувача. Коли бронь вже була ініціалізована і користувач заповнює інформацію про пасажира та 
+        /// додаткову інформацію про поїздку.
+        /// </summary>
+        /// <param name="input_unfinished_ticket"></param>
+        /// <param name="passenger_info"></param>
+        /// <returns></returns>
+        [ClientApiMethod]
         public async Task<QueryResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcessForAuthenticatedUser
             (ExternalOutputMediatorTicketBookingDto input_unfinished_ticket, ExternalInputPassengerInfoForCompletedTicketBookingDto passenger_info)
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("-------------------BOOKING COMPLETION PROCESS------------------------");
+            Console.ResetColor();
+            Stopwatch sw = Stopwatch.StartNew();
             //Отримуємо аутентифікованого користувача
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
             if (user_authentication_result.Fail)
@@ -164,21 +180,23 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             //Перевірка, чи квиток є в базі
             if (ticket_booking is null)
             {
-                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.InternalServerError, "System can't find the ticket to complete booking"));
+                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.InternalServerError, "System can't find the ticket to complete booking. Probably, ticket expiration time came down",
+                    annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка
             if (user.Id != input_unfinished_ticket.User_Id)
             {
-                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed"));
+                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed",
+                    annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             //Перевірка,чи не сплив час бронювання
             if (DateTime.Now > ticket_booking.Booking_Expiration_Time)
             {
-                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Booking reservation time has expired"));
+                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Booking reservation time has expired", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             if (ticket_booking.Ticket_Status != TicketStatus.Booking_In_Progress)
             {
-                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.BadRequest, "This place has already been booked"));
+                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.BadRequest, "This place has already been booked", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             //Встановлюємо інформацію про пасажира
             ticket_booking.Passenger_Name = passenger_info.Passenger_Name;
@@ -206,7 +224,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 Passenger_Surname = ticket_booking.Passenger_Surname,
                 Ticket_Status = TextEnumConvertationService.GetTicketBookingStatusIntoString(ticket_booking.Ticket_Status),
             };
-            return new SuccessQuery<ExternalOutputCompletedTicketBookingDto>(finished_ticket_booking_dto);
+            sw.Stop();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"Booking time: ");
+            Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0} seconds");
+            Console.ResetColor();
+            return new SuccessQuery<ExternalOutputCompletedTicketBookingDto>(finished_ticket_booking_dto, new SuccessMessage($"Booking reservation for ticket with Id: " +
+                $"{ticket_booking.Full_Ticket_Id} has been successfully completed", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
         public async Task<QueryResult<ExternalOutputMediatorTicketBookingDto>> CancelTicketBookingReservationForUser(ExternalOutputMediatorTicketBookingDto input_unfinished_ticket)
         {
@@ -252,149 +276,4 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 }
  
       
-    /*
-     public async QueryResult<MediatorTicketBookingDto> InitialzeTicketBookingProcess(InitialTicketBookingDto input)
-     {
-         QueryResult<User> user_authentication_result = await user_management_service.GetAuthenticatedUser();
-         if (user_authentication_result.Fail)
-         {
-             return new FailQuery<MediatorTicketBookingDto>(user_authentication_result.Error);
-         }
-         User authenticated_user = user_authentication_result.Value;
-
-         InternalTicketBookingDtoWithCarriagePosition ticket_booking_dto_with_carriage_position = new InternalTicketBookingDtoWithCarriagePosition
-         {
-             Train_Route_On_Date_Id = input.Train_Route_On_Date_Id,
-             Passenger_Carriage_Position_In_Squad = input.Passenger_Carriage_Position_In_Squad,
-             Place_In_Carriage = input.Place_In_Carriage,
-             Passenger_Name = "********",
-             Passenger_Surname = "********",
-             User_Id = authenticated_user.Id,
-             Ticket_Status = TicketStatus.Booking_In_Progress,
-             Starting_Station_Title = input.Starting_Station_Title,
-             Ending_Station_Title = input.Ending_Station_Title
-         };
-         QueryResult<TicketBooking> booking_result = await ticket_booking_service.CreateTicketBookingWithCarriagePositionInSquad(ticket_booking_dto_with_carriage_position);
-
-         if (booking_result is FailQuery<TicketBooking>)
-         {
-             //API_ErrorHandler.AddError(ErrorHandler.GetLastErrorFromSingleService(ServiceName.TicketBookingService));
-             return null;
-         }
-         TicketBooking ticket_booking = booking_result.Value!;
-         _ = CancelTicketBookingAfterTimerExpiration(ticket_booking.Id);
-         MediatorTicketBookingDto mediator_ticket_booking = new MediatorTicketBookingDto
-         {
-             Id = ticket_booking.Id,
-             User_Id = ticket_booking.User_Id,
-             Train_Route_On_Date_Id = ticket_booking.Train_Route_On_Date_Id,
-             Passenger_Carriage_Position_In_Squad = input.Passenger_Carriage_Position_In_Squad,
-             Place_In_Carriage = ticket_booking.Place_In_Carriage,
-             TicketStatus = GetTicketBookingStatusIntoString(ticket_booking.Ticket_Status),
-             Starting_Station_Title = input.Starting_Station_Title,
-             Ending_Station_Title = input.Ending_Station_Title,
-             Booking_Initializing_Time = ticket_booking.Booking_Time,
-             Booking_Expiration_Time = ticket_booking.Booking_Time.AddMinutes(timer_expiration),
-             Passenger_Carriage_Id = ticket_booking.Passenger_Carriage_Id
-         };
-         return mediator_ticket_booking;
-     }*/
-    /*
-       public async Task<CompletedTicketBookingDto?> CompleteTicketBookingProcess(MediatorTicketBookingDto input_unfinished_ticket,
-           UserInfoForCompletedTicketBookingDto input_user_info)
-       {
-           TicketBooking? unfinished_ticket_booking = await ticket_booking_service
-               .FindTicketBooking(input_unfinished_ticket.User_Id, input_unfinished_ticket.Train_Route_On_Date_Id, input_unfinished_ticket.Passenger_Carriage_Id,
-               input_unfinished_ticket.Starting_Station_Title, input_unfinished_ticket.Ending_Station_Title, input_unfinished_ticket.Place_In_Carriage);
-           if (unfinished_ticket_booking == null)
-           {
-               return null;
-           }
-           if (unfinished_ticket_booking.User_Id != input_user_info.User_Id)
-           {
-               return null;
-           }
-           if (DateTime.Now > input_unfinished_ticket.Booking_Expiration_Time)
-           {
-               return null;
-           }
-           unfinished_ticket_booking.Passenger_Name = input_user_info.Passenger_Name;
-           unfinished_ticket_booking.Passenger_Surname = input_user_info.Passenger_Surname;
-           unfinished_ticket_booking.Ticket_Status = TicketStatus.Booked_And_Active;
-           unfinished_ticket_booking.Booking_Time = DateTime.Now;
-           await ticket_booking_service.UpdateTicketBooking(unfinished_ticket_booking);
-           return new CompletedTicketBookingDto
-           {
-               Id = unfinished_ticket_booking.Id,
-               Passenger_Carriage_Id = unfinished_ticket_booking.Passenger_Carriage_Id,
-               Passenger_Carriage_Position_In_Squad = input_unfinished_ticket.Passenger_Carriage_Position_In_Squad,
-               Place_In_Carriage = unfinished_ticket_booking.Place_In_Carriage,
-               Starting_Station_Title = input_unfinished_ticket.Starting_Station_Title,
-               Ending_Station_Title = input_unfinished_ticket.Ending_Station_Title,
-               User_Id = input_unfinished_ticket.User_Id,
-               Booking_Completion_Time = unfinished_ticket_booking.Booking_Time,
-               Ticket_Status =  GetTicketBookingStatusIntoString(unfinished_ticket_booking.Ticket_Status),
-               Train_Route_On_Date_Id = unfinished_ticket_booking.Train_Route_On_Date_Id,
-               Passenger_Name = unfinished_ticket_booking.Passenger_Name,
-               Passenger_Surname = unfinished_ticket_booking.Passenger_Surname
-           };
-       }
-       */
-        /*
-        public async Task<QueryResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcessForAuthenticatedUser_OLDVERSION
-            (ExternalOutputMediatorTicketBookingDto input_unfinished_ticket, ExternalInputPassengerInfoForCompletedTicketBookingDto passenger_info)
-        {
-            //Отримуємо аутентифікованого користувача
-            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
-            if (user_authentication_result.Fail)
-            {
-                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(user_authentication_result.Error);
-            }
-            User user = user_authentication_result.Value;
-            //Отримуємо з бази запис про поточне бронювання
-            TicketBooking? ticket_booking = await full_ticket_management_service.FindTicketBookingById(input_unfinished_ticket.Id);
-            //Перевірка, чи квиток є в базі
-            if (ticket_booking is null)
-            {
-                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.InternalServerError, "System can't find the ticket to complete booking"));
-            }
-            //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка
-            if (user.Id != input_unfinished_ticket.User_Id)
-            {
-                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed"));
-            }
-            //Перевірка,чи не сплив час бронювання
-            if (DateTime.Now > ticket_booking.Booking_Expiration_Time)
-            {
-                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Booking reservation time has expired"));
-            }
-            //Встановлюємо інформацію про пасажира
-            ticket_booking.Passenger_Name = passenger_info.Passenger_Name;
-            ticket_booking.Passenger_Surname = passenger_info.Passenger_Surname;
-            //Оновлюємо час бронювання
-            ticket_booking.Booking_Time = DateTime.Now;
-            //Видаляємо інформацію про час закінчення періоду бронювання(адже бронювання завершено)
-            ticket_booking.Booking_Expiration_Time = null;
-            //Оновлюємо статус квитка
-            ticket_booking.Ticket_Status = TicketStatus.Booked_And_Active;
-            //Оновлюємо в базі інформацію про квиток
-            await full_ticket_management_service.UpdateTicketBooking(ticket_booking);
-            ExternalOutputCompletedTicketBookingDto finished_ticket_booking_dto = new ExternalOutputCompletedTicketBookingDto
-            {
-                Id = ticket_booking.Id,
-                User_Id = ticket_booking.User_Id,
-                Train_Route_On_Date_Id = ticket_booking.Train_Route_On_Date_Id,
-                Passenger_Carriage_Id = ticket_booking.Passenger_Carriage_Id,
-                Passenger_Carriage_Position_In_Squad = ticket_booking.Passenger_Carriage_Position_In_Squad,
-                Place_In_Carriage = ticket_booking.Place_In_Carriage,
-                Booking_Completion_Time = ticket_booking.Booking_Time,
-                Starting_Station_Title = input_unfinished_ticket.Starting_Station_Title,
-                Ending_Station_Title = input_unfinished_ticket.Ending_Station_Title,
-                Passenger_Name = ticket_booking.Passenger_Name,
-                Passenger_Surname = ticket_booking.Passenger_Surname,
-                Ticket_Status = TextEnumConvertationService.GetTicketBookingStatusIntoString(ticket_booking.Ticket_Status),
-            };
-            return new SuccessQuery<ExternalOutputCompletedTicketBookingDto>(finished_ticket_booking_dto);
-        }
-    }
-        */
+   

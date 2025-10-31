@@ -48,7 +48,7 @@ namespace RailwayCore.Models
         [MaxLength(30)]
         public string Title { get; set; } = null!; //Назва станції
         [MaxLength(30)]
-        public string? Ukrainian_Title { get; set; }
+        public string? Ukrainian_Title { get; set; } //Українська назва станції(можливо, буде прибрано)
         [MaxLength(30)]
         public string? Location { get; set; } //Фактичне місцезнаходження станції(в деяких випадках не збігається)
         [MaxLength(20)]
