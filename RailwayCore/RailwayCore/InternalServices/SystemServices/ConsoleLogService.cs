@@ -90,6 +90,7 @@ namespace RailwayCore.InternalServices.SystemServices
             result += $"Carriage Position: {ticket_booking.Passenger_Carriage_Position_In_Squad}\n";
             result += $"Place In Carriage: {ticket_booking.Place_In_Carriage}\n";
             result += $"Passenger Full Name: {ticket_booking.Passenger_Name}  {ticket_booking.Passenger_Surname}\n";
+            result += $"Booking Expiration Time: {ticket_booking.Booking_Expiration_Time}\n";
             result += $"Status: {ticket_booking.Ticket_Status}";
             return result;
         }

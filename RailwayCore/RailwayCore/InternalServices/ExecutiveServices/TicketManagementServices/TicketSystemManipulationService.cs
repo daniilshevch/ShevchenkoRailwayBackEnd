@@ -45,10 +45,17 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
             return new SuccessQuery<TicketBooking>(ticket_booking, new SuccessMessage($"Ticket was successfully updated. Info:\n" +
                 $"{ConsoleLogService.PrintTicketBooking(ticket_booking)}", annotation: service_name, unit: ProgramUnit.Core));
         }
-        public async Task DeleteTicketBooking(TicketBooking ticket_booking)
+        /// <summary>
+        /// Видаляє квиток з бази
+        /// </summary>
+        /// <param name="ticket_booking"></param>
+        /// <returns></returns>
+        public async Task<QueryResult<TicketBooking>> DeleteTicketBooking(TicketBooking ticket_booking)
         {
             context.Ticket_Bookings.Remove(ticket_booking);
             await context.SaveChangesAsync();
+            return new SuccessQuery<TicketBooking>(ticket_booking, new SuccessMessage($"Successfuly cancelled reservation for place in ticket:\n" +
+                $"{ConsoleLogService.PrintTicketBooking(ticket_booking)}", annotation: service_name, unit: ProgramUnit.Core));
         }
     }
 }

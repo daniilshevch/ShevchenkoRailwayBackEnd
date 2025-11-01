@@ -47,6 +47,17 @@
             в розкладі руху рейсу поїзда між станціями поїздки пасажира. Список цих об'єктів входить в клас ExternalTrainRaceWithBookingsInfoDto
             </summary>
         </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService">
+            <summary>
+            Даний сервіс займається всіми задачами, які пов'язані з процесом бронювання та купівлі квитків користувачами. Цей сервіс обробляє процес
+            первинної тимчасової броні, коли користувач обирає квитки, кінцевої броні з записом квитка на певне ім'я, а також займається скасування
+            первинної броні для квитків, коли місце тимчасово резерувується для користувача, але він ще його не купив 
+            - при чому поверненням вже придбаних квитків займається сервіс UserTicketManagementService. 
+            Також цей сервіс не займається пошуком бронювань(під час пошуку поїздів з вільними місцями - цим 
+            займається TrainRouteWithBookingsSearchService, а тільки реалізує нові броні для користувача. Крім того, цей сервіс не займається 
+            пошуком вже існуючих бронювань для користувача - цим займається UserTicketManagementService, поверненням вже придбаних квитків теж він.
+            </summary>
+        </member>
         <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.InitializeTicketBookingProcessForUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputInitialTicketBookingDto,RailwayCore.Models.User)">
             <summary>
             Даний метод має спрацьовувати, коли користувач обирає місце в вагоні в певному рейсі і починає процес заповнення інформації про себе та поїздку.
@@ -78,6 +89,15 @@
             </summary>
             <param name="input_unfinished_ticket"></param>
             <param name="passenger_info"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.CancelTicketBookingReservationForUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalOutputMediatorTicketBookingDto)">
+            <summary>
+            Даний метод проводить скасування тимчасової резервації квитків для користувача під час його їх потенційного придбання.
+            Тобто якщо користувач обрав місце і почав його оформлення, але потім вирішив припинити це саме оформлення, то цей метод
+            скасує тимчасову резервацію місця. Важливо: повернення вже придбаних квитків - це задача іншого сервісу - UserTicketManagementService.
+            </summary>
+            <param name="input_unfinished_ticket"></param>
             <returns></returns>
         </member>
         <member name="T:RailwayManagementSystemAPI.ExternalServices.ClientServices.CarriageTypeComparer">

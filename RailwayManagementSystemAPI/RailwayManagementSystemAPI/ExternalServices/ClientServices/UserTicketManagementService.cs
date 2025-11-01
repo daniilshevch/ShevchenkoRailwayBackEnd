@@ -39,54 +39,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
         }
 
     }
-    //public class TicketBookingGroupHeader : IEquatable<TicketBookingGroupHeader>
-    //{
-
-    //    public string Train_Route_On_Date_Id { get; set; }
-    //    public string Train_Route_Id { get; set; }
-    //    public string Full_Route_Starting_Station_Title { get; set; }
-    //    public string Full_Route_Ending_Station_Title { get; set; }
-    //    public string Trip_Starting_Station_Title { get; set; }
-    //    public string Trip_Ending_Station_Title { get; set; }
-    //    public DateTime? Departure_Time_From_Trip_Starting_Station { get; set;}
-    //    public DateTime? Arrival_Time_To_Trip_Ending_Station { get; set; }
-    //    public TimeSpan? Trip_Duration { get; set; }
-    //    public TicketBookingGroupHeader(string train_route_on_date_id, string train_route_id,
-    //        string full_route_starting_station_title, string full_route_ending_station_title,
-    //        string trip_starting_station_title, string trip_ending_station_title,
-    //        DateTime? departure_time_from_trip_starting_station, DateTime? arrival_time_to_trip_ending_station,
-    //        TimeSpan? trip_duration)
-    //    {
-    //        Train_Route_On_Date_Id = train_route_on_date_id;
-    //        Train_Route_Id = train_route_id;
-    //        Full_Route_Starting_Station_Title = full_route_starting_station_title;
-    //        Full_Route_Ending_Station_Title = full_route_ending_station_title;
-    //        Trip_Starting_Station_Title = trip_starting_station_title;
-    //        Trip_Ending_Station_Title = trip_ending_station_title;
-    //        Departure_Time_From_Trip_Starting_Station = departure_time_from_trip_starting_station;
-    //        Arrival_Time_To_Trip_Ending_Station = arrival_time_to_trip_ending_station;
-    //        Trip_Duration = trip_duration;
-    //    }
-    //    public bool Equals(TicketBookingGroupHeader? other)
-    //    {
-    //        if (other is null)
-    //        {
-    //            return false;
-    //        }
-    //        return Train_Route_On_Date_Id == other.Train_Route_On_Date_Id
-    //            && Trip_Starting_Station_Title == other.Trip_Starting_Station_Title
-    //            && Trip_Ending_Station_Title == other.Trip_Ending_Station_Title;
-    //    }
-    //    public override bool Equals(object? obj)
-    //    {
-    //        return Equals(obj as TicketBookingGroupHeader);
-    //    }
-    //    public override int GetHashCode()
-    //    {
-    //        return HashCode.Combine(Train_Route_On_Date_Id, Trip_Starting_Station_Title, Trip_Ending_Station_Title);
-    //    }
-
-    //}
 
     public class UserTicketManagementService
     {

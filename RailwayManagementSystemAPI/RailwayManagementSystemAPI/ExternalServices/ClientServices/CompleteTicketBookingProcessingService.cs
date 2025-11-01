@@ -8,6 +8,15 @@ using System.Diagnostics;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
+    /// <summary>
+    /// Даний сервіс займається всіми задачами, які пов'язані з процесом бронювання та купівлі квитків користувачами. Цей сервіс обробляє процес
+    /// первинної тимчасової броні, коли користувач обирає квитки, кінцевої броні з записом квитка на певне ім'я, а також займається скасування
+    /// первинної броні для квитків, коли місце тимчасово резерувується для користувача, але він ще його не купив 
+    /// - при чому поверненням вже придбаних квитків займається сервіс UserTicketManagementService. 
+    /// Також цей сервіс не займається пошуком бронювань(під час пошуку поїздів з вільними місцями - цим 
+    /// займається TrainRouteWithBookingsSearchService, а тільки реалізує нові броні для користувача. Крім того, цей сервіс не займається 
+    /// пошуком вже існуючих бронювань для користувача - цим займається UserTicketManagementService, поверненням вже придбаних квитків теж він.
+    /// </summary>
     [ClientApiService]
     public class CompleteTicketBookingProcessingService
     {
@@ -149,7 +158,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                     ticket_bookings.Add(successfully_booked_ticket);
                 }
             }
-            return new SuccessQuery<List<ExternalOutputMediatorTicketBookingDto>>(ticket_bookings, new SuccessMessage("$Multiple ticket booking reservation attempt" +
+            return new SuccessQuery<List<ExternalOutputMediatorTicketBookingDto>>(ticket_bookings, new SuccessMessage("Multiple ticket booking reservation attempt" +
                 " has been performed. Results may be observed above", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
 
@@ -232,8 +241,21 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             return new SuccessQuery<ExternalOutputCompletedTicketBookingDto>(finished_ticket_booking_dto, new SuccessMessage($"Booking reservation for ticket with Id: " +
                 $"{ticket_booking.Full_Ticket_Id} has been successfully completed", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
+
+        /// <summary>
+        /// Даний метод проводить скасування тимчасової резервації квитків для користувача під час його їх потенційного придбання.
+        /// Тобто якщо користувач обрав місце і почав його оформлення, але потім вирішив припинити це саме оформлення, то цей метод
+        /// скасує тимчасову резервацію місця. Важливо: повернення вже придбаних квитків - це задача іншого сервісу - UserTicketManagementService.
+        /// </summary>
+        /// <param name="input_unfinished_ticket"></param>
+        /// <returns></returns>
+        [ClientApiMethod]
         public async Task<QueryResult<ExternalOutputMediatorTicketBookingDto>> CancelTicketBookingReservationForUser(ExternalOutputMediatorTicketBookingDto input_unfinished_ticket)
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("-------------------TEMPORARY TICKET RESERVATION CANCELLATION PROCESS------------------------");
+            Console.ResetColor();
+            Stopwatch sw = Stopwatch.StartNew();
             //Отримуємо аутентифікованого користувача
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
             if (user_authentication_result.Fail)
@@ -246,28 +268,38 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             //Перевірка, чи квиток є в базі
             if (ticket_booking is null)
             {
-                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.InternalServerError, "System can't find the ticket to complete booking"));
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.InternalServerError, "System can't find the ticket to complete booking",
+                    annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка
             if (user.Id != input_unfinished_ticket.User_Id)
             {
-                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed"));
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed",
+                    annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             //Перевірка,чи не сплив час бронювання
             if (DateTime.Now > ticket_booking.Booking_Expiration_Time)
             {
-                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Booking reservation time has expired"));
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Booking reservation time has expired", 
+                    annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             if (ticket_booking.Ticket_Status != TicketStatus.Booking_In_Progress)
             {
-                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.BadRequest, "This place has already been booked"));
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.BadRequest, "This place has already been booked",
+                    annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             await full_ticket_management_service.DeleteTicketBooking(ticket_booking);
-            return new SuccessQuery<ExternalOutputMediatorTicketBookingDto>(input_unfinished_ticket);
+            sw.Stop();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"Temporary reservation cancellation time: ");
+            Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0} seconds");
+            Console.ResetColor();
+            return new SuccessQuery<ExternalOutputMediatorTicketBookingDto>(input_unfinished_ticket, 
+                new SuccessMessage($"Temporary ticket reservation was cancelled for ticket {input_unfinished_ticket.Full_Ticket_Id}",
+                annotation: service_name, unit: ProgramUnit.ClientAPI));
 
         }
         
-
         public async Task DeleteAllExpiredBookings()
         {
             await full_ticket_management_service.DeleteAllExpiredTickets();

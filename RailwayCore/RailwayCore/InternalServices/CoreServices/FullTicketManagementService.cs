@@ -87,10 +87,15 @@ namespace RailwayCore.InternalServices.CoreServices
         {
             return await ticket_system_manipulation_service.UpdateTicketBooking(ticket_booking);
         }
+        /// <summary>
+        /// Видаляє квиток
+        /// </summary>
+        /// <param name="ticket_booking"></param>
+        /// <returns></returns>
         [CoreMethod]
-        public async Task DeleteTicketBooking(TicketBooking ticket_booking)
+        public async Task<QueryResult<TicketBooking>> DeleteTicketBooking(TicketBooking ticket_booking)
         {
-            await ticket_system_manipulation_service.DeleteTicketBooking(ticket_booking);
+            return await ticket_system_manipulation_service.DeleteTicketBooking(ticket_booking);
         }
         //TicketBookingTimerService
         [CoreMethod]
