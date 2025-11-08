@@ -217,7 +217,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.Forbidden, $"Authenticated user doesn't own this ticket", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             //Проводимо повернення квитка(переведення квитка в статус Returned)
-            TicketBooking? returned_ticket_booking = await full_ticket_management_service.ReturnTicketBookingById(ticket_id);
+            QueryResult<TicketBooking> ticket_booking_return_result = await full_ticket_management_service.ReturnTicketBookingById(ticket_id);
+            if(ticket_booking_return_result.Fail)
+            {
+                return new FailQuery<ExternalProfileTicketBookingDto>(ticket_booking_return_result.Error);
+            }
+            TicketBooking? returned_ticket_booking = ticket_booking_return_result.Value;
             if(returned_ticket_booking is null)
             {
                 return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.NotFound, $"Can't find ticket with id: {ticket_id}", annotation: service_name, unit: ProgramUnit.ClientAPI));
@@ -228,7 +233,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             Console.Write($"Ticket return time: ");
             Console.ResetColor();
             Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0} seconds");
-            return new SuccessQuery<ExternalProfileTicketBookingDto>(output_ticket, new SuccessMessage($"Ticket with ID: {returned_ticket_booking} " +
+            return new SuccessQuery<ExternalProfileTicketBookingDto>(output_ticket, new SuccessMessage($"Ticket with ID: {returned_ticket_booking.Full_Ticket_Id} " +
                 $"has been successfully returned by user {ConsoleLogService.PrintUser(returned_ticket_booking.User)}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
         public async Task<ExternalProfileTicketBookingDto> CreateProfileDtoForTicketBooking(TicketBooking ticket_booking)

@@ -114,7 +114,7 @@ namespace RailwayCore.InternalServices.CoreServices
             return await ticket_user_manipulation_service.GetAllTicketBookingsForUser(user_id);
         }
         [CoreMethod]
-        public async Task<TicketBooking?> ReturnTicketBookingById(string ticket_id)
+        public async Task<QueryResult<TicketBooking>> ReturnTicketBookingById(string ticket_id)
         {
             return await ticket_user_manipulation_service.ReturnTicketBookingById(ticket_id);
         }

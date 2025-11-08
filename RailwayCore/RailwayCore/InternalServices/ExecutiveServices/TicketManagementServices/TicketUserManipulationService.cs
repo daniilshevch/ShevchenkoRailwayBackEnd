@@ -9,6 +9,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
     /// </summary>
     public class TicketUserManipulationService
     {
+        private readonly string service_name = "TicketUserManipulationService";
         private readonly AppDbContext context;
         public TicketUserManipulationService(AppDbContext context)
         {
@@ -36,7 +37,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
         /// </summary>
         /// <param name="ticket_id"></param>
         /// <returns></returns>
-        public async Task<TicketBooking?> ReturnTicketBookingById(string ticket_id)
+        public async Task<QueryResult<TicketBooking>> ReturnTicketBookingById(string ticket_id)
         {
             bool is_number = int.TryParse(ticket_id, out int number_id);
             TicketBooking? ticket_booking = await context.Ticket_Bookings
@@ -44,12 +45,18 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
                 .FirstOrDefaultAsync(ticket => ticket.Id == number_id || ticket.Full_Ticket_Id.ToString() == ticket_id);
             if (ticket_booking is null)
             {
-                return null;
+                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find ticket booking with ID: {ticket_id}", annotation: service_name, unit: ProgramUnit.Core));
+            }
+            if(ticket_booking.Ticket_Status != TicketStatus.Booked_And_Active)
+            {
+                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't return NOT ACTIVE ticket booking. Current status: {ticket_booking.Ticket_Status}", 
+                    annotation: service_name, unit: ProgramUnit.Core));
             }
             ticket_booking.Ticket_Status = TicketStatus.Returned;
             context.Update(ticket_booking);
             await context.SaveChangesAsync();
-            return ticket_booking;
+            return new SuccessQuery<TicketBooking>(ticket_booking, new SuccessMessage($"Successfully returned ticket booking " +
+                $"with ID: {ticket_booking.Full_Ticket_Id}", annotation: service_name, unit: ProgramUnit.Core));
         }
         /// <summary>
         /// Даний метод вертає користувача-власника квитка за числовим айді квитка або GUID
