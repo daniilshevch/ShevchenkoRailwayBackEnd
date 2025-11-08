@@ -7,6 +7,10 @@ using System.Security.Claims;
 
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
 {
+    /// <summary>
+    /// Даний сервіс є системним сервісом і призначений для отримання користувача, що аутентифікований в системі
+    /// </summary>
+    [SystemApiService]
     public class SystemAuthenticationService
     {
         private readonly string service_name = "SystemAuthenticationService";
@@ -17,6 +21,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
             this.http_context_accessor = http_context_accessor;
             this.db_context = db_context;
         }
+
+        /// <summary>
+        /// Отримує об'єкт користувача, що аутентифікований в системі(виконується в усіх запитах, які вимагають аутентифікацію та авторизацію)
+        /// </summary>
+        /// <returns></returns>
+        [SystemApiMethod]
         public async Task<QueryResult<User>> GetAuthenticatedUser()
         {
             HttpContext? http_context = http_context_accessor.HttpContext;
