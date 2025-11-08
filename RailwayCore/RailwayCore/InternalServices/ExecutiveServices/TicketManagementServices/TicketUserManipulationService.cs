@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices
 {
+    /// <summary>
+    /// Даний сервіс містить функціонал, який пов'язаний з операціями з квитками, які виконуються зі сторони користувача(не системи)
+    /// </summary>
     public class TicketUserManipulationService
     {
         private readonly AppDbContext context;
@@ -11,7 +14,11 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
         {
             this.context = context;
         }
-
+        /// <summary>
+        /// Метод вертає список квитків, які приписані до акаунту користувача
+        /// </summary>
+        /// <param name="user_id"></param>
+        /// <returns></returns>
         public async Task<List<TicketBooking>> GetAllTicketBookingsForUser(int user_id)
         {
             List<TicketBooking> ticket_bookings = await context.Ticket_Bookings

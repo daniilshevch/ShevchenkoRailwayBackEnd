@@ -5,7 +5,6 @@ using RailwayCore.InternalServices.ExecutiveServices.ExecutiveDTO.TicketManageme
 
 namespace RailwayCore.InternalServices.CoreServices
 {
-
     /// <summary>
     /// Даний сервіс відповідає за весь функціонал, пов'язаний з квитками та бронями. Є сервісом-оркестратором, тобто надбудовою над
     /// іншими сервісами, які безпосередньо виконують квитковий функіонал: пошук бронювання на рейси, безпосереднє утворення квитків
@@ -124,23 +123,6 @@ namespace RailwayCore.InternalServices.CoreServices
         {
             return await ticket_user_manipulation_service.GetTicketOwner(ticket_id);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
     

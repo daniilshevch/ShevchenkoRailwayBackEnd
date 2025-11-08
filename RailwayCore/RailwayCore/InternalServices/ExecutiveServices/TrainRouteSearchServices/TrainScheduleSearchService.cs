@@ -5,6 +5,10 @@ using RailwayCore.InternalServices.ModelServices;
 
 namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices
 {
+    /// <summary>
+    /// Даний сервіс дозволяє виконувати запити для пошуку інформації, пов'язаної з розкладом руху поїздів
+    /// </summary>
+    [ExecutiveService]
     public class TrainScheduleSearchService
     {
         private readonly AppDbContext context;
@@ -17,8 +21,13 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
             this.train_route_on_date_repository = train_route_on_date_repository;
 
         }
-        [Checked("18.04.2025")]
-        [Checked("04.07.2025")]
+        /// <summary>
+        /// Вертає список зупинок поїзда(якщо order_mode = true(за замовчування так і є), то список посортований)
+        /// </summary>
+        /// <param name="train_route_on_date_id"></param>
+        /// <param name="order_mode"></param>
+        /// <returns></returns>
+        [ExecutiveMethod]
         public async Task<List<TrainRouteOnDateOnStation>?> GetTrainStopsForTrainRouteOnDate(string train_route_on_date_id, bool order_mode = true)
         {
             //Знаходимо рейс поїзда в дату за айді
@@ -39,19 +48,26 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
             }
             return train_stops;
         }
-
-        [Checked("18.04.2025")]
-        [Checked("04.07.2025")]
-        [Peripheral]
+        /// <summary>
+        /// Вертає список зупинок поїзда(якщо order_mode = true(за замовчування так і є), то список посортований)
+        /// </summary>
+        /// <param name="train_route_id"></param>
+        /// <param name="departure_date"></param>
+        /// <returns></returns>
+        [ExecutiveMethod]
         public async Task<List<TrainRouteOnDateOnStation>?> GetTrainStopsForTrainRouteOnDate(string train_route_id, DateOnly departure_date)
         {
             string train_route_on_date_id = train_route_on_date_repository.BuildTrainRouteOnDateIdentificator(train_route_id, departure_date);
             return await GetTrainStopsForTrainRouteOnDate(train_route_on_date_id);
         }
 
-        [Refactored("v1", "18.04.2025")]
-        [Checked("04.07.2025")]
-        [Crucial]
+        /// <summary>
+        /// Вертає список зупинок для декількох поїздів, причому сортує цей список спочатку за рейсом поїзда, а потім за порядком, в якому їх 
+        /// проходить цей самий рейс(попідряд стоять зупинки одного рейсу поїзда, посортовані в порядку слідування)
+        /// </summary>
+        /// <param name="train_route_on_date_ids"></param>
+        /// <returns></returns>
+        [ExecutiveMethod]
         public async Task<List<TrainRouteOnDateOnStation>> GetTrainStopsForSeveralTrainRoutesOnDate(List<string> train_route_on_date_ids)
         {
             //Отримуємо зупинки для групи рейсів поїздів в дату, посортовані спочатку за номером рейсу поїзда
@@ -63,7 +79,14 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
                 .OrderBy(train_stop => train_stop.Train_Route_On_Date_Id).ThenBy(train_stop => train_stop.Arrival_Time).ToListAsync();
             return train_stops_for_several_train_routes_on_date;
         }
-        [Checked("04.07.2025")]
+        /// <summary>
+        /// Вертає список поїзда між двома зупинками, переданими в параметри функції, включно з ними самими
+        /// </summary>
+        /// <param name="train_route_on_date_id"></param>
+        /// <param name="first_station_title"></param>
+        /// <param name="second_station_title"></param>
+        /// <returns></returns>
+        [ExecutiveMethod]
         public async Task<List<TrainRouteOnDateOnStation>?> GetTrainStopsBetweenTwoStationsForTrainRouteOnDate(string train_route_on_date_id, string first_station_title, string second_station_title)
         {
             //Отримуємо всі зупинки рейса поїзда в дату(посортовані)
@@ -96,9 +119,12 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
 
         }
 
-        [Checked("18.04.2025")]
-        [Checked("04.07.2025")]
-        [Executive]
+        /// <summary>
+        /// Вертає початкову зупинку рейсу поїзда
+        /// </summary>
+        /// <param name="train_route_on_date_id"></param>
+        /// <returns></returns>
+        [ExecutiveMethod]
         public async Task<TrainRouteOnDateOnStation?> GetStartingTrainStopForTrainRouteOnDate(string train_route_on_date_id)
         {
             //Вертаємо початкову зупинку рейсу поїзда
@@ -109,10 +135,12 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
             }
             return train_stops[0];
         }
-
-        [Checked("18.04.2025")]
-        [Checked("04.07.2025")]
-        [Executive]
+        /// <summary>
+        /// Вертає кінцеву зупинку рейсу поїзда
+        /// </summary>
+        /// <param name="train_route_on_date_id"></param>
+        /// <returns></returns>
+        [ExecutiveMethod]
         public async Task<TrainRouteOnDateOnStation?> GetEndingTrainStopForTrainRouteOnDate(string train_route_on_date_id)
         {
             //Вертаємо кінцеву зупинку рейсу поїзда
@@ -123,7 +151,13 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
             }
             return train_stops[train_stops.Count - 1];
         }
-        [Checked("04.07.2025")]
+        /// <summary>
+        /// Вертає об'єкт зупинки за айді рейсу та айді станції
+        /// </summary>
+        /// <param name="train_route_on_date_id"></param>
+        /// <param name="station_id"></param>
+        /// <returns></returns>
+        [ExecutiveMethod]
         public async Task<TrainRouteOnDateOnStation?> GetTrainStopInfoByTrainRouteOnDateIdAndStationId(string train_route_on_date_id, int station_id)
         {
             //Отримуємо об'єкт зупинки за айді рейсу поїзда та айді станції

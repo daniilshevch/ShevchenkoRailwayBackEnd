@@ -4,7 +4,8 @@ public enum ProgramUnit
 {
     Core,
     ClientAPI,
-    AdminAPI
+    AdminAPI,
+    SystemAPI
 }
 
 public enum ErrorType

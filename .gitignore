@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/RailwayCore/.vs
+/RailwayCore/RailwayCore/bin/Debug/net9.0
+/RailwayCore/RailwayCore/obj
+/RailwayManagementSystemAPI/.vs
+/RailwayManagementSystemAPI/RailwayManagementSystemAPI/bin/Debug/net9.0
+/RailwayManagementSystemAPI/RailwayManagementSystemAPI/obj

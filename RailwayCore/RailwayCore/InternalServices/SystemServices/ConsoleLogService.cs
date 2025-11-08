@@ -34,6 +34,11 @@ namespace RailwayCore.InternalServices.SystemServices
                     Console.Write("[Admin API]");
                     Console.ResetColor();
                     return;
+                case ProgramUnit.SystemAPI:
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write("[System API]");
+                    Console.ResetColor();
+                    return;
                 default:
                     return;
 
@@ -93,6 +98,10 @@ namespace RailwayCore.InternalServices.SystemServices
             result += $"Booking Expiration Time: {ticket_booking.Booking_Expiration_Time}\n";
             result += $"Status: {ticket_booking.Ticket_Status}";
             return result;
+        }
+        public static string PrintUser(User user)
+        {
+            return $"(ID = {user.Id}, UserName = {user.User_Name}, Email = {user.Email})";
         }
     }
 }
