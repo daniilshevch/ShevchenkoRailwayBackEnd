@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.InternalServices.ModelRepositories;
 using RailwayCore.Models;
-using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 

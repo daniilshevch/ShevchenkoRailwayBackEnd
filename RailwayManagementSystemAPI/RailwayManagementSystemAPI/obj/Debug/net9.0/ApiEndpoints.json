@@ -529,7 +529,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO.ExternalTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -607,7 +607,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO.ExternalTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1113,13 +1113,13 @@
     "Parameters": [
       {
         "Name": "input_unfinished_ticket",
-        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalOutputMediatorTicketBookingDto",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalOutputMediatorTicketBookingDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalOutputMediatorTicketBookingDto",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalOutputMediatorTicketBookingDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1139,13 +1139,13 @@
     "Parameters": [
       {
         "Name": "input",
-        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputCompletedTicketBookingWithPassengerInfoDto",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalInputCompletedTicketBookingWithPassengerInfoDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalOutputCompletedTicketBookingDto",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalOutputCompletedTicketBookingDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1165,13 +1165,13 @@
     "Parameters": [
       {
         "Name": "input",
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputInitialTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalInputInitialTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalOutputMediatorTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalOutputMediatorTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1191,13 +1191,13 @@
     "Parameters": [
       {
         "Name": "input",
-        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputInitialTicketBookingDto",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalInputInitialTicketBookingDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalOutputMediatorTicketBookingDto",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalOutputMediatorTicketBookingDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1392,7 +1392,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalTicketBookingGroupDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement.ExternalTicketBookingGroupDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1412,7 +1412,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalProfileTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement.ExternalProfileTicketBookingDto, RailwayManagementSystemAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1438,7 +1438,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalProfileTicketBookingDto",
+        "Type": "RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement.ExternalProfileTicketBookingDto",
         "MediaTypes": [
           "text/plain",
           "application/json",

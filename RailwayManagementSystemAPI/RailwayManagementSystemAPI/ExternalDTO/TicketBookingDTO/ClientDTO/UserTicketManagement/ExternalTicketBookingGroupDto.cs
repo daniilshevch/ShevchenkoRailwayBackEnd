@@ -1,7 +1,13 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO
+namespace RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement
 {
+    /// <summary>
+    /// Даний клас представляє з себе групу квитків для функціоналу перегляду користувачем своїх квитків. Групування проводиться на основі
+    /// спільності рейсу поїзда та початкової і кінцевої станцій поїздки. Кожна група містить інформацію про поїздку, а також відповідний 
+    /// список квитків
+    /// </summary>
+    [ClientDto]
     public class ExternalTicketBookingGroupDto
     {
         [JsonPropertyName("train_route_on_date_id")]

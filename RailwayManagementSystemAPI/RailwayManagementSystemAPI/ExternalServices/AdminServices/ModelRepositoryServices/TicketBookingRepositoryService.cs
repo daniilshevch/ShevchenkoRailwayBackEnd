@@ -1,6 +1,6 @@
 ﻿using RailwayCore.InternalServices.ModelRepositories;
 using RailwayCore.Models;
-using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO;
 using System.Text.Json.Serialization;
 
 namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices

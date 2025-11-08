@@ -32,7 +32,6 @@
   <ItemGroup>
     <Folder Include="ExternalDTO\PassengerCarriageDTO\ClientDTO\" />
     <Folder Include="ExternalDTO\StationDTO\ClientDTO\" />
-    <Folder Include="ExternalDTO\TicketBookingDTO\AdminDTO\" />
     <Folder Include="ExternalDTO\TrainRouteDTO\ClientDTO\" />
     <Folder Include="ExternalServices\AdminServices\TrainAssignmentServices\" />
   </ItemGroup>

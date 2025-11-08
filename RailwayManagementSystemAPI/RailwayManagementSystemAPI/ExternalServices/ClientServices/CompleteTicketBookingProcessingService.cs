@@ -5,6 +5,7 @@ using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using Newtonsoft.Json;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO;
 using System.Diagnostics;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
@@ -123,6 +124,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
         public async Task<QueryResult<List<ExternalOutputMediatorTicketBookingDto>>> InitializeMultipleTicketBookingProcessForAuthenticatedUser(
             List<ExternalInputInitialTicketBookingDto> ticket_bookings_list)
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("-------------------MULTIPLE BOOKING INITIALIZATION PROCESS------------------------");
+            Console.ResetColor();
+            Stopwatch sw = Stopwatch.StartNew();
             //Отримуємо аутентифікованого користувача
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
             if (user_authentication_result.Fail)
@@ -158,6 +163,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                     ticket_bookings.Add(successfully_booked_ticket);
                 }
             }
+            sw.Stop();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"Total Booking time: ");
+            Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0} seconds");
+            Console.ResetColor();
             return new SuccessQuery<List<ExternalOutputMediatorTicketBookingDto>>(ticket_bookings, new SuccessMessage("Multiple ticket booking reservation attempt" +
                 " has been performed. Results may be observed above", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }

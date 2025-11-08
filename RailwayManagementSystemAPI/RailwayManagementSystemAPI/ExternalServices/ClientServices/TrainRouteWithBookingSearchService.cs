@@ -423,8 +423,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 
             List<ExternalTrainRaceWithBookingsInfoDto> ordered_total_train_routes_with_bookings_and_stations_info =
                 total_train_routes_with_bookings_and_stations_info.OrderBy(train_route_full_info => train_route_full_info.Trip_Starting_Station_Departure_Time).ToList();
+            
             sw.Stop();
-
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write($"Train search time: ");
             Console.ResetColor();

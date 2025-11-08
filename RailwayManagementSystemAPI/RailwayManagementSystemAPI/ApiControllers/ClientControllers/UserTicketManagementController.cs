@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Collections.Generic;

@@ -22,16 +22,44 @@
             про бронювання місць в даному вагоні в даному рейсі
             </summary>
         </member>
-        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputInitialTicketBookingDto">
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalInputCompletedTicketBookingWithPassengerInfoDto">
+            <summary>
+            Цей клас приймає метод контролера, який проводить фінальне оформлення квитка і його покупку. 
+            Цей клас містить в собі проміжну інформацію про квиток, яку повернув метод, який ініціалізовував
+            первинну резервацію квитка, а також інформацію про пасажира і його поїздку. За допомогою цієї інформації проводить фінальне
+            оформлення та покупку квитка.
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalInputInitialTicketBookingDto">
             <summary>
             Даний клас представляє собою інформацію про квиток, яка потрібна для його первинного резервування. Тут є лише загальна інформація про поїздку на цьому
             місці(поїзд, вагон, місце, станції прибуття та відправлення), але не конкретна інформація про пасажира та його подорож
             </summary>
         </member>
-        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalOutputMediatorTicketBookingDto">
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalInputPassengerInfoForCompletedTicketBookingDto">
+            <summary>
+            Даний клас містить інформацію, яку пасажир вводить про себе та свою поїздку вже під час фінального оформлення 
+            і придбання квитка
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalOutputCompletedTicketBookingDto">
+            <summary>
+            Даний клас містить фінальну інфомрацію про повністю оформлений і придбаний квиток. Цей клас є типом, який 
+            повертає метод, який проводить фінальне бронювання квитка для користувача(тому клас External)
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalOutputMediatorTicketBookingDto">
             <summary>
             Даний клас повертає проміжну інформацію про ініціалізацію бронювання квитка. Це етап, коли користувач вже натиснув на місце в вагоні
-            і вже почав заповнювати інформацію про пасажира, але ще в процесі. Квиток перебуває в статусі Booking_In_Progress. 
+            і вже почав заповнювати інформацію про пасажира, але ще в процесі. Квиток перебуває в статусі Booking_In_Progress. Метод, який проводить 
+            проміжну резервацію квитка(місця в вагоні), вертає цей клас як результат своєї дії.
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement.ExternalTicketBookingGroupDto">
+            <summary>
+            Даний клас представляє з себе групу квитків для функціоналу перегляду користувачем своїх квитків. Групування проводиться на основі
+            спільності рейсу поїзда та початкової і кінцевої станцій поїздки. Кожна група містить інформацію про поїздку, а також відповідний 
+            список квитків
             </summary>
         </member>
         <member name="T:RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.ClientDTO.ExternalTrainRaceWithBookingsInfoDto">
@@ -58,7 +86,7 @@
             пошуком вже існуючих бронювань для користувача - цим займається UserTicketManagementService, поверненням вже придбаних квитків теж він.
             </summary>
         </member>
-        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.InitializeTicketBookingProcessForUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputInitialTicketBookingDto,RailwayCore.Models.User)">
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.InitializeTicketBookingProcessForUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalInputInitialTicketBookingDto,RailwayCore.Models.User)">
             <summary>
             Даний метод має спрацьовувати, коли користувач обирає місце в вагоні в певному рейсі і починає процес заповнення інформації про себе та поїздку.
             Фактично, він розпочинає процес бронювання і резервує дане місце за даним користувачем на певний час. При цьому прізвище, ім'я та конкретна інфомрація про 
@@ -68,21 +96,21 @@
             <param name="user"></param>
             <returns></returns>
         </member>
-        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.InitializeTicketBookingProcessForAuthenticatedUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputInitialTicketBookingDto)">
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.InitializeTicketBookingProcessForAuthenticatedUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalInputInitialTicketBookingDto)">
             <summary>
             Ініціалізовує процес бронювання квитка для користувача, який аутентифікований.
             </summary>
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.InitializeMultipleTicketBookingProcessForAuthenticatedUser(System.Collections.Generic.List{RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputInitialTicketBookingDto})">
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.InitializeMultipleTicketBookingProcessForAuthenticatedUser(System.Collections.Generic.List{RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalInputInitialTicketBookingDto})">
             <summary>
             Проводить ініціалізацію бронювання одразу декількох квитків
             </summary>
             <param name="ticket_bookings_list"></param>
             <returns></returns>
         </member>
-        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.CompleteTicketBookingProcessForAuthenticatedUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalOutputMediatorTicketBookingDto,RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalInputPassengerInfoForCompletedTicketBookingDto)">
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.CompleteTicketBookingProcessForAuthenticatedUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalOutputMediatorTicketBookingDto,RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalInputPassengerInfoForCompletedTicketBookingDto)">
             <summary>
             Даний метод завершує процес бронювання квитка для користувача. Коли бронь вже була ініціалізована і користувач заповнює інформацію про пасажира та 
             додаткову інформацію про поїздку.
@@ -91,7 +119,7 @@
             <param name="passenger_info"></param>
             <returns></returns>
         </member>
-        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.CancelTicketBookingReservationForUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.ExternalOutputMediatorTicketBookingDto)">
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.CompleteTicketBookingProcessingService.CancelTicketBookingReservationForUser(RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess.ExternalOutputMediatorTicketBookingDto)">
             <summary>
             Даний метод проводить скасування тимчасової резервації квитків для користувача під час його їх потенційного придбання.
             Тобто якщо користувач обрав місце і почав його оформлення, але потім вирішив припинити це саме оформлення, то цей метод
@@ -126,6 +154,31 @@
             <param name="ending_station_title"></param>
             <param name="departure_date"></param>
             <param name="admin_mode"></param>
+            <returns></returns>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalServices.ClientServices.TicketBookingGroupHeader">
+            <summary>
+            Допоміжний клас, який дозволяє згрупувати квитки в групи за спільністю рейсу поїзда та поїздки(початкової та кінцевої станції)
+            </summary>
+        </member>
+        <member name="T:RailwayManagementSystemAPI.ExternalServices.ClientServices.UserTicketManagementService">
+            <summary>
+            Даний сервіс містить в собі команди, які відповідають за функціонал можливих дій користувача зі своїми квитками, а саме перегляд 
+            вже придбаних квитків, квитків, які тимчасово зарезервовані на користувача та квитків, які були повернуті, 
+            а також функіонал повернення користувачем вже придбаних квитків(саме куплених, а не скасування попередньо броні)
+            </summary>
+        </member>
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.UserTicketManagementService.GetAllBookedTicketsForCurrentUser">
+            <summary>
+            Даний метод вертає список всіх квитків, які належать користувачу
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RailwayManagementSystemAPI.ExternalServices.ClientServices.UserTicketManagementService.GetAllBookedTicketsInGroupsForCurrentUser">
+            <summary>
+            Даний метод вертає список всіх квитків, що належать користувачу, причому групує квитки за поїздкою(тобто якщо декілька квитків пасажир
+            має на один рейс поїзда, але на різні місця(+можливо, різні вагони), то ці квитки будуть зібрані в одну групу
+            </summary>
             <returns></returns>
         </member>
     </members>

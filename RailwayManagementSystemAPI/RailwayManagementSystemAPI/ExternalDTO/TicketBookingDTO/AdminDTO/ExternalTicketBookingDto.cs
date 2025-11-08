@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO
+namespace RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO
 {
     public class ExternalTicketBookingDto
     {

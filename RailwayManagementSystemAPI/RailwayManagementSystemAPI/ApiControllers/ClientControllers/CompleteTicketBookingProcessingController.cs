@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Security.Claims;

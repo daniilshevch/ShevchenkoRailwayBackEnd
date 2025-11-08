@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO
+namespace RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess
 {
     /// <summary>
     /// Даний клас представляє собою інформацію про квиток, яка потрібна для його первинного резервування. Тут є лише загальна інформація про поїздку на цьому

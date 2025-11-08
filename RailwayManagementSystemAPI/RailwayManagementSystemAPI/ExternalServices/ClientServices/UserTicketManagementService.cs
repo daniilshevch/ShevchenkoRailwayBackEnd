@@ -1,13 +1,18 @@
-﻿using RailwayCore.Models;
-using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+﻿using Microsoft.Extensions.Primitives;
 using RailwayCore.InternalServices.CoreServices;
-using System.Net;
-using Microsoft.Extensions.Primitives;
+using RailwayCore.InternalServices.SystemServices;
+using RailwayCore.Models;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
-using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using System.Diagnostics;
+using System.Net;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
+    /// <summary>
+    /// Допоміжний клас, який дозволяє згрупувати квитки в групи за спільністю рейсу поїзда та поїздки(початкової та кінцевої станції)
+    /// </summary>
     public class TicketBookingGroupHeader: IEquatable<TicketBookingGroupHeader>
     {
         public string Train_Route_On_Date_Id { get; set; } = null!;
@@ -39,9 +44,15 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
         }
 
     }
-
+    /// <summary>
+    /// Даний сервіс містить в собі команди, які відповідають за функціонал можливих дій користувача зі своїми квитками, а саме перегляд 
+    /// вже придбаних квитків, квитків, які тимчасово зарезервовані на користувача та квитків, які були повернуті, 
+    /// а також функіонал повернення користувачем вже придбаних квитків(саме куплених, а не скасування попередньо броні)
+    /// </summary>
+    [ClientApiService]
     public class UserTicketManagementService
     {
+        private readonly string service_name = "UserTicketManagementService";
         private readonly SystemAuthenticationService system_authentication_service;
         private readonly FullTrainRouteSearchService full_train_route_search_service;
         private readonly FullTicketManagementService full_ticket_management_service;
@@ -52,6 +63,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             this.full_train_route_search_service = full_train_route_search_service;
             this.full_ticket_management_service = full_ticket_management_service;
         }
+        /// <summary>
+        /// Даний метод вертає список всіх квитків, які належать користувачу
+        /// </summary>
+        /// <returns></returns>
         public async Task<QueryResult<List<ExternalProfileTicketBookingDto>>> GetAllBookedTicketsForCurrentUser()
         {
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
@@ -70,21 +85,34 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             output_tickets = output_tickets.OrderBy(ticket => ticket.Ticket_Status).ThenBy(ticket => ticket.Departure_Time_From_Trip_Starting_Station).ToList();
             return new SuccessQuery<List<ExternalProfileTicketBookingDto>>(output_tickets);
         }
+        /// <summary>
+        /// Даний метод вертає список всіх квитків, що належать користувачу, причому групує квитки за поїздкою(тобто якщо декілька квитків пасажир
+        /// має на один рейс поїзда, але на різні місця(+можливо, різні вагони), то ці квитки будуть зібрані в одну групу
+        /// </summary>
+        /// <returns></returns>
         public async Task<QueryResult<List<ExternalTicketBookingGroupDto>>> GetAllBookedTicketsInGroupsForCurrentUser()
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("----------------------USER TICKET MANAGEMENT-------------------------");
+            Console.ResetColor();
+            Stopwatch sw = Stopwatch.StartNew();
+            //Отримуємо користувача, який аутентифікований в системі
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
             if (user_authentication_result.Fail)
             {
                 return new FailQuery<List<ExternalTicketBookingGroupDto>>(user_authentication_result.Error);
             }
             User user = user_authentication_result.Value;
+            //Отримуємо з внутрішнього сервіса список всіх квитків для користувача
             List<TicketBooking> ticket_bookings_for_user = (await full_ticket_management_service.GetAllTicketBookingsForUser(user.Id)).ToList();
 
 
+            //Організовуємо квитки в групи за спільністю рейса поїзда та початкової і кінцевої станцій поїздки в квитку
             IEnumerable<IGrouping<TicketBookingGroupHeader, TicketBooking>> ticket_groups =
                 ticket_bookings_for_user.GroupBy(ticket => new TicketBookingGroupHeader(ticket.Train_Route_On_Date_Id, ticket.Starting_Station_Id, ticket.Ending_Station_Id));
 
 
+            //Перетворюємо внутрішні допоміжні групові об'єкти в зовнішні трансферні об'єкти для представлення груп взаємопов'язаних квитків
             List<ExternalTicketBookingGroupDto> output_ticket_booking_groups = new List<ExternalTicketBookingGroupDto>();
             foreach(IGrouping<TicketBookingGroupHeader, TicketBooking> ticket_group in ticket_groups)
             {
@@ -92,12 +120,16 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 string train_route_on_date_id = ticket_group_header.Train_Route_On_Date_Id;
                 int starting_station_id = ticket_group_header.Starting_Station_Id;
                 int ending_station_id = ticket_group_header.Ending_Station_Id;
+                //Знаходимо початкову станцію для всього рейсу поїзда
                 string full_route_starting_station_title = (await full_train_route_search_service
                     .GetStartingTrainStopForTrainRouteOnDate(train_route_on_date_id))!.Station.Title;
+                //Знаходимо кінцеву станцію для всього рейсу поїзда
                 string full_route_ending_station_title = (await full_train_route_search_service
                     .GetEndingTrainStopForTrainRouteOnDate(train_route_on_date_id))!.Station.Title;
+                //Отримуємо початкову зупинку поїздки пасажира з квитку
                 TrainRouteOnDateOnStation? trip_starting_station = await full_train_route_search_service
                     .GetTrainStopInfoByTrainRouteOnDateIdAndStationId(train_route_on_date_id, starting_station_id);
+                //Отримуємо кінцеву зупинку поїздки пасажира з квитку
                 TrainRouteOnDateOnStation? trip_ending_station = await full_train_route_search_service
                     .GetTrainStopInfoByTrainRouteOnDateIdAndStationId(train_route_on_date_id, ending_station_id);
                 string? trip_starting_station_title = trip_starting_station?.Station.Title;
@@ -144,7 +176,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 };
                 output_ticket_booking_groups.Add(output_group);
             }
-            return new SuccessQuery<List<ExternalTicketBookingGroupDto>>(output_ticket_booking_groups);
+
+            sw.Stop();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"Train search time: ");
+            Console.ResetColor();
+            Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0} seconds");
+            return new SuccessQuery<List<ExternalTicketBookingGroupDto>>(output_ticket_booking_groups, new SuccessMessage($"Successfully got " +
+                $"grouped ticket bookings for user {ConsoleLogService.PrintUser(user)}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
         public async Task<QueryResult<ExternalProfileTicketBookingDto>> ReturnTicketBookingForCurrentUserById(string ticket_id)
         {

@@ -13,6 +13,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
     public class UserAccountAuthenticationService
     {
+        private readonly string service_title = "UserAccountAuthenticationService";
         private readonly AppDbContext db_context;
         private readonly IConfiguration configuration;
         private readonly IHttpContextAccessor http_context_accessor;
@@ -31,11 +32,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             {
                 if (existing_user.Email == input.Email)
                 {
-                    return new FailQuery<User>(new Error(ErrorType.Conflict, $"User with email [{input.Email}] already exists"));
+                    return new FailQuery<User>(new Error(ErrorType.Conflict, $"User with email [{input.Email}] already exists", annotation: service_title, unit: ProgramUnit.ClientAPI));
                 }
                 else
                 {
-                    return new FailQuery<User>(new Error(ErrorType.Conflict, $"User with username [{input.User_Name}] already exists"));
+                    return new FailQuery<User>(new Error(ErrorType.Conflict, $"User with username [{input.User_Name}] already exists", annotation: service_title, unit: ProgramUnit.ClientAPI));
                 }
             }
             Sex? sex = TextEnumConvertationService.GetUserSexIntoEnum(input.Sex);
@@ -53,7 +54,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             if(!appropriate_password)
             {
                 return new FailQuery<User>(new Error(ErrorType.BadRequest, "Password must be between 8 and 24 symbols long, contain at least one uppercase letter," +
-                    "lowercase letter and number"));
+                    "lowercase letter and number", annotation: service_title, unit: ProgramUnit.ClientAPI));
             }
             new_user.Password = password_hasher.HashPassword(new_user, input.Password);
             await db_context.Users.AddAsync(new_user);
@@ -72,12 +73,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             User? user = await db_context.Users.FirstOrDefaultAsync(user => user.Email == input.Email);
             if (user == null)
             {
-                return new FailQuery<ExternalOutputLoginUserDto>(new Error(ErrorType.Unauthorized, "Invalid email or password"));
+                return new FailQuery<ExternalOutputLoginUserDto>(new Error(ErrorType.Unauthorized, "Invalid email or password", annotation: service_title, unit: ProgramUnit.ClientAPI));
             }
             PasswordVerificationResult verification_result = password_hasher.VerifyHashedPassword(user, user.Password, input.Password);
             if (verification_result == PasswordVerificationResult.Failed)
             {
-                return new FailQuery<ExternalOutputLoginUserDto>(new Error(ErrorType.Unauthorized, "Invalid email or password"));
+                return new FailQuery<ExternalOutputLoginUserDto>(new Error(ErrorType.Unauthorized, "Invalid email or password", annotation: service_title, unit: ProgramUnit.ClientAPI));
             }
             string token = GenerateJwtToken(user);
             return new SuccessQuery<ExternalOutputLoginUserDto>(new ExternalOutputLoginUserDto
