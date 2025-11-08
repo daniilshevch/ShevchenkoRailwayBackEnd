@@ -24,6 +24,7 @@ namespace RailwayCore.Models
         public StopType Stop_Type { get; set; } = StopType.Boarding; //Тип зупинки
         public double? Distance_From_Starting_Station { get; set; } //Відстань до даної станції від початку маршруту рейсу
         public double? Speed_On_Section { get; set; } //Швидкість на наступній секції(від даної зупинки до наступної)
+        public int? Arrival_Track { get; set; } //Колія(або перон), на яку прибуває поїзд
         public override string ToString()
         {
             string? arrival_time;
