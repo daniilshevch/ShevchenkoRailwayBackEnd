@@ -179,36 +179,57 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 
             sw.Stop();
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write($"Train search time: ");
+            Console.Write($"User tickets search time: ");
             Console.ResetColor();
             Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0} seconds");
             return new SuccessQuery<List<ExternalTicketBookingGroupDto>>(output_ticket_booking_groups, new SuccessMessage($"Successfully got " +
                 $"grouped ticket bookings for user {ConsoleLogService.PrintUser(user)}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
+        /// <summary>
+        /// Даний метод вертає вже попередньо придбаний квиток користувача. Важливо, що мова йде саме про куплений квиток(і оплачений), а не
+        /// про тимчасово зарезервований за користувачем квиток під час процесу купівлі(таким поверненням 
+        /// займається CompleteTicketBookingProcessingService)
+        /// </summary>
+        /// <param name="ticket_id"></param>
+        /// <returns></returns>
         public async Task<QueryResult<ExternalProfileTicketBookingDto>> ReturnTicketBookingForCurrentUserById(string ticket_id)
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("----------------------USER TICKET MANAGEMENT-------------------------");
+            Console.ResetColor();
+            Stopwatch sw = Stopwatch.StartNew();
+            //Отримуємо аутентифікованого користувача
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
             if(user_authentication_result.Fail)
             {
                 return new FailQuery<ExternalProfileTicketBookingDto>(user_authentication_result.Error);
             }
             User authenticated_user = user_authentication_result.Value;
+            //Отримуємо власника квитка
             User? ticket_owner = await full_ticket_management_service.GetTicketOwner(ticket_id);
             if(ticket_owner == null)
             {
-                return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.NotFound, $"Can't find ticket with id: {ticket_id} or ticket owner not found(internal error)"));
+                return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.NotFound, $"Can't find ticket with id: {ticket_id} or ticket owner not found(internal error)", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
+            //Якщо айді аутентифікованого користувача не збігається з айді власника квитка, то операція заборонена
             if(authenticated_user.Id != ticket_owner.Id)
             {
-                return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.Forbidden, $"Authenticated user doesn't own this ticket"));
+                return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.Forbidden, $"Authenticated user doesn't own this ticket", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
+            //Проводимо повернення квитка(переведення квитка в статус Returned)
             TicketBooking? returned_ticket_booking = await full_ticket_management_service.ReturnTicketBookingById(ticket_id);
             if(returned_ticket_booking is null)
             {
-                return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.NotFound, $"Can't find ticket with id: {ticket_id}"));
+                return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.NotFound, $"Can't find ticket with id: {ticket_id}", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             ExternalProfileTicketBookingDto output_ticket = await CreateProfileDtoForTicketBooking(returned_ticket_booking);
-            return new SuccessQuery<ExternalProfileTicketBookingDto>(output_ticket);
+            sw.Stop();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"Ticket return time: ");
+            Console.ResetColor();
+            Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0} seconds");
+            return new SuccessQuery<ExternalProfileTicketBookingDto>(output_ticket, new SuccessMessage($"Ticket with ID: {returned_ticket_booking} " +
+                $"has been successfully returned by user {ConsoleLogService.PrintUser(returned_ticket_booking.User)}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
         public async Task<ExternalProfileTicketBookingDto> CreateProfileDtoForTicketBooking(TicketBooking ticket_booking)
         {

@@ -31,10 +31,17 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
                 .Where(ticket_booking => ticket_booking.User_Id == user_id).ToListAsync();
             return ticket_bookings;
         }
+        /// <summary>
+        /// Даний метод проводить повернення квитка, раніше придбаного користувачем(по факту, ставить квитку в базі статус Returned) 
+        /// </summary>
+        /// <param name="ticket_id"></param>
+        /// <returns></returns>
         public async Task<TicketBooking?> ReturnTicketBookingById(string ticket_id)
         {
             bool is_number = int.TryParse(ticket_id, out int number_id);
-            TicketBooking? ticket_booking = await context.Ticket_Bookings.FirstOrDefaultAsync(ticket => ticket.Id == number_id || ticket.Full_Ticket_Id.ToString() == ticket_id);
+            TicketBooking? ticket_booking = await context.Ticket_Bookings
+                .Include(ticket_booking => ticket_booking.Passenger_Carriage)
+                .FirstOrDefaultAsync(ticket => ticket.Id == number_id || ticket.Full_Ticket_Id.ToString() == ticket_id);
             if (ticket_booking is null)
             {
                 return null;
@@ -44,6 +51,11 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
             await context.SaveChangesAsync();
             return ticket_booking;
         }
+        /// <summary>
+        /// Даний метод вертає користувача-власника квитка за числовим айді квитка або GUID
+        /// </summary>
+        /// <param name="ticket_id"></param>
+        /// <returns></returns>
         public async Task<User?> GetTicketOwner(string ticket_id)
         {
             bool is_number = int.TryParse(ticket_id, out int number_id);
