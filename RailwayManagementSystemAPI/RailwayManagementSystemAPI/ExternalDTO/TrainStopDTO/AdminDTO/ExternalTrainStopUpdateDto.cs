@@ -1,4 +1,4 @@
-﻿using RailwayCore.Models;
+﻿using RailwayCore.Models.ModelEnums.TrainStopEnums;
 using System.Text.Json.Serialization;
 
 namespace RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO

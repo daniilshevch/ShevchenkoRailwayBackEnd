@@ -1,23 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-public enum Sex
-{
-    Male,
-    Female
-}
-public enum Exemption
-{
+﻿using System.ComponentModel.DataAnnotations;
+using RailwayCore.Models.ModelEnums.UserEnums;
 
-}
-public enum Role
-{
-    Administrator,
-    General_User
-}
 namespace RailwayCore.Models
 {
     public class User

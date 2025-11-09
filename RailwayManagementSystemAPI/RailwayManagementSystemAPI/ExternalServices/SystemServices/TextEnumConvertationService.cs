@@ -1,5 +1,7 @@
-﻿using RailwayCore.Models;
+﻿using RailwayCore.Models.ModelEnums.TicketBookingEnums;
+using RailwayCore.Models.ModelEnums.TrainRouteEnums;
 using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
+using RailwayCore.Models.ModelEnums.UserEnums;
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
 {
     public class TextEnumConvertationService

@@ -1,4 +1,4 @@
-﻿using RailwayCore.InternalDTO.ModelDTO;
+﻿using RailwayCore.Models.ModelEnums.TrainRouteEnums;
 using RailwayCore.Models;
 using System.Text.Json.Serialization;
 

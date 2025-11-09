@@ -6,6 +6,7 @@ using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
 using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
+using RailwayCore.Models.ModelEnums.TicketBookingEnums;
 
 /// <summary>
 /// Допоміжній клас, який містить докладну інформацію про пасажира та характеристики його поїздки

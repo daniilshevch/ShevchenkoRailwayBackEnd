@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RailwayCore.Models.ModelEnums.TicketBookingEnums;
 
 namespace RailwayCore.InternalServices.ExecutiveServices.ExecutiveDTO.TicketManagementDTO
 {

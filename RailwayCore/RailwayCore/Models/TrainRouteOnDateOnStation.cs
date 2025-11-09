@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using RailwayCore.Models.ModelEnums.TrainStopEnums;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RailwayCore.Models
 {
-    public enum StopType
-    {
-        Boarding = 0,
-        Technical = 1
-    }
     public class TrainRouteOnDateOnStation  //Зупинка рейса поїзда
     {
         public TrainRouteOnDate Train_Route_On_Date { get; set; } = null!; //Рейс поїзда, який робить зупинку

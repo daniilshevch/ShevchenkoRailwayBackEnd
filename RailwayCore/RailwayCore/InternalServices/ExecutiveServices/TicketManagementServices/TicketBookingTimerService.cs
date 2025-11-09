@@ -1,6 +1,7 @@
 ﻿using RailwayCore.Context;
 using RailwayCore.Models;
 using Microsoft.EntityFrameworkCore;
+using RailwayCore.Models.ModelEnums.TicketBookingEnums;
 namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices
 {
     public class TicketBookingTimerService

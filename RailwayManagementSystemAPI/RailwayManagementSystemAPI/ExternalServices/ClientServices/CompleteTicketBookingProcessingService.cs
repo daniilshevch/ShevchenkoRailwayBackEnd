@@ -2,8 +2,7 @@
 using RailwayCore.InternalServices.CoreServices;
 using RailwayCore.InternalServices.ExecutiveServices.ExecutiveDTO.TicketManagementDTO;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
-using Newtonsoft.Json;
-using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO;
+using RailwayCore.Models.ModelEnums.TicketBookingEnums;
 using System.Diagnostics;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
 

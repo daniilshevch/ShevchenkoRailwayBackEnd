@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RailwayCore.InternalDTO.ModelDTO;
-using RailwayCore.Models;
-using System.ComponentModel.DataAnnotations;
+using RailwayCore.Models.ModelEnums.StationEnums;
 using System.Text.Json.Serialization;
 
 namespace RailwayManagementSystemAPI.ExternalDTO.StationDTO.AdminDTO

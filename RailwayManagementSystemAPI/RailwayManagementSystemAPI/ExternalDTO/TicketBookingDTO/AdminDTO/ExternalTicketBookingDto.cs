@@ -1,5 +1,5 @@
 ﻿using RailwayCore.Models;
-using System.ComponentModel.DataAnnotations;
+using RailwayCore.Models.ModelEnums.TicketBookingEnums;
 using System.Text.Json.Serialization;
 
 namespace RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO

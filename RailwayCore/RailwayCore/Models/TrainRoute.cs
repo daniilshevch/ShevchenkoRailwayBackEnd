@@ -1,49 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using RailwayCore.Models.ModelEnums.TrainRouteEnums;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RailwayCore.Models
 {
-    public enum SpeedType
-    {
-        Express = 0,
-        Fast = 1,
-        General = 2
-    }
-    public enum FrequencyType
-    {
-        Daily = 0,
-        One_To_One = 1,
-        Specific_Dates = 2
-    }
-    public enum TripType
-    {
-        Night_Long_Distance = 0,
-        Day_Long_Distance = 1,
-        Night_Intercity = 2,
-        Day_Intercity = 3,
-        Night_Regional = 4,
-        Day_Regional = 5,
-        Local = 6
-
-    };
-    public enum AssignementType
-    {
-        Whole_Year = 0,
-        Seasonal = 1,
-        Additional = 2,
-        Special = 3
-    }
-    public enum TrainQualityClass
-    {
-        S = 0,
-        A = 1,
-        B = 2,
-        C = 3
-    }
     public class TrainRoute //Маршрут поїзда
     {
         [Key]

@@ -1,14 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using RailwayCore.Models.ModelEnums.TicketBookingEnums;
 
-public enum TicketStatus
-{
-    Booking_In_Progress,
-    Booked_And_Active,
-    Booked_And_Used,
-    Archieved,
-    Returned,
-    Booking_Failed
-}
 namespace RailwayCore.Models
 {
     public class TicketBooking //Бронювання квитку

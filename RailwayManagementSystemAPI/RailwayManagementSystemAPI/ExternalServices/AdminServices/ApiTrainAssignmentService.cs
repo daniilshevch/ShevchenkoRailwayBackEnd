@@ -1,5 +1,5 @@
 ﻿using RailwayCore.InternalDTO.ModelDTO;
-using RailwayCore.Models;
+using RailwayCore.Models.ModelEnums.TrainStopEnums;
 using RailwayCore.InternalServices.CoreServices;
 using RailwayManagementSystemAPI.ExternalDTO.TrainRouteDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO;

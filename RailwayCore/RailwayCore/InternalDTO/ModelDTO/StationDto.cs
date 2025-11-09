@@ -1,11 +1,6 @@
 ﻿using RailwayCore.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+using RailwayCore.Models.ModelEnums.StationEnums;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace RailwayCore.InternalDTO.ModelDTO
 {

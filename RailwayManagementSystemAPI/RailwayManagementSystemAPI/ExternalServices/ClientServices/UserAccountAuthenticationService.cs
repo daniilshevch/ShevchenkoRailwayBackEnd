@@ -7,7 +7,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using RailwayManagementSystemAPI.ExternalServices;
+using RailwayCore.Models.ModelEnums.UserEnums;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
