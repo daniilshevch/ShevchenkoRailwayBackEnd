@@ -6,6 +6,7 @@ using RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.ClientDTO;
 using RailwayCore.InternalServices.SystemServices;
+using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {

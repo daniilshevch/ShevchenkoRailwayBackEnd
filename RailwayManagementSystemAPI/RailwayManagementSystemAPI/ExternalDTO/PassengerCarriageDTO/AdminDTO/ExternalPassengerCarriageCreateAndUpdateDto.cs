@@ -1,5 +1,6 @@
 ﻿using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
+using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
 
 namespace RailwayManagementSystemAPI.ExternalDTO.PassengerCarriageDTO.AdminDTO
 {

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
 using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices;
 using RailwayCore.InternalServices.SystemServices;
+using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
 
 /// <summary>
 /// Допоміжній клас, який містить докладну інформацію про пасажира та характеристики його поїздки

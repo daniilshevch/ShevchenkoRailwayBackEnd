@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Models\ModelEnums\TicketBookingEnums\" />
     <Folder Include="Script Patterns\" />
   </ItemGroup>
 

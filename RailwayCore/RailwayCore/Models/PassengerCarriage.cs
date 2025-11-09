@@ -1,32 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
-
+﻿using System.ComponentModel.DataAnnotations;
+using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
 namespace RailwayCore.Models
 {
-    public enum PassengerCarriageType
-    {
-        Platskart = 0,
-        Coupe = 1,
-        SV = 2,
-        Sitting = 3
-    };
-    public enum PassengerCarriageQualityClass
-    {
-        S = 0,
-        A = 1,
-        B = 2,
-        C = 3
-    }
-    public enum PassengerCarriageManufacturer
-    {
-        KVBZ = 0,
-        Amendorf = 1
-    }
     public class PassengerCarriage //Пасажирський вагон
     {
         [Key]

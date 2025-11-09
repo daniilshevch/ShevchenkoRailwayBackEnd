@@ -1,5 +1,5 @@
 ﻿using RailwayCore.Models;
-
+using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
 {
     public class PricingService

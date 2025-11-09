@@ -1,5 +1,5 @@
 ﻿using RailwayCore.Models;
-using System.ComponentModel.DataAnnotations;
+using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
 using System.Text.Json.Serialization;
 
 namespace RailwayCore.InternalDTO.ModelDTO;
