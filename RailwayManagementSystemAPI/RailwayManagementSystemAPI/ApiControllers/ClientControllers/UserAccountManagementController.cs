@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
-using RailwayCore.InternalServices.CoreServices;
-using RailwayManagementSystemAPI.ExternalDTO;
+using RailwayManagementSystemAPI.ExternalDTO.UserDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
