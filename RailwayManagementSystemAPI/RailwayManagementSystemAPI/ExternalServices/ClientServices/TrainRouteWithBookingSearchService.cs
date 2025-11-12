@@ -279,7 +279,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                         Departure_Time = departure_time_from_stop,
                         Stop_Duration = stop_duration,
                         Is_Part_Of_Trip = is_part_of_trip,
-                        Is_Final_Trip_Stop = is_final_stop
+                        Is_Final_Trip_Stop = is_final_stop,
+                        Distance_From_Full_Route_Starting_Station = current_train_stop.Distance_From_Starting_Station
                     });
                 }
 

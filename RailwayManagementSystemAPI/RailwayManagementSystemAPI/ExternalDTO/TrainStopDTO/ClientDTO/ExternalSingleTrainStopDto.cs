@@ -21,5 +21,7 @@ namespace RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.ClientDTO
         public bool Is_Part_Of_Trip { get; set; }  //Чи є ця зупинка частиною маршруту бажаної поїздки
         [JsonPropertyName("is_final_trip_stop")]
         public bool Is_Final_Trip_Stop { get; set; } //Чи є ця зупинка останньою на маршруті бажаної поїздки
+        [JsonPropertyName("distance_from_full_route_starting_station")]
+        public double? Distance_From_Full_Route_Starting_Station { get; set; } //Відстань від початкової зупинки всього рейсу поїзда
     }
 }
