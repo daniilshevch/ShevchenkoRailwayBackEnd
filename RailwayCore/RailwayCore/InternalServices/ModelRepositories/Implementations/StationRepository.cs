@@ -3,11 +3,12 @@ using RailwayCore.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using RailwayCore.InternalDTO.ModelDTO;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 
-namespace RailwayCore.InternalServices.ModelServices
+namespace RailwayCore.InternalServices.ModelRepositories.Implementations
 {
 
-    public class StationRepository
+    public class StationRepository : IStationRepository
     {
         private readonly AppDbContext context;
         private readonly RailwayBranchRepository railway_branch_repository;
@@ -72,7 +73,7 @@ namespace RailwayCore.InternalServices.ModelServices
         public async Task<QueryResult<Station>> UpdateStation(StationDto input)
         {
             Station? existing_station = await context.Stations.FirstOrDefaultAsync(station => station.Id == input.Id);
-            if(existing_station is null)
+            if (existing_station is null)
             {
                 return new FailQuery<Station>(new Error(ErrorType.NotFound, $"Can't find station with ID: {input.Id}"));
             }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.Json;
 using RailwayCore.InternalDTO.ModelDTO;
-using RailwayCore.InternalServices.ModelServices;
+using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TrainRouteDTO.AdminDTO;
 

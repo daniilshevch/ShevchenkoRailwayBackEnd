@@ -5,9 +5,11 @@ using System.Runtime.InteropServices;
 using System.Globalization;
 using System;
 using RailwayCore.InternalDTO.ModelDTO;
-namespace RailwayCore.InternalServices.ModelServices
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+
+namespace RailwayCore.InternalServices.ModelRepositories.Implementations
 {
-    public class TrainRouteOnDateRepository
+    public class TrainRouteOnDateRepository : ITrainRouteOnDateRepository
     {
 
         private AppDbContext context;
@@ -75,7 +77,7 @@ namespace RailwayCore.InternalServices.ModelServices
         {
             TrainRouteOnDate? train_route_on_date = await context.Train_Routes_On_Date.FirstOrDefaultAsync(train_route_on_date =>
             train_route_on_date.Id == train_route_on_date_id);
-            if(train_route_on_date is null)
+            if (train_route_on_date is null)
             {
                 return null;
             }
@@ -88,7 +90,7 @@ namespace RailwayCore.InternalServices.ModelServices
         {
             TrainRouteOnDate? train_route_on_date = await context.Train_Routes_On_Date.FirstOrDefaultAsync(train_route_on_date =>
             train_route_on_date.Id == train_route_on_date_id);
-            if(train_route_on_date is null)
+            if (train_route_on_date is null)
             {
                 return false;
             }

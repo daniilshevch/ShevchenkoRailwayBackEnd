@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using RailwayCore.InternalDTO.ModelDTO;
 using Microsoft.EntityFrameworkCore.Query.Internal;
-namespace RailwayCore.InternalServices.ModelServices
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+
+namespace RailwayCore.InternalServices.ModelRepositories.Implementations
 {
-    public class PassengerCarriageOnTrainRouteOnDateRepository
+    public class PassengerCarriageOnTrainRouteOnDateRepository : IPassengerCarriageOnTrainRouteOnDateRepository
     {
         private readonly AppDbContext context;
         private readonly TrainRouteOnDateRepository train_route_on_date_repository;
@@ -95,7 +97,7 @@ namespace RailwayCore.InternalServices.ModelServices
             existing_carriage_assignment.Factual_Shower_Availability = input.Factual_Shower_Availability;
             existing_carriage_assignment.Factual_Is_Inclusive = input.Factual_Is_Inclusive;
             existing_carriage_assignment.Food_Availability = input.Food_Availability;
-            
+
             context.Passenger_Carriages_On_Train_Routes_On_Date.Update(existing_carriage_assignment);
             await context.SaveChangesAsync();
             return new SuccessQuery<PassengerCarriageOnTrainRouteOnDate>(existing_carriage_assignment);
@@ -106,7 +108,7 @@ namespace RailwayCore.InternalServices.ModelServices
             PassengerCarriageOnTrainRouteOnDate? existing_carriage_assignment = await context.Passenger_Carriages_On_Train_Routes_On_Date
                .FirstOrDefaultAsync(carriage_assignement => carriage_assignement.Train_Route_On_Date_Id == train_route_on_date_id
                && carriage_assignement.Passenger_Carriage_Id == passenger_carriage_id);
-            if(existing_carriage_assignment is null)
+            if (existing_carriage_assignment is null)
             {
                 return false;
             }

@@ -4,9 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using RailwayCore.InternalDTO.ModelDTO;
 using System.Collections.Generic;
-namespace RailwayCore.InternalServices.ModelServices
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+namespace RailwayCore.InternalServices.ModelRepositories.Implementations
 {
-    public class TrainRouteRepository
+    public class TrainRouteRepository : ITrainRouteRepository
     {
         private readonly AppDbContext context;
         private readonly RailwayBranchRepository railway_branch_repository;
@@ -65,7 +66,7 @@ namespace RailwayCore.InternalServices.ModelServices
         {
             TrainRoute? train_route = await context.Train_Routes.FirstOrDefaultAsync(train_route => train_route.Id == input.Id);
             RailwayBranch? railway_branch = await context.Railway_Branches.FirstOrDefaultAsync(branch => branch.Title == input.Railway_Branch_Title);
-            if(train_route == null)
+            if (train_route == null)
             {
                 return new FailQuery<TrainRoute>(new Error(ErrorType.NotFound, $"Can't find train route with ID: {input.Id}"));
             }
@@ -101,9 +102,9 @@ namespace RailwayCore.InternalServices.ModelServices
         public static int GetTrainRouteNumericNumber(string train_route_id)
         {
             string string_result = string.Empty;
-            foreach(char c in train_route_id)
+            foreach (char c in train_route_id)
             {
-                if(char.IsDigit(c))
+                if (char.IsDigit(c))
                 {
                     string_result += c;
                 }

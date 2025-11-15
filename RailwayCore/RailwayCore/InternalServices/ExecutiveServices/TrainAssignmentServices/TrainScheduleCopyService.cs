@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RailwayCore.Context;
-using RailwayCore.InternalServices.ModelServices;
+using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using System;
 using System.Collections.Generic;

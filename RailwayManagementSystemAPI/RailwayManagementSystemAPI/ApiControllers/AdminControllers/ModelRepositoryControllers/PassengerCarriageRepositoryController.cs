@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.InternalDTO.ModelDTO;
-using RailwayCore.InternalServices.ModelServices;
+using RailwayCore.InternalServices.ModelRepositories;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.PassengerCarriageDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;

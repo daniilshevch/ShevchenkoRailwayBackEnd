@@ -1,7 +1,7 @@
 ﻿using RailwayCore.Context;
-using RailwayCore.InternalServices.ModelServices;
 using RailwayCore.Models;
 using Microsoft.EntityFrameworkCore;
+using RailwayCore.InternalServices.ModelRepositories.Implementations;
 
 namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices
 {

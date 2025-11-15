@@ -1,5 +1,5 @@
 ﻿using RailwayCore.InternalDTO.ModelDTO;
-using RailwayCore.InternalServices.ModelRepositories;
+using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 

@@ -335,7 +335,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             }
             return (fastest_train_race, cheapest_train_race);
         }
-
+       
         /// <summary>
         /// Цей метод проводить пошук доступних рейсів поїздів між станціями в певну дату, а також вертає склад поїзда і інформацію
         /// про доступні місця в вагонах
@@ -368,7 +368,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             //Беремо список айді знайдених поїздів(потрібно для функції ядра сервера, яка перевіряє бронювання для поїздів)
             List<string> appropriate_train_routes_on_date_ids =
                 appropriate_train_routes_on_date.Select(train_route_on_date_info => train_route_on_date_info.Train_Route_On_Date.Id).ToList();
-
 
             //////////////////////////////////ЧАСТИНА ПОШУКУ ВСІХ ВІЛЬНИХ МІСЦЬ ДЛЯ ПОКУПКИ НА РЕЙСАХ//////////////////////////////////////////////
 
@@ -419,7 +418,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 = total_train_routes_with_bookings_and_station_info_get_result.Value;
 
 
-            //Визначені рейсів-лідерів(найшвидші, найдешевші і т.д)
+            //Визначення рейсів-лідерів(найшвидші, найдешевші і т.д)
             (ExternalTrainRaceWithBookingsInfoDto? fastest_train_race, ExternalTrainRaceWithBookingsInfoDto? cheapest_train_race) = 
                 _DefineAvailableTrainRacesTopChart(total_train_routes_with_bookings_and_stations_info);
 
@@ -437,6 +436,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 unit: ProgramUnit.ClientAPI));
 
         }
+      
        
         public async Task<QueryResult<List<ExternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStation(string station_title, DateTime time,
             TimeSpan? left_interval = null, TimeSpan? right_interval = null)

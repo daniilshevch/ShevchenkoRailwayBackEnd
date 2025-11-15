@@ -1,5 +1,5 @@
 ﻿using RailwayCore.InternalDTO.ModelDTO;
-using RailwayCore.InternalServices.ModelServices;
+using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.AdminDTO;
 using System.Reflection.Metadata.Ecma335;

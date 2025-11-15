@@ -3,9 +3,10 @@ using RailwayCore.Context;
 using RailwayCore.Models;
 using System;
 using RailwayCore.InternalDTO.ModelDTO;
-namespace RailwayCore.InternalServices.ModelServices
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+namespace RailwayCore.InternalServices.ModelRepositories.Implementations
 {
-    public class TrainRouteOnDateOnStationRepository
+    public class TrainRouteOnDateOnStationRepository : ITrainRouteOnDateOnStationRepository
     {
         private AppDbContext context;
         private TrainRouteOnDateRepository train_route_on_date_service;
@@ -109,7 +110,7 @@ namespace RailwayCore.InternalServices.ModelServices
             }
             context.Train_Routes_On_Date_On_Stations.Remove(existing_train_stop);
             await context.SaveChangesAsync();
-            return true;    
+            return true;
         }
 
 

@@ -1,12 +1,12 @@
 ﻿using RailwayCore.Context;
 using RailwayCore.InternalDTO.ModelDTO;
-using RailwayCore.InternalServices.ModelServices;
 using RailwayCore.Models;
 using Microsoft.EntityFrameworkCore;
 using RailwayCore.InternalServices.CoreServices;
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
 using RailwayCore.InternalServices.ExecutiveServices.ExecutiveDTO.TicketManagementDTO;
 using RailwayCore.InternalServices.SystemServices;
+using RailwayCore.InternalServices.ModelRepositories.Implementations;
 
 namespace RailwayCore.InternalServices.ExecutiveServices
 {

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using RailwayCore.Context;
 using RailwayCore.InternalDTO.ModelDTO;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayCore.Models;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RailwayCore.InternalServices.ModelRepositories
+namespace RailwayCore.InternalServices.ModelRepositories.Implementations
 {
-    public class ImageRepository
+    public class ImageRepository : IImageRepository
     {
         private readonly AppDbContext context;
         public ImageRepository(AppDbContext context)
@@ -21,7 +22,7 @@ namespace RailwayCore.InternalServices.ModelRepositories
         public async Task<QueryResult<Image>> CreateUserProfileImage(UserProfileImageDto input)
         {
             UserProfile? user_profile = await context.User_Profiles.FirstOrDefaultAsync(user_profile => user_profile.User_Id == input.User_Id);
-            if(user_profile is null)
+            if (user_profile is null)
             {
                 return new FailQuery<Image>(new Error(ErrorType.NotFound, $"Can't find user profile for user with ID: {input.User_Id}"));
             }
@@ -36,7 +37,7 @@ namespace RailwayCore.InternalServices.ModelRepositories
             return new SuccessQuery<Image>(profile_image);
         }
         public async Task<QueryResult<Image>> GetUserProfileImage(int user_id)
-        {  
+        {
             UserProfile? user_profile = await context.User_Profiles.FirstOrDefaultAsync(user_profile => user_profile.User_Id == user_id);
             if (user_profile is null)
             {

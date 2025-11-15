@@ -2,8 +2,8 @@
 using RailwayCore.Context;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
-using RailwayCore.InternalServices.ModelServices;
 using RailwayCore.InternalServices.ExecutiveServices;
+using RailwayCore.InternalServices.ModelRepositories.Implementations;
 
 namespace RailwayCore.InternalServices.CoreServices
 {

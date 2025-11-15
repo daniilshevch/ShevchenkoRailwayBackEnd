@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RailwayCore.Context;
 using RailwayCore.InternalDTO.ModelDTO;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayCore.Models;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RailwayCore.InternalServices.ModelServices
+namespace RailwayCore.InternalServices.ModelRepositories.Implementations
 {
-    public class RailwayBranchRepository
+    public class RailwayBranchRepository : IRailwayBranchRepository
     {
         private readonly AppDbContext context;
         public RailwayBranchRepository(AppDbContext context)

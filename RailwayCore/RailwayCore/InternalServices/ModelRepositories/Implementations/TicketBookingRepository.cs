@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using RailwayCore.Context;
 using RailwayCore.InternalDTO.ModelDTO;
-using RailwayCore.InternalServices.ModelServices;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayCore.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RailwayCore.InternalServices.ModelRepositories
+namespace RailwayCore.InternalServices.ModelRepositories.Implementations
 {
     public class TicketBookingForwardComparer: IComparer<TicketBooking>
     {
@@ -116,22 +116,22 @@ namespace RailwayCore.InternalServices.ModelRepositories
 
         }
     }
-    public class TicketBookingRepository
+    public class TicketBookingRepository : ITicketBookingRepository
     {
         private readonly AppDbContext context;
         private readonly TrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository;
-        public TicketBookingRepository(AppDbContext context, 
+        public TicketBookingRepository(AppDbContext context,
             TrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository)
         {
             this.context = context;
             this.train_route_on_date_on_station_repository = train_route_on_date_on_station_repository;
         }
-        public async Task<QueryResult<List<TicketBooking>>> GetTicketBookingsForTrainRouteOnDate(string train_route_on_date_id, 
+        public async Task<QueryResult<List<TicketBooking>>> GetTicketBookingsForTrainRouteOnDate(string train_route_on_date_id,
             bool inverted_sorting = false)
         {
             TrainRouteOnDate? train_route_on_date = await context.Train_Routes_On_Date.FirstOrDefaultAsync(train_route_on_date =>
                 train_route_on_date.Id == train_route_on_date_id);
-            if(train_route_on_date is null)
+            if (train_route_on_date is null)
             {
                 return new FailQuery<List<TicketBooking>>(new Error(ErrorType.NotFound, $"Can't find train race with ID: {train_route_on_date_id}"));
             }
@@ -141,9 +141,9 @@ namespace RailwayCore.InternalServices.ModelRepositories
                 .Where(ticket_booking =>
                 ticket_booking.Train_Route_On_Date_Id == train_route_on_date_id)
                 .ToListAsync();
-            QueryResult<List<TrainRouteOnDateOnStation>> train_stops_list_result = 
+            QueryResult<List<TrainRouteOnDateOnStation>> train_stops_list_result =
                 await train_route_on_date_on_station_repository.GetTrainStopsForTrainRouteOnDate(train_route_on_date_id);
-            if(train_stops_list_result.Fail)
+            if (train_stops_list_result.Fail)
             {
                 return new FailQuery<List<TicketBooking>>(train_stops_list_result.Error);
             }
