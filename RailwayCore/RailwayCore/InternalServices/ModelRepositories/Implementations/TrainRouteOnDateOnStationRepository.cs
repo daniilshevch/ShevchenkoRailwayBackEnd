@@ -9,10 +9,10 @@ namespace RailwayCore.InternalServices.ModelRepositories.Implementations
     public class TrainRouteOnDateOnStationRepository : ITrainRouteOnDateOnStationRepository
     {
         private AppDbContext context;
-        private TrainRouteOnDateRepository train_route_on_date_service;
-        private StationRepository station_service;
-        public TrainRouteOnDateOnStationRepository(AppDbContext context, TrainRouteOnDateRepository train_route_on_date_service,
-            StationRepository station_service)
+        private ITrainRouteOnDateRepository train_route_on_date_service;
+        private IStationRepository station_service;
+        public TrainRouteOnDateOnStationRepository(AppDbContext context, ITrainRouteOnDateRepository train_route_on_date_service,
+            IStationRepository station_service)
         {
             this.context = context;
             this.train_route_on_date_service = train_route_on_date_service;

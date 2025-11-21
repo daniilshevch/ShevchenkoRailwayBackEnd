@@ -2,6 +2,7 @@
 using RailwayCore.Models;
 using Microsoft.EntityFrameworkCore;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 
 namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices
 {
@@ -12,9 +13,9 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
     public class TrainScheduleSearchService
     {
         private readonly AppDbContext context;
-        private readonly StationRepository station_repository;
-        private readonly TrainRouteOnDateRepository train_route_on_date_repository;
-        public TrainScheduleSearchService(AppDbContext context, StationRepository station_repository, TrainRouteOnDateRepository train_route_on_date_repository)
+        private readonly IStationRepository station_repository;
+        private readonly ITrainRouteOnDateRepository train_route_on_date_repository;
+        public TrainScheduleSearchService(AppDbContext context, IStationRepository station_repository, ITrainRouteOnDateRepository train_route_on_date_repository)
         {
             this.context = context;
             this.station_repository = station_repository;

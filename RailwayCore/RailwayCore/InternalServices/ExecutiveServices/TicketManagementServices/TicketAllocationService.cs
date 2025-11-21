@@ -7,6 +7,7 @@ using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
 using RailwayCore.InternalServices.ExecutiveServices.ExecutiveDTO.TicketManagementDTO;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 
 namespace RailwayCore.InternalServices.ExecutiveServices
 {
@@ -18,16 +19,16 @@ namespace RailwayCore.InternalServices.ExecutiveServices
     {
         private readonly string service_name = "TicketAllocationService";
         private readonly AppDbContext context;
-        private readonly StationRepository station_service;
-        private readonly TrainRouteOnDateRepository train_route_on_date_service;
-        private readonly PassengerCarriageRepository passenger_carriage_service;
+        private readonly IStationRepository station_service;
+        private readonly ITrainRouteOnDateRepository train_route_on_date_service;
+        private readonly IPassengerCarriageRepository passenger_carriage_service;
         private readonly TrainScheduleSearchService train_schedule_search_service;
         private readonly TrainSquadSearchService train_squad_search_service;
         private readonly TicketAvailabilityCheckService ticket_search_service;
         public TicketAllocationService(AppDbContext context, 
-            StationRepository station_service, 
-            TrainRouteOnDateRepository train_route_on_date_service, 
-            PassengerCarriageRepository passenger_carriage_service, 
+            IStationRepository station_service, 
+            ITrainRouteOnDateRepository train_route_on_date_service, 
+            IPassengerCarriageRepository passenger_carriage_service, 
             FullTrainRouteSearchService full_train_route_search_service, 
             TicketAvailabilityCheckService ticket_search_service,
             TrainScheduleSearchService train_schedule_search_service,

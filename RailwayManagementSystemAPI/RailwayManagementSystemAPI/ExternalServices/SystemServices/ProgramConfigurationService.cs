@@ -19,16 +19,25 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
     {
         public void ConfigureModelRepositories(IServiceCollection services)
         {
-            //services.AddScoped<IRailwayBranchRepository, RailwayBranchRepository>();
-            services.AddScoped<RailwayBranchRepository>();
-            services.AddScoped<StationRepository>();
-            services.AddScoped<TrainRouteRepository>();
-            services.AddScoped<TrainRouteOnDateRepository>();
-            services.AddScoped<TrainRouteOnDateOnStationRepository>();
-            services.AddScoped<PassengerCarriageRepository>();
-            services.AddScoped<PassengerCarriageOnTrainRouteOnDateRepository>();
-            services.AddScoped<ImageRepository>();
-            services.AddScoped<TicketBookingRepository>();
+            services.AddScoped<IRailwayBranchRepository, RailwayBranchRepository>();
+            services.AddScoped<IStationRepository, StationRepository>();
+            services.AddScoped<ITrainRouteRepository, TrainRouteRepository>();
+            services.AddScoped<ITrainRouteOnDateRepository, TrainRouteOnDateRepository>();
+            services.AddScoped<ITrainRouteOnDateOnStationRepository, TrainRouteOnDateOnStationRepository>();
+            services.AddScoped<IPassengerCarriageRepository, PassengerCarriageRepository>();
+            services.AddScoped<IPassengerCarriageOnTrainRouteOnDateRepository, PassengerCarriageOnTrainRouteOnDateRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<ITicketBookingRepository, TicketBookingRepository>();    
+            
+            //services.AddScoped<RailwayBranchRepository>();
+            //services.AddScoped<StationRepository>();
+            //services.AddScoped<TrainRouteRepository>();
+            //services.AddScoped<TrainRouteOnDateRepository>();
+            //services.AddScoped<TrainRouteOnDateOnStationRepository>();
+            //services.AddScoped<PassengerCarriageRepository>();
+            //services.AddScoped<PassengerCarriageOnTrainRouteOnDateRepository>();
+            //services.AddScoped<ImageRepository>();
+            //services.AddScoped<TicketBookingRepository>();
         }
         public void ConfigureTicketManagementExecutiveServices(IServiceCollection services)
         {

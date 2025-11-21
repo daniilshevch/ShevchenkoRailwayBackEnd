@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RailwayCore.Models;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 
 namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices
 {
@@ -15,8 +16,8 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
     {
         private readonly string service_name = "TrainTripsSearchService";
         private readonly AppDbContext context;
-        private readonly StationRepository station_repository;
-        public TrainTripsSearchService(AppDbContext context, StationRepository station_repository)
+        private readonly IStationRepository station_repository;
+        public TrainTripsSearchService(AppDbContext context, IStationRepository station_repository)
         {
             this.context = context;
             this.station_repository = station_repository;

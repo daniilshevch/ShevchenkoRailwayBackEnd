@@ -2,13 +2,14 @@
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.PassengerCarriageDTO.AdminDTO;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 
 namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
 {
     public class PassengerCarriageRepositoryService
     {
-        private readonly PassengerCarriageRepository passenger_carriage_repository;
-        public PassengerCarriageRepositoryService(PassengerCarriageRepository passenger_carriage_repository)
+        private readonly IPassengerCarriageRepository passenger_carriage_repository;
+        public PassengerCarriageRepositoryService(IPassengerCarriageRepository passenger_carriage_repository)
         {
             this.passenger_carriage_repository = passenger_carriage_repository;
         }

@@ -1,123 +1,123 @@
-﻿using RailwayCore.Models;
-using RailwayCore.Context;
-using Microsoft.EntityFrameworkCore;
-using System;
-using RailwayCore.InternalDTO.ModelDTO;
-using System.Collections.Generic;
-using RailwayCore.InternalServices.ModelRepositories.Interfaces;
-namespace RailwayCore.InternalServices.ModelRepositories.Implementations
-{
-    public class TrainRouteRepository : ITrainRouteRepository
+﻿    using RailwayCore.Models;
+    using RailwayCore.Context;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using RailwayCore.InternalDTO.ModelDTO;
+    using System.Collections.Generic;
+    using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+    namespace RailwayCore.InternalServices.ModelRepositories.Implementations
     {
-        private readonly AppDbContext context;
-        private readonly RailwayBranchRepository railway_branch_repository;
-        public TrainRouteRepository(AppDbContext context, RailwayBranchRepository railway_branch_repository)
+        public class TrainRouteRepository : ITrainRouteRepository
         {
-            this.context = context;
-            this.railway_branch_repository = railway_branch_repository;
-        }
+            private readonly AppDbContext context;
+            private readonly IRailwayBranchRepository railway_branch_repository;
+            public TrainRouteRepository(AppDbContext context, IRailwayBranchRepository railway_branch_repository)
+            {
+                this.context = context;
+                this.railway_branch_repository = railway_branch_repository;
+            }
 
 
-        public async Task<QueryResult<TrainRoute>> CreateTrainRoute(TrainRouteDto input)
-        {
-            TrainRoute? already_in_memory = await context.Train_Routes.FirstOrDefaultAsync(train_route => train_route.Id == input.Id);
-            if (already_in_memory is not null)
+            public async Task<QueryResult<TrainRoute>> CreateTrainRoute(TrainRouteDto input)
             {
-                return new FailQuery<TrainRoute>(new Error(ErrorType.BadRequest, $"Train route with ID: {input.Id} already exists"));
-            }
-            RailwayBranch? railway_branch = await railway_branch_repository.FindRailwayBranchByTitle(input.Railway_Branch_Title);
-            if (railway_branch == null)
-            {
-                return new FailQuery<TrainRoute>(new Error(ErrorType.BadRequest, $"Railway branch {input.Railway_Branch_Title} doesn't exist"));
-            }
-            TrainRoute train_route = new TrainRoute()
-            {
-                Id = input.Id,
-                Is_Branded = input.Is_Branded,
-                Branded_Name = input.Branded_Name,
-                Quality_Class = input.Quality_Class,
-                Speed_Type = input.Speed_Type,
-                Trip_Type = input.Trip_Type,
-                Frequency_Type = input.Frequency_Type,
-                Assignement_Type = input.Assignement_Type,
-                Railway_Branch = railway_branch,
-                Train_Route_Coefficient = input.Train_Route_Coefficient,
-            };
-            context.Train_Routes.Add(train_route);
-            await context.SaveChangesAsync();
-            return new SuccessQuery<TrainRoute>(train_route);
-        }
-        public async Task<TrainRoute?> GetTrainRouteById(string id)
-        {
-            TrainRoute? train_route = await context.Train_Routes.Include(train_route => train_route.Railway_Branch).FirstOrDefaultAsync(train_route => train_route.Id == id);
-            if (train_route == null)
-            {
-                return null;
-            }
-            return train_route;
-        }
-        public async Task<List<TrainRoute>> GetTrainRoutes()
-        {
-            List<TrainRoute> train_routes = await context.Train_Routes.Include(train_route => train_route.Railway_Branch).ToListAsync();
-            List<TrainRoute> sorted_train_routes = train_routes.OrderBy(train_route => GetTrainRouteNumericNumber(train_route.Id)).ToList();
-            return sorted_train_routes;
-        }
-        public async Task<QueryResult<TrainRoute>> UpdateTrainRoute(TrainRouteDto input)
-        {
-            TrainRoute? train_route = await context.Train_Routes.FirstOrDefaultAsync(train_route => train_route.Id == input.Id);
-            RailwayBranch? railway_branch = await context.Railway_Branches.FirstOrDefaultAsync(branch => branch.Title == input.Railway_Branch_Title);
-            if (train_route == null)
-            {
-                return new FailQuery<TrainRoute>(new Error(ErrorType.NotFound, $"Can't find train route with ID: {input.Id}"));
-            }
-            if (railway_branch == null)
-            {
-                return new FailQuery<TrainRoute>(new Error(ErrorType.NotFound, $"Can't find railway branch {input.Railway_Branch_Title}"));
-            }
-            train_route.Trip_Type = input.Trip_Type;
-            train_route.Quality_Class = input.Quality_Class;
-            train_route.Railway_Branch = railway_branch;
-            train_route.Is_Branded = input.Is_Branded;
-            train_route.Assignement_Type = input.Assignement_Type;
-            train_route.Speed_Type = input.Speed_Type;
-            train_route.Frequency_Type = input.Frequency_Type;
-            train_route.Branded_Name = input.Branded_Name;
-            train_route.Train_Route_Coefficient = input.Train_Route_Coefficient;
-            context.Train_Routes.Update(train_route);
-            await context.SaveChangesAsync();
-            return new SuccessQuery<TrainRoute>(train_route);
-        }
-        public async Task<bool> DeleteTrainRouteById(string id)
-        {
-            TrainRoute? train_route = await context.Train_Routes.FirstOrDefaultAsync(train_route => train_route.Id == id);
-            if (train_route == null)
-            {
-                return false;
-            }
-            context.Train_Routes.Remove(train_route);
-            await context.SaveChangesAsync();
-            return true;
-        }
-
-        public static int GetTrainRouteNumericNumber(string train_route_id)
-        {
-            string string_result = string.Empty;
-            foreach (char c in train_route_id)
-            {
-                if (char.IsDigit(c))
+                TrainRoute? already_in_memory = await context.Train_Routes.FirstOrDefaultAsync(train_route => train_route.Id == input.Id);
+                if (already_in_memory is not null)
                 {
-                    string_result += c;
+                    return new FailQuery<TrainRoute>(new Error(ErrorType.BadRequest, $"Train route with ID: {input.Id} already exists"));
                 }
+                RailwayBranch? railway_branch = await railway_branch_repository.FindRailwayBranchByTitle(input.Railway_Branch_Title);
+                if (railway_branch == null)
+                {
+                    return new FailQuery<TrainRoute>(new Error(ErrorType.BadRequest, $"Railway branch {input.Railway_Branch_Title} doesn't exist"));
+                }
+                TrainRoute train_route = new TrainRoute()
+                {
+                    Id = input.Id,
+                    Is_Branded = input.Is_Branded,
+                    Branded_Name = input.Branded_Name,
+                    Quality_Class = input.Quality_Class,
+                    Speed_Type = input.Speed_Type,
+                    Trip_Type = input.Trip_Type,
+                    Frequency_Type = input.Frequency_Type,
+                    Assignement_Type = input.Assignement_Type,
+                    Railway_Branch = railway_branch,
+                    Train_Route_Coefficient = input.Train_Route_Coefficient,
+                };
+                context.Train_Routes.Add(train_route);
+                await context.SaveChangesAsync();
+                return new SuccessQuery<TrainRoute>(train_route);
             }
-            bool successful_convertion = int.TryParse(string_result, out int int_result);
-            if (successful_convertion)
+            public async Task<TrainRoute?> GetTrainRouteById(string id)
             {
-                return int_result;
+                TrainRoute? train_route = await context.Train_Routes.Include(train_route => train_route.Railway_Branch).FirstOrDefaultAsync(train_route => train_route.Id == id);
+                if (train_route == null)
+                {
+                    return null;
+                }
+                return train_route;
             }
-            else
+            public async Task<List<TrainRoute>> GetTrainRoutes()
             {
-                return 0;
+                List<TrainRoute> train_routes = await context.Train_Routes.Include(train_route => train_route.Railway_Branch).ToListAsync();
+                List<TrainRoute> sorted_train_routes = train_routes.OrderBy(train_route => GetTrainRouteNumericNumber(train_route.Id)).ToList();
+                return sorted_train_routes;
+            }
+            public async Task<QueryResult<TrainRoute>> UpdateTrainRoute(TrainRouteDto input)
+            {
+                TrainRoute? train_route = await context.Train_Routes.FirstOrDefaultAsync(train_route => train_route.Id == input.Id);
+                RailwayBranch? railway_branch = await context.Railway_Branches.FirstOrDefaultAsync(branch => branch.Title == input.Railway_Branch_Title);
+                if (train_route == null)
+                {
+                    return new FailQuery<TrainRoute>(new Error(ErrorType.NotFound, $"Can't find train route with ID: {input.Id}"));
+                }
+                if (railway_branch == null)
+                {
+                    return new FailQuery<TrainRoute>(new Error(ErrorType.NotFound, $"Can't find railway branch {input.Railway_Branch_Title}"));
+                }
+                train_route.Trip_Type = input.Trip_Type;
+                train_route.Quality_Class = input.Quality_Class;
+                train_route.Railway_Branch = railway_branch;
+                train_route.Is_Branded = input.Is_Branded;
+                train_route.Assignement_Type = input.Assignement_Type;
+                train_route.Speed_Type = input.Speed_Type;
+                train_route.Frequency_Type = input.Frequency_Type;
+                train_route.Branded_Name = input.Branded_Name;
+                train_route.Train_Route_Coefficient = input.Train_Route_Coefficient;
+                context.Train_Routes.Update(train_route);
+                await context.SaveChangesAsync();
+                return new SuccessQuery<TrainRoute>(train_route);
+            }
+            public async Task<bool> DeleteTrainRouteById(string id)
+            {
+                TrainRoute? train_route = await context.Train_Routes.FirstOrDefaultAsync(train_route => train_route.Id == id);
+                if (train_route == null)
+                {
+                    return false;
+                }
+                context.Train_Routes.Remove(train_route);
+                await context.SaveChangesAsync();
+                return true;
+            }
+
+            public static int GetTrainRouteNumericNumber(string train_route_id)
+            {
+                string string_result = string.Empty;
+                foreach (char c in train_route_id)
+                {
+                    if (char.IsDigit(c))
+                    {
+                        string_result += c;
+                    }
+                }
+                bool successful_convertion = int.TryParse(string_result, out int int_result);
+                if (successful_convertion)
+                {
+                    return int_result;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
     }
-}

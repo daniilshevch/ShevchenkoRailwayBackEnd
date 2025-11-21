@@ -2,23 +2,19 @@
 using RailwayCore.Context;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 
 namespace RailwayCore.InternalServices.ExecutiveServices
 {
     public class TrainSquadCopyService
     {
         private readonly AppDbContext context;
-        private readonly TrainRouteOnDateRepository train_route_on_date_service;
-        private readonly PassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service;
-        private readonly PassengerCarriageRepository passenger_carriage_service;
-        public TrainSquadCopyService(AppDbContext context, TrainRouteOnDateRepository train_route_on_date_service, 
-            PassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service, 
-            PassengerCarriageRepository passenger_carriage_service)
+        private readonly ITrainRouteOnDateRepository train_route_on_date_service;
+        private readonly IPassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service;
+        private readonly IPassengerCarriageRepository passenger_carriage_service;
+        public TrainSquadCopyService(AppDbContext context, ITrainRouteOnDateRepository train_route_on_date_service, 
+            IPassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service, 
+            IPassengerCarriageRepository passenger_carriage_service)
         {
             this.context = context;
             this.train_route_on_date_service = train_route_on_date_service;

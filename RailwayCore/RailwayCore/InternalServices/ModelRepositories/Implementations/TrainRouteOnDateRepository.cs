@@ -13,8 +13,8 @@ namespace RailwayCore.InternalServices.ModelRepositories.Implementations
     {
 
         private AppDbContext context;
-        private TrainRouteRepository train_route_repository;
-        public TrainRouteOnDateRepository(AppDbContext context, TrainRouteRepository train_route_repository)
+        private ITrainRouteRepository train_route_repository;
+        public TrainRouteOnDateRepository(AppDbContext context, ITrainRouteRepository train_route_repository)
         {
             this.context = context;
             this.train_route_repository = train_route_repository;

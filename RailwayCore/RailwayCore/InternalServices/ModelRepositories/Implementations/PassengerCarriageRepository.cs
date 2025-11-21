@@ -11,9 +11,9 @@ namespace RailwayCore.InternalServices.ModelRepositories.Implementations
     public class PassengerCarriageRepository : IPassengerCarriageRepository
     {
         private readonly AppDbContext context;
-        private readonly StationRepository station_service;
+        private readonly IStationRepository station_service;
 
-        public PassengerCarriageRepository(AppDbContext context, StationRepository station_service)
+        public PassengerCarriageRepository(AppDbContext context, IStationRepository station_service)
         {
             this.context = context;
             this.station_service = station_service;

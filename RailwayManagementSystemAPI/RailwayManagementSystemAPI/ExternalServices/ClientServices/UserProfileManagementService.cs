@@ -2,14 +2,15 @@
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
     public class UserProfileManagementService
     {
         private readonly SystemAuthenticationService system_authentication_service;
-        private readonly ImageRepository image_repository;
-        public UserProfileManagementService(SystemAuthenticationService system_authentication_service, ImageRepository image_repository) 
+        private readonly IImageRepository image_repository;
+        public UserProfileManagementService(SystemAuthenticationService system_authentication_service, IImageRepository image_repository) 
         {
             this.system_authentication_service = system_authentication_service;
             this.image_repository = image_repository;

@@ -7,12 +7,11 @@ using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 
 namespace RailwayCore.InternalServices.ModelRepositories.Implementations
 {
-
     public class StationRepository : IStationRepository
     {
         private readonly AppDbContext context;
-        private readonly RailwayBranchRepository railway_branch_repository;
-        public StationRepository(AppDbContext context, RailwayBranchRepository railway_branch_repository)
+        private readonly IRailwayBranchRepository railway_branch_repository;
+        public StationRepository(AppDbContext context, IRailwayBranchRepository railway_branch_repository)
         {
             this.context = context;
             this.railway_branch_repository = railway_branch_repository;

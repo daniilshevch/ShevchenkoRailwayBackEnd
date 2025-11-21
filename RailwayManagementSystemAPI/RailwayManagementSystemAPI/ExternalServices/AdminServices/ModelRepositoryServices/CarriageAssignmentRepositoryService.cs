@@ -2,14 +2,14 @@
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.AdminDTO;
-using System.Reflection.Metadata.Ecma335;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 
 namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
 {
     public class CarriageAssignmentRepositoryService
     {
-        private readonly PassengerCarriageOnTrainRouteOnDateRepository carriage_assignment_repository;
-        public CarriageAssignmentRepositoryService(PassengerCarriageOnTrainRouteOnDateRepository carriage_assignment_repository)
+        private readonly IPassengerCarriageOnTrainRouteOnDateRepository carriage_assignment_repository;
+        public CarriageAssignmentRepositoryService(IPassengerCarriageOnTrainRouteOnDateRepository carriage_assignment_repository)
         {
             this.carriage_assignment_repository = carriage_assignment_repository;
         }

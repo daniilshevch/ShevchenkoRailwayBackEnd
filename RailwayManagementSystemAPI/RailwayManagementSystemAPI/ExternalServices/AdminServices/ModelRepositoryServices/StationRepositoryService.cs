@@ -2,13 +2,14 @@
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.StationDTO.AdminDTO;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 
 namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
 {
     public class StationRepositoryService
     {
-        private readonly StationRepository station_repository;
-        public StationRepositoryService(StationRepository station_repository)
+        private readonly IStationRepository station_repository;
+        public StationRepositoryService(IStationRepository station_repository)
         {
             this.station_repository = station_repository;
         }

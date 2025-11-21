@@ -119,9 +119,9 @@ namespace RailwayCore.InternalServices.ModelRepositories.Implementations
     public class TicketBookingRepository : ITicketBookingRepository
     {
         private readonly AppDbContext context;
-        private readonly TrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository;
+        private readonly ITrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository;
         public TicketBookingRepository(AppDbContext context,
-            TrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository)
+            ITrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository)
         {
             this.context = context;
             this.train_route_on_date_on_station_repository = train_route_on_date_on_station_repository;

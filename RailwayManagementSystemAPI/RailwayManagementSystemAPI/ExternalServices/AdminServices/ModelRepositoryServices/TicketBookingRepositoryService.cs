@@ -2,7 +2,7 @@
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO;
 using System.Text.Json.Serialization;
-
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
 {
     public class ExternalTicketGroupByStartingStationDto
@@ -30,8 +30,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
     }
     public class TicketBookingRepositoryService
     {
-        public readonly TicketBookingRepository ticket_booking_repository;
-        public TicketBookingRepositoryService(TicketBookingRepository ticket_booking_repository)
+        public readonly ITicketBookingRepository ticket_booking_repository;
+        public TicketBookingRepositoryService(ITicketBookingRepository ticket_booking_repository)
         {
             this.ticket_booking_repository = ticket_booking_repository;
         }

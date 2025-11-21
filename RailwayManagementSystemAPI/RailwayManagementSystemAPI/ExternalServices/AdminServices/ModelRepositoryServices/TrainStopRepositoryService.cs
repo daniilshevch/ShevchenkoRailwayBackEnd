@@ -2,12 +2,13 @@
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
 {
     public class TrainStopRepositoryService
     {
-        private readonly TrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository;
-        public TrainStopRepositoryService(TrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository)
+        private readonly ITrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository;
+        public TrainStopRepositoryService(ITrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository)
         {
             this.train_route_on_date_on_station_repository = train_route_on_date_on_station_repository;
         }

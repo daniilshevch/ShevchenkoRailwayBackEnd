@@ -7,6 +7,7 @@ using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
 using RailwayCore.Models.ModelEnums.TicketBookingEnums;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 
 /// <summary>
 /// Допоміжній клас, який містить докладну інформацію про пасажира та характеристики його поїздки
@@ -75,15 +76,15 @@ namespace RailwayCore.InternalServices.ExecutiveServices
     {
         private readonly string service_name = "TicketAvailabilityCheckService";
         private readonly AppDbContext context;
-        private readonly TrainRouteOnDateRepository train_route_on_date_service;
-        private readonly PassengerCarriageRepository passenger_carriage_service;
-        private readonly StationRepository station_service;
+        private readonly ITrainRouteOnDateRepository train_route_on_date_service;
+        private readonly IPassengerCarriageRepository passenger_carriage_service;
+        private readonly IStationRepository station_service;
         private readonly TrainScheduleSearchService train_schedule_search_service;
         private readonly TrainSquadSearchService train_squad_search_service;
         public TicketAvailabilityCheckService(AppDbContext context, 
-            TrainRouteOnDateRepository train_route_on_date_service, 
-            PassengerCarriageRepository passenger_carriage_service, 
-            StationRepository station_service, 
+            ITrainRouteOnDateRepository train_route_on_date_service, 
+            IPassengerCarriageRepository passenger_carriage_service, 
+            IStationRepository station_service, 
             TrainScheduleSearchService train_schedule_search_service,
             TrainSquadSearchService train_squad_search_service)
         {

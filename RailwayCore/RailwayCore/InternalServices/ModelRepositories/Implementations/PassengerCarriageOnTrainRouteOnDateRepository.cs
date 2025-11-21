@@ -11,10 +11,10 @@ namespace RailwayCore.InternalServices.ModelRepositories.Implementations
     public class PassengerCarriageOnTrainRouteOnDateRepository : IPassengerCarriageOnTrainRouteOnDateRepository
     {
         private readonly AppDbContext context;
-        private readonly TrainRouteOnDateRepository train_route_on_date_repository;
-        private readonly PassengerCarriageRepository passenger_carriage_repository;
-        public PassengerCarriageOnTrainRouteOnDateRepository(AppDbContext context, TrainRouteOnDateRepository train_route_on_date_repository,
-            PassengerCarriageRepository passenger_carriage_repository)
+        private readonly ITrainRouteOnDateRepository train_route_on_date_repository;
+        private readonly IPassengerCarriageRepository passenger_carriage_repository;
+        public PassengerCarriageOnTrainRouteOnDateRepository(AppDbContext context, ITrainRouteOnDateRepository train_route_on_date_repository,
+            IPassengerCarriageRepository passenger_carriage_repository)
         {
             this.context = context;
             this.train_route_on_date_repository = train_route_on_date_repository;
