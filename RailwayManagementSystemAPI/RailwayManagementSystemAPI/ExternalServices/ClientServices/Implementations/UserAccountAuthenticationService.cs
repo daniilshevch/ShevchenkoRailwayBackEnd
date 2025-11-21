@@ -7,7 +7,7 @@ using RailwayCore.Models;
 using RailwayCore.Models.ModelEnums.UserEnums;
 using RailwayManagementSystemAPI.ExternalDTO.UserDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
-using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

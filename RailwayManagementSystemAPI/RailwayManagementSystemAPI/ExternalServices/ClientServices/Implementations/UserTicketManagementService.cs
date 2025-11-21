@@ -3,11 +3,12 @@ using RailwayCore.InternalServices.CoreServices.Implementations;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement;
-using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Diagnostics;
 using System.Net;
 using RailwayCore.InternalServices.CoreServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.Interfaces;
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
     /// <summary>
@@ -56,12 +57,15 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         private readonly SystemAuthenticationService system_authentication_service;
         private readonly IFullTrainRouteSearchService full_train_route_search_service;
         private readonly IFullTicketManagementService full_ticket_management_service;
+        private readonly IQRCodeGeneratorService qr_code_generator_service;
         public UserTicketManagementService(SystemAuthenticationService system_authentication_service,
-            IFullTrainRouteSearchService full_train_route_search_service, IFullTicketManagementService full_ticket_management_service)
+            IFullTrainRouteSearchService full_train_route_search_service, IFullTicketManagementService full_ticket_management_service,
+            IQRCodeGeneratorService qr_code_generator_service)
         {
             this.system_authentication_service = system_authentication_service;
             this.full_train_route_search_service = full_train_route_search_service;
             this.full_ticket_management_service = full_ticket_management_service;
+            this.qr_code_generator_service = qr_code_generator_service;
         }
         /// <summary>
         /// Даний метод вертає список всіх квитків, які належать користувачу
@@ -171,7 +175,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                         Arrival_Time_To_Trip_Ending_Station = arrival_time_to_trip_ending_station,
                         Trip_Duration = trip_duration,
                         Passenger_Name = ticket_booking.Passenger_Name,
-                        Passenger_Surname = ticket_booking.Passenger_Surname
+                        Passenger_Surname = ticket_booking.Passenger_Surname,
+                        Qr_Code = qr_code_generator_service.GenerateQrCodeBase64(ticket_booking.Full_Ticket_Id.ToString()) //!!!!Вирішити
                     }).ToList()
                 };
                 output_ticket_booking_groups.Add(output_group);
@@ -250,6 +255,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             DateTime? arrival_time_to_trip_ending_station = (await full_train_route_search_service
                 .GetTrainStopInfoByTrainRouteOnDateIdAndStationId(ticket_booking.Train_Route_On_Date_Id, ticket_booking.Ending_Station_Id))!.Arrival_Time;
             TimeSpan? trip_duration = arrival_time_to_trip_ending_station - departure_time_from_trip_starting_station;
+            string qr_code_base_64 = qr_code_generator_service.GenerateQrCodeBase64(ticket_booking.Full_Ticket_Id.ToString()); //!!!!Вирішити
             ExternalProfileTicketBookingDto output_ticket = new ExternalProfileTicketBookingDto()
             {
                 Full_Ticket_Id = ticket_booking.Full_Ticket_Id,
@@ -268,7 +274,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 Arrival_Time_To_Trip_Ending_Station = arrival_time_to_trip_ending_station,
                 Trip_Duration = trip_duration,
                 Passenger_Name = ticket_booking.Passenger_Name,
-                Passenger_Surname = ticket_booking.Passenger_Surname
+                Passenger_Surname = ticket_booking.Passenger_Surname,
+                Qr_Code = qr_code_base_64
             };
             return output_ticket;
         }

@@ -4,8 +4,8 @@ using RailwayCore.InternalServices.ModelRepositories;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.PassengerCarriageDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
-using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations;
 
 namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers
 {

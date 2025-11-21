@@ -4,7 +4,7 @@ using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
-using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers

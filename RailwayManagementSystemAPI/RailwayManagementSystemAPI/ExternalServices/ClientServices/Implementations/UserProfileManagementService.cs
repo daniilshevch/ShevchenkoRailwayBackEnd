@@ -1,9 +1,9 @@
 ﻿using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
-using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {

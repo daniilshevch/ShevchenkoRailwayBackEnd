@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
+namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations
 {
     public static class ErrorMessageService
     {

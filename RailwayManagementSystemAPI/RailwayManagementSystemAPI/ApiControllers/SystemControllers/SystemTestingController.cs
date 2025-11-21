@@ -3,7 +3,7 @@ using RailwayCore.Models;
 using RailwayCore.InternalServices.CoreServices;
 using RailwayManagementSystemAPI.ApiControllers.ClientControllers;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
-using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations;
 
 public class SystemUserDemonstrationDto
 {
