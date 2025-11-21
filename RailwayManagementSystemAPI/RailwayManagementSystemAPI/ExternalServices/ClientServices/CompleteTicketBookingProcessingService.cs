@@ -1,10 +1,11 @@
 ﻿using RailwayCore.Models;
-using RailwayCore.InternalServices.CoreServices;
 using RailwayCore.InternalServices.ExecutiveServices.ExecutiveDTO.TicketManagementDTO;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using RailwayCore.Models.ModelEnums.TicketBookingEnums;
 using System.Diagnostics;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
+using RailwayCore.InternalServices.CoreServices.Implementations;
+using RailwayCore.InternalServices.CoreServices.Interfaces;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
@@ -21,10 +22,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
     public class CompleteTicketBookingProcessingService
     {
         private readonly string service_name = "CompleteTicketBookingProcessingService";
-        private readonly FullTicketManagementService full_ticket_management_service;
+        private readonly IFullTicketManagementService full_ticket_management_service;
         private readonly SystemAuthenticationService system_authentication_service;
         private readonly IConfiguration configuration;
-        public CompleteTicketBookingProcessingService(FullTicketManagementService full_ticket_management_service, SystemAuthenticationService system_authentication_service, IConfiguration configuration)
+        public CompleteTicketBookingProcessingService(IFullTicketManagementService full_ticket_management_service, SystemAuthenticationService system_authentication_service, IConfiguration configuration)
         {
             this.full_ticket_management_service = full_ticket_management_service;
             this.system_authentication_service = system_authentication_service;

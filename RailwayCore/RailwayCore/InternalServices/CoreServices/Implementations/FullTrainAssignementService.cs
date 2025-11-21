@@ -6,10 +6,11 @@ using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayCore.InternalServices.ExecutiveServices.TrainAssignmentServices.Implementations;
 using RailwayCore.InternalServices.ExecutiveServices.TrainAssignmentServices.Interfaces;
+using RailwayCore.InternalServices.CoreServices.Interfaces;
 
-namespace RailwayCore.InternalServices.CoreServices
+namespace RailwayCore.InternalServices.CoreServices.Implementations
 {
-    public class FullTrainAssignementService
+    public class FullTrainAssignementService : IFullTrainAssignementService
     {
         private readonly AppDbContext context;
         private readonly ITrainRouteOnDateRepository train_route_on_date_service;
@@ -168,7 +169,7 @@ namespace RailwayCore.InternalServices.CoreServices
             {
                 QueryResult schedule_copy_result = await CopyTrainRouteOnDateWithSchedule(prototype_train_route_id, new_train_route_id, prototype_date, new_date, true);
                 QueryResult squad_copy_result = await CopyTrainRouteOnDateWithSquad(prototype_train_route_id, new_train_route_id, prototype_date, new_date, false);
-                if(schedule_copy_result.Fail || squad_copy_result.Fail)
+                if (schedule_copy_result.Fail || squad_copy_result.Fail)
                 {
                     return new FailQuery(schedule_copy_result.Error); //  Доробити
                 }
@@ -177,7 +178,7 @@ namespace RailwayCore.InternalServices.CoreServices
             else
             {
                 QueryResult schedule_copy_result = await CopyTrainRouteOnDateWithSchedule(prototype_train_route_id, new_train_route_id, prototype_date, new_date, false);
-                QueryResult squad_copy_result =  await CopyTrainRouteOnDateWithSquad(prototype_train_route_id, new_train_route_id, prototype_date, new_date, false);
+                QueryResult squad_copy_result = await CopyTrainRouteOnDateWithSquad(prototype_train_route_id, new_train_route_id, prototype_date, new_date, false);
                 if (schedule_copy_result.Fail || squad_copy_result.Fail)
                 {
                     return new FailQuery(schedule_copy_result.Error); //  Доробити

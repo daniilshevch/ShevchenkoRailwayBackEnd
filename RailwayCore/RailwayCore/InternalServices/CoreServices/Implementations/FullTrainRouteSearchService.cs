@@ -1,8 +1,9 @@
 ﻿using RailwayCore.Models;
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Implementations;
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Interfaces;
+using RailwayCore.InternalServices.CoreServices.Interfaces;
 
-namespace RailwayCore.InternalServices.CoreServices
+namespace RailwayCore.InternalServices.CoreServices.Implementations
 {
     /// <summary>
     /// Цей сервіс є оркестратором всіх функцій, пов'язаних з пошуком рейсів поїздів, їх розкладу руху, а також їх складу
@@ -10,27 +11,27 @@ namespace RailwayCore.InternalServices.CoreServices
     /// іншими, кожен з яких окремо відповідає за пошук рейсів, визначення розкладу руху поїздів та визначення рухомого складу поїздів
     /// </summary>
     [CoreService]
-    public class FullTrainRouteSearchService
+    public class FullTrainRouteSearchService : IFullTrainRouteSearchService
     {
         private readonly ITrainTripsSearchService train_trips_search_service;
         private readonly ITrainScheduleSearchService train_schedule_search_service;
         private readonly ITrainSquadSearchService train_squad_search_service;
-        public FullTrainRouteSearchService(ITrainTripsSearchService train_trips_search_service, 
+        public FullTrainRouteSearchService(ITrainTripsSearchService train_trips_search_service,
             ITrainScheduleSearchService train_schedule_search_service,
             ITrainSquadSearchService train_squad_search_service)
         {
             this.train_trips_search_service = train_trips_search_service;
             this.train_schedule_search_service = train_schedule_search_service;
-            this.train_squad_search_service= train_squad_search_service;
+            this.train_squad_search_service = train_squad_search_service;
         }
 
         //TrainTripsSearchService
         [CoreMethod]
         public async Task<QueryResult<List<InternalTrainRaceBetweenStationsDto>>> SearchTrainRoutesBetweenStationsOnDate(string start_station_title, string end_station_title, DateOnly trip_departure_date)
         {
-            return await train_trips_search_service.SearchTrainRoutesBetweenStationsOnDate(start_station_title, end_station_title, trip_departure_date);   
+            return await train_trips_search_service.SearchTrainRoutesBetweenStationsOnDate(start_station_title, end_station_title, trip_departure_date);
         }
-        [CoreMethod]    
+        [CoreMethod]
         public async Task<QueryResult<List<InternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStationOnDate(string station_title, DateTime time,
     TimeSpan? left_interval = null, TimeSpan? right_interval = null)
         {

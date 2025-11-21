@@ -1,5 +1,4 @@
-﻿using RailwayCore.InternalServices.CoreServices;
-using RailwayCore.Models;
+﻿using RailwayCore.Models;
 using System.Diagnostics;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.ClientDTO;
@@ -7,6 +6,8 @@ using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.ClientDTO;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
+using RailwayCore.InternalServices.CoreServices.Implementations;
+using RailwayCore.InternalServices.CoreServices.Interfaces;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
@@ -45,9 +46,9 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
     public class TrainRouteWithBookingsSearchService
     {
         private readonly string service_name = "TrainRouteWithBookingsSearchService";
-        private readonly FullTrainRouteSearchService full_train_route_search_service; 
-        private readonly FullTicketManagementService full_ticket_management_service;
-        public TrainRouteWithBookingsSearchService(FullTrainRouteSearchService full_train_route_search_service, FullTicketManagementService full_ticket_management_service)
+        private readonly IFullTrainRouteSearchService full_train_route_search_service; 
+        private readonly IFullTicketManagementService full_ticket_management_service;
+        public TrainRouteWithBookingsSearchService(IFullTrainRouteSearchService full_train_route_search_service, IFullTicketManagementService full_ticket_management_service)
         {
             this.full_train_route_search_service = full_train_route_search_service;
             this.full_ticket_management_service = full_ticket_management_service;

@@ -2,7 +2,8 @@
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RailwayCore.Context;
-using RailwayCore.InternalServices.CoreServices;
+using RailwayCore.InternalServices.CoreServices.Implementations;
+using RailwayCore.InternalServices.CoreServices.Interfaces;
 using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations;
 using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Interfaces;
 using RailwayCore.InternalServices.ExecutiveServices.TrainAssignmentServices.Implementations;
@@ -76,9 +77,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
         }
         public void ConfigureCoreServices(IServiceCollection services)
         {
-            services.AddScoped<FullTrainAssignementService>();
-            services.AddScoped<FullTrainRouteSearchService>();
-            services.AddScoped<FullTicketManagementService>();
+            services.AddScoped<IFullTrainAssignementService, FullTrainAssignementService>();
+            services.AddScoped<IFullTrainRouteSearchService, FullTrainRouteSearchService>();
+            services.AddScoped<IFullTicketManagementService, FullTicketManagementService>();
+
+            //services.AddScoped<FullTrainAssignementService>();
+            //services.AddScoped<FullTrainRouteSearchService>();
+            //services.AddScoped<FullTicketManagementService>();
         }
         public void ConfigureModelRepositoryServices(IServiceCollection services)
         {

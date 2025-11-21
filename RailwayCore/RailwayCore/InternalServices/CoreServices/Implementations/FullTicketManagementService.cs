@@ -2,7 +2,8 @@
 using RailwayCore.InternalServices.ExecutiveServices.ExecutiveDTO.TicketManagementDTO;
 using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations;
 using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Interfaces;
-namespace RailwayCore.InternalServices.CoreServices
+using RailwayCore.InternalServices.CoreServices.Interfaces;
+namespace RailwayCore.InternalServices.CoreServices.Implementations
 {
     /// <summary>
     /// Даний сервіс відповідає за весь функціонал, пов'язаний з квитками та бронями. Є сервісом-оркестратором, тобто надбудовою над
@@ -10,7 +11,7 @@ namespace RailwayCore.InternalServices.CoreServices
     /// в базі, контроль таймера бронювання квитків, системні та користувацькі маніпуляції з квитками 
     /// </summary>
     [CoreService]
-    public class FullTicketManagementService
+    public class FullTicketManagementService : IFullTicketManagementService
     {
         private readonly ITicketAvailabilityCheckService ticket_availability_check_service;
         private readonly ITicketAllocationService ticket_allocation_service;
@@ -18,8 +19,8 @@ namespace RailwayCore.InternalServices.CoreServices
         private readonly ITicketSystemManipulationService ticket_system_manipulation_service;
         private readonly ITicketUserManipulationService ticket_user_manipulation_service;
 
-        public FullTicketManagementService(ITicketAvailabilityCheckService ticket_availability_check_service, ITicketAllocationService ticket_allocation_service, 
-            ITicketBookingTimerService ticket_booking_timer_service, ITicketSystemManipulationService ticket_system_manipulation_service, 
+        public FullTicketManagementService(ITicketAvailabilityCheckService ticket_availability_check_service, ITicketAllocationService ticket_allocation_service,
+            ITicketBookingTimerService ticket_booking_timer_service, ITicketSystemManipulationService ticket_system_manipulation_service,
             ITicketUserManipulationService ticket_user_manipulation_service)
         {
             this.ticket_availability_check_service = ticket_availability_check_service;

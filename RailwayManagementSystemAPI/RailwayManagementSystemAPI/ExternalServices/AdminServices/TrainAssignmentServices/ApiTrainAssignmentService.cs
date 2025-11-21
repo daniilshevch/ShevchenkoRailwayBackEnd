@@ -1,14 +1,15 @@
 ﻿using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models.ModelEnums.TrainStopEnums;
-using RailwayCore.InternalServices.CoreServices;
 using RailwayManagementSystemAPI.ExternalDTO.TrainRouteDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO;
+using RailwayCore.InternalServices.CoreServices.Implementations;
+using RailwayCore.InternalServices.CoreServices.Interfaces;
 namespace RailwayManagementSystemAPI.ExternalServices.AdminServices
 {
     public class ApiTrainAssignmentService
     {
-        private readonly FullTrainAssignementService full_train_assignment_service;
-        public ApiTrainAssignmentService(FullTrainAssignementService full_train_assignment_service)
+        private readonly IFullTrainAssignementService full_train_assignment_service;
+        public ApiTrainAssignmentService(IFullTrainAssignementService full_train_assignment_service)
         {
             this.full_train_assignment_service = full_train_assignment_service;
         }

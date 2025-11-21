@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Primitives;
-using RailwayCore.InternalServices.CoreServices;
+using RailwayCore.InternalServices.CoreServices.Implementations;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement;
@@ -7,7 +7,7 @@ using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Diagnostics;
 using System.Net;
-
+using RailwayCore.InternalServices.CoreServices.Interfaces;
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 {
     /// <summary>
@@ -54,10 +54,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
     {
         private readonly string service_name = "UserTicketManagementService";
         private readonly SystemAuthenticationService system_authentication_service;
-        private readonly FullTrainRouteSearchService full_train_route_search_service;
-        private readonly FullTicketManagementService full_ticket_management_service;
+        private readonly IFullTrainRouteSearchService full_train_route_search_service;
+        private readonly IFullTicketManagementService full_ticket_management_service;
         public UserTicketManagementService(SystemAuthenticationService system_authentication_service,
-            FullTrainRouteSearchService full_train_route_search_service, FullTicketManagementService full_ticket_management_service)
+            IFullTrainRouteSearchService full_train_route_search_service, IFullTicketManagementService full_ticket_management_service)
         {
             this.system_authentication_service = system_authentication_service;
             this.full_train_route_search_service = full_train_route_search_service;
