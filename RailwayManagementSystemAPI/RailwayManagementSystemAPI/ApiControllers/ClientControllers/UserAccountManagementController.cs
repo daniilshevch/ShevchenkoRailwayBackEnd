@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.UserDTO.ClientDTO;
-using RailwayManagementSystemAPI.ExternalServices.ClientServices;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
     [ApiController]
@@ -10,10 +11,10 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
     [Route("Client-API")]
     public class UserAccountManagementController : ControllerBase
     {
-        private readonly UserAccountAuthenticationService user_account_management_service;
-        private readonly UserProfileManagementService user_profile_management_service;
-        public UserAccountManagementController(UserAccountAuthenticationService user_account_management_service, 
-            UserProfileManagementService user_profile_management_service)
+        private readonly IUserAccountAuthenticationService user_account_management_service;
+        private readonly IUserProfileManagementService user_profile_management_service;
+        public UserAccountManagementController(IUserAccountAuthenticationService user_account_management_service, 
+            IUserProfileManagementService user_profile_management_service)
         {
             this.user_account_management_service = user_account_management_service;
             this.user_profile_management_service=  user_profile_management_service;

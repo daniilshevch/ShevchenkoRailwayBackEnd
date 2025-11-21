@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
-using RailwayManagementSystemAPI.ExternalServices.ClientServices;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Security.Claims;
 
@@ -15,8 +16,8 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
     public class CompleteTicketBookingProcessingController : ControllerBase
     {
 
-        private readonly CompleteTicketBookingProcessingService complete_ticket_booking_processing_service;
-        public CompleteTicketBookingProcessingController(CompleteTicketBookingProcessingService complete_ticket_booking_processing_service)
+        private readonly ICompleteTicketBookingProcessingService complete_ticket_booking_processing_service;
+        public CompleteTicketBookingProcessingController(ICompleteTicketBookingProcessingService complete_ticket_booking_processing_service)
         {
             this.complete_ticket_booking_processing_service = complete_ticket_booking_processing_service;
         }

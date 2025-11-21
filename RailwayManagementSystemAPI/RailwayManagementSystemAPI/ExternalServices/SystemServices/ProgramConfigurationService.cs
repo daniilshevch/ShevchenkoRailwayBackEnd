@@ -15,7 +15,8 @@ using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
-using RailwayManagementSystemAPI.ExternalServices.ClientServices;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using System.Text;
 
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
@@ -106,11 +107,17 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
         }
         public void ConfigureClientServices(IServiceCollection services)
         {
-            services.AddScoped<TrainRouteWithBookingsSearchService>();
-            services.AddScoped<CompleteTicketBookingProcessingService>();
-            services.AddScoped<UserAccountAuthenticationService>();
-            services.AddScoped<UserProfileManagementService>();
-            services.AddScoped<UserTicketManagementService>();
+            services.AddScoped<ITrainRouteWithBookingsSearchService, TrainRouteWithBookingsSearchService>();
+            services.AddScoped<ICompleteTicketBookingProcessingService, CompleteTicketBookingProcessingService>();
+            services.AddScoped<IUserAccountAuthenticationService, UserAccountAuthenticationService>();
+            services.AddScoped<IUserProfileManagementService, UserProfileManagementService>();
+            services.AddScoped<IUserTicketManagementService, UserTicketManagementService>();
+
+            //services.AddScoped<TrainRouteWithBookingsSearchService>();
+            //services.AddScoped<CompleteTicketBookingProcessingService>();
+            //services.AddScoped<UserAccountAuthenticationService>();
+            //services.AddScoped<UserProfileManagementService>();
+            //services.AddScoped<UserTicketManagementService>();
         }
         public void ConfigureAdminServices(IServiceCollection services)
         {

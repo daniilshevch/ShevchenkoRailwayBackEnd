@@ -3,14 +3,15 @@ using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 
-namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
+namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
-    public class UserProfileManagementService
+    public class UserProfileManagementService : IUserProfileManagementService
     {
         private readonly SystemAuthenticationService system_authentication_service;
         private readonly IImageRepository image_repository;
-        public UserProfileManagementService(SystemAuthenticationService system_authentication_service, IImageRepository image_repository) 
+        public UserProfileManagementService(SystemAuthenticationService system_authentication_service, IImageRepository image_repository)
         {
             this.system_authentication_service = system_authentication_service;
             this.image_repository = image_repository;
@@ -27,13 +28,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 return new FailQuery(new Error(ErrorType.BadRequest, "Invalid file type"));
             }
             byte[] image_data;
-            using(MemoryStream memory_stream = new MemoryStream())
+            using (MemoryStream memory_stream = new MemoryStream())
             {
                 await image_file.CopyToAsync(memory_stream);
                 image_data = memory_stream.ToArray();
             }
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
-            if(user_authentication_result.Fail)
+            if (user_authentication_result.Fail)
             {
                 return new FailQuery(user_authentication_result.Error);
             }
@@ -44,7 +45,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
                 User_Id = authenticated_user.Id
             };
             QueryResult<Image> image_creation_result = await image_repository.CreateUserProfileImage(image_dto);
-            if(image_creation_result.Fail)
+            if (image_creation_result.Fail)
             {
                 return new FailQuery(image_creation_result.Error);
             }
@@ -59,7 +60,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             }
             User authenticated_user = user_authentication_result.Value;
             QueryResult<Image> image_get_result = await image_repository.GetUserProfileImage(authenticated_user.Id);
-            if(image_get_result.Fail)
+            if (image_get_result.Fail)
             {
                 return new FailQuery<Image>(image_get_result.Error);
             }

@@ -6,8 +6,9 @@ using System.Diagnostics;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
 using RailwayCore.InternalServices.CoreServices.Implementations;
 using RailwayCore.InternalServices.CoreServices.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 
-namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
+namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
     /// <summary>
     /// Даний сервіс займається всіми задачами, які пов'язані з процесом бронювання та купівлі квитків користувачами. Цей сервіс обробляє процес
@@ -19,7 +20,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
     /// пошуком вже існуючих бронювань для користувача - цим займається UserTicketManagementService, поверненням вже придбаних квитків теж він.
     /// </summary>
     [ClientApiService]
-    public class CompleteTicketBookingProcessingService
+    public class CompleteTicketBookingProcessingService : ICompleteTicketBookingProcessingService
     {
         private readonly string service_name = "CompleteTicketBookingProcessingService";
         private readonly IFullTicketManagementService full_ticket_management_service;
@@ -137,12 +138,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             User user = user_authentication_result.Value;
             List<ExternalOutputMediatorTicketBookingDto> ticket_bookings = new List<ExternalOutputMediatorTicketBookingDto>();
             //Проводимо процес бронювання декількох квитків
-            foreach(ExternalInputInitialTicketBookingDto ticket_booking_dto in ticket_bookings_list)
+            foreach (ExternalInputInitialTicketBookingDto ticket_booking_dto in ticket_bookings_list)
             {
                 //Пробуємо ініціалізувати бронювання кожного окремо взятого квитка
-                QueryResult<ExternalOutputMediatorTicketBookingDto> ticket_booking_result = 
+                QueryResult<ExternalOutputMediatorTicketBookingDto> ticket_booking_result =
                     await InitializeTicketBookingProcessForUser(ticket_booking_dto, user);
-                if(ticket_booking_result.Fail)
+                if (ticket_booking_result.Fail)
                 {
                     //Якщо для певного квитка не вдалась ініціалізація броні, не вертаємо FailQuery, як в випадку одного квитка, а вертаємо цей квиток зі статусом
                     //Booking Failed.
@@ -290,7 +291,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             //Перевірка,чи не сплив час бронювання
             if (DateTime.Now > ticket_booking.Booking_Expiration_Time)
             {
-                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Booking reservation time has expired", 
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Booking reservation time has expired",
                     annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             if (ticket_booking.Ticket_Status != TicketStatus.Booking_In_Progress)
@@ -304,12 +305,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             Console.Write($"Temporary reservation cancellation time: ");
             Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0} seconds");
             Console.ResetColor();
-            return new SuccessQuery<ExternalOutputMediatorTicketBookingDto>(input_unfinished_ticket, 
+            return new SuccessQuery<ExternalOutputMediatorTicketBookingDto>(input_unfinished_ticket,
                 new SuccessMessage($"Temporary ticket reservation was cancelled for ticket {input_unfinished_ticket.Full_Ticket_Id}",
                 annotation: service_name, unit: ProgramUnit.ClientAPI));
 
         }
-        
+
         public async Task DeleteAllExpiredBookings()
         {
             await full_ticket_management_service.DeleteAllExpiredTickets();

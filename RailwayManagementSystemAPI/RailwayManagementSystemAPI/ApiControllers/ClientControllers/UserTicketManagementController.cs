@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement;
-using RailwayManagementSystemAPI.ExternalServices.ClientServices;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Collections.Generic;
-
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
     [ApiExplorerSettings(GroupName = "Client Controllers")]
     public class UserTicketManagementController: ControllerBase
     {
-        private readonly UserTicketManagementService user_ticket_management_service;
-        public UserTicketManagementController(UserTicketManagementService user_ticket_management_service)
+        private readonly IUserTicketManagementService user_ticket_management_service;
+        public UserTicketManagementController(IUserTicketManagementService user_ticket_management_service)
         {
             this.user_ticket_management_service = user_ticket_management_service;
         }

@@ -6,18 +6,19 @@ using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
 using RailwayCore.Models.ModelEnums.UserEnums;
 using RailwayManagementSystemAPI.ExternalDTO.UserDTO.ClientDTO;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
+namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
     /// <summary>
     /// Даний сервіс відповідає за аутентифікаційні операції користувача, такі як реєстрація та логін
     /// </summary>
     [ClientApiService]
-    public class UserAccountAuthenticationService
+    public class UserAccountAuthenticationService : IUserAccountAuthenticationService
     {
         private readonly string service_title = "UserAccountAuthenticationService";
         private readonly AppDbContext db_context;
@@ -69,7 +70,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             };
             //Перевіряємо, чи пароль проходить за вимогами
             bool appropriate_password = _VerifyPassword(input.Password);
-            if(!appropriate_password)
+            if (!appropriate_password)
             {
                 return new FailQuery<User>(new Error(ErrorType.BadRequest, "Password must be between 8 and 24 symbols long, contain at least one uppercase letter," +
                     "lowercase letter and number", annotation: service_title, unit: ProgramUnit.ClientAPI));
@@ -164,14 +165,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
         [PartialLogicMethod]
         public static bool _VerifyPassword(string password)
         {
-            if(password.Length < 8 || password.Length > 24)
+            if (password.Length < 8 || password.Length > 24)
             {
                 return false;
             }
             bool has_upper = password.Any(char.IsUpper);
             bool has_lower = password.Any(char.IsLower);
             bool has_digit = password.Any(char.IsDigit);
-            if(!has_upper || !has_lower || !has_digit)
+            if (!has_upper || !has_lower || !has_digit)
             {
                 return false;
             }

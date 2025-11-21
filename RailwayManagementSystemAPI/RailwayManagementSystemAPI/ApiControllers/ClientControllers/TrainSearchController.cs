@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
 using RailwayCore.InternalServices.CoreServices;
-using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.ClientDTO;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
     [ApiController]
@@ -10,8 +11,8 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
     [Route("Client-API/[controller]")]
     public class TrainSearchController : ControllerBase
     {
-        private readonly TrainRouteWithBookingsSearchService train_route_with_booking_search_service;
-        public TrainSearchController(TrainRouteWithBookingsSearchService train_route_with_booking_search_service)
+        private readonly ITrainRouteWithBookingsSearchService train_route_with_booking_search_service;
+        public TrainSearchController(ITrainRouteWithBookingsSearchService train_route_with_booking_search_service)
         {
             this.train_route_with_booking_search_service = train_route_with_booking_search_service;
         }

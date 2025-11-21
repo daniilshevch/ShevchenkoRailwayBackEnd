@@ -33,8 +33,6 @@
     <Folder Include="ExternalDTO\PassengerCarriageDTO\ClientDTO\" />
     <Folder Include="ExternalDTO\StationDTO\ClientDTO\" />
     <Folder Include="ExternalDTO\TrainRouteDTO\ClientDTO\" />
-    <Folder Include="ExternalServices\ClientServices\Implementation\" />
-    <Folder Include="ExternalServices\ClientServices\Interfaces\" />
   </ItemGroup>
 
 </Project>

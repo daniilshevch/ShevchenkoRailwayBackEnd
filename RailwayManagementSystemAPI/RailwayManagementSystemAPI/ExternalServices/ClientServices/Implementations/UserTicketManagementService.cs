@@ -3,12 +3,12 @@ using RailwayCore.InternalServices.CoreServices.Implementations;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement;
-using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using System.Diagnostics;
 using System.Net;
 using RailwayCore.InternalServices.CoreServices.Interfaces;
-namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
+namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
     /// <summary>
     /// Допоміжний клас, який дозволяє згрупувати квитки в групи за спільністю рейсу поїзда та поїздки(початкової та кінцевої станції)
@@ -50,7 +50,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
     /// а також функіонал повернення користувачем вже придбаних квитків(саме куплених, а не скасування попередньо броні)
     /// </summary>
     [ClientApiService]
-    public class UserTicketManagementService
+    public class UserTicketManagementService : IUserTicketManagementService
     {
         private readonly string service_name = "UserTicketManagementService";
         private readonly SystemAuthenticationService system_authentication_service;
@@ -70,14 +70,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
         public async Task<QueryResult<List<ExternalProfileTicketBookingDto>>> GetAllBookedTicketsForCurrentUser()
         {
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
-            if(user_authentication_result.Fail)
+            if (user_authentication_result.Fail)
             {
                 return new FailQuery<List<ExternalProfileTicketBookingDto>>(user_authentication_result.Error);
             }
             User user = user_authentication_result.Value;
             List<TicketBooking> ticket_bookings_for_user = (await full_ticket_management_service.GetAllTicketBookingsForUser(user.Id)).ToList();
             List<ExternalProfileTicketBookingDto> output_tickets = new List<ExternalProfileTicketBookingDto>();
-            foreach(TicketBooking ticket_booking in ticket_bookings_for_user)
+            foreach (TicketBooking ticket_booking in ticket_bookings_for_user)
             {
                 ExternalProfileTicketBookingDto output_ticket = await CreateProfileDtoForTicketBooking(ticket_booking);
                 output_tickets.Add(output_ticket);
@@ -114,7 +114,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
 
             //Перетворюємо внутрішні допоміжні групові об'єкти в зовнішні трансферні об'єкти для представлення груп взаємопов'язаних квитків
             List<ExternalTicketBookingGroupDto> output_ticket_booking_groups = new List<ExternalTicketBookingGroupDto>();
-            foreach(IGrouping<TicketBookingGroupHeader, TicketBooking> ticket_group in ticket_groups)
+            foreach (IGrouping<TicketBookingGroupHeader, TicketBooking> ticket_group in ticket_groups)
             {
                 TicketBookingGroupHeader ticket_group_header = ticket_group.Key;
                 string train_route_on_date_id = ticket_group_header.Train_Route_On_Date_Id;
@@ -200,30 +200,30 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices
             Stopwatch sw = Stopwatch.StartNew();
             //Отримуємо аутентифікованого користувача
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
-            if(user_authentication_result.Fail)
+            if (user_authentication_result.Fail)
             {
                 return new FailQuery<ExternalProfileTicketBookingDto>(user_authentication_result.Error);
             }
             User authenticated_user = user_authentication_result.Value;
             //Отримуємо власника квитка
             User? ticket_owner = await full_ticket_management_service.GetTicketOwner(ticket_id);
-            if(ticket_owner == null)
+            if (ticket_owner == null)
             {
                 return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.NotFound, $"Can't find ticket with id: {ticket_id} or ticket owner not found(internal error)", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             //Якщо айді аутентифікованого користувача не збігається з айді власника квитка, то операція заборонена
-            if(authenticated_user.Id != ticket_owner.Id)
+            if (authenticated_user.Id != ticket_owner.Id)
             {
                 return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.Forbidden, $"Authenticated user doesn't own this ticket", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             //Проводимо повернення квитка(переведення квитка в статус Returned)
             QueryResult<TicketBooking> ticket_booking_return_result = await full_ticket_management_service.ReturnTicketBookingById(ticket_id);
-            if(ticket_booking_return_result.Fail)
+            if (ticket_booking_return_result.Fail)
             {
                 return new FailQuery<ExternalProfileTicketBookingDto>(ticket_booking_return_result.Error);
             }
             TicketBooking? returned_ticket_booking = ticket_booking_return_result.Value;
-            if(returned_ticket_booking is null)
+            if (returned_ticket_booking is null)
             {
                 return new FailQuery<ExternalProfileTicketBookingDto>(new Error(ErrorType.NotFound, $"Can't find ticket with id: {ticket_id}", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.OpenApi.Writers;
 using RailwayCore.Models;
-using RailwayManagementSystemAPI.ExternalServices.ClientServices;
-
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
 {
     public class ExpiredTicketBookingsRemovingService: BackgroundService
@@ -20,7 +20,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
                 {
                     using IServiceScope scope = scope_factory.CreateScope();
                     IServiceProvider service_provider = scope.ServiceProvider;
-                    CompleteTicketBookingProcessingService ticket_booking_service = service_provider.GetRequiredService<CompleteTicketBookingProcessingService>();
+                    ICompleteTicketBookingProcessingService ticket_booking_service = service_provider.GetRequiredService<ICompleteTicketBookingProcessingService>();
                     await ticket_booking_service.DeleteAllExpiredBookings();
                 }
                 catch (Exception ex)
