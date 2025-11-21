@@ -3,11 +3,12 @@ using RailwayCore.Models;
 using Microsoft.EntityFrameworkCore;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Interfaces;
 
-namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Implementations
 {
     [ExecutiveService]
-    public class TrainSquadSearchService
+    public class TrainSquadSearchService : ITrainSquadSearchService
     {
         private readonly AppDbContext context;
         private readonly ITrainRouteOnDateRepository train_route_on_date_service;

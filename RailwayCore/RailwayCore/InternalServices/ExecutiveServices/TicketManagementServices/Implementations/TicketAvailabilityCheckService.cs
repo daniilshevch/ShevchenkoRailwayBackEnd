@@ -1,13 +1,14 @@
 ﻿using RailwayCore.Models;
 using RailwayCore.Context;
 using Microsoft.EntityFrameworkCore;
-using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
-using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
 using RailwayCore.Models.ModelEnums.TicketBookingEnums;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Implementations;
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Interfaces;
 
 /// <summary>
 /// Допоміжній клас, який містить докладну інформацію про пасажира та характеристики його поїздки
@@ -66,27 +67,27 @@ public class PlaceAccumulator
     }
 
 }
-namespace RailwayCore.InternalServices.ExecutiveServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations
 {
     /// <summary>
     /// Даний сервіс займається пошуком бронювань в вагонах(тобто займається пошуком квитків для рейсів(між станціями))
     /// </summary>
     [ExecutiveService]
-    public class TicketAvailabilityCheckService
+    public class TicketAvailabilityCheckService : ITicketAvailabilityCheckService
     {
         private readonly string service_name = "TicketAvailabilityCheckService";
         private readonly AppDbContext context;
         private readonly ITrainRouteOnDateRepository train_route_on_date_service;
         private readonly IPassengerCarriageRepository passenger_carriage_service;
         private readonly IStationRepository station_service;
-        private readonly TrainScheduleSearchService train_schedule_search_service;
-        private readonly TrainSquadSearchService train_squad_search_service;
-        public TicketAvailabilityCheckService(AppDbContext context, 
-            ITrainRouteOnDateRepository train_route_on_date_service, 
-            IPassengerCarriageRepository passenger_carriage_service, 
-            IStationRepository station_service, 
-            TrainScheduleSearchService train_schedule_search_service,
-            TrainSquadSearchService train_squad_search_service)
+        private readonly ITrainScheduleSearchService train_schedule_search_service;
+        private readonly ITrainSquadSearchService train_squad_search_service;
+        public TicketAvailabilityCheckService(AppDbContext context,
+            ITrainRouteOnDateRepository train_route_on_date_service,
+            IPassengerCarriageRepository passenger_carriage_service,
+            IStationRepository station_service,
+            ITrainScheduleSearchService train_schedule_search_service,
+            ITrainSquadSearchService train_squad_search_service)
         {
             this.context = context;
             this.train_route_on_date_service = train_route_on_date_service;
@@ -94,7 +95,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             this.station_service = station_service;
             this.train_schedule_search_service = train_schedule_search_service;
             this.train_squad_search_service = train_squad_search_service;
-            
+
         }
 
         /// <summary>
@@ -159,7 +160,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
         /// <param name="starting_station_title"></param>
         /// <param name="ending_station_title"></param>
         /// <returns></returns>
-        [ExecutiveMethod] 
+        [ExecutiveMethod]
         public async Task<QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>> GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDate
            (List<string> train_route_on_date_ids, string starting_station_title, string ending_station_title)
         {
@@ -194,7 +195,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             //Збираємо всі бронювання квитків в усіх вагонах в усіх поїздах зі списку між обраними станціями поїздки
             //Тут ми шукаємо в базі всі квитки, які грають роль при пошуку вільних місць між поїздкою саме між початковою та кінцевою станцією, які ми задавали
             //при пошуку. Для того, щоб квиток перекривав якесь місце в вагоні, мають виконуватись одна з двох умов:
-            
+
             //1) Початкова або кінцева станція знаходяться в центральній зоні поїздки(з алгоритму 3 секцій, всі зупинки між початковою та
             //кінцевою станцією поїздки, обидві не включно)
             //2) Початкова станція поїздки знаходиться в лівій зоні(з алгоритму 3 секцій, всі зупинки до початкової станції поїздки, включно з нею) і 

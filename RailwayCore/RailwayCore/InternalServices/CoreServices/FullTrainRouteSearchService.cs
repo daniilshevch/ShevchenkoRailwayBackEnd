@@ -1,6 +1,6 @@
 ﻿using RailwayCore.Models;
-using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
-
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Implementations;
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Interfaces;
 
 namespace RailwayCore.InternalServices.CoreServices
 {
@@ -12,12 +12,12 @@ namespace RailwayCore.InternalServices.CoreServices
     [CoreService]
     public class FullTrainRouteSearchService
     {
-        private readonly TrainTripsSearchService train_trips_search_service;
-        private readonly TrainScheduleSearchService train_schedule_search_service;
-        private readonly TrainSquadSearchService train_squad_search_service;
-        public FullTrainRouteSearchService(TrainTripsSearchService train_trips_search_service, 
-            TrainScheduleSearchService train_schedule_search_service,
-            TrainSquadSearchService train_squad_search_service)
+        private readonly ITrainTripsSearchService train_trips_search_service;
+        private readonly ITrainScheduleSearchService train_schedule_search_service;
+        private readonly ITrainSquadSearchService train_squad_search_service;
+        public FullTrainRouteSearchService(ITrainTripsSearchService train_trips_search_service, 
+            ITrainScheduleSearchService train_schedule_search_service,
+            ITrainSquadSearchService train_squad_search_service)
         {
             this.train_trips_search_service = train_trips_search_service;
             this.train_schedule_search_service = train_schedule_search_service;

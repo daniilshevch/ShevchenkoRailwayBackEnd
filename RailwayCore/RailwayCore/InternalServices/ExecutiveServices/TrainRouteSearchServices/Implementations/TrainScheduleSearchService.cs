@@ -3,14 +3,15 @@ using RailwayCore.Models;
 using Microsoft.EntityFrameworkCore;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Interfaces;
 
-namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Implementations
 {
     /// <summary>
     /// Даний сервіс дозволяє виконувати запити для пошуку інформації, пов'язаної з розкладом руху поїздів
     /// </summary>
     [ExecutiveService]
-    public class TrainScheduleSearchService
+    public class TrainScheduleSearchService : ITrainScheduleSearchService
     {
         private readonly AppDbContext context;
         private readonly IStationRepository station_repository;
@@ -112,7 +113,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
             }
             List<TrainRouteOnDateOnStation> final_train_stops = new List<TrainRouteOnDateOnStation>();
             //Перебираємо всі зупинки між бажаною початковою та кінцевою та додаємо їх в масив
-            for(int station_number = starting_station_number; station_number <= ending_station_number; station_number++)
+            for (int station_number = starting_station_number; station_number <= ending_station_number; station_number++)
             {
                 final_train_stops.Add(train_stops[station_number]);
             }

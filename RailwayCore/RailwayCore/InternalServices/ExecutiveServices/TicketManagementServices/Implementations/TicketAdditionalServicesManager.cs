@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace RailwayCore.InternalServices.ExecutiveServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations
 {
     public class TicketAdditionalServicesManager
     {

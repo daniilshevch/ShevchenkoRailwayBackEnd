@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using RailwayCore.Models;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Interfaces;
 
-namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Implementations
 {
     /// <summary>
     /// Даний сервіс відповідає за пошук рейсів між двома станціями в дату або пошук рейсів, які проходять транзитом через
@@ -12,7 +13,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
     /// склад поїзда або бронювання квитків в цьому рейсі поїзда
     /// </summary>
     [ExecutiveService]
-    public class TrainTripsSearchService
+    public class TrainTripsSearchService : ITrainTripsSearchService
     {
         private readonly string service_name = "TrainTripsSearchService";
         private readonly AppDbContext context;
@@ -153,19 +154,19 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
             return actual_train_routes_on_date_get_result;
         }
 
-        public async Task<QueryResult<List<InternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStationOnDate(string station_title, DateTime time, 
+        public async Task<QueryResult<List<InternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStationOnDate(string station_title, DateTime time,
             TimeSpan? left_interval = null, TimeSpan? right_interval = null)
         {
-            if(left_interval is null)
+            if (left_interval is null)
             {
                 left_interval = TimeSpan.FromHours(3);
             }
-            if(right_interval is null)
+            if (right_interval is null)
             {
                 right_interval = TimeSpan.FromHours(3);
             }
             Station? station = await station_repository.GetStationByTitle(station_title);
-            if(station is null)
+            if (station is null)
             {
                 return new FailQuery<List<InternalTrainRaceThroughStationDto>>(new Error(ErrorType.NotFound, $"Station {station_title} has not been found"));
             }
@@ -175,17 +176,17 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
                 context.Train_Routes_On_Date_On_Stations.Include(train_stop => train_stop.Station)
                 .Any(train_stop => train_stop.Station.Title == station_title &&
                 train_stop.Train_Route_On_Date_Id == train_route_on_date.Id &&
-                ((train_stop.Arrival_Time > time - left_interval && train_stop.Arrival_Time < time + right_interval) ||
-                (train_stop.Departure_Time > time - left_interval && train_stop.Departure_Time < time + right_interval)))).ToListAsync();
-            
+                (train_stop.Arrival_Time > time - left_interval && train_stop.Arrival_Time < time + right_interval ||
+                train_stop.Departure_Time > time - left_interval && train_stop.Departure_Time < time + right_interval))).ToListAsync();
+
             List<InternalTrainRaceThroughStationDto> final_train_routes_on_date = new List<InternalTrainRaceThroughStationDto>();
-            foreach(TrainRouteOnDate train_race in appropriate_train_routes_on_date)
+            foreach (TrainRouteOnDate train_race in appropriate_train_routes_on_date)
             {
-                    List<TrainRouteOnDateOnStation> train_stops_for_current_train_route_on_date = await context.Train_Routes_On_Date_On_Stations
-                .Include(train_stop => train_stop.Train_Route_On_Date)
-                .Include(train_stop => train_stop.Station)
-                .Where(train_stop => train_stop.Train_Route_On_Date_Id == train_race.Id)
-                .OrderBy(train_stop => train_stop.Arrival_Time).ToListAsync();
+                List<TrainRouteOnDateOnStation> train_stops_for_current_train_route_on_date = await context.Train_Routes_On_Date_On_Stations
+            .Include(train_stop => train_stop.Train_Route_On_Date)
+            .Include(train_stop => train_stop.Station)
+            .Where(train_stop => train_stop.Train_Route_On_Date_Id == train_race.Id)
+            .OrderBy(train_stop => train_stop.Arrival_Time).ToListAsync();
                 TrainRouteOnDateOnStation starting_stop = train_stops_for_current_train_route_on_date[0];
                 TrainRouteOnDateOnStation ending_stop = train_stops_for_current_train_route_on_date[train_stops_for_current_train_route_on_date.Count - 1];
                 TrainRouteOnDateOnStation current_stop = train_stops_for_current_train_route_on_date.FirstOrDefault(train_stop => train_stop.Station.Title == station_title)!;

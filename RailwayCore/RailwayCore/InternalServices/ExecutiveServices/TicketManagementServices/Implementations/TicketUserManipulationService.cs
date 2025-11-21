@@ -2,13 +2,14 @@
 using RailwayCore.Models;
 using Microsoft.EntityFrameworkCore;
 using RailwayCore.Models.ModelEnums.TicketBookingEnums;
+using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Interfaces;
 
-namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations
 {
     /// <summary>
     /// Даний сервіс містить функціонал, який пов'язаний з операціями з квитками, які виконуються зі сторони користувача(не системи)
     /// </summary>
-    public class TicketUserManipulationService
+    public class TicketUserManipulationService : ITicketUserManipulationService
     {
         private readonly string service_name = "TicketUserManipulationService";
         private readonly AppDbContext context;
@@ -48,9 +49,9 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
             {
                 return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find ticket booking with ID: {ticket_id}", annotation: service_name, unit: ProgramUnit.Core));
             }
-            if(ticket_booking.Ticket_Status != TicketStatus.Booked_And_Active)
+            if (ticket_booking.Ticket_Status != TicketStatus.Booked_And_Active)
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't return NOT ACTIVE ticket booking. Current status: {ticket_booking.Ticket_Status}", 
+                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't return NOT ACTIVE ticket booking. Current status: {ticket_booking.Ticket_Status}",
                     annotation: service_name, unit: ProgramUnit.Core));
             }
             ticket_booking.Ticket_Status = TicketStatus.Returned;

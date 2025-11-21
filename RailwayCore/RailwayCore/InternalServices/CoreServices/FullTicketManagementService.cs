@@ -1,8 +1,7 @@
-﻿using RailwayCore.InternalServices.ExecutiveServices;
-using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices;
-using RailwayCore.Models;
+﻿using RailwayCore.Models;
 using RailwayCore.InternalServices.ExecutiveServices.ExecutiveDTO.TicketManagementDTO;
-
+using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations;
+using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Interfaces;
 namespace RailwayCore.InternalServices.CoreServices
 {
     /// <summary>
@@ -13,15 +12,15 @@ namespace RailwayCore.InternalServices.CoreServices
     [CoreService]
     public class FullTicketManagementService
     {
-        private readonly TicketAvailabilityCheckService ticket_availability_check_service;
-        private readonly TicketAllocationService ticket_allocation_service;
-        private readonly TicketBookingTimerService ticket_booking_timer_service;
-        private readonly TicketSystemManipulationService ticket_system_manipulation_service;
-        private readonly TicketUserManipulationService ticket_user_manipulation_service;
+        private readonly ITicketAvailabilityCheckService ticket_availability_check_service;
+        private readonly ITicketAllocationService ticket_allocation_service;
+        private readonly ITicketBookingTimerService ticket_booking_timer_service;
+        private readonly ITicketSystemManipulationService ticket_system_manipulation_service;
+        private readonly ITicketUserManipulationService ticket_user_manipulation_service;
 
-        public FullTicketManagementService(TicketAvailabilityCheckService ticket_availability_check_service, TicketAllocationService ticket_allocation_service, 
-            TicketBookingTimerService ticket_booking_timer_service, TicketSystemManipulationService ticket_system_manipulation_service, 
-            TicketUserManipulationService ticket_user_manipulation_service)
+        public FullTicketManagementService(ITicketAvailabilityCheckService ticket_availability_check_service, ITicketAllocationService ticket_allocation_service, 
+            ITicketBookingTimerService ticket_booking_timer_service, ITicketSystemManipulationService ticket_system_manipulation_service, 
+            ITicketUserManipulationService ticket_user_manipulation_service)
         {
             this.ticket_availability_check_service = ticket_availability_check_service;
             this.ticket_allocation_service = ticket_allocation_service;

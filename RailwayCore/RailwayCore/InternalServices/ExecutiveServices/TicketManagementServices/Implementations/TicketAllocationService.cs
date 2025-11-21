@@ -3,36 +3,37 @@ using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
 using Microsoft.EntityFrameworkCore;
 using RailwayCore.InternalServices.CoreServices;
-using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
 using RailwayCore.InternalServices.ExecutiveServices.ExecutiveDTO.TicketManagementDTO;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Implementations;
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Interfaces;
 
-namespace RailwayCore.InternalServices.ExecutiveServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations
 {
     /// <summary>
     /// Даний сервіс є сервісом, який відповідає за створення квитків
     /// </summary>
     [ExecutiveService]
-    public class TicketAllocationService
+    public class TicketAllocationService : ITicketAllocationService
     {
         private readonly string service_name = "TicketAllocationService";
         private readonly AppDbContext context;
         private readonly IStationRepository station_service;
         private readonly ITrainRouteOnDateRepository train_route_on_date_service;
         private readonly IPassengerCarriageRepository passenger_carriage_service;
-        private readonly TrainScheduleSearchService train_schedule_search_service;
-        private readonly TrainSquadSearchService train_squad_search_service;
-        private readonly TicketAvailabilityCheckService ticket_search_service;
-        public TicketAllocationService(AppDbContext context, 
-            IStationRepository station_service, 
-            ITrainRouteOnDateRepository train_route_on_date_service, 
-            IPassengerCarriageRepository passenger_carriage_service, 
-            FullTrainRouteSearchService full_train_route_search_service, 
-            TicketAvailabilityCheckService ticket_search_service,
-            TrainScheduleSearchService train_schedule_search_service,
-            TrainSquadSearchService train_squad_search_service)
+        private readonly ITrainScheduleSearchService train_schedule_search_service;
+        private readonly ITrainSquadSearchService train_squad_search_service;
+        private readonly ITicketAvailabilityCheckService ticket_search_service;
+        public TicketAllocationService(AppDbContext context,
+            IStationRepository station_service,
+            ITrainRouteOnDateRepository train_route_on_date_service,
+            IPassengerCarriageRepository passenger_carriage_service,
+            ITicketAvailabilityCheckService ticket_search_service,
+            ITrainScheduleSearchService train_schedule_search_service,
+            ITrainSquadSearchService train_squad_search_service)
         {
             this.context = context;
             this.station_service = station_service;
@@ -41,7 +42,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             this.train_schedule_search_service = train_schedule_search_service;
             this.train_squad_search_service = train_squad_search_service;
             this.ticket_search_service = ticket_search_service;
-            
+
         }
 
         /// <summary>
@@ -61,25 +62,25 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             TrainRouteOnDate? train_route_on_date_from_ticket = await train_route_on_date_service.GetTrainRouteOnDateById(input.Train_Route_On_Date_Id);
             if (train_route_on_date_from_ticket is null)
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find train route on date with ID: {input.Train_Route_On_Date_Id}", 
+                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find train route on date with ID: {input.Train_Route_On_Date_Id}",
                     annotation: service_name, unit: ProgramUnit.Core));
             }
             PassengerCarriage? passenger_carriage_from_ticket = await passenger_carriage_service.GetPassengerCarriageById(input.Passenger_Carriage_Id);
             if (passenger_carriage_from_ticket is null)
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find passenger carriage with ID: {input.Passenger_Carriage_Id}", 
+                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find passenger carriage with ID: {input.Passenger_Carriage_Id}",
                     annotation: service_name, unit: ProgramUnit.Core));
             }
             Station? starting_station_from_ticket = await station_service.GetStationByTitle(input.Starting_Station_Title);
             Station? ending_station_from_ticket = await station_service.GetStationByTitle(input.Ending_Station_Title);
             if (starting_station_from_ticket is null)
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find station with title: {input.Starting_Station_Title}", 
+                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find station with title: {input.Starting_Station_Title}",
                     annotation: service_name, unit: ProgramUnit.Core));
             }
             if (ending_station_from_ticket is null)
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find station with title: {input.Ending_Station_Title}", 
+                return new FailQuery<TicketBooking>(new Error(ErrorType.NotFound, $"Can't find station with title: {input.Ending_Station_Title}",
                     annotation: service_name, unit: ProgramUnit.Core));
             }
 
@@ -87,7 +88,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             List<TrainRouteOnDateOnStation>? all_train_stops_for_train_route_on_date = await train_schedule_search_service.GetTrainStopsForTrainRouteOnDate(input.Train_Route_On_Date_Id);
             if (all_train_stops_for_train_route_on_date is null)
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"Can't get stations list for train route on date", 
+                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"Can't get stations list for train route on date",
                     annotation: service_name, unit: ProgramUnit.Core));
             }
 
@@ -95,7 +96,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             if (!all_train_stops_for_train_route_on_date.Any(train_stop => train_stop.Station_Id == starting_station_from_ticket.Id) ||
             !all_train_stops_for_train_route_on_date.Any(train_stop => train_stop.Station_Id == ending_station_from_ticket.Id))
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"This train route on date doesn't pass through these stations", 
+                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"This train route on date doesn't pass through these stations",
                     annotation: service_name, unit: ProgramUnit.Core));
             }
             //Знаходимо номер за рахунком у слідування поїзда через станції
@@ -105,7 +106,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             //Якщо поїзд проходить між цими станціями, але в іншому порядку, то вертаємо помилку і квиток купити не можливо
             if (ending_stop_from_ticket_index <= starting_stop_from_ticket_index)
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"This train doesn't pass through these stations IN THIS ORDER", 
+                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"This train doesn't pass through these stations IN THIS ORDER",
                     annotation: service_name, unit: ProgramUnit.Core));
             }
 
@@ -114,13 +115,13 @@ namespace RailwayCore.InternalServices.ExecutiveServices
                  train_squad_search_service.GetPassengerCarriageAssignmentsForTrainRouteOnDate(input.Train_Route_On_Date_Id);
             if (all_passenger_carriage_assignments_for_train_route_on_date is null)
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"Can't find carriage squad for train route on date with ID: {input.Train_Route_On_Date_Id}", 
+                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"Can't find carriage squad for train route on date with ID: {input.Train_Route_On_Date_Id}",
                     annotation: service_name, unit: ProgramUnit.Core));
             }
             //Якщо в складі рейсу поїзда немає вагону з квитка, то вертаємо помилку і квиток купити не можливо
             if (!all_passenger_carriage_assignments_for_train_route_on_date.Any(carriage_assignment => carriage_assignment.Passenger_Carriage_Id == passenger_carriage_from_ticket.Id))
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"Train route on date {input.Train_Route_On_Date_Id} doesn't contain carriage {input.Passenger_Carriage_Id} in its squad", 
+                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"Train route on date {input.Train_Route_On_Date_Id} doesn't contain carriage {input.Passenger_Carriage_Id} in its squad",
                     annotation: service_name, unit: ProgramUnit.Core));
             }
 
@@ -129,7 +130,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
     .FirstOrDefault(carriage_assignment => carriage_assignment.Passenger_Carriage_Id == passenger_carriage_from_ticket.Id);
             if (desired_carriage_assignment is null) //Дана перевірка є надлишкова
             {
-                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"Train route on date {input.Train_Route_On_Date_Id} doesn't contain carriage {input.Passenger_Carriage_Id} in its squad", 
+                return new FailQuery<TicketBooking>(new Error(ErrorType.BadRequest, $"Train route on date {input.Train_Route_On_Date_Id} doesn't contain carriage {input.Passenger_Carriage_Id} in its squad",
                     annotation: service_name, unit: ProgramUnit.Core));
             }
             int carriage_position_in_squad = desired_carriage_assignment.Position_In_Squad;

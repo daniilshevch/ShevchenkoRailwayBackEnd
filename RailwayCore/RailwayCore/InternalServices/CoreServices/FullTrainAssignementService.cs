@@ -2,9 +2,10 @@
 using RailwayCore.Context;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
-using RailwayCore.InternalServices.ExecutiveServices;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TrainAssignmentServices.Implementations;
+using RailwayCore.InternalServices.ExecutiveServices.TrainAssignmentServices.Interfaces;
 
 namespace RailwayCore.InternalServices.CoreServices
 {
@@ -16,13 +17,13 @@ namespace RailwayCore.InternalServices.CoreServices
         private readonly IPassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service;
         private readonly IStationRepository station_service;
         private readonly IPassengerCarriageRepository passenger_carriage_service;
-        private readonly TrainSquadCopyService train_squad_copy_service;
-        private readonly TrainScheduleCopyService train_schedule_copy_service;
+        private readonly ITrainSquadCopyService train_squad_copy_service;
+        private readonly ITrainScheduleCopyService train_schedule_copy_service;
         public FullTrainAssignementService(AppDbContext context, ITrainRouteOnDateRepository train_route_on_date_service,
             ITrainRouteOnDateOnStationRepository train_route_on_date_on_station_service,
             IPassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service,
             IStationRepository station_service, IPassengerCarriageRepository passenger_carriage_service,
-            TrainSquadCopyService train_squad_copy_service, TrainScheduleCopyService train_schedule_copy_service)
+            ITrainSquadCopyService train_squad_copy_service, ITrainScheduleCopyService train_schedule_copy_service)
         {
             this.context = context;
             this.train_route_on_date_service = train_route_on_date_service;

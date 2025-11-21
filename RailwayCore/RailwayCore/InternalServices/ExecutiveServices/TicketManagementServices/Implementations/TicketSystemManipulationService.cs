@@ -3,10 +3,11 @@ using RailwayCore.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using RailwayCore.InternalServices.SystemServices;
+using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Interfaces;
 
-namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations
 {
-    public class TicketSystemManipulationService
+    public class TicketSystemManipulationService : ITicketSystemManipulationService
     {
         private readonly string service_name = "TicketSystemManipulationService";
         private readonly AppDbContext context;

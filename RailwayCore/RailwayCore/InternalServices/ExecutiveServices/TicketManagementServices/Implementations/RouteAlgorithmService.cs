@@ -1,5 +1,5 @@
 ﻿using RailwayCore.Models;
-namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations
 {
     public static class RouteAlgorithmService
     {

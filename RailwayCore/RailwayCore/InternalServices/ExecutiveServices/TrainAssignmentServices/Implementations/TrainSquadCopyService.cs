@@ -3,17 +3,18 @@ using RailwayCore.Context;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TrainAssignmentServices.Interfaces;
 
-namespace RailwayCore.InternalServices.ExecutiveServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TrainAssignmentServices.Implementations
 {
-    public class TrainSquadCopyService
+    public class TrainSquadCopyService : ITrainSquadCopyService
     {
         private readonly AppDbContext context;
         private readonly ITrainRouteOnDateRepository train_route_on_date_service;
         private readonly IPassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service;
         private readonly IPassengerCarriageRepository passenger_carriage_service;
-        public TrainSquadCopyService(AppDbContext context, ITrainRouteOnDateRepository train_route_on_date_service, 
-            IPassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service, 
+        public TrainSquadCopyService(AppDbContext context, ITrainRouteOnDateRepository train_route_on_date_service,
+            IPassengerCarriageOnTrainRouteOnDateRepository passenger_carriage_on_train_route_on_date_service,
             IPassengerCarriageRepository passenger_carriage_service)
         {
             this.context = context;

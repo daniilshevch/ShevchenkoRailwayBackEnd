@@ -3,9 +3,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RailwayCore.Context;
 using RailwayCore.InternalServices.CoreServices;
-using RailwayCore.InternalServices.ExecutiveServices;
-using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices;
-using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
+using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations;
+using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TrainAssignmentServices.Implementations;
+using RailwayCore.InternalServices.ExecutiveServices.TrainAssignmentServices.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Implementations;
+using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Interfaces;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices;
@@ -41,22 +44,35 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
         }
         public void ConfigureTicketManagementExecutiveServices(IServiceCollection services)
         {
-            services.AddScoped<TicketAvailabilityCheckService>();
-            services.AddScoped<TicketAllocationService>();
-            services.AddScoped<TicketBookingTimerService>();
-            services.AddScoped<TicketSystemManipulationService>();
-            services.AddScoped<TicketUserManipulationService>();
+            services.AddScoped<ITicketAvailabilityCheckService, TicketAvailabilityCheckService>();
+            services.AddScoped<ITicketAllocationService, TicketAllocationService>();
+            services.AddScoped<ITicketBookingTimerService, TicketBookingTimerService>();
+            services.AddScoped<ITicketSystemManipulationService, TicketSystemManipulationService>();
+            services.AddScoped<ITicketUserManipulationService, TicketUserManipulationService>();
+
+            //services.AddScoped<TicketAvailabilityCheckService>();
+            //services.AddScoped<TicketAllocationService>();
+            //services.AddScoped<TicketBookingTimerService>();
+            //services.AddScoped<TicketSystemManipulationService>();
+            //services.AddScoped<TicketUserManipulationService>();
         }
         public void ConfigureTrainRouteSearchExecutiveServices(IServiceCollection services)
         {
-            services.AddScoped<TrainTripsSearchService>();
-            services.AddScoped<TrainScheduleSearchService>();
-            services.AddScoped<TrainSquadSearchService>();
+            services.AddScoped<ITrainTripsSearchService, TrainTripsSearchService>();
+            services.AddScoped<ITrainScheduleSearchService, TrainScheduleSearchService>();
+            services.AddScoped<ITrainSquadSearchService, TrainSquadSearchService>();
+
+            //services.AddScoped<TrainTripsSearchService>();
+            //services.AddScoped<TrainScheduleSearchService>();
+            //services.AddScoped<TrainSquadSearchService>();
         }
         public void ConfigureTrainAssignmentExecutiveServices(IServiceCollection services)
         {
-            services.AddScoped<TrainSquadCopyService>();
-            services.AddScoped<TrainScheduleCopyService>();
+            services.AddScoped<ITrainSquadCopyService, TrainSquadCopyService>();
+            services.AddScoped<ITrainScheduleCopyService, TrainScheduleCopyService>();
+
+            //services.AddScoped<TrainSquadCopyService>();
+            //services.AddScoped<TrainScheduleCopyService>();
         }
         public void ConfigureCoreServices(IServiceCollection services)
         {

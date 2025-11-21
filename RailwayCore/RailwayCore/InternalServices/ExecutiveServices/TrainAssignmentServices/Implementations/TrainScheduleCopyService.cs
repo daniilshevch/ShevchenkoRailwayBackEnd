@@ -3,18 +3,19 @@ using RailwayCore.Context;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayCore.InternalServices.ExecutiveServices.TrainAssignmentServices.Interfaces;
 
-namespace RailwayCore.InternalServices.ExecutiveServices
+namespace RailwayCore.InternalServices.ExecutiveServices.TrainAssignmentServices.Implementations
 {
-    public class TrainScheduleCopyService
+    public class TrainScheduleCopyService : ITrainScheduleCopyService
     {
         private readonly AppDbContext context;
         private readonly ITrainRouteOnDateRepository train_route_on_date_service;
         private readonly ITrainRouteOnDateOnStationRepository train_route_on_date_on_station_service;
         private readonly IStationRepository station_service;
-        public TrainScheduleCopyService(AppDbContext context, 
-            ITrainRouteOnDateRepository train_route_on_date_service, 
-            ITrainRouteOnDateOnStationRepository train_route_on_date_on_station_service, 
+        public TrainScheduleCopyService(AppDbContext context,
+            ITrainRouteOnDateRepository train_route_on_date_service,
+            ITrainRouteOnDateOnStationRepository train_route_on_date_on_station_service,
             IStationRepository station_service)
         {
             this.context = context;
@@ -56,7 +57,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices
             List<TrainRouteOnDateOnStation> prototype_train_route_on_date_stations = context.Train_Routes_On_Date_On_Stations
                 .Include(train_stop => train_stop.Train_Route_On_Date)
                 .Include(train_stop => train_stop.Station)
-                .Where(train_stop => train_stop.Train_Route_On_Date_Id == prototype_train_route_on_date_id).ToList(); 
+                .Where(train_stop => train_stop.Train_Route_On_Date_Id == prototype_train_route_on_date_id).ToList();
             List<TrainRouteOnDateOnStation> new_train_route_on_date_stations = new List<TrainRouteOnDateOnStation>();
             foreach (TrainRouteOnDateOnStation old_train_stop in prototype_train_route_on_date_stations)
             {
