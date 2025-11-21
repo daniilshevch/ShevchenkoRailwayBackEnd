@@ -7,6 +7,7 @@ using RailwayCore.InternalServices.ExecutiveServices;
 using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices;
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
@@ -18,6 +19,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
     {
         public void ConfigureModelRepositories(IServiceCollection services)
         {
+            //services.AddScoped<IRailwayBranchRepository, RailwayBranchRepository>();
             services.AddScoped<RailwayBranchRepository>();
             services.AddScoped<StationRepository>();
             services.AddScoped<TrainRouteRepository>();
