@@ -4,8 +4,9 @@ using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.StationDTO.AdminDTO;
-using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
 using System.Net;
 
 namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers
@@ -15,8 +16,8 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
     [ApiExplorerSettings(GroupName = "Admin Controllers")]
     public class StationRepositoryController: ControllerBase
     {
-        private readonly StationRepositoryService station_repository_service;
-        public StationRepositoryController(StationRepositoryService station_repository_service)
+        private readonly IStationRepositoryService station_repository_service;
+        public StationRepositoryController(IStationRepositoryService station_repository_service)
         {
             this.station_repository_service = station_repository_service;
         }

@@ -13,7 +13,8 @@ using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.In
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices;
-using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices;
 using System.Text;
 
@@ -87,13 +88,21 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
         }
         public void ConfigureModelRepositoryServices(IServiceCollection services)
         {
-            services.AddScoped<CarriageAssignmentRepositoryService>();
-            services.AddScoped<TrainStopRepositoryService>();
-            services.AddScoped<TrainRouteRepositoryService>();
-            services.AddScoped<TrainRaceRepositoryService>();
-            services.AddScoped<PassengerCarriageRepositoryService>();
-            services.AddScoped<StationRepositoryService>();
-            services.AddScoped<TicketBookingRepositoryService>();
+            services.AddScoped<ICarriageAssignmentRepositoryService, CarriageAssignmentRepositoryService>();
+            services.AddScoped<ITrainStopRepositoryService, TrainStopRepositoryService>();
+            services.AddScoped<ITrainRouteRepositoryService, TrainRouteRepositoryService>();
+            services.AddScoped<ITrainRaceRepositoryService, TrainRaceRepositoryService>();
+            services.AddScoped<IPassengerCarriageRepositoryService, PassengerCarriageRepositoryService>();
+            services.AddScoped<IStationRepositoryService, StationRepositoryService>();
+            services.AddScoped<ITicketBookingRepositoryService, TicketBookingRepositoryService>();
+
+            //services.AddScoped<CarriageAssignmentRepositoryService>();
+            //services.AddScoped<TrainStopRepositoryService>();
+            //services.AddScoped<TrainRouteRepositoryService>();
+            //services.AddScoped<TrainRaceRepositoryService>();
+            //services.AddScoped<PassengerCarriageRepositoryService>();
+            //services.AddScoped<StationRepositoryService>();
+            //services.AddScoped<TicketBookingRepositoryService>();
         }
         public void ConfigureClientServices(IServiceCollection services)
         {

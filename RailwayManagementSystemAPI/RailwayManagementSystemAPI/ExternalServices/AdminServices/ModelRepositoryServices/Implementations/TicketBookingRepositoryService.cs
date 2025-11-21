@@ -3,7 +3,8 @@ using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO;
 using System.Text.Json.Serialization;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
-namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
+namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations
 {
     public class ExternalTicketGroupByStartingStationDto
     {
@@ -28,7 +29,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         [JsonPropertyName("ticket_bookings_list")]
         public List<ExternalTicketBookingDto> Ticket_Bookings_List { get; set; } = new List<ExternalTicketBookingDto>();
     }
-    public class TicketBookingRepositoryService
+    public class TicketBookingRepositoryService : ITicketBookingRepositoryService
     {
         public readonly ITicketBookingRepository ticket_booking_repository;
         public TicketBookingRepositoryService(ITicketBookingRepository ticket_booking_repository)
@@ -37,9 +38,9 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         }
         public async Task<QueryResult<List<ExternalTicketBookingDto>>> GetTicketBookingsForTrainRouteOnDate(string train_route_on_date_id)
         {
-            QueryResult<List<TicketBooking>> ticket_bookings_get_result = 
+            QueryResult<List<TicketBooking>> ticket_bookings_get_result =
                 await ticket_booking_repository.GetTicketBookingsForTrainRouteOnDate(train_route_on_date_id);
-            if(ticket_bookings_get_result.Fail)
+            if (ticket_bookings_get_result.Fail)
             {
                 return new FailQuery<List<ExternalTicketBookingDto>>(ticket_bookings_get_result.Error);
             }
@@ -127,7 +128,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             List<ExternalTicketGroupByEndingStationDto> grouped_ticket_bookings = GroupTicketBookingsByEndingStation(ticket_bookings);
             return new SuccessQuery<List<ExternalTicketGroupByEndingStationDto>>(grouped_ticket_bookings);
         }
-        public async Task<QueryResult<List<ExternalTicketGroupByStartingStationDto>>> 
+        public async Task<QueryResult<List<ExternalTicketGroupByStartingStationDto>>>
             GetGroupedTicketBookingsForCarriageAssignmentOrderedByStartingStation(string train_route_on_date_id, string passenger_carriage_id)
         {
             QueryResult<List<TicketBooking>> ticket_bookings_get_result =

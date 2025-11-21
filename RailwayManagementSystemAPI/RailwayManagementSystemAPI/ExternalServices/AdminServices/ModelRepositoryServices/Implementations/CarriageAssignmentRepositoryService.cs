@@ -3,10 +3,11 @@ using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.AdminDTO;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
 
-namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
+namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations
 {
-    public class CarriageAssignmentRepositoryService
+    public class CarriageAssignmentRepositoryService : ICarriageAssignmentRepositoryService
     {
         private readonly IPassengerCarriageOnTrainRouteOnDateRepository carriage_assignment_repository;
         public CarriageAssignmentRepositoryService(IPassengerCarriageOnTrainRouteOnDateRepository carriage_assignment_repository)
@@ -15,9 +16,9 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         }
         public async Task<QueryResult<ExternalCarriageAssignmentDto>> CreatePassengerCarriageOnTrainRouteOnDate(PassengerCarriageOnTrainRouteOnDateDto input)
         {
-            QueryResult<PassengerCarriageOnTrainRouteOnDate> carriage_assignment_creation_result =  
+            QueryResult<PassengerCarriageOnTrainRouteOnDate> carriage_assignment_creation_result =
                 await carriage_assignment_repository.CreatePassengerCarriageOnTrainRouteOnDate(input);
-            if(carriage_assignment_creation_result.Fail)
+            if (carriage_assignment_creation_result.Fail)
             {
                 return new FailQuery<ExternalCarriageAssignmentDto>(carriage_assignment_creation_result.Error);
             }
@@ -41,7 +42,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
                 Is_For_Children = input.Is_For_Children,
                 Is_For_Woman = input.Is_For_Woman
             };
-            QueryResult<PassengerCarriageOnTrainRouteOnDate> carriage_assignment_update_result = 
+            QueryResult<PassengerCarriageOnTrainRouteOnDate> carriage_assignment_update_result =
                 await carriage_assignment_repository.UpdatePassengerCarriageOnTrainRouteOnDate(update_dto);
             if (carriage_assignment_update_result.Fail)
             {
@@ -52,9 +53,9 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         }
         public async Task<QueryResult<List<ExternalCarriageAssignmentDto>>> GetPassengerCarriagesForTrainRouteOnDate(string train_route_on_date_id)
         {
-            QueryResult<List<PassengerCarriageOnTrainRouteOnDate>> carriage_assignment_get_result = 
+            QueryResult<List<PassengerCarriageOnTrainRouteOnDate>> carriage_assignment_get_result =
                 await carriage_assignment_repository.GetPassengerCarriagesForTrainRouteOnDate(train_route_on_date_id);
-            if(carriage_assignment_get_result.Fail)
+            if (carriage_assignment_get_result.Fail)
             {
                 return new FailQuery<List<ExternalCarriageAssignmentDto>>(carriage_assignment_get_result.Error);
             }

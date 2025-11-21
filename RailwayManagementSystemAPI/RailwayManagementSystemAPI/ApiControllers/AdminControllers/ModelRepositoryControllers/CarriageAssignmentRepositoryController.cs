@@ -2,7 +2,8 @@
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.AdminDTO;
-using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -15,8 +16,8 @@ namespace RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers
     
     public class CarriageAssignmentRepositoryController: ControllerBase
     {
-        private readonly CarriageAssignmentRepositoryService carriage_assignment_repository_service;
-        public CarriageAssignmentRepositoryController(CarriageAssignmentRepositoryService carriage_assignment_repository_service)
+        private readonly ICarriageAssignmentRepositoryService carriage_assignment_repository_service;
+        public CarriageAssignmentRepositoryController(ICarriageAssignmentRepositoryService carriage_assignment_repository_service)
         {
             this.carriage_assignment_repository_service = carriage_assignment_repository_service;
         }

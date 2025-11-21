@@ -3,8 +3,9 @@ using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.ModelRepositories;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.PassengerCarriageDTO.AdminDTO;
-using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
 
 namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers
 {
@@ -13,8 +14,8 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
     [ApiExplorerSettings(GroupName = "Admin Controllers")]
     public class PassengerCarriageRepositoryController: ControllerBase
     {
-        private readonly PassengerCarriageRepositoryService passenger_carriage_repository_service;
-        public PassengerCarriageRepositoryController(PassengerCarriageRepositoryService passenger_carriage_repository_service)
+        private readonly IPassengerCarriageRepositoryService passenger_carriage_repository_service;
+        public PassengerCarriageRepositoryController(IPassengerCarriageRepositoryService passenger_carriage_repository_service)
         {
             this.passenger_carriage_repository_service = passenger_carriage_repository_service;
         }

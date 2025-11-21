@@ -3,10 +3,11 @@ using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.AdminDTO;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
 
-namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
+namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations
 {
-    public class TrainRaceRepositoryService
+    public class TrainRaceRepositoryService : ITrainRaceRepositoryService
     {
         private readonly ITrainRouteOnDateRepository train_route_on_date_repository;
         public TrainRaceRepositoryService(ITrainRouteOnDateRepository train_route_on_date_repository)
@@ -16,7 +17,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         public async Task<ExternalSimpleTrainRaceDto?> CreateTrainRouteOnDate(TrainRouteOnDateDto input)
         {
             TrainRouteOnDate? train_race = await train_route_on_date_repository.CreateTrainRouteOnDate(input);
-            if(train_race is null)
+            if (train_race is null)
             {
                 return null;
             }
@@ -30,7 +31,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         public async Task<ExternalSimpleTrainRaceDto?> ChangeTrainRaceCoefficientForTrainRouteOnDate(string train_route_on_date_id, double train_race_coefficient)
         {
             TrainRouteOnDate? train_race = await train_route_on_date_repository.ChangeTrainRaceCoefficientForTrainRouteOnDate(train_route_on_date_id, train_race_coefficient);
-            if(train_race is null)
+            if (train_race is null)
             {
                 return null;
             }

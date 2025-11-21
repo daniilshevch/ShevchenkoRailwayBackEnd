@@ -2,7 +2,8 @@
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.AdminDTO;
-using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
 
 namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers
 {
@@ -11,8 +12,8 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
     [ApiExplorerSettings(GroupName = "Admin Controllers")]
     public class TrainRaceRepositoryController: ControllerBase
     {
-        public TrainRaceRepositoryService train_race_repository_service;
-        public TrainRaceRepositoryController(TrainRaceRepositoryService train_race_repository_service)
+        public ITrainRaceRepositoryService train_race_repository_service;
+        public TrainRaceRepositoryController(ITrainRaceRepositoryService train_race_repository_service)
         {
             this.train_race_repository_service = train_race_repository_service;
         }

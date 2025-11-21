@@ -3,9 +3,10 @@ using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
-namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
+namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations
 {
-    public class TrainStopRepositoryService
+    public class TrainStopRepositoryService : ITrainStopRepositoryService
     {
         private readonly ITrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository;
         public TrainStopRepositoryService(ITrainRouteOnDateOnStationRepository train_route_on_date_on_station_repository)
@@ -15,7 +16,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         public async Task<QueryResult<TrainRouteOnDateOnStationDto>> CreateTrainStop(TrainRouteOnDateOnStationDto input)
         {
             QueryResult<TrainRouteOnDateOnStation> train_stop_creation_result = await train_route_on_date_on_station_repository.CreateTrainStop(input);
-            if(train_stop_creation_result.Fail)
+            if (train_stop_creation_result.Fail)
             {
                 return new FailQuery<TrainRouteOnDateOnStationDto>(train_stop_creation_result.Error);
             }
@@ -23,9 +24,9 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         }
         public async Task<QueryResult<List<TrainRouteOnDateOnStationDto>>> GetTrainStopsForTrainRouteOnDate(string train_route_on_date_id)
         {
-            QueryResult<List<TrainRouteOnDateOnStation>> train_stops_get_result = 
+            QueryResult<List<TrainRouteOnDateOnStation>> train_stops_get_result =
                 await train_route_on_date_on_station_repository.GetTrainStopsForTrainRouteOnDate(train_route_on_date_id);
-            if(train_stops_get_result.Fail)
+            if (train_stops_get_result.Fail)
             {
                 return new FailQuery<List<TrainRouteOnDateOnStationDto>>(train_stops_get_result.Error);
             }
@@ -33,10 +34,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
                 (TrainRouteOnDateOnStationDto)single_train_stop).ToList();
 
             TrainRouteOnDateOnStationDto? previous_stop = null;
-            foreach(TrainRouteOnDateOnStationDto current_stop in train_stops)
+            foreach (TrainRouteOnDateOnStationDto current_stop in train_stops)
             {
                 double? speed_on_section = null;
-                if(previous_stop is not null)
+                if (previous_stop is not null)
                 {
                     double distance_between_stations = (double)(current_stop.Distance_From_Starting_Station - previous_stop.Distance_From_Starting_Station)!;
                     if (current_stop.Arrival_Time is not null && previous_stop.Departure_Time is not null)
@@ -50,7 +51,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             }
             return new SuccessQuery<List<TrainRouteOnDateOnStationDto>>(train_stops);
         }
-        public async Task<QueryResult<TrainRouteOnDateOnStationDto>> UpdateTrainStop(string train_route_on_date_id, string station_title, 
+        public async Task<QueryResult<TrainRouteOnDateOnStationDto>> UpdateTrainStop(string train_route_on_date_id, string station_title,
             ExternalTrainStopUpdateDto input)
         {
             TrainRouteOnDateOnStationDto update_dto = new TrainRouteOnDateOnStationDto()
@@ -63,9 +64,9 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
                 Speed_On_Section = input.Speed_On_Section,
                 Stop_Type = input.Stop_Type
             };
-            QueryResult<TrainRouteOnDateOnStation> train_stop_update_result = 
+            QueryResult<TrainRouteOnDateOnStation> train_stop_update_result =
                 await train_route_on_date_on_station_repository.UpdateTrainStop(update_dto);
-            if(train_stop_update_result.Fail)
+            if (train_stop_update_result.Fail)
             {
                 return new FailQuery<TrainRouteOnDateOnStationDto>(train_stop_update_result.Error);
             }

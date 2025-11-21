@@ -3,10 +3,11 @@ using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.StationDTO.AdminDTO;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
 
-namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
+namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations
 {
-    public class StationRepositoryService
+    public class StationRepositoryService : IStationRepositoryService
     {
         private readonly IStationRepository station_repository;
         public StationRepositoryService(IStationRepository station_repository)
@@ -18,7 +19,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             StationDto station_dto = (StationDto)input;
             station_dto.Id = id;
             QueryResult<Station> station_creation_result = await station_repository.CreateStation(station_dto);
-            if(station_creation_result.Fail)
+            if (station_creation_result.Fail)
             {
                 return new FailQuery<StationDto>(station_creation_result.Error);
             }
@@ -27,7 +28,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         public async Task<StationDto?> GetStationById(int id)
         {
             Station? station = await station_repository.GetStationById(id);
-            if(station is null)
+            if (station is null)
             {
                 return null;
             }
@@ -52,10 +53,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             StationDto station_dto = (StationDto)input;
             station_dto.Id = id;
             QueryResult<Station> station_update_result = await station_repository.UpdateStation(station_dto);
-            if(station_update_result.Fail)
+            if (station_update_result.Fail)
             {
                 return new FailQuery<StationDto>(station_update_result.Error);
-            }    
+            }
             return new SuccessQuery<StationDto>((StationDto)station_update_result.Value);
 
         }

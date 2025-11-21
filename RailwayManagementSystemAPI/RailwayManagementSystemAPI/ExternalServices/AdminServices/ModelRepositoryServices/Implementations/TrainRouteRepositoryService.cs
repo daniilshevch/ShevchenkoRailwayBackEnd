@@ -4,9 +4,10 @@ using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TrainRouteDTO.AdminDTO;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
-namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
+namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations
 {
-    public class TrainRouteRepositoryService
+    public class TrainRouteRepositoryService : ITrainRouteRepositoryService
     {
         private readonly ITrainRouteRepository train_route_repository;
         public TrainRouteRepositoryService(ITrainRouteRepository train_route_repository)
@@ -17,8 +18,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         {
             TrainRouteDto train_route_dto = (TrainRouteDto)input;
             train_route_dto.Id = id;
-            QueryResult<TrainRoute> train_creation_result =  await train_route_repository.CreateTrainRoute(train_route_dto);
-            if(train_creation_result.Fail)
+            QueryResult<TrainRoute> train_creation_result = await train_route_repository.CreateTrainRoute(train_route_dto);
+            if (train_creation_result.Fail)
             {
                 return new FailQuery<ExternalTrainRouteDto>(train_creation_result.Error);
             }
@@ -28,7 +29,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         public async Task<ExternalTrainRouteDto?> GetTrainRouteById(string id)
         {
             TrainRoute? train_route_get_result = await train_route_repository.GetTrainRouteById(id);
-            if(train_route_get_result == null)
+            if (train_route_get_result == null)
             {
                 return null;
             }
@@ -44,7 +45,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             TrainRouteDto train_route_dto = (TrainRouteDto)input;
             train_route_dto.Id = id;
             QueryResult<TrainRoute> train_route_update_result = await train_route_repository.UpdateTrainRoute(train_route_dto);
-            if(train_route_update_result.Fail)
+            if (train_route_update_result.Fail)
             {
                 return new FailQuery<ExternalTrainRouteDto>(train_route_update_result.Error);
             }

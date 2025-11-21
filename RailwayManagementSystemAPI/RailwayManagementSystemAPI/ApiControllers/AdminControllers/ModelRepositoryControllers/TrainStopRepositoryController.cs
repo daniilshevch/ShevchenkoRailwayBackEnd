@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO;
-using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
 
 namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers
 {
@@ -13,8 +14,8 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
     [ApiExplorerSettings(GroupName = "Admin Controllers")]
     public class TrainStopRepositoryController: ControllerBase
     {
-        private readonly TrainStopRepositoryService train_stop_repository_service;
-        public TrainStopRepositoryController(TrainStopRepositoryService train_stop_repository_service)
+        private readonly ITrainStopRepositoryService train_stop_repository_service;
+        public TrainStopRepositoryController(ITrainStopRepositoryService train_stop_repository_service)
         {
             this.train_stop_repository_service = train_stop_repository_service;
         }

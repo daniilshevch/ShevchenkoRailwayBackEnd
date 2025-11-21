@@ -3,10 +3,11 @@ using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.PassengerCarriageDTO.AdminDTO;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
 
-namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices
+namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations
 {
-    public class PassengerCarriageRepositoryService
+    public class PassengerCarriageRepositoryService : IPassengerCarriageRepositoryService
     {
         private readonly IPassengerCarriageRepository passenger_carriage_repository;
         public PassengerCarriageRepositoryService(IPassengerCarriageRepository passenger_carriage_repository)
@@ -19,7 +20,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             passenger_carriage_dto.Id = passenger_carriage_id;
 
             QueryResult<PassengerCarriage> passenger_carriage_creation_result = await passenger_carriage_repository.CreatePassengerCarriage(passenger_carriage_dto);
-            if(passenger_carriage_creation_result.Fail)
+            if (passenger_carriage_creation_result.Fail)
             {
                 return new FailQuery<PassengerCarriageDto>(passenger_carriage_creation_result.Error);
             }
@@ -27,8 +28,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         }
         public async Task<PassengerCarriageDto?> GetPassengerCarriageById(string id)
         {
-            PassengerCarriage? passenger_carriage = await passenger_carriage_repository.GetPassengerCarriageById(id);   
-            if(passenger_carriage is null)
+            PassengerCarriage? passenger_carriage = await passenger_carriage_repository.GetPassengerCarriageById(id);
+            if (passenger_carriage is null)
             {
                 return null;
             }
@@ -44,7 +45,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             PassengerCarriageDto passenger_carriage_dto = (PassengerCarriageDto)input;
             passenger_carriage_dto.Id = passenger_carriage_id;
             QueryResult<PassengerCarriage> passenger_carriage_update_result = await passenger_carriage_repository.UpdatePassengerCarriage(passenger_carriage_dto);
-            if(passenger_carriage_update_result.Fail)
+            if (passenger_carriage_update_result.Fail)
             {
                 return new FailQuery<PassengerCarriageDto>(passenger_carriage_update_result.Error);
             }

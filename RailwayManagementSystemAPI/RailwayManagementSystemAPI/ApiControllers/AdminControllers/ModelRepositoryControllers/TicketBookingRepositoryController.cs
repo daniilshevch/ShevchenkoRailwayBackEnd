@@ -2,8 +2,9 @@
 using RailwayCore.InternalServices.ModelRepositories;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO;
-using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
 
 namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers
 {
@@ -12,8 +13,8 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
     [ApiExplorerSettings(GroupName = "Admin Controllers")]
     public class TicketBookingRepositoryController: ControllerBase
     {
-        private readonly TicketBookingRepositoryService ticket_booking_repository_service;
-        public TicketBookingRepositoryController(TicketBookingRepositoryService ticket_booking_repository_service)
+        private readonly ITicketBookingRepositoryService ticket_booking_repository_service;
+        public TicketBookingRepositoryController(ITicketBookingRepositoryService ticket_booking_repository_service)
         {
             this.ticket_booking_repository_service = ticket_booking_repository_service;
         }
