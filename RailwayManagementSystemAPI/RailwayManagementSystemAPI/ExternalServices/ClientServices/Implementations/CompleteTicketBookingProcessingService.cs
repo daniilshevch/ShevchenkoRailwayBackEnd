@@ -311,9 +311,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
 
         }
 
-        public async Task DeleteAllExpiredBookings()
+        public async Task<QueryResult> DeleteAllExpiredBookings()
         {
             await full_ticket_management_service.DeleteAllExpiredTickets();
+            return new SuccessQuery(new SuccessMessage($"Expired ticket bookings have been successfuly deleted at {DateTime.Now}",
+                annotation: service_name, unit: ProgramUnit.SystemAPI)); //System/Client
         }
     }
 }
