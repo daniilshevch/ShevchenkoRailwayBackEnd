@@ -12,9 +12,10 @@ using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Im
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Interfaces;
 using RailwayCore.InternalServices.ModelRepositories.Implementations;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
-using RailwayManagementSystemAPI.ExternalServices.AdminServices;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.TrainAssignmentServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.TrainAssignmentServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using System.Text;
@@ -121,7 +122,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices
         }
         public void ConfigureAdminServices(IServiceCollection services)
         {
-            services.AddScoped<ApiTrainAssignmentService>();
+            services.AddScoped<IApiTrainAssignmentService, ApiTrainAssignmentService>();
         }
         public void ConfigureSystemServices(IServiceCollection services)
         {

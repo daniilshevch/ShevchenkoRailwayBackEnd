@@ -2,18 +2,20 @@
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayManagementSystemAPI.ExternalDTO.TrainRouteDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO;
-using RailwayManagementSystemAPI.ExternalServices.AdminServices;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.TrainAssignmentServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.TrainAssignmentServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices;
+
 using System.Net;
-namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers
+namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.TrainAssignmentControllers
 {
     [ApiController]
     [Route("Admin-API/[controller]")]
     [ApiExplorerSettings(GroupName = "Admin Controllers")]
     public class TrainAssignmentController : ControllerBase
     {
-        private readonly ApiTrainAssignmentService api_train_assignment_service;
-        public TrainAssignmentController(ApiTrainAssignmentService api_train_assignment_service)
+        private readonly IApiTrainAssignmentService api_train_assignment_service;
+        public TrainAssignmentController(IApiTrainAssignmentService api_train_assignment_service)
         {
             this.api_train_assignment_service = api_train_assignment_service;
         }

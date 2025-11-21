@@ -4,9 +4,10 @@ using RailwayManagementSystemAPI.ExternalDTO.TrainRouteDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO;
 using RailwayCore.InternalServices.CoreServices.Implementations;
 using RailwayCore.InternalServices.CoreServices.Interfaces;
-namespace RailwayManagementSystemAPI.ExternalServices.AdminServices
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.TrainAssignmentServices.Interfaces;
+namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.TrainAssignmentServices.Implementations
 {
-    public class ApiTrainAssignmentService
+    public class ApiTrainAssignmentService : IApiTrainAssignmentService
     {
         private readonly IFullTrainAssignementService full_train_assignment_service;
         public ApiTrainAssignmentService(IFullTrainAssignementService full_train_assignment_service)
