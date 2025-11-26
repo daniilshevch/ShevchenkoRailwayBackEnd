@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RailwayCore.Context;
@@ -22,6 +23,7 @@ using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.I
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.Interfaces;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.Google;
 
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations
 {
@@ -206,7 +208,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementat
         public void ConfigureJwtAuthenticationAndAuthorization(IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+                .AddJwtBearer((JwtBearerOptions options) => options.TokenValidationParameters = new TokenValidationParameters
                 {
                    ValidateAudience = true,
                    ValidateIssuer = true,
@@ -217,6 +219,25 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementat
                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtAuthentication:SecretKey"]!))
                 });
             services.AddAuthorization();
+        }
+        public void ConfigureGoogleAuthentication(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAuthentication().AddCookie().AddGoogle((GoogleOptions options) =>
+            {
+                string? client_id = configuration["Authentication:Google:ClientId"];
+                if (client_id is null)
+                {
+                    throw new ArgumentNullException(nameof(client_id));
+                }
+                string? client_secret = configuration["Authentication:Google:ClientSecret"];
+                if (client_secret is null)
+                {
+                    throw new ArgumentNullException(nameof(client_secret));
+                }
+                options.ClientId = client_id;
+                options.ClientSecret = client_secret;
+                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
         }
         public void UseJwtAuthenticationAndAuthorization(WebApplication app)
         {
