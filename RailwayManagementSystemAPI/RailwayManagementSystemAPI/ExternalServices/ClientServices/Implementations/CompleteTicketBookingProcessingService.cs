@@ -7,6 +7,7 @@ using RailwayCore.InternalServices.CoreServices.Implementations;
 using RailwayCore.InternalServices.CoreServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Interfaces;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
@@ -26,11 +27,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         private readonly IFullTicketManagementService full_ticket_management_service;
         private readonly SystemAuthenticationService system_authentication_service;
         private readonly IConfiguration configuration;
-        public CompleteTicketBookingProcessingService(IFullTicketManagementService full_ticket_management_service, SystemAuthenticationService system_authentication_service, IConfiguration configuration)
+        private readonly IEmailTicketSender email_ticket_sender;
+        public CompleteTicketBookingProcessingService(IFullTicketManagementService full_ticket_management_service, SystemAuthenticationService system_authentication_service, IConfiguration configuration,
+            IEmailTicketSender email_ticket_sender)
         {
             this.full_ticket_management_service = full_ticket_management_service;
             this.system_authentication_service = system_authentication_service;
             this.configuration = configuration;
+            this.email_ticket_sender = email_ticket_sender;
         }
         /// <summary>
         /// Даний метод має спрацьовувати, коли користувач обирає місце в вагоні в певному рейсі і починає процес заповнення інформації про себе та поїздку.
@@ -244,6 +248,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 Passenger_Surname = ticket_booking.Passenger_Surname,
                 Ticket_Status = TextEnumConvertationService.GetTicketBookingStatusIntoString(ticket_booking.Ticket_Status),
             };
+
+            await email_ticket_sender.SendTicketToEmailAsync(user.Email, finished_ticket_booking_dto);
             sw.Stop();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write($"Booking time: ");

@@ -18,6 +18,8 @@ using RailwayManagementSystemAPI.ExternalServices.AdminServices.TrainAssignmentS
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.TrainAssignmentServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.Interfaces;
 using System.Text;
 
@@ -130,6 +132,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementat
             services.AddScoped<SystemAuthenticationService>();
             services.AddHostedService<ExpiredTicketBookingsRemovingService>();
             services.AddSingleton<IQRCodeGeneratorService, QRCodeGeneratorService>();
+            services.AddScoped<IEmailTicketSender, GmailSmtpTicketSender>();
         }
     }
     public class SwaggerDocumentationConfigurationManager

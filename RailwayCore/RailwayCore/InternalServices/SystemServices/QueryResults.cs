@@ -17,7 +17,8 @@ public enum ErrorType
     NotFound, //404
     Conflict, //409
     InternalServerError, //500
-    NoError //помилки нема
+    NoError, //помилки нема
+    ServiceUnrecheable //503
 }
 public class Error
 {

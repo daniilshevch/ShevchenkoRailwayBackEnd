@@ -66,7 +66,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 return new FailQuery<List<InternalTrainRaceBetweenStationsDto>>(train_routes_list_result.Error);
             }
             List<InternalTrainRaceBetweenStationsDto> appropriate_train_routes_on_date = train_routes_list_result.Value;
-
             return new SuccessQuery<List<InternalTrainRaceBetweenStationsDto>>(appropriate_train_routes_on_date, new SuccessMessage($"Successfuly got train races passing between" +
                 $" {starting_station_title} and {ending_station_title} on {departure_date}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
@@ -319,6 +318,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 $" {ConsoleLogService.PrintRaces(appropriate_train_routes_on_date.Select(train_race => train_race.Train_Route_On_Date.Id).ToList())}",
                 annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
+
         [PartialLogicMethod]
         public (ExternalTrainRaceWithBookingsInfoDto? fastest_train_race, ExternalTrainRaceWithBookingsInfoDto? cheapest_train_race) _DefineAvailableTrainRacesTopChart
             (List<ExternalTrainRaceWithBookingsInfoDto> total_train_routes_with_bookings_and_stations_info)
@@ -506,16 +506,3 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         }
     }
 }
-    
-
-
-
-
-
-
-
-
-
-
-
-  
