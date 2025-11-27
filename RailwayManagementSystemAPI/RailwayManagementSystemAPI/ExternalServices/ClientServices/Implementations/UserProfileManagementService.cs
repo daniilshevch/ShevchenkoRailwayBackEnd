@@ -4,6 +4,7 @@ using RailwayCore.Models;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations;
+using RailwayCore.InternalServices.SystemServices;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
@@ -11,6 +12,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
     {
         private readonly SystemAuthenticationService system_authentication_service;
         private readonly IImageRepository image_repository;
+        private readonly string service_name = "UserProfileManagementService";
         public UserProfileManagementService(SystemAuthenticationService system_authentication_service, IImageRepository image_repository)
         {
             this.system_authentication_service = system_authentication_service;
@@ -49,7 +51,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             {
                 return new FailQuery(image_creation_result.Error);
             }
-            return new SuccessQuery();
+            return new SuccessQuery(new SuccessMessage($"Successfully uploaded profile image", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
         public async Task<QueryResult<Image>> GetProfileImage()
         {
@@ -64,7 +66,26 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             {
                 return new FailQuery<Image>(image_get_result.Error);
             }
-            return new SuccessQuery<Image>(image_get_result.Value);
+            return new SuccessQuery<Image>(image_get_result.Value, 
+                new SuccessMessage($"Succesfully got profile image for user: " +
+                $"{ConsoleLogService.PrintUser(authenticated_user)}", annotation: service_name, unit: ProgramUnit.ClientAPI));
+        }
+        public async Task<QueryResult<string>> GetProfileImageFromGoogleUrl()
+        {
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
+            if (user_authentication_result.Fail)
+            {
+                return new FailQuery<string>(user_authentication_result.Error);
+            }
+            User authenticated_user = user_authentication_result.Value;
+            QueryResult<string> image_url_get_result = await image_repository.GetUserProfileImageFromGoogleUrl(authenticated_user.Id);
+            if (image_url_get_result.Fail)
+            {
+                return new FailQuery<string>(image_url_get_result.Error);
+            }
+            return new SuccessQuery<string>(image_url_get_result.Value,
+                new SuccessMessage($"Succesfully got google profile image url for user: " +
+                $"{ConsoleLogService.PrintUser(authenticated_user)}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
     }
 }

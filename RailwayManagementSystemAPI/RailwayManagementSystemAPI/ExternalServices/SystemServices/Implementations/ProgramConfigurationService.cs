@@ -248,6 +248,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementat
                 options.ClientId = client_id;
                 options.ClientSecret = client_secret;
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
             });
         }
         public void UseJwtAuthenticationAndAuthorization(WebApplication app)

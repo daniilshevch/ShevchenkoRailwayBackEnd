@@ -6,5 +6,6 @@ namespace RailwayCore.InternalServices.ModelRepositories.Interfaces
     {
         Task<QueryResult<Image>> CreateUserProfileImage(UserProfileImageDto input);
         Task<QueryResult<Image>> GetUserProfileImage(int user_id);
+        Task<QueryResult<string>> GetUserProfileImageFromGoogleUrl(int user_id);
     }
 }

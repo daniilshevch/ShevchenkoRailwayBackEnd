@@ -4,5 +4,6 @@
     {
         Task<QueryResult<Image>> GetProfileImage();
         Task<QueryResult> UploadProfileImage(IFormFile image_file);
+        Task<QueryResult<string>> GetProfileImageFromGoogleUrl();
     }
 }

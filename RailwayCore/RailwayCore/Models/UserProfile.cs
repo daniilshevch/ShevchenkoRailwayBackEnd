@@ -14,6 +14,6 @@ namespace RailwayCore.Models
         public int User_Id { get; set; }
         public User User { get; set; } = null!;
         public List<Image> Images { get; set; } = null!;
-
+        public string? Profile_Picture_Url { get; set; } = null!;
     }
 }

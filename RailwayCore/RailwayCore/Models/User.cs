@@ -9,7 +9,7 @@ namespace RailwayCore.Models
         public int Id { get; set; }
         [MaxLength(30)]
         public string Surname { get; set; } = null!;
-        [MaxLength(30)]
+        [MaxLength(50)]
         public string User_Name { get; set; } = null!;
         [MaxLength(30)]
         public string Name { get; set; } = null!;
