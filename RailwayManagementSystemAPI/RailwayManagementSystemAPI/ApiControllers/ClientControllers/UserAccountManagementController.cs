@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.UserDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
@@ -43,6 +44,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             ExternalOutputLoginUserDto login_user_dto = user_login_result.Value;
             return Ok(login_user_dto);
         }
+
         [HttpPost("upload-profile-image-for-current-user")]
         public async Task<ActionResult> UploadProfileImage(IFormFile image_file)
         {

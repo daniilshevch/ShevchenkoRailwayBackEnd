@@ -12,7 +12,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
 {
     public class UserGoogleAccountAuthenticationService : IUserGoogleAccountAuthenticationService
     {
-        private readonly IHttpContextAccessor http_context_accessor;
         private readonly IUserAccountAuthenticationService user_account_authentication_service;
         private readonly PasswordHasher<ExternalInputRegisterUserDto> password_hasher = new PasswordHasher<ExternalInputRegisterUserDto>();
         private readonly AppDbContext db_context;
@@ -20,22 +19,15 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         public UserGoogleAccountAuthenticationService(IHttpContextAccessor http_context_accessor, AppDbContext db_context,
             IUserAccountAuthenticationService user_account_authentication_service)
         {
-            this.http_context_accessor = http_context_accessor;
             this.db_context = db_context;
             this.user_account_authentication_service = user_account_authentication_service;
         }
-        public async Task<QueryResult<ExternalOutputLoginUserDto>> LoginWithGoogle()
+        public async Task<QueryResult<ExternalOutputLoginUserDto>> LoginWithGoogle(ClaimsPrincipal google_user)
         {
-            HttpContext? http_context = http_context_accessor.HttpContext;
-            if (http_context is null)
-            {
-                return new FailQuery<ExternalOutputLoginUserDto>(new Error(ErrorType.InternalServerError, "Can't get access to HttpContext", annotation: service_name, unit: ProgramUnit.ClientAPI));
-            }
-            ClaimsPrincipal user_principal = http_context.User;
-            string? email = user_principal.FindFirst(ClaimTypes.Email)?.Value;
+            string? email = google_user.FindFirst(ClaimTypes.Email)?.Value;
             if (email is null)
             {
-                return new FailQuery<ExternalOutputLoginUserDto>(new Error(ErrorType.Unauthorized, $"User is not authorized", annotation: service_name, unit: ProgramUnit.ClientAPI));
+                return new FailQuery<ExternalOutputLoginUserDto>(new Error(ErrorType.Unauthorized, $"Fail while getting email from google", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
 
             User? user = await db_context.Users.FirstOrDefaultAsync(user => user.Email == email);
@@ -45,11 +37,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 {
                     User_Name = email,
                     Email = email,
-                    Name = user_principal.FindFirst(ClaimTypes.GivenName)?.Value ?? string.Empty,
-                    Surname = user_principal.FindFirst(ClaimTypes.Surname)?.Value ?? string.Empty,
+                    Name = google_user.FindFirst(ClaimTypes.GivenName)?.Value ?? string.Empty,
+                    Surname = google_user.FindFirst(ClaimTypes.Surname)?.Value ?? string.Empty,
                 };
-                string password = password_hasher.HashPassword(new_user_info, Guid.NewGuid().ToString());
-                new_user_info.Password = password;
+                string random_password = Guid.NewGuid().ToString("N").Substring(0, 15) + "Q1";
+                new_user_info.Password = random_password;
                 QueryResult<User> user_register_result = await user_account_authentication_service.Register(new_user_info);
                 if (user_register_result.Fail)
                 {

@@ -24,6 +24,7 @@ using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.I
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.Interfaces;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
 
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations
 {
@@ -116,6 +117,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementat
             services.AddScoped<ITrainRouteWithBookingsSearchService, TrainRouteWithBookingsSearchService>();
             services.AddScoped<ICompleteTicketBookingProcessingService, CompleteTicketBookingProcessingService>();
             services.AddScoped<IUserAccountAuthenticationService, UserAccountAuthenticationService>();
+            services.AddScoped<IUserGoogleAccountAuthenticationService, UserGoogleAccountAuthenticationService>();
             services.AddScoped<IUserProfileManagementService, UserProfileManagementService>();
             services.AddScoped<IUserTicketManagementService, UserTicketManagementService>();
 
@@ -205,9 +207,19 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementat
     }
     public class AuthenticationAndAuthorizationConfigurationManager
     {
-        public void ConfigureJwtAuthenticationAndAuthorization(IServiceCollection services, IConfiguration configuration)
+        public AuthenticationBuilder ConfigureGeneralAuthenticationProperties(IServiceCollection services)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            AuthenticationBuilder authentication_builder = services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
+            services.AddAuthorization();
+            return authentication_builder;
+        }
+        public void ConfigureJwtAuthenticationAndAuthorization(AuthenticationBuilder authentication_builder, IConfiguration configuration)
+        {
+            authentication_builder
                 .AddJwtBearer((JwtBearerOptions options) => options.TokenValidationParameters = new TokenValidationParameters
                 {
                    ValidateAudience = true,
@@ -218,11 +230,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementat
                    ValidIssuer = configuration["JwtAuthentication:Issuer"],
                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtAuthentication:SecretKey"]!))
                 });
-            services.AddAuthorization();
         }
-        public void ConfigureGoogleAuthentication(IServiceCollection services, IConfiguration configuration)
+        public void ConfigureGoogleAuthentication(AuthenticationBuilder authentication_builder, IConfiguration configuration)
         {
-            services.AddAuthentication().AddCookie().AddGoogle((GoogleOptions options) =>
+           authentication_builder.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme).AddGoogle((GoogleOptions options) =>
             {
                 string? client_id = configuration["Authentication:Google:ClientId"];
                 if (client_id is null)

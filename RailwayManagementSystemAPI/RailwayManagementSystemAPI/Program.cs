@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations;
 
 
@@ -8,11 +9,15 @@ class Server
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         IServiceCollection services = builder.Services;
         IConfiguration configuration = builder.Configuration;
-        
-        
+
+
         //Authentication and Authorization
+        AuthenticationBuilder authentication_builder = ProgramConfigurationService.AuthenticationAndAuthorizationConfigurationManager
+            .ConfigureGeneralAuthenticationProperties(services);
         ProgramConfigurationService.AuthenticationAndAuthorizationConfigurationManager
-            .ConfigureJwtAuthenticationAndAuthorization(services, configuration);
+            .ConfigureJwtAuthenticationAndAuthorization(authentication_builder, configuration);
+        ProgramConfigurationService.AuthenticationAndAuthorizationConfigurationManager
+            .ConfigureGoogleAuthentication(authentication_builder, configuration);
         
         services.AddHttpContextAccessor();
         services.AddControllers();
