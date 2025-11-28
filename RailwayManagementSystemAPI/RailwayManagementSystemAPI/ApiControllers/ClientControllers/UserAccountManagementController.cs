@@ -55,26 +55,6 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             }
             return Ok();
         }
-        //[HttpGet("get-profile-image-for-current-user")]
-        //public async Task<ActionResult> GetProfileImage()
-        //{
-        //    QueryResult<Image> image_get_result = await user_profile_management_service.GetProfileImage();
-        //    if (image_get_result.Fail)
-        //    {
-        //        return image_get_result.GetErrorFromQueryResultWithoutOutput();
-        //    }
-        //    return File(image_get_result.Value.Image_Data, "image/jpeg");
-        //}
-        //[HttpGet("get-google-profile-image-url-for-current-user")]
-        //public async Task<ActionResult<string>> GetGoogleProfileImageUrl()
-        //{
-        //    QueryResult<string> google_image_get_result = await user_profile_management_service.GetProfileImageFromGoogleUrl();
-        //    if (google_image_get_result.Fail)
-        //    {
-        //        return google_image_get_result.GetErrorFromQueryResultWithoutOutput();
-        //    }
-        //    return Ok(google_image_get_result.Value);
-        //}
         [HttpGet("get-profile-image-for-current-user")]
         public async Task<ActionResult> GetProfileImage()
         {

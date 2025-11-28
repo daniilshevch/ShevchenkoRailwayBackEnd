@@ -8,6 +8,9 @@ using RailwayCore.InternalServices.SystemServices;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
+    /// <summary>
+    /// Даний сервіс відповідає за всі операції, що пов'язані з профілем користувача
+    /// </summary>
     public class UserProfileManagementService : IUserProfileManagementService
     {
         private readonly SystemAuthenticationService system_authentication_service;
@@ -18,16 +21,21 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             this.system_authentication_service = system_authentication_service;
             this.image_repository = image_repository;
         }
+        /// <summary>
+        /// Метод проводить встановлення зображення для профіля користувача
+        /// </summary>
+        /// <param name="image_file"></param>
+        /// <returns></returns>
         public async Task<QueryResult> UploadProfileImage(IFormFile image_file)
         {
             if (image_file is null || image_file.Length == 0)
             {
-                return new FailQuery(new Error(ErrorType.BadRequest, "File is empty"));
+                return new FailQuery(new Error(ErrorType.BadRequest, "File is empty", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             string[] allowed_types = new string[] { "image/jpeg", "image/png", "image/webp" };
             if (!allowed_types.Contains(image_file.ContentType))
             {
-                return new FailQuery(new Error(ErrorType.BadRequest, "Invalid file type"));
+                return new FailQuery(new Error(ErrorType.BadRequest, "Invalid file type", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
             byte[] image_data;
             using (MemoryStream memory_stream = new MemoryStream())
@@ -53,6 +61,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             }
             return new SuccessQuery(new SuccessMessage($"Successfully uploaded profile image", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
+        /// <summary>
+        /// Даний метод вертає зображення, яке встановлене для профіля через внутрішню систему програми(не сервіси гугл)
+        /// </summary>
+        /// <returns></returns>
         public async Task<QueryResult<Image>> GetProfileImage()
         {
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
@@ -70,6 +82,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 new SuccessMessage($"Succesfully got profile image for user: " +
                 $"{ConsoleLogService.PrintUser(authenticated_user)}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
+        /// <summary>
+        /// Даний метод вертає посилання на зображення профілю, що було отримане через сервіси гугл(записане в User_Profile для користувача, може бути null))
+        /// </summary>
+        /// <returns></returns>
         public async Task<QueryResult<string>> GetProfileImageFromGoogleUrl()
         {
             QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
