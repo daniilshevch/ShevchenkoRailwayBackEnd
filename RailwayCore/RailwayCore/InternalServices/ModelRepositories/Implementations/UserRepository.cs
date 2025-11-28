@@ -4,6 +4,7 @@ using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayCore.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,11 +20,11 @@ namespace RailwayCore.InternalServices.ModelRepositories.Implementations
         }
         public async Task<User?> GetUserByEmailOrUsername(string email, string user_name)
         {
-            return await context.Users.FirstOrDefaultAsync(user => user.Email == email || user.User_Name == user_name);
+            return await context.Users.Include(user => user.User_Profile).FirstOrDefaultAsync(user => user.Email == email || user.User_Name == user_name);
         }
         public async Task<User?> GetUserByEmail(string email)
         {
-            return await context.Users.FirstOrDefaultAsync(user => user.Email == email);
+            return await context.Users.Include(user => user.User_Profile).FirstOrDefaultAsync(user => user.Email == email);
         }
         public async Task AddUser(User user)
         {
@@ -34,6 +35,12 @@ namespace RailwayCore.InternalServices.ModelRepositories.Implementations
         {
             await context.User_Profiles.AddAsync(user_profile);
             await context.SaveChangesAsync();
+        }
+        public async Task UpdateUser(User user)
+        {
+            context.Users.Update(user);
+            await context.SaveChangesAsync();
+
         }
     }
 }
