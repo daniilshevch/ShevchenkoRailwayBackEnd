@@ -103,6 +103,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementat
             services.AddScoped<IPassengerCarriageRepositoryService, PassengerCarriageRepositoryService>();
             services.AddScoped<IStationRepositoryService, StationRepositoryService>();
             services.AddScoped<ITicketBookingRepositoryService, TicketBookingRepositoryService>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             //services.AddScoped<CarriageAssignmentRepositoryService>();
             //services.AddScoped<TrainStopRepositoryService>();

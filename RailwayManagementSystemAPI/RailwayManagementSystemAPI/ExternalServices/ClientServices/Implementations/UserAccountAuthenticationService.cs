@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RailwayCore.Context;
+using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
 using RailwayCore.Models.ModelEnums.UserEnums;
@@ -21,13 +22,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
     public class UserAccountAuthenticationService : IUserAccountAuthenticationService
     {
         private readonly string service_title = "UserAccountAuthenticationService";
-        private readonly AppDbContext db_context;
+        private readonly IUserRepository user_repository;
         private readonly IConfiguration configuration;
         private readonly IHttpContextAccessor http_context_accessor;
         private readonly PasswordHasher<User> password_hasher = new PasswordHasher<User>();
-        public UserAccountAuthenticationService(AppDbContext db_context, IConfiguration configuration, IHttpContextAccessor http_context_accessor)
+        public UserAccountAuthenticationService(IUserRepository user_repository, IConfiguration configuration, IHttpContextAccessor http_context_accessor)
         {
-            this.db_context = db_context;
+            this.user_repository = user_repository;
             this.configuration = configuration;
             this.http_context_accessor = http_context_accessor;
         }
@@ -44,7 +45,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             Console.ResetColor();
             Stopwatch sw = Stopwatch.StartNew();
             //Перевіряємо, чи користувач з такою поштою або іменем користувача вже існує в базі
-            User? existing_user = await db_context.Users.FirstOrDefaultAsync(user => user.Email == input.Email || user.User_Name == input.User_Name);
+            User? existing_user = await user_repository.GetUserByEmailOrUsername(input.Email, input.User_Name);
             //Якщо такий користувач існує, видаємо помилку
             if (existing_user != null)
             {
@@ -77,14 +78,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             }
             //Хешуємо пароль
             new_user.Password = password_hasher.HashPassword(new_user, input.Password);
-            await db_context.Users.AddAsync(new_user);
-            await db_context.SaveChangesAsync();
+            await user_repository.AddUser(new_user);
             UserProfile user_profile = new UserProfile
             {
                 User_Id = new_user.Id,
             };
-            await db_context.User_Profiles.AddAsync(user_profile);
-            await db_context.SaveChangesAsync();
+            await user_repository.AddUserProfile(user_profile);
             sw.Stop();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write($"User registration time: ");
@@ -106,7 +105,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             Console.ResetColor();
             Stopwatch sw = Stopwatch.StartNew();
             //Отримуємо користувача за поштою
-            User? user = await db_context.Users.FirstOrDefaultAsync(user => user.Email == input.Email);
+            User? user = await user_repository.GetUserByEmail(input.Email);
             if (user == null)
             {
                 return new FailQuery<ExternalOutputLoginUserDto>(new Error(ErrorType.Unauthorized, "Invalid email or password", annotation: service_title, unit: ProgramUnit.ClientAPI));
