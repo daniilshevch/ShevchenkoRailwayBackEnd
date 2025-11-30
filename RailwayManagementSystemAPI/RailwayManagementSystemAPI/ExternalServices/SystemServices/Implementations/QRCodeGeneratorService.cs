@@ -2,6 +2,9 @@
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.Interfaces;
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations
 {
+    /// <summary>
+    /// Даний сервіс генерує QR-коди для квитків, які придбані користувачем
+    /// </summary>
     public class QRCodeGeneratorService : IQRCodeGeneratorService
     {
         public string GenerateQrCodeBase64(string content)

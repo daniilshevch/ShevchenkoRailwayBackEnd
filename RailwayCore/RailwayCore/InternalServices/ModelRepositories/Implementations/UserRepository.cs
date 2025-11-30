@@ -18,6 +18,10 @@ namespace RailwayCore.InternalServices.ModelRepositories.Implementations
         {
             this.context = context;
         }
+        public async Task<User?> GetUserById(int id)
+        {
+            return await context.Users.FirstOrDefaultAsync(user => user.Id == id);
+        }
         public async Task<User?> GetUserByEmailOrUsername(string email, string user_name)
         {
             return await context.Users.Include(user => user.User_Profile).FirstOrDefaultAsync(user => user.Email == email || user.User_Name == user_name);

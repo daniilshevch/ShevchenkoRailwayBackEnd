@@ -6,6 +6,9 @@ using SendGrid.Helpers.Mail;
 
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Implementations
 {
+    /// <summary>
+    /// Даний сервіс проводить розсилку квитків на пошту користувача після покупки через сервіси SendGrid
+    /// </summary>
     public class SendGridTicketSender: IEmailTicketSender
     {
         private readonly string api_key;
@@ -15,6 +18,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
             api_key = configuration["SendGrid:ApiKey"]!;
             from_email = configuration["SendGrid:Mail"]!;
         }
+        /// <summary>
+        /// Відправляє квиток на пошту користувача після покупки
+        /// </summary>
+        /// <param name="user_email"></param>
+        /// <param name="ticket_booking_info"></param>
+        /// <returns></returns>
         public async Task<QueryResult> SendTicketToEmailAsync(string user_email, ExternalOutputCompletedTicketBookingDto ticket_booking_info)
         {
             SendGridClient client = new SendGridClient(api_key);

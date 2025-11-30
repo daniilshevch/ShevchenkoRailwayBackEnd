@@ -37,6 +37,9 @@
     <Folder Include="ExternalDTO\PassengerCarriageDTO\ClientDTO\" />
     <Folder Include="ExternalDTO\StationDTO\ClientDTO\" />
     <Folder Include="ExternalDTO\TrainRouteDTO\ClientDTO\" />
+    <Folder Include="ExternalServices\SystemServices\CodeBaseServices\" />
+    <Folder Include="ExternalServices\SystemServices\SystemAuthenticationServices\" />
+    <Folder Include="ExternalServices\SystemServices\TicketFormationServices\" />
   </ItemGroup>
 
 </Project>

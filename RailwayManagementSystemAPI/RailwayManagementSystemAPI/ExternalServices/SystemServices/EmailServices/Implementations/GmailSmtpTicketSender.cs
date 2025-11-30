@@ -6,6 +6,9 @@ using System.Net.Mail;
 
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Implementations
 {
+    /// <summary>
+    /// Даний сервіс проводить розсилку квитків після покупки, використовуючи Gmail API
+    /// </summary>
     public class GmailSmtpTicketSender: IEmailTicketSender
     {
         private readonly string from_email;
@@ -16,6 +19,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
             from_email = configuration["GmailSmtp:Email"]!;
             app_password = configuration["GmailSmtp:AppPassword"]!;
         }
+        /// <summary>
+        /// Даний метод відправляє один квиток на пошту користувача після покупки
+        /// </summary>
+        /// <param name="user_email"></param>
+        /// <param name="ticket_booking_info"></param>
+        /// <returns></returns>
         public async Task<QueryResult> SendTicketToEmailAsync(string user_email, ExternalOutputCompletedTicketBookingDto ticket_booking_info)
         {
             MimeMessage message = new MimeMessage();
