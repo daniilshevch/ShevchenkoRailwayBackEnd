@@ -7,7 +7,6 @@ using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.UserDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayCore.InternalDTO.ModelDTO;
-using RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations;
 using System.Security.Claims;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations

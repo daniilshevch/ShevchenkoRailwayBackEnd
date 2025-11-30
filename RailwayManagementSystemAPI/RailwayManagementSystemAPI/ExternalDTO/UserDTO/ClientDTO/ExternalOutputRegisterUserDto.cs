@@ -1,5 +1,5 @@
 ﻿using RailwayCore.Models;
-using RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices;
 using System.Text.Json.Serialization;
 
 namespace RailwayManagementSystemAPI.ExternalDTO.UserDTO.ClientDTO

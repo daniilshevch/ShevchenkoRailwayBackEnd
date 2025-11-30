@@ -2,7 +2,7 @@
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
-namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations
+namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Implementations
 {
     public class ExpiredTicketBookingsRemovingService: BackgroundService
     {

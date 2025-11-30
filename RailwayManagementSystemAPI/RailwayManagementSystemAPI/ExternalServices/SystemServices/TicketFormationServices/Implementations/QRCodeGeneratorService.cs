@@ -1,6 +1,6 @@
 ﻿using QRCoder;
-using RailwayManagementSystemAPI.ExternalServices.SystemServices.Interfaces;
-namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Interfaces;
+namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Implementations
 {
     /// <summary>
     /// Даний сервіс генерує QR-коди для квитків, які придбані користувачем

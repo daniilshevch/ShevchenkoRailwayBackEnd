@@ -1,4 +1,4 @@
-﻿namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Interfaces
+﻿namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Interfaces
 {
     public interface IQRCodeGeneratorService
     {

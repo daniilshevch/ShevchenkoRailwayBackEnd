@@ -21,12 +21,14 @@ using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Interfaces;
-using RailwayManagementSystemAPI.ExternalServices.SystemServices.Interfaces;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.SystemAuthenticationServices;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Interfaces;
 
-namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations
+namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices
 {
     public class LogicalServiceConfigurationManager
     {
@@ -221,7 +223,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementat
         public void ConfigureJwtAuthenticationAndAuthorization(AuthenticationBuilder authentication_builder, IConfiguration configuration)
         {
             authentication_builder
-                .AddJwtBearer((JwtBearerOptions options) => options.TokenValidationParameters = new TokenValidationParameters
+                .AddJwtBearer((options) => options.TokenValidationParameters = new TokenValidationParameters
                 {
                    ValidateAudience = true,
                    ValidateIssuer = true,
@@ -234,7 +236,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementat
         }
         public void ConfigureGoogleAuthentication(AuthenticationBuilder authentication_builder, IConfiguration configuration)
         {
-           authentication_builder.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme).AddGoogle((GoogleOptions options) =>
+           authentication_builder.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme).AddGoogle((options) =>
             {
                 string? client_id = configuration["Authentication:Google:ClientId"];
                 if (client_id is null)

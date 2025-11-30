@@ -5,7 +5,7 @@ using RailwayCore.InternalServices.SystemServices;
 using RailwayCore.Models;
 using System.Security.Claims;
 
-namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations
+namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.SystemAuthenticationServices
 {
     /// <summary>
     /// Даний сервіс є системним сервісом і призначений для отримання користувача, що аутентифікований в системі

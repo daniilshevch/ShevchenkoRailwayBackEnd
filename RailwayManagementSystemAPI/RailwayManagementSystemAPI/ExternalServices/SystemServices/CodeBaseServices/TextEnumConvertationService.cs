@@ -2,7 +2,7 @@
 using RailwayCore.Models.ModelEnums.TrainRouteEnums;
 using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
 using RailwayCore.Models.ModelEnums.UserEnums;
-namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations
+namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices
 {
     public class TextEnumConvertationService
     {

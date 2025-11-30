@@ -1,6 +1,6 @@
 ﻿using RailwayCore.Models;
 using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
-namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.Implementations
+namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Implementations
 {
     public class PricingService
     {
