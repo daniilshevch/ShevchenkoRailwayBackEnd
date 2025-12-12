@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #2a3376;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        .alert-green {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            margin: 0 20px 20px 20px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .alert-orange {
+            background-color: #fff3e0;
+            color: #e65100;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .info-table td {
+                padding: 12px 20px;
+                vertical-align: top;
+            }
+
+        .label {
+            color: #9aa0a6;
+            font-size: 14px;
+            width: 30%;
+        }
+
+        .value {
+            color: #202124;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .row-bg {
+            background-color: #f8f9fa;
+        }
+
+        .footer-link {
+            color: #1a73e8;
+            text-decoration: none;
+            font-size: 13px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .logo-container {
+            text-align: center;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body style='background-color: #2a3376; padding: 20px;'>
+
+    <div class='logo-container'>
+        <h1 style='color: white; margin: 0; font-size: 24px;'>Shevchenko Railway</h1>
+    </div>
+
+    <div class='container'>
+        <div class='header'>
+            <h2 style='margin: 0; font-size: 22px;'>Вас вітає Shevchenko Railway!</h2>
+        </div>
+
+        <div class='alert-green'>
+            Квиток знаходиться у вкладенні листа. Дякуємо, що подорожуєте потягами Shevchenko Railway.
+        </div>
+
+        <table class='info-table'>
+            <tr style='background-color: #f8f9fa;'>
+                <td class='label'>Потяг:</td>
+                <td class='value'>
+                    {{Train_Route_Id}} {{Full_Route_Starting_Station_Title}} — {{Full_Route_Ending_Station_Title}}
+                </td>
+            </tr>
+
+            <tr>
+                <td class='label'>Відправлення:</td>
+                <td class='value'>
+                    <div style='font-size: 16px; margin-bottom: 4px;'>{{Trip_Starting_Station_Title}}</div>
+                    <div style='font-weight: normal;'>{{Departure_Time_From_Trip_Starting_Station}}</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class='label'>Прибуття:</td>
+                <td class='value'>
+                    <div style='font-size: 16px; margin-bottom: 4px;'>{{Trip_Ending_Station_Title}}</div>
+                    <div style='font-weight: normal;'>{{Arrival_Time_To_Trip_Ending_Station}}</div>
+                </td>
+            </tr>
+
+            <tr style='background-color: #f1f3f4;'>
+                <td colspan='2' style='text-align: center; color: #5f6368; font-size: 13px; padding: 8px;'>Пасажир</td>
+            </tr>
+
+            <tr>
+                <td class='value' style='width: 50%;'>{{Passenger_Name}}</td>
+                <td class='value' style='text-align: right;'>
+                    Тип вагону: {{Carriage_Type}}<br>
+                    <span style='font-weight: normal; font-size: 14px;'>Місце {{Place_In_Carriage}}</span>
+                </td>
+            </tr>
+        </table>
+
+        <div class='alert-orange'>
+            Зауважте, що перевірка пасажирів на вокзалі стала ретельнішою задля безпеки — не забудьте взяти паспорт.
+        </div>
+
+        <br>
+    </div>
+
+    <div style='text-align: center; color: #aab0c6; font-size: 12px; margin-top: 20px;'>
+        © {{CurrentYear}} Shevchenko Railway Systems
+    </div>
+</body>
+</html>
