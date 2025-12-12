@@ -43,7 +43,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
                     if (current_stop.Arrival_Time is not null && previous_stop.Departure_Time is not null)
                     {
                         double trip_duration_between_station = (current_stop.Arrival_Time.Value - previous_stop.Departure_Time.Value).TotalHours;
-                        speed_on_section = distance_between_stations / trip_duration_between_station;
+                        if (trip_duration_between_station != 0)
+                        {
+                            speed_on_section = distance_between_stations / trip_duration_between_station;
+                        }
+                        else
+                        {
+                            speed_on_section = 1;
+                        }
                         previous_stop.Speed_On_Section = speed_on_section;
                     }
                 }

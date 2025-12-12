@@ -85,8 +85,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
                     .Replace("{{Departure_Time_From_Trip_Starting_Station}}", ticket_booking_profile_for_pdf.Departure_Time_From_Trip_Starting_Station!.Value.ToString("dd MMMM о HH:mm", ua_culture))
                     .Replace("{{Trip_Ending_Station_Title}}", ticket_booking_profile_for_pdf.Trip_Ending_Station_Title)
                     .Replace("{{Arrival_Time_To_Trip_Ending_Station}}", ticket_booking_profile_for_pdf.Arrival_Time_To_Trip_Ending_Station!.Value.ToString("dd MMMM о HH:mm", ua_culture))
-                    .Replace("{{Passenger_Name}}", ticket_booking_info.Passenger_Name)
+                    .Replace("{{Passenger_Name}}", ticket_booking_profile_for_pdf.Passenger_Name)
+                    .Replace("{{Passenger_Surname}}", ticket_booking_profile_for_pdf.Passenger_Surname)
+                    .Replace("{{Passenger_Carriage_Position_In_Squad}}", ticket_booking_info.Passenger_Carriage_Position_In_Squad.ToString())
                     .Replace("{{Carriage_Type}}", ticket_booking_profile_for_pdf.Carriage_Type)
+                    .Replace("{{Carriage_Quality_Class}}", ticket_booking_profile_for_pdf.Carriage_Quality_Class)
                     .Replace("{{Place_In_Carriage}}", ticket_booking_profile_for_pdf.Place_In_Carriage.ToString())
                     .Replace("{{CurrentYear}}", DateTime.Now.Year.ToString());
 

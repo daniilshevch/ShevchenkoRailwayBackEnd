@@ -5,17 +5,30 @@
         body {
             margin: 0;
             padding: 0;
+            /* Колір залишаємо як запасний варіант */
             background-color: #2a3376;
             font-family: Arial, sans-serif;
         }
 
+        .email-background {
+            background-image: url('https://lutsk.rayon.in.ua/upload/news/1/2016-01/145397050218/17_789913504.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 40px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             background-color: #ffffff;
             border-radius: 8px;
             overflow: hidden;
+            /* Додаємо тінь, щоб картка краще виглядала на фоні фото */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .header {
@@ -59,6 +72,7 @@
             color: #9aa0a6;
             font-size: 14px;
             width: 30%;
+            font-weight: 600;
         }
 
         .value {
@@ -81,71 +95,109 @@
 
         .logo-container {
             text-align: center;
-            padding: 20px 0;
+            padding-bottom: 20px; /* Відступ від лого до картки */
+        }
+
+        /* Стилі класів вагонів */
+        .quality-A {
+            color: #d32f2f !important;
+        }
+
+        .quality-B {
+            color: #2e7d32 !important;
+        }
+
+        .quality-C {
+            color: #1565c0 !important;
+        }
+
+        .quality-S {
+            color: #7b1fa2 !important;
+        }
+
+        /* Фікс для тексту логотипу, щоб він був читабельний на будь-якому фото */
+        .logo-text {
+            color: white;
+            margin: 0;
+            font-size: 28px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Тінь для тексту */
         }
     </style>
 </head>
-<body style='background-color: #2a3376; padding: 20px;'>
+<body>
 
-    <div class='logo-container'>
-        <h1 style='color: white; margin: 0; font-size: 24px;'>Shevchenko Railway</h1>
-    </div>
+    <div class="email-background">
 
-    <div class='container'>
-        <div class='header'>
-            <h2 style='margin: 0; font-size: 22px;'>Вас вітає Shevchenko Railway!</h2>
+        <div class='logo-container'>
+            <h1 class="logo-text">Shevchenko Railway</h1>
         </div>
 
-        <div class='alert-green'>
-            Квиток знаходиться у вкладенні листа. Дякуємо, що подорожуєте потягами Shevchenko Railway.
+        <div class='container'>
+            <div class='header'>
+                <h2 style='margin: 0; font-size: 22px;'>Вас вітає приватна залізнична компанія Shevchenko Railway!</h2>
+            </div>
+
+            <div class='alert-green'>
+                Квиток знаходиться у вкладенні листа. Дякуємо, що подорожуєте потягами Shevchenko Railway.
+            </div>
+
+            <table class='info-table'>
+                <tr style='background-color: #f8f9fa;'>
+                    <td class='label'>Потяг:</td>
+                    <td class='value'>
+                        {{Train_Route_Id}} {{Full_Route_Starting_Station_Title}} — {{Full_Route_Ending_Station_Title}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class='label'>Відправлення:</td>
+                    <td class='value'>
+                        <div style='font-size: 16px; margin-bottom: 4px;'>{{Trip_Starting_Station_Title}}</div>
+                        <div style='font-weight: normal; font-weight: 500;'>{{Departure_Time_From_Trip_Starting_Station}}</div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class='label'>Прибуття:</td>
+                    <td class='value'>
+                        <div style='font-size: 16px; margin-bottom: 4px;'>{{Trip_Ending_Station_Title}}</div>
+                        <div style='font-weight: normal;'>{{Arrival_Time_To_Trip_Ending_Station}}</div>
+                    </td>
+                </tr>
+
+                <tr style='background-color: #f1f3f4;'>
+                    <td colspan='2' style='text-align: center; color: #5f6368; font-size: 13px; padding: 8px;'>Пасажир</td>
+                </tr>
+
+                <tr>
+                    <td class='value' style='width: 50%; white-space: nowrap;'>
+                        {{Passenger_Name}} {{Passenger_Surname}}
+                    </td>
+
+                    <td class='value' style='text-align: right;'>
+                        Вагон {{Passenger_Carriage_Position_In_Squad}} ({{Carriage_Type}}, клас
+                        <span class="quality-{{Carriage_Quality_Class}}">{{Carriage_Quality_Class}}</span>)
+
+                        <br>
+
+                        <span style='font-size: 15px; display: inline-block; margin-top: 4px;'>
+                            місце {{Place_In_Carriage}}
+                        </span>
+                    </td>
+                </tr>
+            </table>
+
+            <div class='alert-orange'>
+                Зауважте, що перевірка пасажирів на вокзалі стала ретельнішою задля безпеки — не забудьте взяти паспорт.
+            </div>
+
+            <br>
         </div>
 
-        <table class='info-table'>
-            <tr style='background-color: #f8f9fa;'>
-                <td class='label'>Потяг:</td>
-                <td class='value'>
-                    {{Train_Route_Id}} {{Full_Route_Starting_Station_Title}} — {{Full_Route_Ending_Station_Title}}
-                </td>
-            </tr>
-
-            <tr>
-                <td class='label'>Відправлення:</td>
-                <td class='value'>
-                    <div style='font-size: 16px; margin-bottom: 4px;'>{{Trip_Starting_Station_Title}}</div>
-                    <div style='font-weight: normal;'>{{Departure_Time_From_Trip_Starting_Station}}</div>
-                </td>
-            </tr>
-
-            <tr>
-                <td class='label'>Прибуття:</td>
-                <td class='value'>
-                    <div style='font-size: 16px; margin-bottom: 4px;'>{{Trip_Ending_Station_Title}}</div>
-                    <div style='font-weight: normal;'>{{Arrival_Time_To_Trip_Ending_Station}}</div>
-                </td>
-            </tr>
-
-            <tr style='background-color: #f1f3f4;'>
-                <td colspan='2' style='text-align: center; color: #5f6368; font-size: 13px; padding: 8px;'>Пасажир</td>
-            </tr>
-
-            <tr>
-                <td class='value' style='width: 50%;'>{{Passenger_Name}}</td>
-                <td class='value' style='text-align: right;'>
-                    Тип вагону: {{Carriage_Type}}<br>
-                    <span style='font-weight: normal; font-size: 14px;'>Місце {{Place_In_Carriage}}</span>
-                </td>
-            </tr>
-        </table>
-
-        <div class='alert-orange'>
-            Зауважте, що перевірка пасажирів на вокзалі стала ретельнішою задля безпеки — не забудьте взяти паспорт.
+        <div style='text-align: center; color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 20px; text-shadow: 0 1px 2px rgba(0,0,0,0.8);'>
+            © {{CurrentYear}} Shevchenko Railway Systems
         </div>
 
-        <br>
-    </div>
-
-    <div style='text-align: center; color: #aab0c6; font-size: 12px; margin-top: 20px;'>
-        © {{CurrentYear}} Shevchenko Railway Systems
     </div>
 </body>
 </html>
