@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Interfaces;
 using SendGrid;
@@ -24,14 +25,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
         /// <param name="user_email"></param>
         /// <param name="ticket_booking_info"></param>
         /// <returns></returns>
-        public async Task<QueryResult> SendTicketToEmailAsync(string user_email, ExternalOutputCompletedTicketBookingDto ticket_booking_info)
+        public async Task<QueryResult> SendTicketToEmailAsync(string user_email, TicketBooking ticket_booking_info)
         {
             SendGridClient client = new SendGridClient(api_key);
             EmailAddress from = new EmailAddress(from_email, "Shevchenko Railway");
             EmailAddress to = new EmailAddress(user_email);
             string subject = "Your ticket";
 
-            var htmlContent = $"<p>Привіт, {ticket_booking_info.Passenger_Name}!</p><p>Твій квиток: <strong>{ticket_booking_info.Starting_Station_Title}</strong></p>";
+            var htmlContent = $"<p>Привіт, {ticket_booking_info.Passenger_Name}!</p><p>Твій квиток: <strong>{ticket_booking_info.Starting_Station.Title}</strong></p>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, "test", htmlContent);
             Response response = await client.SendEmailAsync(msg);
             Console.WriteLine(response.IsSuccessStatusCode);

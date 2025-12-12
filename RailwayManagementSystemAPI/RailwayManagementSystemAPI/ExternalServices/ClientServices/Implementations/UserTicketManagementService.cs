@@ -10,6 +10,7 @@ using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.SystemAuthenticationServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Interfaces;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
     /// <summary>
@@ -280,6 +281,5 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             };
             return output_ticket;
         }
-
     }
 }

@@ -250,7 +250,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 Ticket_Status = TextEnumConvertationService.GetTicketBookingStatusIntoString(ticket_booking.Ticket_Status),
             };
 
-            await email_ticket_sender.SendTicketToEmailAsync(user.Email, finished_ticket_booking_dto);
+            await email_ticket_sender.SendTicketToEmailAsync(user.Email, ticket_booking);
             sw.Stop();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write($"Booking time: ");

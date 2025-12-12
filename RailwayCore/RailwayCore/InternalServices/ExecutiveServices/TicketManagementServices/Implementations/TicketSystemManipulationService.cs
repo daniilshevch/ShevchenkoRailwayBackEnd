@@ -30,7 +30,12 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
         [Checked("02.05.2025")]
         public async Task<TicketBooking?> FindTicketBookingById(int ticket_booking_id)
         {
-            TicketBooking? ticket_booking = await context.Ticket_Bookings.FirstOrDefaultAsync(ticket_booking => ticket_booking.Id == ticket_booking_id);
+            TicketBooking? ticket_booking = await context.Ticket_Bookings
+                .Include(ticket_booking => ticket_booking.Passenger_Carriage)
+                .Include(ticket_booking => ticket_booking.Starting_Station)
+                .Include(ticket_booking => ticket_booking.Ending_Station)
+                .Include(ticket_booking => ticket_booking.User)
+                .FirstOrDefaultAsync(ticket_booking => ticket_booking.Id == ticket_booking_id);
             return ticket_booking;
         }
         /// <summary>

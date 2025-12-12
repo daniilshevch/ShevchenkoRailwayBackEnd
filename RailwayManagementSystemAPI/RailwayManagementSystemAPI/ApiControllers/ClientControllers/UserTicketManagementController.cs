@@ -5,15 +5,21 @@ using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 using System.Collections.Generic;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Interfaces;
+using MailKit.Search;
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
+    [ApiController]
     [ApiExplorerSettings(GroupName = "Client Controllers")]
     public class UserTicketManagementController: ControllerBase
     {
         private readonly IUserTicketManagementService user_ticket_management_service;
-        public UserTicketManagementController(IUserTicketManagementService user_ticket_management_service)
+        private readonly IPdfTicketGeneratorService pdf_ticket_generator_service;
+        public UserTicketManagementController(IUserTicketManagementService user_ticket_management_service,
+            IPdfTicketGeneratorService pdf_ticket_generator_service)
         {
             this.user_ticket_management_service = user_ticket_management_service;
+            this.pdf_ticket_generator_service = pdf_ticket_generator_service;   
         }
 
         [HttpGet("get-tickets-for-current-user")]
@@ -50,6 +56,12 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             }
             ExternalProfileTicketBookingDto returned_ticket = ticket_returning_result.Value;
             return returned_ticket;
+        }
+        [HttpPost("download-ticket-pdf")]
+        public IActionResult DownloadTicketPdf([FromBody] ExternalProfileTicketBookingDto ticket_booking)
+        {
+            byte[] pdf_file = pdf_ticket_generator_service.GenerateTicketPdf(ticket_booking);
+            return File(pdf_file, "application/pdf", $"ticket_{ticket_booking.Full_Ticket_Id}.pdf");
         }
     }
 }

@@ -35,6 +35,7 @@ class Server
         ProgramConfigurationService.LogicalServiceConfigurationManager.ConfigureClientServices(services);
         ProgramConfigurationService.LogicalServiceConfigurationManager.ConfigureAdminServices(services);
         ProgramConfigurationService.LogicalServiceConfigurationManager.ConfigureSystemServices(services);
+        ProgramConfigurationService.LogicalServiceConfigurationManager.ConfigureSystemTranslators(services);
         //Swagger
         ProgramConfigurationService.SwaggerDocumentationConfigurationManager.ConfigureSwagger(services);
         //Cors

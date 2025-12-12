@@ -27,6 +27,8 @@ using Microsoft.AspNetCore.Authentication;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.SystemAuthenticationServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.TranslationServices.Translators.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.TranslationServices.Translators.Interfaces;
 
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices
 {
@@ -134,12 +136,19 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseSer
         {
             services.AddScoped<IApiTrainAssignmentService, ApiTrainAssignmentService>();
         }
+        public void ConfigureSystemTranslators(IServiceCollection services)
+        {
+            services.AddSingleton<IStationTranslator, StationTranslator>();
+            services.AddSingleton<ICarriageTypeTranslator, CarriageTypeTranslator>();
+            services.AddSingleton<ITrainRoutesTranslator, TrainRoutesTranslator>();
+        }
         public void ConfigureSystemServices(IServiceCollection services)
         {
             services.AddScoped<SystemAuthenticationService>();
             services.AddHostedService<ExpiredTicketBookingsRemovingService>();
             services.AddSingleton<IQRCodeGeneratorService, QRCodeGeneratorService>();
             services.AddScoped<IEmailTicketSender, GmailSmtpTicketSender>();
+            services.AddScoped<IPdfTicketGeneratorService, PdfTicketGeneratorService>();
         }
     }
     public class SwaggerDocumentationConfigurationManager
