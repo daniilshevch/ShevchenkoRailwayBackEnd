@@ -285,9 +285,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseSer
                 options.AddPolicy("AllowFrontend",
                     policy =>
                     {
-                        policy.WithOrigins("http://localhost:50994")
-                              .AllowAnyHeader()
-                              .AllowAnyMethod();
+                        policy
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
         }

@@ -39,7 +39,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
                 double? speed_on_section = null;
                 if (previous_stop is not null)
                 {
-                    double distance_between_stations = (double)(current_stop.Distance_From_Starting_Station - previous_stop.Distance_From_Starting_Station)!;
+                    double? _distance_between_stations = current_stop.Distance_From_Starting_Station - previous_stop.Distance_From_Starting_Station;
+                    double distance_between_stations = 0;
+                    if(_distance_between_stations is not null)
+                    {
+                        distance_between_stations = (double)_distance_between_stations;
+                    }
                     if (current_stop.Arrival_Time is not null && previous_stop.Departure_Time is not null)
                     {
                         double trip_duration_between_station = (current_stop.Arrival_Time.Value - previous_stop.Departure_Time.Value).TotalHours;
@@ -49,7 +54,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
                         }
                         else
                         {
-                            speed_on_section = 1;
+                            speed_on_section = 0;
                         }
                         previous_stop.Speed_On_Section = speed_on_section;
                     }
