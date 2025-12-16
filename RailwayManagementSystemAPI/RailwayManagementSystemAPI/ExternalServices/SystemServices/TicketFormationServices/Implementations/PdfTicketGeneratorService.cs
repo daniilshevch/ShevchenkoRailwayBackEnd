@@ -1,19 +1,29 @@
-﻿using QuestPDF;
+﻿using Microsoft.EntityFrameworkCore.Query.Internal;
+using QuestPDF;
 using QuestPDF.Fluent;
-using QuestPDF.Infrastructure;
 using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
+using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Interfaces;
-using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.TranslationServices.Translators.Implementations;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.TranslationServices.Translators.Interfaces;
 
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Implementations
 {
     public class PdfTicketGeneratorService : IPdfTicketGeneratorService
     {
         private readonly IQRCodeGeneratorService qr_code_generator_service;
-        public PdfTicketGeneratorService(IQRCodeGeneratorService qr_code_generator_service)
+        private readonly IStationTranslator station_translator;
+        private readonly ICarriageTypeTranslator carriage_type_translator;
+        private readonly ITrainRoutesTranslator train_routes_translator;
+        public PdfTicketGeneratorService(IQRCodeGeneratorService qr_code_generator_service, IStationTranslator station_translator,
+            ICarriageTypeTranslator carriage_type_translator, ITrainRoutesTranslator train_routes_translator)
         {
             this.qr_code_generator_service = qr_code_generator_service;
+            this.station_translator = station_translator;
+            this.carriage_type_translator = carriage_type_translator;
+            this.train_routes_translator = train_routes_translator;
             Settings.License = LicenseType.Community;
         }
         public byte[] GenerateTicketPdf(ExternalProfileTicketBookingDto ticket_booking)
@@ -35,6 +45,15 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketForma
             });
 
             return document.GeneratePdf();
+        }
+        public void TranslateTicketIntoUkrainian(ExternalProfileTicketBookingDto ticket_booking_profile_for_pdf)
+        {
+            ticket_booking_profile_for_pdf.Full_Route_Starting_Station_Title = station_translator.TranslateStationTitleIntoUkrainian(ticket_booking_profile_for_pdf.Full_Route_Starting_Station_Title)!;
+            ticket_booking_profile_for_pdf.Full_Route_Ending_Station_Title = station_translator.TranslateStationTitleIntoUkrainian(ticket_booking_profile_for_pdf.Full_Route_Ending_Station_Title)!;
+            ticket_booking_profile_for_pdf.Trip_Starting_Station_Title = station_translator.TranslateStationTitleIntoUkrainian(ticket_booking_profile_for_pdf.Trip_Starting_Station_Title)!;
+            ticket_booking_profile_for_pdf.Trip_Ending_Station_Title = station_translator.TranslateStationTitleIntoUkrainian(ticket_booking_profile_for_pdf.Trip_Ending_Station_Title)!;
+            ticket_booking_profile_for_pdf.Carriage_Type = carriage_type_translator.TranslateCarriageTypeIntoUkrainian(ticket_booking_profile_for_pdf.Carriage_Type)!;
+            ticket_booking_profile_for_pdf.Train_Route_Id = train_routes_translator.TranslateTrainRouteIdIntoUkrainian(ticket_booking_profile_for_pdf.Train_Route_Id)!;
         }
         public void _ConstructHeader(IContainer container, ExternalProfileTicketBookingDto ticket_booking)
         {

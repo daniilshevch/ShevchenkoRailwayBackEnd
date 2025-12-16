@@ -60,6 +60,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
         [HttpPost("download-ticket-pdf")]
         public IActionResult DownloadTicketPdf([FromBody] ExternalProfileTicketBookingDto ticket_booking)
         {
+            pdf_ticket_generator_service.TranslateTicketIntoUkrainian(ticket_booking);
             byte[] pdf_file = pdf_ticket_generator_service.GenerateTicketPdf(ticket_booking);
             return File(pdf_file, "application/pdf", $"ticket_{ticket_booking.Full_Ticket_Id}.pdf");
         }

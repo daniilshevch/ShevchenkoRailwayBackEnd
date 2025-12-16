@@ -23,21 +23,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
         private readonly string service_title = "EmailTicketSender";
         private readonly IUserTicketManagementService user_ticket_management_service;
         private readonly IPdfTicketGeneratorService pdf_ticket_generator_service;
-        private readonly IStationTranslator station_translator;
-        private readonly ICarriageTypeTranslator carriage_type_translator;
-        private readonly ITrainRoutesTranslator train_routes_translator;
         public GmailSmtpTicketSender(IConfiguration configuration, IUserTicketManagementService user_ticket_management_service,
-            IPdfTicketGeneratorService pdf_ticket_generator_service, IStationTranslator station_translator,
-            ICarriageTypeTranslator carriage_type_translator, ITrainRoutesTranslator train_routes_translator,
+            IPdfTicketGeneratorService pdf_ticket_generator_service,
             IWebHostEnvironment web_host_environment)
         {
             this.from_email = configuration["GmailSmtp:Email"]!;
             this.app_password = configuration["GmailSmtp:AppPassword"]!;
             this.user_ticket_management_service = user_ticket_management_service;
             this.pdf_ticket_generator_service = pdf_ticket_generator_service;
-            this.station_translator = station_translator;
-            this.carriage_type_translator = carriage_type_translator;
-            this.train_routes_translator = train_routes_translator;
             string template_path = Path.Combine(web_host_environment.ContentRootPath, "ExternalServices",
                 "SystemServices", "EmailServices", "HtmlTemplate", "TicketEmailTemplate.html");
             if(File.Exists(template_path))
@@ -63,14 +56,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
 
             ExternalProfileTicketBookingDto ticket_booking_profile_for_pdf =
                 await user_ticket_management_service.CreateProfileDtoForTicketBooking(ticket_booking_info);
-            ticket_booking_profile_for_pdf.Full_Route_Starting_Station_Title = station_translator.TranslateStationTitleIntoUkrainian(ticket_booking_profile_for_pdf.Full_Route_Starting_Station_Title)!;
-            ticket_booking_profile_for_pdf.Full_Route_Ending_Station_Title = station_translator.TranslateStationTitleIntoUkrainian(ticket_booking_profile_for_pdf.Full_Route_Ending_Station_Title)!;
-            ticket_booking_profile_for_pdf.Trip_Starting_Station_Title = station_translator.TranslateStationTitleIntoUkrainian(ticket_booking_profile_for_pdf.Trip_Starting_Station_Title)!;
-            ticket_booking_profile_for_pdf.Trip_Ending_Station_Title = station_translator.TranslateStationTitleIntoUkrainian(ticket_booking_profile_for_pdf.Trip_Ending_Station_Title)!;
-            ticket_booking_profile_for_pdf.Carriage_Type = carriage_type_translator.TranslateCarriageTypeIntoUkrainian(ticket_booking_profile_for_pdf.Carriage_Type)!;
-            ticket_booking_profile_for_pdf.Train_Route_Id = train_routes_translator.TranslateTrainRouteIdIntoUkrainian(ticket_booking_profile_for_pdf.Train_Route_Id)!;
-
-
+            pdf_ticket_generator_service.TranslateTicketIntoUkrainian(ticket_booking_profile_for_pdf);
             message.Subject = $"Квиток на поїзд {ticket_booking_profile_for_pdf.Train_Route_Id}, {ticket_booking_profile_for_pdf.Departure_Time_From_Trip_Starting_Station}";
  
             string logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Ukrzaliznytsia_logo.svg/1200px-Ukrzaliznytsia_logo.svg.png";
