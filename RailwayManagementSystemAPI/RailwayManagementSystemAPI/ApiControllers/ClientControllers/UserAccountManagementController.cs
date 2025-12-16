@@ -18,6 +18,16 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
         {
             this.user_profile_management_service = user_profile_management_service;
         }
+        [HttpGet("get-user-profile-info")]
+        public async Task<ActionResult<ExternalOutputUserProfileDto>> GetUserProileInfo()
+        {
+            QueryResult<ExternalOutputUserProfileDto> user_profile_get_result = await user_profile_management_service.GetUserInfoForAuthenticatedUser();
+            if(user_profile_get_result.Fail)
+            {
+                return user_profile_get_result.GetErrorFromQueryResult<ExternalOutputUserProfileDto, ExternalOutputUserProfileDto>();
+            }
+            return Ok(user_profile_get_result.Value);
+        }
 
         [HttpPost("upload-profile-image-for-current-user")]
         public async Task<ActionResult> UploadProfileImage(IFormFile image_file)

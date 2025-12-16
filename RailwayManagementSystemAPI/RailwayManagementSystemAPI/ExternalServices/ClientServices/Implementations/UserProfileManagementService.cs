@@ -5,6 +5,7 @@ using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayCore.InternalServices.SystemServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.SystemAuthenticationServices;
+using RailwayManagementSystemAPI.ExternalDTO.UserDTO.ClientDTO;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
@@ -20,6 +21,24 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         {
             this.system_authentication_service = system_authentication_service;
             this.image_repository = image_repository;
+        }
+        public async Task<QueryResult<ExternalOutputUserProfileDto>> GetUserInfoForAuthenticatedUser()
+        {
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
+            if (user_authentication_result.Fail)
+            {
+                return new FailQuery<ExternalOutputUserProfileDto>(user_authentication_result.Error);
+            }
+            User authenticated_user = user_authentication_result.Value;
+            ExternalOutputUserProfileDto user_profile = (ExternalOutputUserProfileDto)authenticated_user;
+            QueryResult<Image> image_get_result_for_user = await image_repository.GetUserProfileImage(authenticated_user.Id);
+            if (!image_get_result_for_user.Fail)
+            {
+                user_profile.User_Profile_Image = image_get_result_for_user.Value.Image_Data;
+            }
+            return new SuccessQuery<ExternalOutputUserProfileDto>(user_profile, new SuccessMessage($"Successfully got profile info" +
+                $"for user: {ConsoleLogService.PrintUser(authenticated_user)}", annotation: service_name, unit: ProgramUnit.ClientAPI));
+
         }
         /// <summary>
         /// Метод проводить встановлення зображення для профіля користувача
