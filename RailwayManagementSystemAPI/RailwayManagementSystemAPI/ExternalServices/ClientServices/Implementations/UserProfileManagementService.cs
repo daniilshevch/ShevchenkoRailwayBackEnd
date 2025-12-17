@@ -36,6 +36,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             {
                 user_profile.User_Profile_Image = image_get_result_for_user.Value.Image_Data;
             }
+            QueryResult<string> google_image_get_result_for_user = await image_repository.GetUserProfileImageFromGoogleUrl(authenticated_user.Id);
+            if(!google_image_get_result_for_user.Fail)
+            {
+                user_profile.User_Google_Profile_Image_Url = google_image_get_result_for_user.Value;
+            }
             return new SuccessQuery<ExternalOutputUserProfileDto>(user_profile, new SuccessMessage($"Successfully got profile info" +
                 $"for user: {ConsoleLogService.PrintUser(authenticated_user)}", annotation: service_name, unit: ProgramUnit.ClientAPI));
 

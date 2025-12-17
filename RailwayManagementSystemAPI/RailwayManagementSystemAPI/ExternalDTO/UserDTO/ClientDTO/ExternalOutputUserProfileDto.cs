@@ -22,6 +22,9 @@ namespace RailwayManagementSystemAPI.ExternalDTO.UserDTO.ClientDTO
         public string? Phone_Number { get; set; }
         [JsonPropertyName("user_profile_image")]
         public byte[]? User_Profile_Image { get; set; }
+        [JsonPropertyName("user_google_profile_image_url")]
+        public string? User_Google_Profile_Image_Url { get; set; }
+        
         public static explicit operator ExternalOutputUserProfileDto(User user)
         {
             return new ExternalOutputUserProfileDto()

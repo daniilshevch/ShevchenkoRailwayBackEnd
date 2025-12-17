@@ -109,9 +109,9 @@ namespace RailwayCore.InternalServices.CoreServices.Implementations
         }
         //TicketUserManipulationService
         [CoreMethod]
-        public async Task<List<TicketBooking>> GetAllTicketBookingsForUser(int user_id)
+        public async Task<List<TicketBooking>> GetAllTicketBookingsForUser(int user_id, bool only_active = true)
         {
-            return await ticket_user_manipulation_service.GetAllTicketBookingsForUser(user_id);
+            return await ticket_user_manipulation_service.GetAllTicketBookingsForUser(user_id, only_active);
         }
         [CoreMethod]
         public async Task<QueryResult<TicketBooking>> ReturnTicketBookingById(string ticket_id)

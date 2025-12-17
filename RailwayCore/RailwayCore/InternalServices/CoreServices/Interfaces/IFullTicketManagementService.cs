@@ -15,7 +15,7 @@ namespace RailwayCore.InternalServices.CoreServices.Interfaces
         Task<List<TicketBooking>> GetAllExpiredTicketBookings();
         Task<QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>> GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDate(List<string> train_route_on_date_ids, string starting_station_title, string ending_station_title);
         Task<QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>> GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDateWithPassengerInformationAnalytics(List<string> train_route_on_date_ids, string starting_station_title, string ending_station_title);
-        Task<List<TicketBooking>> GetAllTicketBookingsForUser(int user_id);
+        Task<List<TicketBooking>> GetAllTicketBookingsForUser(int user_id, bool only_active = true);
         Task<User?> GetTicketOwner(string ticket_id);
         Task<QueryResult<TicketBooking>> ReturnTicketBookingById(string ticket_id);
         Task<QueryResult<TicketBooking>> UpdateTicketBooking(TicketBooking ticket_booking);

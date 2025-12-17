@@ -81,7 +81,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 return new FailQuery<List<ExternalProfileTicketBookingDto>>(user_authentication_result.Error);
             }
             User user = user_authentication_result.Value;
-            List<TicketBooking> ticket_bookings_for_user = (await full_ticket_management_service.GetAllTicketBookingsForUser(user.Id)).ToList();
+            List<TicketBooking> ticket_bookings_for_user = (await full_ticket_management_service.GetAllTicketBookingsForUser(user.Id, only_active: true)).ToList();
             List<ExternalProfileTicketBookingDto> output_tickets = new List<ExternalProfileTicketBookingDto>();
             foreach (TicketBooking ticket_booking in ticket_bookings_for_user)
             {

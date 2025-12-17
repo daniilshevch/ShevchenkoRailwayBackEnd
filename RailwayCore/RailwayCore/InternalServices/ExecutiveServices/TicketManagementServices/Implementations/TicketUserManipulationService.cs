@@ -22,16 +22,32 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
         /// </summary>
         /// <param name="user_id"></param>
         /// <returns></returns>
-        public async Task<List<TicketBooking>> GetAllTicketBookingsForUser(int user_id)
+        public async Task<List<TicketBooking>> GetAllTicketBookingsForUser(int user_id, bool only_active = true)
         {
-            List<TicketBooking> ticket_bookings = await context.Ticket_Bookings
-                .Include(ticket_booking => ticket_booking.Starting_Station)
-                .Include(ticket_booking => ticket_booking.Ending_Station)
-                .Include(ticket_booking => ticket_booking.User)
-                .Include(ticket_booking => ticket_booking.Passenger_Carriage)
-                .Include(ticket_booking => ticket_booking.Train_Route_On_Date)
-                .ThenInclude(train_route_on_date => train_route_on_date.Train_Route)
-                .Where(ticket_booking => ticket_booking.User_Id == user_id).ToListAsync();
+            List<TicketBooking> ticket_bookings = new List<TicketBooking>();
+            if (only_active)
+            {
+                ticket_bookings = await context.Ticket_Bookings
+                    .Include(ticket_booking => ticket_booking.Starting_Station)
+                    .Include(ticket_booking => ticket_booking.Ending_Station)
+                    .Include(ticket_booking => ticket_booking.User)
+                    .Include(ticket_booking => ticket_booking.Passenger_Carriage)
+                    .Include(ticket_booking => ticket_booking.Train_Route_On_Date)
+                    .ThenInclude(train_route_on_date => train_route_on_date.Train_Route)
+                    .Where(ticket_booking => ticket_booking.User_Id == user_id && ticket_booking.Ticket_Status == TicketStatus.Booked_And_Active)
+                    .ToListAsync();
+            }
+            else
+            {
+                ticket_bookings = await context.Ticket_Bookings
+                    .Include(ticket_booking => ticket_booking.Starting_Station)
+                    .Include(ticket_booking => ticket_booking.Ending_Station)
+                    .Include(ticket_booking => ticket_booking.User)
+                    .Include(ticket_booking => ticket_booking.Passenger_Carriage)
+                    .Include(ticket_booking => ticket_booking.Train_Route_On_Date)
+                    .ThenInclude(train_route_on_date => train_route_on_date.Train_Route)
+                    .Where(ticket_booking => ticket_booking.User_Id == user_id).ToListAsync();
+            }
             return ticket_bookings;
         }
         /// <summary>
