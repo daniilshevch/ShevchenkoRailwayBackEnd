@@ -18,7 +18,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
             this.context = context;
         }
         /// <summary>
-        /// Метод вертає список квитків, які приписані до акаунту користувача
+        /// Метод вертає список квитків, які приписані до акаунту користувача(якщо вибрано параметр only_active = true, то тільки ті, які мають статус активних
         /// </summary>
         /// <param name="user_id"></param>
         /// <returns></returns>
@@ -34,7 +34,8 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
                     .Include(ticket_booking => ticket_booking.Passenger_Carriage)
                     .Include(ticket_booking => ticket_booking.Train_Route_On_Date)
                     .ThenInclude(train_route_on_date => train_route_on_date.Train_Route)
-                    .Where(ticket_booking => ticket_booking.User_Id == user_id && ticket_booking.Ticket_Status == TicketStatus.Booked_And_Active)
+                    .Where(ticket_booking => ticket_booking.User_Id == user_id
+                    && (ticket_booking.Ticket_Status == TicketStatus.Booked_And_Active || ticket_booking.Ticket_Status == TicketStatus.Booked_And_Used))
                     .ToListAsync();
             }
             else
@@ -48,6 +49,26 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
                     .ThenInclude(train_route_on_date => train_route_on_date.Train_Route)
                     .Where(ticket_booking => ticket_booking.User_Id == user_id).ToListAsync();
             }
+            return ticket_bookings;
+        }
+       /// <summary>
+       /// Метод вертає всі архівні квитки користувача, які можуть бути безпосередньо в статусі Archieved, якщо поїздка успішно завершена, або
+       /// мати статус Returned, якщо користувач повернув квитки і не здійснив поїздку
+       /// </summary>
+       /// <param name="user_id"></param>
+       /// <returns></returns>
+        public async Task<List<TicketBooking>> GetAllArchievedAndReturnedTicketBookingsForUser(int user_id)
+        {
+            List<TicketBooking> ticket_bookings = await context.Ticket_Bookings
+                .Include(ticket_booking => ticket_booking.Starting_Station)
+                .Include(ticket_booking => ticket_booking.Ending_Station)
+                .Include(ticket_booking => ticket_booking.User)
+                .Include(ticket_booking => ticket_booking.Passenger_Carriage)
+                .Include(ticket_booking => ticket_booking.Train_Route_On_Date)
+                .ThenInclude(train_route_on_date => train_route_on_date.Train_Route)
+                .Where(ticket_booking => ticket_booking.User_Id == user_id
+                && (ticket_booking.Ticket_Status == TicketStatus.Archieved || ticket_booking.Ticket_Status == TicketStatus.Returned))
+                .ToListAsync();
             return ticket_bookings;
         }
         /// <summary>
