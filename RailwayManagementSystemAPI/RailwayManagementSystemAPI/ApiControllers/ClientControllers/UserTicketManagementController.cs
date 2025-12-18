@@ -38,8 +38,32 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
         public async Task<ActionResult<List<ExternalTicketBookingGroupDto>>> GetAllBookedTicketsInGroupsForCurrentUser()
         {
             QueryResult<List<ExternalTicketBookingGroupDto>> ticket_bookings_get_result = 
-                await user_ticket_management_service.GetAllBookedTicketsInGroupsForCurrentUser();
+                await user_ticket_management_service.GetAllBookedTicketsInGroupsForCurrentUser(TicketGroupSearchOptions.All);
             if(ticket_bookings_get_result.Fail)
+            {
+                return ticket_bookings_get_result.GetErrorFromQueryResult<List<ExternalTicketBookingGroupDto>, List<ExternalTicketBookingGroupDto>>();
+            }
+            List<ExternalTicketBookingGroupDto> ticket_groups = ticket_bookings_get_result.Value;
+            return Ok(ticket_groups);
+        }
+        [HttpGet("get-grouped-active-tickets-for-current-user")]
+        public async Task<ActionResult<List<ExternalTicketBookingGroupDto>>> GetAllBookedActiveTicketsInGroupsForCurrentUser()
+        {
+            QueryResult<List<ExternalTicketBookingGroupDto>> ticket_bookings_get_result =
+                await user_ticket_management_service.GetAllBookedTicketsInGroupsForCurrentUser(TicketGroupSearchOptions.Active);
+            if (ticket_bookings_get_result.Fail)
+            {
+                return ticket_bookings_get_result.GetErrorFromQueryResult<List<ExternalTicketBookingGroupDto>, List<ExternalTicketBookingGroupDto>>();
+            }
+            List<ExternalTicketBookingGroupDto> ticket_groups = ticket_bookings_get_result.Value;
+            return Ok(ticket_groups);
+        }
+        [HttpGet("get-grouped-archieved-tickets-for-current-user")]
+        public async Task<ActionResult<List<ExternalTicketBookingGroupDto>>> GetAllBookedArchievedTicketsInGroupsForCurrentUser()
+        {
+            QueryResult<List<ExternalTicketBookingGroupDto>> ticket_bookings_get_result =
+                await user_ticket_management_service.GetAllBookedTicketsInGroupsForCurrentUser(TicketGroupSearchOptions.Archieved_And_Returned);
+            if (ticket_bookings_get_result.Fail)
             {
                 return ticket_bookings_get_result.GetErrorFromQueryResult<List<ExternalTicketBookingGroupDto>, List<ExternalTicketBookingGroupDto>>();
             }

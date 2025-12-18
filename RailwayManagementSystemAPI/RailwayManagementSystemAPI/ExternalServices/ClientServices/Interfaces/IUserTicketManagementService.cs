@@ -1,5 +1,6 @@
 ﻿using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement;
+using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces
 {
@@ -7,7 +8,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces
     {
         Task<ExternalProfileTicketBookingDto> CreateProfileDtoForTicketBooking(TicketBooking ticket_booking);
         Task<QueryResult<List<ExternalProfileTicketBookingDto>>> GetAllBookedTicketsForCurrentUser();
-        Task<QueryResult<List<ExternalTicketBookingGroupDto>>> GetAllBookedTicketsInGroupsForCurrentUser();
         Task<QueryResult<ExternalProfileTicketBookingDto>> ReturnTicketBookingForCurrentUserById(string ticket_id);
+        Task<QueryResult<List<ExternalTicketBookingGroupDto>>> GetAllBookedTicketsInGroupsForCurrentUser(TicketGroupSearchOptions search_options);
     }
 }

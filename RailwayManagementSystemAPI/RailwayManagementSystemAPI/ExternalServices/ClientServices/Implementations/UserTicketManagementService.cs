@@ -11,6 +11,7 @@ using RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseService
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.SystemAuthenticationServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
+using System.Security.Permissions;
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
     /// <summary>
@@ -46,6 +47,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             return HashCode.Combine(Train_Route_On_Date_Id, Starting_Station_Id, Ending_Station_Id);
         }
 
+    }
+    public enum TicketGroupSearchOptions
+    {
+        All,
+        Active,
+        Archieved_And_Returned
     }
     /// <summary>
     /// Даний сервіс містить в собі команди, які відповідають за функціонал можливих дій користувача зі своїми квитками, а саме перегляд 
@@ -96,7 +103,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         /// має на один рейс поїзда, але на різні місця(+можливо, різні вагони), то ці квитки будуть зібрані в одну групу
         /// </summary>
         /// <returns></returns>
-        public async Task<QueryResult<List<ExternalTicketBookingGroupDto>>> GetAllBookedTicketsInGroupsForCurrentUser()
+        public async Task<QueryResult<List<ExternalTicketBookingGroupDto>>> GetAllBookedTicketsInGroupsForCurrentUser(TicketGroupSearchOptions search_options)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("----------------------USER TICKET MANAGEMENT-------------------------");
@@ -110,9 +117,23 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             }
             User user = user_authentication_result.Value;
             //Отримуємо з внутрішнього сервіса список всіх квитків для користувача
-            List<TicketBooking> ticket_bookings_for_user = (await full_ticket_management_service.GetAllTicketBookingsForUser(user.Id)).ToList();
 
-
+            List<TicketBooking> ticket_bookings_for_user = new List<TicketBooking>();
+            //З цією опцією будуть шукатись лише активні квитки(ті, що куплені і ще не використані або ті, що вже пробив провідник, але поїздка ще триває)
+            if (search_options == TicketGroupSearchOptions.Active)
+            {
+                ticket_bookings_for_user = (await full_ticket_management_service.GetAllTicketBookingsForUser(user.Id, only_active: true)).ToList();
+            }
+            //З цією опцією будуть шукатись лише квитки в архіві - ті, де поїздка вже закінчилась або квитки були повернуті і поїздка не сталась
+            else if(search_options == TicketGroupSearchOptions.Archieved_And_Returned)
+            {
+                ticket_bookings_for_user = (await full_ticket_management_service.GetAllArchievedAndReturnedTicketBookingsForUser(user.Id)).ToList();
+            }
+            //З цією опцією будуть знайдені всі квитки
+            else
+            {
+                ticket_bookings_for_user = (await full_ticket_management_service.GetAllTicketBookingsForUser(user.Id, only_active: false)).ToList();
+            }
             //Організовуємо квитки в групи за спільністю рейса поїзда та початкової і кінцевої станцій поїздки в квитку
             IEnumerable<IGrouping<TicketBookingGroupHeader, TicketBooking>> ticket_groups =
                 ticket_bookings_for_user.GroupBy(ticket => new TicketBookingGroupHeader(ticket.Train_Route_On_Date_Id, ticket.Starting_Station_Id, ticket.Ending_Station_Id));
