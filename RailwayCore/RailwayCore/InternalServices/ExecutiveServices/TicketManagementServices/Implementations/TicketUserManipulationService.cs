@@ -72,6 +72,26 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
             return ticket_bookings;
         }
         /// <summary>
+        /// Метод вертає всі тимчасові резервації місць за користувачами під час бронювання(ті, що розпочались після натиснення на кнопку місця, але 
+        /// ще не закінчились)
+        /// </summary>
+        /// <param name="user_id"></param>
+        /// <returns></returns>
+        public async Task<List<TicketBooking>> GetAllTicketBookingsInProgressForUser(int user_id)
+        {
+            List<TicketBooking> ticket_bookings = await context.Ticket_Bookings
+                .Include(ticket_booking => ticket_booking.Starting_Station)
+                .Include(ticket_booking => ticket_booking.Ending_Station)
+                .Include(ticket_booking => ticket_booking.User)
+                .Include(ticket_booking => ticket_booking.Passenger_Carriage)
+                .Include(ticket_booking => ticket_booking.Train_Route_On_Date)
+                .ThenInclude(train_route_on_date => train_route_on_date.Train_Route)
+                .Where(ticket_booking => ticket_booking.User_Id == user_id
+                && (ticket_booking.Ticket_Status == TicketStatus.Booking_In_Progress))
+                .ToListAsync();
+            return ticket_bookings;
+        }
+        /// <summary>
         /// Даний метод проводить повернення квитка, раніше придбаного користувачем(по факту, ставить квитку в базі статус Returned) 
         /// </summary>
         /// <param name="ticket_id"></param>

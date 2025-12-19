@@ -52,7 +52,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
     {
         All,
         Active,
-        Archieved_And_Returned
+        Archieved_And_Returned,
+        In_Booking_Progress
     }
     /// <summary>
     /// Даний сервіс містить в собі команди, які відповідають за функціонал можливих дій користувача зі своїми квитками, а саме перегляд 
@@ -128,6 +129,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             else if(search_options == TicketGroupSearchOptions.Archieved_And_Returned)
             {
                 ticket_bookings_for_user = (await full_ticket_management_service.GetAllArchievedAndReturnedTicketBookingsForUser(user.Id)).ToList();
+            }
+            else if(search_options == TicketGroupSearchOptions.In_Booking_Progress)
+            {
+                ticket_bookings_for_user = (await full_ticket_management_service.GetAllTicketBookingsInProgressForUser(user.Id)).ToList();
             }
             //З цією опцією будуть знайдені всі квитки
             else
