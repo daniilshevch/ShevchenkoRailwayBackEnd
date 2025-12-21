@@ -5,6 +5,7 @@ using RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices;
+using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.ClientDTO;
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
     [ApiController]
@@ -41,10 +42,12 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
         }
         [HttpGet("Search-Train-Routes-Through-Station/{station_title}")]
         public async Task<ActionResult<List<ExternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStation([FromRoute] string station_title,
-            [FromQuery] DateTime time, [FromQuery] TimeSpan? left_interval = null, [FromQuery] TimeSpan? right_interval = null)
+            [FromQuery] DateTime time, [FromQuery] double? left_interval = null, [FromQuery] double? right_interval = null)
         {
+            TimeSpan? left = left_interval.HasValue ? TimeSpan.FromHours(left_interval.Value) : null;
+            TimeSpan? right = right_interval.HasValue ? TimeSpan.FromHours(right_interval.Value) : null;
             QueryResult<List<ExternalTrainRaceThroughStationDto>> train_races_result = 
-                await train_route_with_booking_search_service.SearchTrainRoutesThroughStation(station_title, time, left_interval, right_interval);
+                await train_route_with_booking_search_service.SearchTrainRoutesThroughStation(station_title, time, left, right);
             if(train_races_result.Fail)
             {
                 return NotFound();
@@ -63,30 +66,18 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             }
             return Ok(train_race_info_get_result.Value);
         }
+        [HttpGet("get-train-schedule-for-train-race/{train_race_id}")]
+        public async Task<ActionResult<List<ExternalSingleTrainStopDto>>> GetScheduleForTrainRace([FromRoute] string train_race_id,
+            [FromQuery] string starting_station_title, [FromQuery] string ending_station_title)
+        {
+            QueryResult<List<ExternalSingleTrainStopDto>> train_stops_get_result = await train_route_with_booking_search_service.GetScheduleForTrainRace(train_race_id,
+                starting_station_title, ending_station_title);
+            if(train_stops_get_result.Fail)
+            {
+                return train_stops_get_result.GetErrorFromQueryResult<List<ExternalSingleTrainStopDto>, List<ExternalSingleTrainStopDto>>();
+            }
+            return Ok(train_stops_get_result.Value);
 
-
-        //[HttpPost("Get-Train-Schedule")]
-        //public ActionResult<List<ExternalSingleTrainStopDto>> GetScheduleForSpecificTrainRouteOnDate([FromBody] ExternalTrainRouteWithBookingsInfoDto train_route_on_date)
-        //{
-        //    return train_route_with_booking_search_service.GetScheduleForSpecificTrainRouteOnDate(train_route_on_date);
-        //}
-        //[HttpPost("Get-Train-Schedule2")]
-        //public ActionResult<List<ExternalSingleTrainStopDto>> GetScheduleForSpecificTrainRouteOnDate([FromBody] List<ExternalTrainRouteWithBookingsInfoDto> train_routes_on_date_statistics_list, string train_route_on_date_id)
-        //{
-        //    return train_route_with_booking_search_service.GetScheduleForSpecificTrainRouteOnDateFromGeneralList(train_routes_on_date_statistics_list, train_route_on_date_id);
-        //}
-
-        //[HttpPost("Get-All-Carriages-Info")]
-        //public ActionResult<List<ExternalSinglePassengerCarriageBookingsInfoDto>> GetBookingsInfoForAllCarriagesForSpecificTrainRouteOnDate
-        //    ([FromBody] ExternalTrainRouteWithBookingsInfoDto train_route_on_date)
-        //{
-        //    return train_route_with_booking_search_service.GetBookingsInfoForAllPassengerCarriagesForSpecificTrainRouteOnDate(train_route_on_date);
-        //}
-        //[HttpPost("Get-Carriages-Of-Type-Info")]
-        //public ActionResult<List<ExternalSinglePassengerCarriageBookingsInfoDto>> GetBookingsInfoForPassengerCarriagesOfSpecificTypeForSpecificTrainRouteOnDate
-        //    (ExternalTrainRouteWithBookingsInfoDto train_route_on_date, PassengerCarriageType? carriage_type = null, PassengerCarriageQualityClass? quality_class = null)
-        //{
-        //    return train_route_with_booking_search_service.GetBookingsInfoForPassengerCarriagesOfSpecificTypeForSpecificTrainRouteOnDate(train_route_on_date, carriage_type, quality_class);
-        //}
+        }
     }
 }

@@ -70,6 +70,54 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             return new SuccessQuery<List<InternalTrainRaceBetweenStationsDto>>(appropriate_train_routes_on_date, new SuccessMessage($"Successfuly got train races passing between" +
                 $" {starting_station_title} and {ending_station_title} on {departure_date}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
+        [PartialLogicMethod]
+        public List<ExternalSingleTrainStopDto> _CreateListOfExternalTrainStopsDto(List<TrainRouteOnDateOnStation> train_stops_for_current_train_route_on_date,
+            string starting_station_title, string ending_station_title)
+        {
+            List<ExternalSingleTrainStopDto> external_train_stops = new List<ExternalSingleTrainStopDto>();
+
+            //Знаходимо номер за рахунком у маршруті початкової станції подорожі
+            int trip_start_stop_index = train_stops_for_current_train_route_on_date.FindIndex(train_stop => train_stop.Station.Title == starting_station_title);
+            //Знаходимо номер за рахунком у маршруті кінцевої станції подорожі
+            int trip_end_stop_index = train_stops_for_current_train_route_on_date.FindIndex(train_stop => train_stop.Station.Title == ending_station_title);
+
+            //Ініціалізуємо лічильник,який буде рахувати, яка за рахунком дана станція при переборі
+            int current_stop_index = 0;
+            // Перебираємо всі станції на маршруті, збираємо інформацію про них і додаємо в список зовнішніх трансферів
+            foreach (TrainRouteOnDateOnStation current_train_stop in train_stops_for_current_train_route_on_date)
+            {
+                DateTime? arrival_time_to_stop = current_train_stop.Arrival_Time;
+                DateTime? departure_time_from_stop = current_train_stop.Departure_Time;
+                TimeSpan? stop_duration = null;
+                if (arrival_time_to_stop is not null && departure_time_from_stop is not null)
+                {
+                    stop_duration = (DateTime)departure_time_from_stop - (DateTime)arrival_time_to_stop;
+                }
+                bool is_part_of_trip = false;
+                bool is_final_stop = false;
+                if (current_stop_index >= trip_start_stop_index && current_stop_index <= trip_end_stop_index)
+                {
+                    is_part_of_trip = true;
+                }
+                if (current_stop_index == trip_end_stop_index)
+                {
+                    is_final_stop = true;
+                }
+                current_stop_index++;
+                //Додаємо зупинку в список зовнішніх трансферів
+                external_train_stops.Add(new ExternalSingleTrainStopDto()
+                {
+                    Station_Title = current_train_stop.Station.Title,
+                    Arrival_Time = arrival_time_to_stop,
+                    Departure_Time = departure_time_from_stop,
+                    Stop_Duration = stop_duration,
+                    Is_Part_Of_Trip = is_part_of_trip,
+                    Is_Final_Trip_Stop = is_final_stop,
+                    Distance_From_Full_Route_Starting_Station = current_train_stop.Distance_From_Starting_Station
+                });
+            }
+            return external_train_stops;
+        }
 
         [PartialLogicMethod]
         public QueryResult<List<ExternalTrainRaceWithBookingsInfoDto>> _CreateListOfExternalTrainRaceWithBookingsInfoDto
@@ -252,48 +300,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
 
                 //Отримуємо список всіх зупинок на маршруті в порядку слідування поїзда
                 List<TrainRouteOnDateOnStation> train_stops_for_current_train_route_on_date = current_train_route_trip_info.Full_Route_Stops_List;
-                List<ExternalSingleTrainStopDto> external_train_stops = new List<ExternalSingleTrainStopDto>();
-
-                //Знаходимо номер за рахунком у маршруті початкової станції подорожі
-                int trip_start_stop_index = train_stops_for_current_train_route_on_date.FindIndex(train_stop => train_stop.Station.Title == starting_station_title);
-                //Знаходимо номер за рахунком у маршруті кінцевої станції подорожі
-                int trip_end_stop_index = train_stops_for_current_train_route_on_date.FindIndex(train_stop => train_stop.Station.Title == ending_station_title);
-
-                //Ініціалізуємо лічильник,який буде рахувати, яка за рахунком дана станція при переборі
-                int current_stop_index = 0;
-                // Перебираємо всі станції на маршруті, збираємо інформацію про них і додаємо в список зовнішніх трансферів
-                foreach (TrainRouteOnDateOnStation current_train_stop in train_stops_for_current_train_route_on_date)
-                {
-                    DateTime? arrival_time_to_stop = current_train_stop.Arrival_Time;
-                    DateTime? departure_time_from_stop = current_train_stop.Departure_Time;
-                    TimeSpan? stop_duration = null;
-                    if (arrival_time_to_stop is not null && departure_time_from_stop is not null)
-                    {
-                        stop_duration = (DateTime)departure_time_from_stop - (DateTime)arrival_time_to_stop;
-                    }
-                    bool is_part_of_trip = false;
-                    bool is_final_stop = false;
-                    if (current_stop_index >= trip_start_stop_index && current_stop_index <= trip_end_stop_index)
-                    {
-                        is_part_of_trip = true;
-                    }
-                    if (current_stop_index == trip_end_stop_index)
-                    {
-                        is_final_stop = true;
-                    }
-                    current_stop_index++;
-                    //Додаємо зупинку в список зовнішніх трансферів
-                    external_train_stops.Add(new ExternalSingleTrainStopDto()
-                    {
-                        Station_Title = current_train_stop.Station.Title,
-                        Arrival_Time = arrival_time_to_stop,
-                        Departure_Time = departure_time_from_stop,
-                        Stop_Duration = stop_duration,
-                        Is_Part_Of_Trip = is_part_of_trip,
-                        Is_Final_Trip_Stop = is_final_stop,
-                        Distance_From_Full_Route_Starting_Station = current_train_stop.Distance_From_Starting_Station
-                    });
-                }
+                List<ExternalSingleTrainStopDto> external_train_stops = _CreateListOfExternalTrainStopsDto(train_stops_for_current_train_route_on_date,
+                    starting_station_title, ending_station_title);
 
                 /////////////////////////////КОНСОЛІДУВАННЯ ІНФОРМАЦІЇ В ОДИН ЗОВНІШНІЙ ТРАНСФЕРНИЙ ОБ'ЄКТ//////////////////////////// 
 
@@ -541,7 +549,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 $"train race: {train_route_on_date_id} between stations {starting_station_title} and {ending_station_title}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
 
-
         public async Task<QueryResult<List<ExternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStation(string station_title, DateTime time,
             TimeSpan? left_interval = null, TimeSpan? right_interval = null)
         {
@@ -572,39 +579,19 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             return new SuccessQuery<List<ExternalTrainRaceThroughStationDto>>(external_train_races);
         }
 
-        [Checked("19.04.2025")]
-        public List<ExternalSingleTrainStopDto> GetScheduleForSpecificTrainRouteOnDate(ExternalTrainRaceWithBookingsInfoDto train_route_on_date)
+        public async Task<QueryResult<List<ExternalSingleTrainStopDto>>> GetScheduleForTrainRace(string train_route_on_date_id, string starting_station_title,
+            string ending_station_title)
         {
-            return train_route_on_date.Train_Stops_List;
-        }
-        public List<ExternalSingleTrainStopDto> GetScheduleForSpecificTrainRouteOnDateFromGeneralList
-            (List<ExternalTrainRaceWithBookingsInfoDto> train_routes_on_date_statistics_list, string train_route_id)
-        {
-            ExternalTrainRaceWithBookingsInfoDto? desired_train_route_on_date = train_routes_on_date_statistics_list
-                .FirstOrDefault(train_route_on_date_info => train_route_on_date_info.Train_Route_Id == train_route_id);
-            return GetScheduleForSpecificTrainRouteOnDate(desired_train_route_on_date);
+            List<TrainRouteOnDateOnStation>? train_stops = await full_train_route_search_service.GetTrainStopsForTrainRouteOnDate(train_route_on_date_id);
+            if(train_stops is null)
+            {
+                return new FailQuery<List<ExternalSingleTrainStopDto>>(new Error(ErrorType.NotFound, $"Can't find train race with ID: {train_route_on_date_id}",
+                    annotation: service_name, unit: ProgramUnit.ClientAPI));
+            }
+            List<ExternalSingleTrainStopDto> external_train_stops_dto = _CreateListOfExternalTrainStopsDto(train_stops, starting_station_title, ending_station_title);
+            return new SuccessQuery<List<ExternalSingleTrainStopDto>>(external_train_stops_dto, new SuccessMessage($"Succesfully found " +
+                $"schedule for train race {train_route_on_date_id} for trip between stations {starting_station_title} and {ending_station_title}"));
         }
 
-
-        public List<ExternalSinglePassengerCarriageBookingsInfoDto> GetBookingsInfoForAllPassengerCarriagesForSpecificTrainRouteOnDate(ExternalTrainRaceWithBookingsInfoDto train_route_on_date)
-        {
-            return train_route_on_date.Carriage_Statistics_List;
-        }
-        public List<ExternalSinglePassengerCarriageBookingsInfoDto> GetBookingsInfoForPassengerCarriagesOfSpecificTypeForSpecificTrainRouteOnDate
-            (ExternalTrainRaceWithBookingsInfoDto train_route_on_date, PassengerCarriageType? carriage_type = null, PassengerCarriageQualityClass? quality_class = null)
-        {
-            List<ExternalSinglePassengerCarriageBookingsInfoDto> output_result = train_route_on_date.Carriage_Statistics_List;
-            if (carriage_type != null)
-            {
-                output_result = output_result
-                    .Where(carriage_info => carriage_info.Carriage_Type == TextEnumConvertationService.GetCarriageTypeIntoString((PassengerCarriageType)carriage_type)).ToList();
-            }
-            if (quality_class != null)
-            {
-                output_result = output_result
-                    .Where(carriage_info => carriage_info.Quality_Class == TextEnumConvertationService.GetCarriageQualityClassIntoString((PassengerCarriageQualityClass)quality_class)).ToList();
-            }
-            return output_result;
-        }
     }
 }
