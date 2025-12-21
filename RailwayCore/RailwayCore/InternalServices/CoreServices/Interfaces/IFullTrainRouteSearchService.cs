@@ -16,5 +16,6 @@ namespace RailwayCore.InternalServices.CoreServices.Interfaces
         Task<List<TrainRouteOnDateOnStation>?> GetTrainStopsForTrainRouteOnDate(string train_route_id, DateOnly departure_date);
         Task<QueryResult<List<InternalTrainRaceBetweenStationsDto>>> SearchTrainRoutesBetweenStationsOnDate(string start_station_title, string end_station_title, DateOnly trip_departure_date);
         Task<QueryResult<List<InternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStationOnDate(string station_title, DateTime time, TimeSpan? left_interval = null, TimeSpan? right_interval = null);
+        Task<QueryResult<InternalTrainRaceBetweenStationsDto>> TransformTrainRouteOnDateIntoTrainRaceDto(string train_route_on_date_id, string start_station_title, string end_station_title);
     }
 }

@@ -25,7 +25,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
         }
         /// <summary>
         /// Функція є допоміжною в методі SearchTrainRoutesBetweenStationsOnDate. Вона шукає всі рейси, які проходять через дві вказані станції
-        /// і проходять початкову в певну дату. Але ця функція повертає і поїзди, які їдуть в зворотньому напрямку, тому цей список
+        /// і проходять початкову станцію в певну дату. Але ця функція повертає і поїзди, які їдуть в зворотньому напрямку, тому цей список
         /// потребує додаткової фільтрації
         /// </summary>
         /// <param name="start_station_title"></param>
@@ -60,7 +60,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
         /// <returns></returns>
         [PartialLogicMethod]
         public async Task<QueryResult<List<InternalTrainRaceBetweenStationsDto>>> _FilterTrainRoutesBetweenStationsOnDateByPassingOrderAndTransformIntoTrainRaceDto(List<TrainRouteOnDate> possible_train_routes_on_date,
-            string start_station_title, string end_station_title, DateOnly trip_departure_date)
+            string start_station_title, string end_station_title)
         {
             //Тут з поїздів фільтруються ті, які проходять через бажані станції в потрібному порядку 
             List<InternalTrainRaceBetweenStationsDto> actual_train_routes_on_date = new List<InternalTrainRaceBetweenStationsDto>();
@@ -113,10 +113,50 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
                     });
                 }
             }
-            return new SuccessQuery<List<InternalTrainRaceBetweenStationsDto>>(actual_train_routes_on_date, new SuccessMessage($"Successfuly found races between" +
-                $" {start_station_title} and {end_station_title} on date {trip_departure_date}", annotation: service_name, unit: ProgramUnit.Core));
+            return new SuccessQuery<List<InternalTrainRaceBetweenStationsDto>>(actual_train_routes_on_date, new SuccessMessage($"Successfuly filtered train races between" +
+                $" {start_station_title} and {end_station_title}", annotation: service_name, unit: ProgramUnit.Core));
         }
-
+        /// <summary>
+        /// Метод трансформує сирі дані про рейс поїзда в трансферний об'єкт InternalTrainRaceBetweenStationsDto, який містить повну інформацію про рейс
+        /// поїзда в контексті поїздки між двома заданими станіями в певну дату + розклад цього поїзда(інформації про бронювання цей об'єкт не містить)
+        /// </summary>
+        /// <param name="train_route_on_date_id"></param>
+        /// <param name="start_station_title"></param>
+        /// <param name="end_station_title"></param>
+        /// <param name="trip_departure_date"></param>
+        /// <returns></returns>
+        [ExecutiveMethod]
+        public async Task<QueryResult<InternalTrainRaceBetweenStationsDto>> TransformTrainRouteOnDateIntoTrainRaceDto(string train_route_on_date_id,
+            string start_station_title, string end_station_title)
+        {
+            TrainRouteOnDate? train_route_on_date = await context.Train_Routes_On_Date
+                .Include(train_route_on_date => train_route_on_date.Train_Route)
+                .FirstOrDefaultAsync(train_route_on_date => train_route_on_date.Id == train_route_on_date_id);
+            if(train_route_on_date is null)
+            {
+                return new FailQuery<InternalTrainRaceBetweenStationsDto>(new Error(ErrorType.NotFound, $"Can't find train race with ID: {train_route_on_date_id}",
+                    annotation: service_name, unit: ProgramUnit.Core));
+            }
+            QueryResult<List<InternalTrainRaceBetweenStationsDto>> train_race_dto_get_result = await
+                _FilterTrainRoutesBetweenStationsOnDateByPassingOrderAndTransformIntoTrainRaceDto(new List<TrainRouteOnDate>() { train_route_on_date },
+                start_station_title, end_station_title);
+            if(train_race_dto_get_result.Fail)
+            {
+                return new FailQuery<InternalTrainRaceBetweenStationsDto>(train_race_dto_get_result.Error);
+            }
+            List<InternalTrainRaceBetweenStationsDto> train_races_list_of_one_element = train_race_dto_get_result.Value;
+            if(train_races_list_of_one_element.Count == 0)
+            {
+                return new FailQuery<InternalTrainRaceBetweenStationsDto>(new Error(ErrorType.BadRequest, $"This train doesn't pass this stations in this order", annotation: service_name, unit: ProgramUnit.Core));
+            }
+            if(train_races_list_of_one_element.Count > 1)
+            {
+                return new FailQuery<InternalTrainRaceBetweenStationsDto>(new Error(ErrorType.InternalServerError, $"Incorrect data passed for race transform method", annotation: service_name, unit: ProgramUnit.Core));
+            }
+            InternalTrainRaceBetweenStationsDto train_race_dto = train_races_list_of_one_element[0];
+            return new SuccessQuery<InternalTrainRaceBetweenStationsDto>(train_race_dto, new SuccessMessage($"Successfully created InternalTrainRaceBetweenStationsDto for" +
+                $" train race: {train_route_on_date_id}", annotation: service_name, unit: ProgramUnit.Core));
+        }
 
         /// <summary>
         /// Даний метод шукає рейси поїздів між двома станціями в певну дату. Фактично є основою для функції пошуку квитків в системі.
@@ -127,8 +167,6 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
         /// <param name="end_station_title"></param>
         /// <param name="trip_departure_date"></param>
         /// <returns></returns>
-        [Refactored("v1", "18.04.2025")]
-        [Checked("24.10.2025")]
         [ExecutiveMethod]
         public async Task<QueryResult<List<InternalTrainRaceBetweenStationsDto>>> SearchTrainRoutesBetweenStationsOnDate(string start_station_title, string end_station_title, DateOnly trip_departure_date)
         {
@@ -149,7 +187,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
             //Тут з поїздів фільтруються ті, які проходять через бажані станції в потрібному порядку. Також інформація трансформується
             //в трансферні об'єкти.
             QueryResult<List<InternalTrainRaceBetweenStationsDto>> actual_train_routes_on_date_get_result = await
-                _FilterTrainRoutesBetweenStationsOnDateByPassingOrderAndTransformIntoTrainRaceDto(possible_train_routes_on_date, start_station_title, end_station_title, trip_departure_date);
+                _FilterTrainRoutesBetweenStationsOnDateByPassingOrderAndTransformIntoTrainRaceDto(possible_train_routes_on_date, start_station_title, end_station_title);
 
             return actual_train_routes_on_date_get_result;
         }

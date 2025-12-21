@@ -75,7 +75,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         public QueryResult<List<ExternalTrainRaceWithBookingsInfoDto>> _CreateListOfExternalTrainRaceWithBookingsInfoDto
             (List<InternalTrainRaceBetweenStationsDto> appropriate_train_routes_on_date,
             Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto> ticket_bookings_info_for_appropriate_train_routes,
-            string starting_station_title, string ending_station_title)
+            string starting_station_title, string ending_station_title, bool include_places_availability_info = true)
         {
             //Ініціалізуємо список, де кожен елемент буде містити всю потрібну інформацію по одному конкретному поїзду
             List<ExternalTrainRaceWithBookingsInfoDto> total_train_routes_with_bookings_and_stations_info = new List<ExternalTrainRaceWithBookingsInfoDto>();
@@ -160,6 +160,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                             _average_speed: FullTrainAssignementService.
                             FindSpeedOnSection(trip_starting_stop_km_point, trip_ending_stop_km_point, departure_time_from_trip_starting_station, arrival_time_to_trip_ending_station))
                     };
+                    
                     //Додаємо цей зовнішній трансферний об'єкт в список вагонів рейсу
                     external_carriage_statistics_for_current_train_route_on_date.Add(external_single_carriage_info_dto);
 
@@ -177,6 +178,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                     }
                     carriage_type_and_quality_group.Carriage_Statistics_List.Add(external_single_carriage_info_dto);
                 }
+                
+
 
                 /////////////////////////////ЗБІР СТАТИСИТИКИ ПО ВАГОНАХ В РЕЙСІ//////////////////////////// 
 
@@ -224,6 +227,12 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                         if (quality_class_max_price > type_group_max_price)
                         {
                             type_group_max_price = quality_class_max_price;
+                        }
+
+                        //Якщо обраний параметр, що не потрібно передавати детальну статистику зайнятості місць, то видаляємо цю інформацію і передаємо більш легкий JSON
+                        if (!include_places_availability_info)
+                        {
+                            carriage_type_and_quality_group.Value.Carriage_Statistics_List.Clear();
                         }
                     }
                     carriage_type_group.Value.Free_Places = type_group_free_places;
@@ -307,7 +316,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                     Full_Route_Starting_Station_Ukrainian_Title = current_train_route_trip_info.Full_Route_Starting_Stop.Station.Ukrainian_Title,
                     Full_Route_Ending_Station_Title = current_train_route_trip_info.Full_Route_Ending_Stop.Station.Title,
                     Full_Route_Ending_Station_Ukrainian_Title = current_train_route_trip_info.Full_Route_Ending_Stop.Station.Ukrainian_Title,
-                    Carriage_Statistics_List = external_carriage_statistics_for_current_train_route_on_date,
+                    Carriage_Statistics_List = include_places_availability_info ? external_carriage_statistics_for_current_train_route_on_date: new List<ExternalSinglePassengerCarriageBookingsInfoDto>(),
                     Grouped_Carriage_Statistics_List = external_carriage_type_groups,
                     Train_Stops_List = external_train_stops,
                     Average_Speed_On_Trip = FullTrainAssignementService.FindSpeedOnSection(trip_starting_stop_km_point, trip_ending_stop_km_point, departure_time_from_trip_starting_station, arrival_time_to_trip_ending_station)
@@ -347,10 +356,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         /// <param name="ending_station_title"></param>
         /// <param name="departure_date"></param>
         /// <param name="admin_mode"></param>
+        /// <param name="places_availability_info"></param>
         /// <returns></returns>
         [ClientApiMethod]
         public async Task<QueryResult<List<ExternalTrainRaceWithBookingsInfoDto>>> SearchTrainRoutesBetweenStationsWithBookingsInfo
-            (string starting_station_title, string ending_station_title, DateOnly departure_date, bool admin_mode = false)
+            (string starting_station_title, string ending_station_title, DateOnly departure_date, bool admin_mode = false, bool places_availability_info = true)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("----------------------TRAIN TRIPS SEARCH PROCESS-------------------------");
@@ -411,7 +421,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
 
             QueryResult<List<ExternalTrainRaceWithBookingsInfoDto>> total_train_routes_with_bookings_and_station_info_get_result =
                 _CreateListOfExternalTrainRaceWithBookingsInfoDto(appropriate_train_routes_on_date, ticket_bookings_info_for_appropriate_train_routes,
-                starting_station_title, ending_station_title);
+                starting_station_title, ending_station_title, include_places_availability_info: places_availability_info);
             if (total_train_routes_with_bookings_and_station_info_get_result.Fail)
             {
                 return new FailQuery<List<ExternalTrainRaceWithBookingsInfoDto>>(total_train_routes_with_bookings_and_station_info_get_result.Error);
@@ -438,6 +448,97 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 $"{departure_date}, schedule of these train trips(races), squads of these train races and available places in carriages", annotation: service_name,
                 unit: ProgramUnit.ClientAPI));
 
+        }
+        /// <summary>
+        /// Даний метод вертає інформацію про конкретний рейс поїзда між станціями, в тому числі і інформацію про бронювання та повний розклад.
+        /// Може використовуватись для оновлення інформації про певний поїзд в реальному часі(після відкриття сторінки з вагонами для актуалізації інформації) 
+        /// або в режимі Lazy Loading, коли при першому завантаженні списку поїздів не провантажуються місця, а тільки загальна інформація. В такому випадку при натисненні 
+        /// на кнопку для переходу на список вагонів буде викликатись цей метод для підтягування інформації про бронювання.
+        /// </summary>
+        /// <param name="train_route_on_date_id"></param>
+        /// <param name="starting_station_title"></param>
+        /// <param name="ending_station_title"></param>
+        /// <param name="admin_mode"></param>
+        /// <param name="places_availability_info"></param>
+        /// <returns></returns>
+        public async Task<QueryResult<ExternalTrainRaceWithBookingsInfoDto>> GetCompleteInfoWithBookingsForTrainRaceOnDateBetweenStations(string train_route_on_date_id,
+            string starting_station_title, string ending_station_title, bool admin_mode = false, bool places_availability_info = true)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("----------------------TRAIN TRIPS SEARCH PROCESS-------------------------");
+            Console.ResetColor();
+            Stopwatch sw = Stopwatch.StartNew();
+            //Отримуємо інформацію про рейс даного поїзда в контексті поїздки між двома станціями(тут є лише інформація про сам рейс і його розклад і нема інформації про бронювання)
+            QueryResult<InternalTrainRaceBetweenStationsDto> train_race_dto_get_result = await full_train_route_search_service.TransformTrainRouteOnDateIntoTrainRaceDto(train_route_on_date_id,
+                starting_station_title, ending_station_title);
+            if(train_race_dto_get_result.Fail)
+            {
+                return new FailQuery<ExternalTrainRaceWithBookingsInfoDto>(train_race_dto_get_result.Error);
+            }
+            InternalTrainRaceBetweenStationsDto train_race_dto = train_race_dto_get_result.Value;
+            //Створюємо список, що складається з одного елемента - айді поїзда, для якого ми шукаємо інформацію.
+            //Цей список потрібний для метода GetAllPassengerCarriagesPlaceBookingForSeveralTrainRoutesOnDate, який шукає всі заброньовані місця для списку
+            //рейсів. Тому нам для того, щоб отримати інформацію для одного рейсу, все одно треба передавати список з цим одним айді.
+            List<string> train_route_on_date_ids_list_of_one_element = new List<string>() { train_route_on_date_id };
+            QueryResult<Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto>>? train_route_on_date_bookings_statistics_result = null;
+            if (admin_mode == false) //В залежності від того, який режим, включаємо чи не включаємо інформацію про пасажирів
+            {
+                train_route_on_date_bookings_statistics_result = await full_ticket_management_service.
+                    GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDate(train_route_on_date_ids_list_of_one_element, 
+                    starting_station_title, ending_station_title);
+            }
+            else
+            {
+                train_route_on_date_bookings_statistics_result = await full_ticket_management_service.
+                   GetAllPassengerCarriagesPlaceBookingsForSeveralTrainRoutesOnDateWithPassengerInformationAnalytics(train_route_on_date_ids_list_of_one_element, 
+                   starting_station_title, ending_station_title);
+            }
+            if (train_route_on_date_bookings_statistics_result.Fail)
+            {
+                return new FailQuery<ExternalTrainRaceWithBookingsInfoDto>(train_route_on_date_bookings_statistics_result.Error);
+            }
+            Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto> ticket_bookings_info_for_appropriate_train_route =
+                train_route_on_date_bookings_statistics_result.Value;
+
+            //Ми вже отримали всю потрібну інформацію, яка реальна має бути передана пасажиру:
+
+            // A) InternalTrainRaceBetweenStationsDto - інформацію про рейс поїзда в контексті його поїздки між двома станціями(які пасажир вказав
+            //як бажані початкову та кінцеву(загальна інформація про даний рейс, його прибуття на початкову та кінцеву станцію подорожі, кілометраж і так далі,
+            //а також розкладу руху цього поїзда на всьому маршруті(не тільки маршруті поїздки пасажира)
+
+            // B) InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto - інформацію про склад рейсу, а також про всі вільні та заброньовані місця 
+            //в кожному вагоні складу цього рейсу в контексті поїздки між початковою та кінцевою станцією, які обрав пасажир
+
+            //Далі ми маємо скомбінувати ці дві порції внутрішньої інформації про рейс в один зовнішній трансферний клас:
+
+            // AB) ExternalTrainRaceWithBookingsInfoDto - цей клас є зовнішнім трансферним об'єктом і є гібридом двох внутрішніх трансферних об'єктів (A + B),
+            // тому що містить і інформацію про рейс поїзда в плані його розкладу руху на всьому маршруті та зокрема між станціями поїздки пасажира, 
+            // а також містить інформацію про склад поїзда і всю інформацію про бронювання місць в вагонах на рейсі.
+            
+            QueryResult<List<ExternalTrainRaceWithBookingsInfoDto>> total_train_route_with_bookings_and_station_info_get_result =
+                _CreateListOfExternalTrainRaceWithBookingsInfoDto(new List<InternalTrainRaceBetweenStationsDto> { train_race_dto}, ticket_bookings_info_for_appropriate_train_route,
+                starting_station_title, ending_station_title, include_places_availability_info: places_availability_info);
+            if (total_train_route_with_bookings_and_station_info_get_result.Fail)
+            {
+                return new FailQuery<ExternalTrainRaceWithBookingsInfoDto>(total_train_route_with_bookings_and_station_info_get_result.Error);
+            }
+
+            //Отримуємо список з одного елемента, який буде містити повну інформацію про рейс поїзда та бронювання місць. Отримуємо список, оскільки метод, який 
+            //поєднує загальну інформацію про рейс та розклад з інформацією про бронювання працює для списків поїздів і вертає також список
+            List<ExternalTrainRaceWithBookingsInfoDto> total_train_race_info_list_of_one_element
+                = total_train_route_with_bookings_and_station_info_get_result.Value;
+            if(total_train_race_info_list_of_one_element.Count != 1)
+            {
+                return new FailQuery<ExternalTrainRaceWithBookingsInfoDto>(new Error(ErrorType.InternalServerError, $"Incorrect data passed to method", annotation: service_name, unit: ProgramUnit.ClientAPI));
+            }
+            ExternalTrainRaceWithBookingsInfoDto external_train_race_dto = total_train_race_info_list_of_one_element[0];
+            sw.Stop();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"Train search time: ");
+            Console.ResetColor();
+            Console.WriteLine($"{sw.ElapsedMilliseconds / 1000.0} seconds");
+            return new SuccessQuery<ExternalTrainRaceWithBookingsInfoDto>(external_train_race_dto, new SuccessMessage($"Successfully got complete race info with bookings for " +
+                $"train race: {train_route_on_date_id} between stations {starting_station_title} and {ending_station_title}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
 
 

@@ -4,6 +4,7 @@ using RailwayCore.InternalServices.CoreServices;
 using RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices;
 namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
 {
     [ApiController]
@@ -27,6 +28,17 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             }
             return Ok(train_routes_with_bookings_info_result.Value);
         }
+        [HttpGet("Search-Train-Routes-Between-Stations-With-Bookings-Without-Places/{starting_station}/{ending_station}")]
+        public async Task<ActionResult<List<ExternalTrainRaceWithBookingsInfoDto>>> SearchTrainRoutesBetweenStationsWithBookingsInfoWithoutPlaces([FromRoute] string starting_station, [FromRoute] string ending_station, [FromQuery] DateOnly departure_date)
+        {
+            QueryResult<List<ExternalTrainRaceWithBookingsInfoDto>>? train_routes_with_bookings_info_result =
+                await train_route_with_booking_search_service.SearchTrainRoutesBetweenStationsWithBookingsInfo(starting_station, ending_station, departure_date, admin_mode: false, places_availability_info: false);
+            if (train_routes_with_bookings_info_result is FailQuery<List<ExternalTrainRaceWithBookingsInfoDto>>)
+            {
+                return NotFound(train_routes_with_bookings_info_result.Error!.Message);
+            }
+            return Ok(train_routes_with_bookings_info_result.Value);
+        }
         [HttpGet("Search-Train-Routes-Through-Station/{station_title}")]
         public async Task<ActionResult<List<ExternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStation([FromRoute] string station_title,
             [FromQuery] DateTime time, [FromQuery] TimeSpan? left_interval = null, [FromQuery] TimeSpan? right_interval = null)
@@ -39,6 +51,20 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             }
             return Ok(train_races_result.Value);
         }
+        [HttpGet("get-full-train-race-info-with-bookings/{train_race_id}/{starting_station}/{ending_station}")]
+        public async Task<ActionResult<ExternalTrainRaceWithBookingsInfoDto>> GetCompleteInfoWithBookingsForTrainRaceBetweenStations([FromRoute] string train_race_id, 
+            [FromRoute] string starting_station, [FromRoute] string ending_station)
+        {
+            QueryResult<ExternalTrainRaceWithBookingsInfoDto> train_race_info_get_result =
+                await train_route_with_booking_search_service.GetCompleteInfoWithBookingsForTrainRaceOnDateBetweenStations(train_race_id, starting_station, ending_station, admin_mode: true);
+            if (train_race_info_get_result.Fail)
+            {
+                return train_race_info_get_result.GetErrorFromQueryResult<ExternalTrainRaceWithBookingsInfoDto, ExternalTrainRaceWithBookingsInfoDto>();
+            }
+            return Ok(train_race_info_get_result.Value);
+        }
+
+
         //[HttpPost("Get-Train-Schedule")]
         //public ActionResult<List<ExternalSingleTrainStopDto>> GetScheduleForSpecificTrainRouteOnDate([FromBody] ExternalTrainRouteWithBookingsInfoDto train_route_on_date)
         //{

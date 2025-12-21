@@ -37,7 +37,12 @@ namespace RailwayCore.InternalServices.CoreServices.Implementations
         {
             return await train_trips_search_service.SearchTrainRoutesThroughStationOnDate(station_title, time, left_interval, right_interval);
         }
-
+        [CoreMethod]
+        public async Task<QueryResult<InternalTrainRaceBetweenStationsDto>> TransformTrainRouteOnDateIntoTrainRaceDto(string train_route_on_date_id, string start_station_title,
+            string end_station_title)
+        {
+            return await train_trips_search_service.TransformTrainRouteOnDateIntoTrainRaceDto(train_route_on_date_id, start_station_title, end_station_title);
+        }
         //TrainScheduleSearchService
         [CoreMethod]
         public async Task<List<TrainRouteOnDateOnStation>?> GetTrainStopsForTrainRouteOnDate(string train_route_on_date_id, bool order_mode = true)
