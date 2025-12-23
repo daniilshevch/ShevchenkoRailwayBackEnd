@@ -67,7 +67,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
                 .Include(ticket_booking => ticket_booking.Train_Route_On_Date)
                 .ThenInclude(train_route_on_date => train_route_on_date.Train_Route)
                 .Where(ticket_booking => ticket_booking.User_Id == user_id
-                && (ticket_booking.Ticket_Status == TicketStatus.Archieved || ticket_booking.Ticket_Status == TicketStatus.Returned))
+                && (ticket_booking.Ticket_Status == TicketStatus.Archived || ticket_booking.Ticket_Status == TicketStatus.Returned))
                 .ToListAsync();
             return ticket_bookings;
         }

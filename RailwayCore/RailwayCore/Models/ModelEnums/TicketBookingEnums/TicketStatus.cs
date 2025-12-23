@@ -11,7 +11,7 @@ namespace RailwayCore.Models.ModelEnums.TicketBookingEnums
         Booking_In_Progress,
         Booked_And_Active,
         Booked_And_Used,
-        Archieved,
+        Archived,
         Returned,
         Booking_Failed
     }

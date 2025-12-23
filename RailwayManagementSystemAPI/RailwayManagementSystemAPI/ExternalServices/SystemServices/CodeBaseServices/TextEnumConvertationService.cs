@@ -121,7 +121,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseSer
                     return "Booked_And_Used";
                 case TicketStatus.Returned:
                     return "Returned";
-                case TicketStatus.Archieved:
+                case TicketStatus.Archived:
                     return "Archieved";
                 case TicketStatus.Booking_Failed:
                     return "Booking_Failed";

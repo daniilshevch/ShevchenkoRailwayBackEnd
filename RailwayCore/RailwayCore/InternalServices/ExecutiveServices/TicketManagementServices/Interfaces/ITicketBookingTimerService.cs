@@ -6,5 +6,6 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
     {
         Task DeleteAllExpiredTickets();
         Task<List<TicketBooking>> GetAllExpiredTicketBookings();
+        IQueryable<TicketBooking> GetAllTicketBookingsWithFinishedTrip(TimeSpan delay);
     }
 }

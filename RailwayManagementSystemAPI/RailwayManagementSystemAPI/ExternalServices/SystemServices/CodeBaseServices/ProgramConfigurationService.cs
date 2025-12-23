@@ -146,6 +146,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseSer
         {
             services.AddScoped<SystemAuthenticationService>();
             services.AddHostedService<ExpiredTicketBookingsRemovingService>();
+            services.AddHostedService<TicketBookingArchivatorService>();
             services.AddSingleton<IQRCodeGeneratorService, QRCodeGeneratorService>();
             services.AddScoped<IEmailTicketSender, GmailSmtpTicketSender>();
             services.AddScoped<IPdfTicketGeneratorService, PdfTicketGeneratorService>();
