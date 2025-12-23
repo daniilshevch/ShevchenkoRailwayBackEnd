@@ -40,4 +40,10 @@
     <Folder Include="ExternalDTO\TrainRouteDTO\ClientDTO\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ExternalServices\SystemServices\EmailServices\HtmlTemplate\gmail_head.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

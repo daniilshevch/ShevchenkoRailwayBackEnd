@@ -19,6 +19,8 @@ namespace RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.ClientDTO
         public TimeSpan? Stop_Duration { get; set; } //Тривалість зупинки
         [JsonPropertyName("is_part_of_trip")]
         public bool Is_Part_Of_Trip { get; set; }  //Чи є ця зупинка частиною маршруту бажаної поїздки
+        [JsonPropertyName("is_start_trip_stop")]
+        public bool Is_Start_Trip_Stop { get; set; }
         [JsonPropertyName("is_final_trip_stop")]
         public bool Is_Final_Trip_Stop { get; set; } //Чи є ця зупинка останньою на маршруті бажаної поїздки
         [JsonPropertyName("distance_from_full_route_starting_station")]

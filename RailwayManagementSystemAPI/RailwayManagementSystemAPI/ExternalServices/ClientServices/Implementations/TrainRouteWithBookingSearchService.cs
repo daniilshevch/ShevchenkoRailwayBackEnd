@@ -94,10 +94,15 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                     stop_duration = (DateTime)departure_time_from_stop - (DateTime)arrival_time_to_stop;
                 }
                 bool is_part_of_trip = false;
+                bool is_start_stop = false;
                 bool is_final_stop = false;
                 if (current_stop_index >= trip_start_stop_index && current_stop_index <= trip_end_stop_index)
                 {
                     is_part_of_trip = true;
+                }
+                if(current_stop_index == trip_start_stop_index)
+                {
+                    is_start_stop = true;
                 }
                 if (current_stop_index == trip_end_stop_index)
                 {
@@ -112,6 +117,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                     Departure_Time = departure_time_from_stop,
                     Stop_Duration = stop_duration,
                     Is_Part_Of_Trip = is_part_of_trip,
+                    Is_Start_Trip_Stop = is_start_stop,
                     Is_Final_Trip_Stop = is_final_stop,
                     Distance_From_Full_Route_Starting_Station = current_train_stop.Distance_From_Starting_Station
                 });
@@ -141,7 +147,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
 
                 InternalTrainRaceBetweenStationsDto? current_train_route_trip_info = appropriate_train_routes_on_date.FirstOrDefault(train_race =>
                 train_race.Train_Route_On_Date.Id == single_train_route_on_date_statistics.Key);
-                if (current_train_route_trip_info is null)
+                if (current_train_route_trip_info is null)  
                 {
                     return new FailQuery<List<ExternalTrainRaceWithBookingsInfoDto>>(new Error(ErrorType.InternalServerError, $"Fail while searching info about train route on date " +
                         $"{single_train_route_on_date_statistics.Key}", annotation: service_name, unit: ProgramUnit.ClientAPI));
