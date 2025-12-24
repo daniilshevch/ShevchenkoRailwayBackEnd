@@ -172,6 +172,17 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 string train_route_id = trip_starting_station!.Train_Route_On_Date.Train_Route_Id;
                 string train_route_class = TextEnumConvertationService.GetTrainQualityClassIntoString(trip_starting_station!.Train_Route_On_Date.Train_Route.Quality_Class)!;
                 string train_branded_name = trip_starting_station!.Train_Route_On_Date.Train_Route.Branded_Name!;
+
+                double? km_point_of_starting_trip_stop = trip_starting_station?.Distance_From_Starting_Station;
+                double? km_point_of_ending_trip_stop = trip_ending_station?.Distance_From_Starting_Station;
+                double? speed_on_trip = null;
+                if (km_point_of_starting_trip_stop is not null && km_point_of_ending_trip_stop is not null && trip_duration is not null)
+                {
+                    speed_on_trip = (km_point_of_ending_trip_stop - km_point_of_starting_trip_stop) / trip_duration.Value.TotalHours;
+                }
+
+
+
                 ExternalTicketBookingGroupDto output_group = new ExternalTicketBookingGroupDto()
                 {
                     Train_Route_On_Date_Id = ticket_group_header.Train_Route_On_Date_Id,
@@ -185,6 +196,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                     Departure_Time_From_Trip_Starting_Station = departure_time_from_trip_starting_station,
                     Arrival_Time_To_Trip_Ending_Station = arrival_time_to_trip_ending_station,
                     Trip_Duration = trip_duration,
+                    Speed_On_Trip = speed_on_trip,
                     Ticket_Bookings_List = ticket_group.Select(ticket_booking => new ExternalProfileTicketBookingDto
                     {
                         Full_Ticket_Id = ticket_booking.Full_Ticket_Id,
@@ -204,7 +216,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                         Trip_Duration = trip_duration,
                         Passenger_Name = ticket_booking.Passenger_Name,
                         Passenger_Surname = ticket_booking.Passenger_Surname,
-                        Qr_Code = qr_code_generator_service.GenerateQrCodeBase64(ticket_booking.Full_Ticket_Id.ToString()) //!!!!Вирішити
+                        Qr_Code = qr_code_generator_service.GenerateQrCodeBase64(ticket_booking.Full_Ticket_Id.ToString()), //!!!!Вирішити
+                        Speed_On_Trip = speed_on_trip
                     }).ToList()
                 };
                 output_ticket_booking_groups.Add(output_group);
@@ -284,6 +297,19 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 .GetTrainStopInfoByTrainRouteOnDateIdAndStationId(ticket_booking.Train_Route_On_Date_Id, ticket_booking.Ending_Station_Id))!.Arrival_Time;
             TimeSpan? trip_duration = arrival_time_to_trip_ending_station - departure_time_from_trip_starting_station;
             string qr_code_base_64 = qr_code_generator_service.GenerateQrCodeBase64(ticket_booking.Full_Ticket_Id.ToString()); //!!!!Вирішити
+
+            TrainRouteOnDateOnStation? starting_trip_stop = await full_train_route_search_service
+                .GetTrainStopInfoByTrainRouteOnDateIdAndStationId(ticket_booking.Train_Route_On_Date_Id, ticket_booking.Starting_Station_Id);
+            TrainRouteOnDateOnStation? ending_trip_stop = await full_train_route_search_service
+    .GetTrainStopInfoByTrainRouteOnDateIdAndStationId(ticket_booking.Train_Route_On_Date_Id, ticket_booking.Ending_Station_Id);
+            double? km_point_of_starting_trip_stop = starting_trip_stop?.Distance_From_Starting_Station;
+            double? km_point_of_ending_trip_stop = ending_trip_stop?.Distance_From_Starting_Station;
+
+            double? speed_on_trip = null;
+            if (km_point_of_starting_trip_stop is not null && km_point_of_ending_trip_stop is not null && trip_duration is not null)
+            {
+                speed_on_trip = (km_point_of_ending_trip_stop - km_point_of_starting_trip_stop) / trip_duration.Value.TotalHours;
+            }
             ExternalProfileTicketBookingDto output_ticket = new ExternalProfileTicketBookingDto()
             {
                 Full_Ticket_Id = ticket_booking.Full_Ticket_Id,
@@ -303,6 +329,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 Trip_Duration = trip_duration,
                 Passenger_Name = ticket_booking.Passenger_Name,
                 Passenger_Surname = ticket_booking.Passenger_Surname,
+                Speed_On_Trip = speed_on_trip,
                 Qr_Code = qr_code_base_64
             };
             return output_ticket;

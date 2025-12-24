@@ -32,6 +32,8 @@ namespace RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.User
         public DateTime? Arrival_Time_To_Trip_Ending_Station { get; set; }
         [JsonPropertyName("trip_duration")]
         public TimeSpan? Trip_Duration { get; set; }
+        [JsonPropertyName("speed_on_trip")]
+        public double? Speed_On_Trip { get; set; }
         [JsonPropertyName("ticket_bookings_list")]
         public List<ExternalProfileTicketBookingDto> Ticket_Bookings_List { get; set; } = new List<ExternalProfileTicketBookingDto>();
     }

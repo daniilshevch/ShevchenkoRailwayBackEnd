@@ -42,5 +42,7 @@ namespace RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.User
         public string Ticket_Status { get; set; } = null!;
         [JsonPropertyName("qr_code")]
         public string? Qr_Code { get; set; } = null!; //подивитись, чи все норм
+        [JsonPropertyName("speed_on_trip")]
+        public double? Speed_On_Trip { get; set; }
     }
 }
