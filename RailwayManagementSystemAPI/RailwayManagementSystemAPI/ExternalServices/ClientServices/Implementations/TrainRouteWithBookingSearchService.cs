@@ -596,7 +596,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             }
             List<ExternalSingleTrainStopDto> external_train_stops_dto = _CreateListOfExternalTrainStopsDto(train_stops, starting_station_title, ending_station_title);
             return new SuccessQuery<List<ExternalSingleTrainStopDto>>(external_train_stops_dto, new SuccessMessage($"Succesfully found " +
-                $"schedule for train race {train_route_on_date_id} for trip between stations {starting_station_title} and {ending_station_title}"));
+                $"schedule for train race {train_route_on_date_id} for trip between stations {starting_station_title} and {ending_station_title}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
 
     }

@@ -1,5 +1,7 @@
 ﻿using MailKit;
 using MimeKit;
+using Org.BouncyCastle.Crypto;
+using RailwayCore.InternalServices.CoreServices.Interfaces;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement;
@@ -22,15 +24,17 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
         private readonly string html_template;
         private readonly string service_title = "EmailTicketSender";
         private readonly IUserTicketManagementService user_ticket_management_service;
+        private readonly IFullTicketManagementService full_ticket_management_service;
         private readonly IPdfTicketGeneratorService pdf_ticket_generator_service;
         public GmailSmtpTicketSender(IConfiguration configuration, IUserTicketManagementService user_ticket_management_service,
-            IPdfTicketGeneratorService pdf_ticket_generator_service,
+            IPdfTicketGeneratorService pdf_ticket_generator_service, IFullTicketManagementService full_ticket_management_service,
             IWebHostEnvironment web_host_environment)
         {
             this.from_email = configuration["GmailSmtp:Email"]!;
             this.app_password = configuration["GmailSmtp:AppPassword"]!;
             this.user_ticket_management_service = user_ticket_management_service;
             this.pdf_ticket_generator_service = pdf_ticket_generator_service;
+            this.full_ticket_management_service = full_ticket_management_service;
             string template_path = Path.Combine(web_host_environment.ContentRootPath, "ExternalServices",
                 "SystemServices", "EmailServices", "HtmlTemplate", "TicketEmailTemplate.html");
             if(File.Exists(template_path))
@@ -50,18 +54,40 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
         /// <returns></returns>
         public async Task<QueryResult> SendTicketToEmailAsync(string user_email, TicketBooking ticket_booking_info)
         {
-            MimeMessage message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Shevchenko Railway", from_email));
-            message.To.Add(new MailboxAddress(ticket_booking_info.Passenger_Name, user_email));
-
             ExternalProfileTicketBookingDto ticket_booking_profile_for_pdf =
                 await user_ticket_management_service.CreateProfileDtoForTicketBooking(ticket_booking_info);
             pdf_ticket_generator_service.TranslateTicketIntoUkrainian(ticket_booking_profile_for_pdf);
-            message.Subject = $"Квиток на поїзд {ticket_booking_profile_for_pdf.Train_Route_Id}, {ticket_booking_profile_for_pdf.Departure_Time_From_Trip_Starting_Station}";
+            return await _SendOrganisedTicketBookingToEmail(user_email, ticket_booking_profile_for_pdf, ticket_booking_info);
+        }
 
+        public async Task<QueryResult> SendMultipleTicketsToEmail(string user_email, List<ExternalOutputCompletedTicketBookingDto> ticket_bookings_list)
+        {
+            List<TicketBooking> ticket_bookings = await full_ticket_management_service.FindSeveralTicketBookingsById(ticket_bookings_list.Select(ticket_booking => ticket_booking.Id).ToList());
+            List<Task<QueryResult>> tickets_sending_to_email_task_list = new List<Task<QueryResult>>();
+            foreach(TicketBooking ticket_booking in ticket_bookings)
+            {
+                ExternalProfileTicketBookingDto profile_ticket_booking_dto = await user_ticket_management_service.CreateProfileDtoForTicketBooking(ticket_booking);
+                pdf_ticket_generator_service.TranslateTicketIntoUkrainian(profile_ticket_booking_dto);
+                tickets_sending_to_email_task_list.Add(_SendOrganisedTicketBookingToEmail(user_email, profile_ticket_booking_dto, ticket_booking));
+            }
+            IEnumerable<QueryResult> tickets_send_result = await Task.WhenAll(tickets_sending_to_email_task_list);
+            foreach (QueryResult single_ticket_send_result in tickets_send_result)
+            {
+                if (single_ticket_send_result.Fail)
+                {
+                    return new FailQuery(single_ticket_send_result.Error);
+                }
+            }
+            return new SuccessQuery(new SuccessMessage($"All tickets have been successfully sent to {user_email}", annotation: service_title, unit: ProgramUnit.ClientAPI));
+        }
+        public async Task<QueryResult> _SendOrganisedTicketBookingToEmail(string user_email, ExternalProfileTicketBookingDto ticket_booking_profile_for_pdf, TicketBooking ticket_booking_info)
+        {
+            MimeMessage message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Shevchenko Railway", from_email));
+            message.To.Add(new MailboxAddress(ticket_booking_info.Passenger_Name, user_email));
             string logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Ukrzaliznytsia_logo.svg/1200px-Ukrzaliznytsia_logo.svg.png";
             //string logo_Url = "https://lh3.googleusercontent.com/rd-gg-dl/ABS2GSlAGdqMXm-2U_hW0TUXsffvIIkmWjbx_bkLMLsb-m7MsNin67267dzvBzkGcMkkQneTnbRKfkaDzQ1YwDxwItIfHy1usbOmB_zBbBT_fmoxXJGLYUU_oCiDm1Agy15Y-LQKfNORTpO5T_Ie_MUGvYhPD3OA_ySACXxwoqjb2XkFHsyFqcechgOl8WTmOf7tbs7Hffs5wNmozspV60c1ZyTVC9tOLo9I8gWVQiyK2cWH3hMShFyqoZoIUIn5K7R41CErBp5UGj4LxuULEG_XuJoM5D6mg3NIIldArrb9Z5nRUySkfJY9sTqU-LUkW5YeDLF5lUteyhMp0KILWWzYClELv_6nR7Syvg-35siiVlRgYphldI91OLODkhHE_fHqp2jETWBZK0r9V1N1jzsq-sAbcQIaXy-iqlKe1_srk0T6RZ_Zrx8Z8zbWaF8XspBM2eW8EB50dLWPwBFEbh5tyrSBKBUVzlUTMUL8VNu6eDNw1My3WVpPicQ7Ov1l3XDHbZB_OsATXH_4hmh2TqawYN-0hH8EYx6r1ERu_oJPANBiwntARLixARzX2p5UR5eGi1KWMuN4ZCkWTP2jrFxi7eyhUEEBarylPNMfH8TeC_W2fsXoD4V1mrdc3DhSNw7rqlpoF_QanhN5xThKKyUa5PNzWN5VfD6gQ1qfqbsUVoRl9FIbLpXuXRs_sRhxWCMQRDMScqWOIF6LrwgX1rdkwI3-21dP13qLTmsJJoRYEC-d_N-QXNc8OxXYPiw0Ooe4jQz54WnKhcJRDt6YI2Of89lH6Yf5kGOU8XNT4vzTZzK1jxPGFhstoSi7_AE6AceGe5nnaX-3RjVVP7bgaQc8v1PwcyBslljiHifOlVZxs2YVnRPXmxGqW_TzswGJyyZXObijPNIBqeyg3DGbiO4cQKQU86ohbSL_wub_yhNs0_VLs_QmCQcBOBVZcXld1HG4JqZ0b-Vk8YcIXXnXks2b3aXx4f6btT6t5nErT9Ehto4H3t4SRzZTDQnvca1Ks3bFgpOUL_jBQofroikI86-P7cLAFSdhyxZd7qu48Dr8EGHqNy9ODI-XGOjLq1WmDJ-S6UWv9sTm4A_ygzpLeHJqEFJaWo3gKR1ikRQEFAu4U98iKMnaA29X8OqWFjJAcrs77926w3Nrn1krm6m2kkoEKvyifWMrNiApAST9BSMkbWJGBFUv973Bd3v7BXp7afUUYPoYpUVFfhbxCX2RpPuHcf_AeHm8xQE0sltDOP7z1cljI8URwnvE9W6hoU4duFjKUPZgbm5UxcgDnE98ad-CglWML8m0huLUYcVw3HMSHKIOc1Sq-SCxa-RxFZBhOt5G74iatt-2FNGGCAIqVfjsNlzGbEvhxxXfs3tfqOgDC9HGkv78LulVJ1mfrqXfQxfM_D1bW6gu-uE_gdA=s1024-rj?authuser=2";
-
+            message.Subject = $"Квиток на поїзд {ticket_booking_profile_for_pdf.Train_Route_Id}, {ticket_booking_profile_for_pdf.Departure_Time_From_Trip_Starting_Station}";
             BodyBuilder body_builder = new BodyBuilder();
             CultureInfo ua_culture = new CultureInfo("uk-UA");
             body_builder.HtmlBody = html_template
@@ -95,11 +121,11 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
                 }
                 catch (Exception ex)
                 {
-                    return new FailQuery(new Error(ErrorType.InternalServerError, $"Fail while attempt to send tickets to email: {user_email}. Error: {ex.Message}", 
+                    return new FailQuery(new Error(ErrorType.InternalServerError, $"Fail while attempt to send tickets to email: {user_email}. Error: {ex.Message}",
                         annotation: service_title, unit: ProgramUnit.SystemAPI));
                 }
             }
-            return new SuccessQuery(new SuccessMessage($"Tickets have successfully been sent to email: {user_email}", annotation: service_title, unit: ProgramUnit.SystemAPI));
+            return new SuccessQuery(new SuccessMessage($"Ticket {ticket_booking_info.Full_Ticket_Id} has successfully been sent to email: {user_email}", annotation: service_title, unit: ProgramUnit.SystemAPI));
         }
     }
 }

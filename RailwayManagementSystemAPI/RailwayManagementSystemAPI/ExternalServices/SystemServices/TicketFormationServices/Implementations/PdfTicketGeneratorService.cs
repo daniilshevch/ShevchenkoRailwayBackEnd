@@ -184,8 +184,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketForma
 
             try
             {
-                // Твій сервіс повертає рядок виду "data:image/png;base64,iVBORw0KGgoAAA..."
-                // Нам треба відкинути все до коми.
                 var parts = base64String.Split(',');
                 var cleanBase64 = parts.Length > 1 ? parts[1] : parts[0];
 
@@ -193,7 +191,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketForma
             }
             catch
             {
-                // Логування помилки можна додати тут
                 return Array.Empty<byte>();
             }
         }

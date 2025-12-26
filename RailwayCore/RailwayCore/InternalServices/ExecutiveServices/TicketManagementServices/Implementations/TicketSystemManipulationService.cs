@@ -38,6 +38,16 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
                 .FirstOrDefaultAsync(ticket_booking => ticket_booking.Id == ticket_booking_id);
             return ticket_booking;
         }
+        public async Task<List<TicketBooking>> FindSeveralTicketBookingsById(List<int> ticket_booking_ids)
+        {
+            List<TicketBooking> ticket_bookings = await context.Ticket_Bookings
+               .Include(ticket_booking => ticket_booking.Passenger_Carriage)
+               .Include(ticket_booking => ticket_booking.Starting_Station)
+               .Include(ticket_booking => ticket_booking.Ending_Station)
+               .Include(ticket_booking => ticket_booking.User)
+               .Where(ticket_booking => ticket_booking_ids.Contains(ticket_booking.Id)).ToListAsync();   
+            return ticket_bookings;
+        }
         /// <summary>
         /// Оновлює квиток в базі новими даними
         /// </summary>

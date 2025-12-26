@@ -275,6 +275,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseSer
         public void ConfigureDbContext(IServiceCollection services)
         {
             services.AddScoped<AppDbContext>();
+            services.AddScoped<ITransactionManager, TransactionManager>();
         }
     }
     public class WebConnectionConfiguration

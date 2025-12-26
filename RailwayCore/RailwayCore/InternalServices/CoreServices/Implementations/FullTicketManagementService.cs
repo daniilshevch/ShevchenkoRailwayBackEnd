@@ -76,6 +76,11 @@ namespace RailwayCore.InternalServices.CoreServices.Implementations
         {
             return await ticket_system_manipulation_service.FindTicketBookingById(ticket_booking_id);
         }
+        [CoreMethod]
+        public async Task<List<TicketBooking>> FindSeveralTicketBookingsById(List<int> ticket_booking_ids)
+        {
+            return await ticket_system_manipulation_service.FindSeveralTicketBookingsById(ticket_booking_ids);
+        }
         /// <summary>
         /// Оновлює квиток
         /// </summary>

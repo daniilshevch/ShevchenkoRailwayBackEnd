@@ -38,5 +38,9 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
             Console.WriteLine(response.IsSuccessStatusCode);
             return new SuccessQuery(new SuccessMessage($""));
         }
+        public async Task<QueryResult> SendMultipleTicketsToEmail(string user_email, List<ExternalOutputCompletedTicketBookingDto> ticket_bookings)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

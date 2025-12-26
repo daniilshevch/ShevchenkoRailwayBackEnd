@@ -9,6 +9,9 @@ using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.SystemAuthenticationServices;
+using System.Runtime.CompilerServices;
+using RailwayCore.Context;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementations
 {
@@ -29,13 +32,15 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         private readonly SystemAuthenticationService system_authentication_service;
         private readonly IConfiguration configuration;
         private readonly IEmailTicketSender email_ticket_sender;
+        private readonly ITransactionManager transaction_manager;
         public CompleteTicketBookingProcessingService(IFullTicketManagementService full_ticket_management_service, SystemAuthenticationService system_authentication_service, IConfiguration configuration,
-            IEmailTicketSender email_ticket_sender)
+            IEmailTicketSender email_ticket_sender, ITransactionManager transaction_manager)
         {
             this.full_ticket_management_service = full_ticket_management_service;
             this.system_authentication_service = system_authentication_service;
             this.configuration = configuration;
             this.email_ticket_sender = email_ticket_sender;
+            this.transaction_manager = transaction_manager;
         }
         /// <summary>
         /// Даний метод має спрацьовувати, коли користувач обирає місце в вагоні в певному рейсі і починає процес заповнення інформації про себе та поїздку.
@@ -178,28 +183,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 " has been performed. Results may be observed above", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
 
-        /// <summary>
-        /// Даний метод завершує процес бронювання квитка для користувача. Коли бронь вже була ініціалізована і користувач заповнює інформацію про пасажира та 
-        /// додаткову інформацію про поїздку.
-        /// </summary>
-        /// <param name="input_unfinished_ticket"></param>
-        /// <param name="passenger_info"></param>
-        /// <returns></returns>
-        [ClientApiMethod]
-        public async Task<QueryResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcessForAuthenticatedUser
-            (ExternalOutputMediatorTicketBookingDto input_unfinished_ticket, ExternalInputPassengerInfoForCompletedTicketBookingDto passenger_info)
+        public async Task<QueryResult<ExternalOutputCompletedTicketBookingDto>> _CompleteTicketBookingProcessForUser(ExternalOutputMediatorTicketBookingDto input_unfinished_ticket,
+            ExternalInputPassengerInfoForCompletedTicketBookingDto passenger_info, User user)
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("-------------------BOOKING COMPLETION PROCESS------------------------");
-            Console.ResetColor();
             Stopwatch sw = Stopwatch.StartNew();
-            //Отримуємо аутентифікованого користувача
-            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
-            if (user_authentication_result.Fail)
-            {
-                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(user_authentication_result.Error);
-            }
-            User user = user_authentication_result.Value;
             //Отримуємо з бази запис про поточне бронювання
             TicketBooking? ticket_booking = await full_ticket_management_service.FindTicketBookingById(input_unfinished_ticket.Id);
             //Перевірка, чи квиток є в базі
@@ -249,8 +236,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 Passenger_Surname = ticket_booking.Passenger_Surname,
                 Ticket_Status = TextEnumConvertationService.GetTicketBookingStatusIntoString(ticket_booking.Ticket_Status),
             };
-
-            await email_ticket_sender.SendTicketToEmailAsync(user.Email, ticket_booking);
             sw.Stop();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write($"Booking time: ");
@@ -258,6 +243,87 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             Console.ResetColor();
             return new SuccessQuery<ExternalOutputCompletedTicketBookingDto>(finished_ticket_booking_dto, new SuccessMessage($"Booking reservation for ticket with Id: " +
                 $"{ticket_booking.Full_Ticket_Id} has been successfully completed", annotation: service_name, unit: ProgramUnit.ClientAPI));
+        }
+        /// <summary>
+        /// Даний метод завершує процес бронювання квитка для користувача. Коли бронь вже була ініціалізована і користувач заповнює інформацію про пасажира та 
+        /// додаткову інформацію про поїздку.
+        /// </summary>
+        /// <param name="input_unfinished_ticket"></param>
+        /// <param name="passenger_info"></param>
+        /// <returns></returns>
+        [ClientApiMethod]
+        public async Task<QueryResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcessForAuthenticatedUser
+            (ExternalOutputMediatorTicketBookingDto input_unfinished_ticket, ExternalInputPassengerInfoForCompletedTicketBookingDto passenger_info)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("-------------------BOOKING COMPLETION PROCESS------------------------");
+            Console.ResetColor();
+            Stopwatch sw = Stopwatch.StartNew();
+            //Отримуємо аутентифікованого користувача
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
+            if (user_authentication_result.Fail)
+            {
+                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(user_authentication_result.Error);
+            }
+            User user = user_authentication_result.Value;
+            return await _CompleteTicketBookingProcessForUser(input_unfinished_ticket, passenger_info, user);
+        }
+        /// <summary>
+        /// Даний метод виконує транзакцію з метою фінального бронювання та покупки одразу декількох квитків. Виконується лише в разі успішної
+        /// покупки всіх квитків. Якщо хоча б один з квитків не пройшов покупку, всі квитки повернуться в стан Booking_In_Progress. 
+        /// </summary>
+        /// <param name="final_tickets_info"></param>
+        /// <returns></returns>
+        [ClientApiMethod]
+        public async Task<QueryResult<List<ExternalOutputCompletedTicketBookingDto>>> CompleteMultipleTicketBookingsAsTransaction(
+            ExternalInputMultipleCompletionBookingsDto final_tickets_info)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("-------------------MULTIPLE BOOKING COMPLETION PROCESS------------------------");
+            Console.ResetColor();
+            Stopwatch sw = Stopwatch.StartNew();
+            //Отримуємо аутентифікованого користувача
+            QueryResult<User> user_authentication_result = await system_authentication_service.GetAuthenticatedUser();
+            if (user_authentication_result.Fail)
+            {
+                return new FailQuery<List<ExternalOutputCompletedTicketBookingDto>>(user_authentication_result.Error);
+            }
+            User user = user_authentication_result.Value;
+            using IDbContextTransaction transaction = await transaction_manager.BeginTransactionAsync();
+            List<ExternalOutputCompletedTicketBookingDto> final_completed_tickets = new List<ExternalOutputCompletedTicketBookingDto>();
+            try
+            {
+                List<ExternalInputTicketCompletionPairDto> single_ticket_completion_info_list = final_tickets_info.Ticket_Completion_Info_List;
+                int tickets_amount = single_ticket_completion_info_list.Count;
+                for (int ticket_index = 0; ticket_index < tickets_amount; ticket_index++)
+                {
+                    ExternalInputTicketCompletionPairDto single_ticket_completion_info = single_ticket_completion_info_list[ticket_index];
+                    ExternalOutputMediatorTicketBookingDto mediator_ticket_booking = single_ticket_completion_info.Mediator_Ticket_Booking;
+                    ExternalInputPassengerInfoForCompletedTicketBookingDto passenger_info = single_ticket_completion_info.Passenger_Info;
+
+                    QueryResult<ExternalOutputCompletedTicketBookingDto> ticket_booking_result = await
+                        _CompleteTicketBookingProcessForUser(mediator_ticket_booking, passenger_info, user);
+                    if(ticket_booking_result.Fail)
+                    {
+                        await transaction.RollbackAsync();
+                        return new FailQuery<List<ExternalOutputCompletedTicketBookingDto>>(new Error(ErrorType.InternalServerError,
+                            $"Ticket bookings transaction failed: {ticket_booking_result.Error.Message}", annotation: service_name, unit: ProgramUnit.ClientAPI));
+                    }
+                    ExternalOutputCompletedTicketBookingDto successfully_completed_ticket_booking = ticket_booking_result.Value;
+                    final_completed_tickets.Add(successfully_completed_ticket_booking);
+                }
+                await transaction.CommitAsync();
+            }
+            catch(Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return new FailQuery<List<ExternalOutputCompletedTicketBookingDto>>(new Error(ErrorType.InternalServerError, $"Transaction error: " +
+                    $"{ex.Message}", annotation: service_name, unit: ProgramUnit.ClientAPI));
+            }
+            await email_ticket_sender.SendMultipleTicketsToEmail(user.Email, final_completed_tickets);
+            return new SuccessQuery<List<ExternalOutputCompletedTicketBookingDto>>(final_completed_tickets, new SuccessMessage($"Successfully performed " +
+    $"transaction for multiple ticket bookings completion", annotation: service_name, unit: ProgramUnit.ClientAPI));
+
         }
 
         /// <summary>

@@ -6,6 +6,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces
     public interface ICompleteTicketBookingProcessingService
     {
         Task<QueryResult<ExternalOutputMediatorTicketBookingDto>> CancelTicketBookingReservationForUser(ExternalOutputMediatorTicketBookingDto input_unfinished_ticket);
+        Task<QueryResult<List<ExternalOutputCompletedTicketBookingDto>>> CompleteMultipleTicketBookingsAsTransaction(ExternalInputMultipleCompletionBookingsDto final_tickets_info);
         Task<QueryResult<ExternalOutputCompletedTicketBookingDto>> CompleteTicketBookingProcessForAuthenticatedUser(ExternalOutputMediatorTicketBookingDto input_unfinished_ticket, ExternalInputPassengerInfoForCompletedTicketBookingDto passenger_info);
         Task<QueryResult> DeleteAllExpiredBookings();
         Task<QueryResult<List<ExternalOutputMediatorTicketBookingDto>>> InitializeMultipleTicketBookingProcessForAuthenticatedUser(List<ExternalInputInitialTicketBookingDto> ticket_bookings_list);
