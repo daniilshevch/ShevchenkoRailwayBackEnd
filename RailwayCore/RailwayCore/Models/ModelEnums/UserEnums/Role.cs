@@ -3,6 +3,8 @@
     public enum Role
     {
         Administrator,
-        General_User
+        General_User,
+        Carriage_Assistant,
+        Station_Assistant
     }
 }

@@ -143,7 +143,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.User_Name),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
             SecurityKey security_key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtAuthentication:SecretKey"]!));
             SigningCredentials creds = new SigningCredentials(security_key, SecurityAlgorithms.HmacSha256);

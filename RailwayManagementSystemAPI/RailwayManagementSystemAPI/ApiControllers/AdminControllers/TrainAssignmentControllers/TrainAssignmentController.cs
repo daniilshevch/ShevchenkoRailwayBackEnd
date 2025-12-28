@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayManagementSystemAPI.ExternalDTO.TrainRouteDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.AdminDTO;
@@ -10,6 +11,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.TrainAssign
 {
     [ApiController]
     [Route("Admin-API/[controller]")]
+    [Authorize(Roles = "Administrator")]
     [ApiExplorerSettings(GroupName = "Admin Controllers")]
     public class TrainAssignmentController : ControllerBase
     {
