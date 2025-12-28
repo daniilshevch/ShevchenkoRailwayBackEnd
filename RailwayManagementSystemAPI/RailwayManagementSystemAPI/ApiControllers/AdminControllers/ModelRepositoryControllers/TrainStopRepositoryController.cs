@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
@@ -11,6 +12,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
 {
     [ApiController]
     [Route("Admin-API")]
+    [Authorize(Roles = "Administrator")]
     [ApiExplorerSettings(GroupName = "Admin Controllers")]
     public class TrainStopRepositoryController: ControllerBase
     {

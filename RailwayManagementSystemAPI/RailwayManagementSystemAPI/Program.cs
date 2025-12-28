@@ -44,11 +44,10 @@ class Server
 
 
         WebApplication app = builder.Build();
-        
-        //Authentication and Authorization
-        ProgramConfigurationService.AuthenticationAndAuthorizationConfigurationManager.UseJwtAuthenticationAndAuthorization(app);
         //Cors
         ProgramConfigurationService.WebConnectionConfiguration.UseCorsPolicy(app);
+        //Authentication and Authorization
+        ProgramConfigurationService.AuthenticationAndAuthorizationConfigurationManager.UseJwtAuthenticationAndAuthorization(app);
         //Swagger
         ProgramConfigurationService.SwaggerDocumentationConfigurationManager.UseSwagger(app);
 

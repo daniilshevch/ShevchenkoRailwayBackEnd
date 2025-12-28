@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices;
@@ -6,13 +7,14 @@ using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.StationDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelRepositoryServices.Interfaces;
-using System.Net;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices;
+using System.Net;
 
 namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelRepositoryControllers
 {
     [ApiController]
     [Route("Admin-API")]
+    [Authorize(Roles = "Administrator")]
     [ApiExplorerSettings(GroupName = "Admin Controllers")]
     public class StationRepositoryController: ControllerBase
     {

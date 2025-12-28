@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RailwayCore.InternalServices.ModelRepositories;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO;
@@ -10,6 +11,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
 {
     [ApiController]
     [Route("Admin-API")]
+    [Authorize(Roles = "Administrator")]
     [ApiExplorerSettings(GroupName = "Admin Controllers")]
     public class TicketBookingRepositoryController: ControllerBase
     {

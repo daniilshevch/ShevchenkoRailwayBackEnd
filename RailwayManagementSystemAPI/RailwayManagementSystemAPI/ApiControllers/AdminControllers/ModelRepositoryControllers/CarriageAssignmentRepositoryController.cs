@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.CarriageAssignmentDTO.AdminDTO;
@@ -12,6 +13,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ModelRepositoryControllers
     [ApiController]
     [Route("Admin-API")]
     [ApiExplorerSettings(GroupName = "Admin Controllers")]
+    [Authorize(Roles = "Administrator")]
     [SwaggerTag("Контролер для призначення пасажирських вагонів до поїздів")]
     
     public class CarriageAssignmentRepositoryController: ControllerBase
