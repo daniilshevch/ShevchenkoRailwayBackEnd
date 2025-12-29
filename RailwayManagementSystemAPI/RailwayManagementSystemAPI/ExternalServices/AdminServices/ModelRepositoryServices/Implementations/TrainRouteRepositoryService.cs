@@ -9,6 +9,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
 {
     public class TrainRouteRepositoryService : ITrainRouteRepositoryService
     {
+        private readonly string service_title = "TrainRouteRepositoryService";
         private readonly ITrainRouteRepository train_route_repository;
         public TrainRouteRepositoryService(ITrainRouteRepository train_route_repository)
         {
@@ -23,7 +24,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             {
                 return new FailQuery<ExternalTrainRouteDto>(train_creation_result.Error);
             }
-            return new SuccessQuery<ExternalTrainRouteDto>((ExternalTrainRouteDto)train_creation_result.Value);
+            return new SuccessQuery<ExternalTrainRouteDto>((ExternalTrainRouteDto)train_creation_result.Value, new SuccessMessage($"Successfullu created " +
+                $"train route with ID: {id}", annotation: service_title, unit: ProgramUnit.AdminAPI));
 
         }
         public async Task<ExternalTrainRouteDto?> GetTrainRouteById(string id)
@@ -49,7 +51,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
             {
                 return new FailQuery<ExternalTrainRouteDto>(train_route_update_result.Error);
             }
-            return new SuccessQuery<ExternalTrainRouteDto>((ExternalTrainRouteDto)train_route_update_result.Value);
+            return new SuccessQuery<ExternalTrainRouteDto>((ExternalTrainRouteDto)train_route_update_result.Value, new SuccessMessage($"Succesfully updated " +
+                $"train route with ID: {id}", annotation: service_title, unit: ProgramUnit.AdminAPI));
         }
         public async Task<bool> DeleteTrainRouteById(string id)
         {
