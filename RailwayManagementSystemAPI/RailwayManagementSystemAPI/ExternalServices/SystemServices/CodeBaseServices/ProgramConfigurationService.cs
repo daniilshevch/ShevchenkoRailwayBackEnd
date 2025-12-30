@@ -29,6 +29,8 @@ using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormation
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.TranslationServices.Translators.Implementations;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.TranslationServices.Translators.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.CarriageAssistantServices.Interfaces;
+using RailwayManagementSystemAPI.ExternalServices.AdminServices.CarriageAssistantServices.Implementations;
 
 namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices
 {
@@ -135,6 +137,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseSer
         public void ConfigureAdminServices(IServiceCollection services)
         {
             services.AddScoped<IApiTrainAssignmentService, ApiTrainAssignmentService>();
+            services.AddScoped<ICarriageAssistantTicketAggregationService, CarriageAssistantTicketAggregationService>();
         }
         public void ConfigureSystemTranslators(IServiceCollection services)
         {
