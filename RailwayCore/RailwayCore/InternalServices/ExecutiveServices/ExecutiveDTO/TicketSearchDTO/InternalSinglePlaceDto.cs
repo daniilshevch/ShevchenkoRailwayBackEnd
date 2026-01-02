@@ -12,5 +12,5 @@ public class InternalSinglePlaceDto //Представлення одного о
     [JsonPropertyName("is_free")]
     public bool Is_Free { get; set; } //Чи місце заброньоване
     [JsonPropertyName("passenger_trip_info")]
-    public List<InternalPassengerTripInfoDto>? Passenger_Trip_Info { get; set; } //Інформація про поїздки пасажирів, які забронювали місце(не обов'язковий запис)
+    public List<ExternalPassengerTripInfoDto>? Passenger_Trip_Info { get; set; } //Інформація про поїздки пасажирів, які забронювали місце(не обов'язковий запис)
 }

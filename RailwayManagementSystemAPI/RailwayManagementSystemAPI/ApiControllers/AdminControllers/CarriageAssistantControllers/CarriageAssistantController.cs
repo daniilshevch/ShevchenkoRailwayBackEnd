@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.CarriageAssistantServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseServices;
 using Swashbuckle.AspNetCore.Annotations;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO;
 
 namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.CarriageAssistantControllers
 {
@@ -33,6 +34,17 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.CarriageAss
                     .GetErrorFromQueryResult<AdminFullTicketStatisticsInfoForPassengerCarriageDto, AdminFullTicketStatisticsInfoForPassengerCarriageDto>();
             }
             return Ok(full_ticket_statistitics_get_result.Value);
+        }
+        [HttpGet("set-ticket-status-as-used/{full_ticket_id}")]
+        public async Task<ActionResult> SetTicketBookingStatusAsUsed(string full_ticket_id)
+        {
+            QueryResult ticket_status_change_result = await carriage_assistant_ticket_aggregation_service
+                .SetTicketBookingStatusAsBookedAndUsed(full_ticket_id);
+            if(ticket_status_change_result.Fail)
+            {
+                return ticket_status_change_result.GetErrorFromNonGenericQueryResult();
+            }
+            return Ok();
         }
 
     }

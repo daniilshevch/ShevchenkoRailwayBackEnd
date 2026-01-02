@@ -9,7 +9,6 @@ using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayCore.InternalServices.ExecutiveServices.TicketManagementServices.Interfaces;
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Implementations;
 using RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchServices.Interfaces;
-
 /// <summary>
 /// Допоміжній клас, який містить докладну інформацію про пасажира та характеристики його поїздки
 /// </summary>
@@ -21,6 +20,7 @@ public class BookingInfo
     public User User_Booker { get; set; } = null!;
     public string Starting_Station_Title { get; set; } = null!;
     public string Ending_Station_Title { get; set; } = null!;
+    public TicketBooking Ticket_Booking { get; set; } = null!;
 }
 
 /// <summary>
@@ -371,7 +371,8 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
                         Passenger_Surname = ticket.Passenger_Surname,
                         Starting_Station_Title = ticket.Starting_Station.Title,
                         Ending_Station_Title = ticket.Ending_Station.Title,
-                        User_Booker = ticket.User
+                        User_Booker = ticket.User,
+                        Ticket_Booking = ticket                        
                     }
                 }).ToList();
 
@@ -427,13 +428,15 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
                         List<BookingInfo> bookers_for_current_place = booked_places_for_carriage_in_train_route_on_date.
                             Where(ticket => ticket.Train_Route_On_Date_Id == current_train_route_on_date_id && ticket.Carriage_Id == current_carriage_assignment.Passenger_Carriage_Id
                             && ticket.Place == current_place_in_carriage).Select(ticket => ticket.Booking_Info).ToList();
-                        List<InternalPassengerTripInfoDto> trip_info_for_current_place = bookers_for_current_place.Select(booker => new InternalPassengerTripInfoDto
+                        List<ExternalPassengerTripInfoDto> trip_info_for_current_place = bookers_for_current_place.Select(booker => new ExternalPassengerTripInfoDto
                         {
                             User_Id = booker.User_Booker.Id,
                             Trip_Starting_Station = booker.Starting_Station_Title,
                             Trip_Ending_Station = booker.Ending_Station_Title,
                             Passenger_Name = booker.Passenger_Name,
-                            Passenger_Surname = booker.Passenger_Surname
+                            Passenger_Surname = booker.Passenger_Surname,
+                            Full_Ticket_Id = booker.Ticket_Booking.Full_Ticket_Id.ToString(),
+                            Ticket_Status = booker.Ticket_Booking.Ticket_Status
                         }).ToList();
 
                         //Перевірка, чи є дане місце в списку зайнятих для даного вагону

@@ -38,6 +38,16 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TicketManagementService
                 .FirstOrDefaultAsync(ticket_booking => ticket_booking.Id == ticket_booking_id);
             return ticket_booking;
         }
+        public async Task<TicketBooking?> FindTicketBookingByFullId(string full_ticket_id)
+        {
+            TicketBooking? ticket_booking = await context.Ticket_Bookings
+               .Include(ticket_booking => ticket_booking.Passenger_Carriage)
+               .Include(ticket_booking => ticket_booking.Starting_Station)
+               .Include(ticket_booking => ticket_booking.Ending_Station)
+               .Include(ticket_booking => ticket_booking.User)
+               .FirstOrDefaultAsync(ticket_booking => ticket_booking.Full_Ticket_Id.ToString() == full_ticket_id);
+            return ticket_booking;
+        }
         public async Task<List<TicketBooking>> FindSeveralTicketBookingsById(List<int> ticket_booking_ids)
         {
             List<TicketBooking> ticket_bookings = await context.Ticket_Bookings

@@ -5,57 +5,11 @@ using RailwayManagementSystemAPI.ExternalDTO.TrainRaceDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalDTO.TrainStopDTO.ClientDTO;
 using RailwayManagementSystemAPI.ExternalServices.AdminServices.CarriageAssistantServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO;
+using RailwayCore.Models.ModelEnums.TicketBookingEnums;
 using System.Text.Json.Serialization;
-
-
-public class AdminTicketsGroupByStartingStationDto
-{
-    [JsonPropertyName("trip_starting_station_title")]
-    public string Trip_Starting_Station_Title { get; set; } = null!;
-    [JsonPropertyName("destination_groups")]
-    public List<AdminDestinationTicketGroupDto> Destination_Groups { get; set; } = new List<AdminDestinationTicketGroupDto>();
-}
-public class AdminDestinationTicketGroupDto
-{
-    [JsonPropertyName("trip_ending_station_title")]
-    public string Trip_Ending_Station_Title { get; set; } = null!;
-    [JsonPropertyName("passenger_trips_info")]
-    public List<AdminPassengerTripInfoDto> Passenger_Trips_Info { get; set; } = new List<AdminPassengerTripInfoDto>();
-}
-public class AdminTicketsGroupByEndingStationDto
-{
-    [JsonPropertyName("trip_ending_station_title")]
-    public string Trip_Ending_Station_Title { get; set; } = null!;
-
-    [JsonPropertyName("starting_station_groups")]
-    public List<AdminStartingStationTicketGroupDto> Starting_Station_Groups { get; set; } = new List<AdminStartingStationTicketGroupDto>();
-}
-
-public class AdminStartingStationTicketGroupDto
-{
-    [JsonPropertyName("trip_starting_station_title")]
-    public string Trip_Starting_Station_Title { get; set; } = null!;
-
-    [JsonPropertyName("passenger_trips_info")]
-    public List<AdminPassengerTripInfoDto> Passenger_Trips_Info { get; set; } = new List<AdminPassengerTripInfoDto>();
-}
-public class AdminPassengerTripInfoDto
-{
-    [JsonPropertyName("place_in_carriage")]
-    public int Place_In_Carriage { get; set; }
-    [JsonPropertyName("passenger_trip_info")]
-    public InternalPassengerTripInfoDto Passenger_Trip_Info { get; set; } = null!;
-}
-public class AdminFullTicketStatisticsInfoForPassengerCarriageDto
-{
-    [JsonPropertyName("passenger_carriage_bookings_info")]
-    public ExternalSinglePassengerCarriageBookingsInfoDto Passenger_Carriage_Bookings_Info { get; set; } = null!;
-    [JsonPropertyName("ticket_groups_by_starting_station")]
-    public List<AdminTicketsGroupByStartingStationDto> Ticket_Groups_By_Starting_Station { get; set; } = new List<AdminTicketsGroupByStartingStationDto>();
-    [JsonPropertyName("ticket_groups_by_ending_station")]
-    public List<AdminTicketsGroupByEndingStationDto> Ticket_Groups_By_Ending_Station { get; set; } = new List<AdminTicketsGroupByEndingStationDto>();
-}
-
+using System.Runtime.CompilerServices;
+using RailwayCore.Migrations;
 
 namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.CarriageAssistantServices.Implementations
 {
@@ -64,11 +18,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.CarriageAssi
         private readonly string service_name = "CarriageAssistantTicketAggregationService";
         private readonly ITrainRouteWithBookingsSearchService train_route_with_bookings_search_service;
         private readonly IFullTrainRouteSearchService full_train_route_search_service;
+        private readonly IFullTicketManagementService full_ticket_management_service;
         public CarriageAssistantTicketAggregationService(ITrainRouteWithBookingsSearchService train_route_with_bookings_search_service,
-            IFullTrainRouteSearchService full_train_route_search_service)
+            IFullTrainRouteSearchService full_train_route_search_service,
+            IFullTicketManagementService full_ticket_management_service)
         {
             this.train_route_with_bookings_search_service = train_route_with_bookings_search_service;
             this.full_train_route_search_service = full_train_route_search_service;
+            this.full_ticket_management_service = full_ticket_management_service;
         }
         public async Task<QueryResult<AdminFullTicketStatisticsInfoForPassengerCarriageDto>> GetGroupedTicketBookingsByStationsForTrainRace(
             string train_route_on_date_id,
@@ -104,7 +61,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.CarriageAssi
                 .FirstOrDefault(carriage_bookings_info => carriage_bookings_info.Carriage_Position_In_Squad == carriage_position_in_squad);
             if (bookings_info_for_current_carriage is null)
             {
-                return new FailQuery<AdminFullTicketStatisticsInfoForPassengerCarriageDto>(new Error(ErrorType.InternalServerError, $"Can't find bookings info for carriage with number " +
+                return new FailQuery<AdminFullTicketStatisticsInfoForPassengerCarriageDto>(new Error(ErrorType.NotFound, $"Can't ind bookings info for carriage with number " +
                     $"{carriage_position_in_squad} " +
                     $"for train race {train_route_on_date_id}", annotation: service_name, unit: ProgramUnit.AdminAPI));
             }
@@ -179,6 +136,23 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.CarriageAssi
             return new SuccessQuery<AdminFullTicketStatisticsInfoForPassengerCarriageDto>(full_ticket_statistics_info,
                 new SuccessMessage($"Successfully get all ticket bookings statistics info for passenger carriage with " +
                 $"number {carriage_position_in_squad} in train race {train_route_on_date_id}"));
+        }
+        public async Task<QueryResult> SetTicketBookingStatusAsBookedAndUsed(string full_ticket_id)
+        {
+            TicketBooking? ticket_booking = await full_ticket_management_service.FindTicketBookingByFullId(full_ticket_id);
+            if (ticket_booking is null)
+            {
+                return new FailQuery(new Error(ErrorType.NotFound, $"Can't find ticket booking with ID: {full_ticket_id}", annotation: service_name, unit: ProgramUnit.AdminAPI));
+            }
+            if (ticket_booking.Ticket_Status != RailwayCore.Models.ModelEnums.TicketBookingEnums.TicketStatus.Booked_And_Active)
+            {
+                return new FailQuery(new Error(ErrorType.BadRequest, $"Can't set status as Booked_And_Used for ticket {full_ticket_id} because it is not Active", 
+                    annotation: service_name, unit: ProgramUnit.AdminAPI));
+            }
+            ticket_booking.Ticket_Status = RailwayCore.Models.ModelEnums.TicketBookingEnums.TicketStatus.Booked_And_Used;
+            await full_ticket_management_service.UpdateTicketBooking(ticket_booking);
+            return new SuccessQuery(new SuccessMessage($"Succesfully set ticket status as USED for ticket {ticket_booking.Full_Ticket_Id}",
+                annotation: service_name, unit: ProgramUnit.AdminAPI));
         }
     }
 }

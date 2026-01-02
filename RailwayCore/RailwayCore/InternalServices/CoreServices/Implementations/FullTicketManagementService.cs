@@ -76,6 +76,13 @@ namespace RailwayCore.InternalServices.CoreServices.Implementations
         {
             return await ticket_system_manipulation_service.FindTicketBookingById(ticket_booking_id);
         }
+
+        [CoreMethod]
+        public async Task<TicketBooking?> FindTicketBookingByFullId(string full_ticket_id)
+        {
+            return await ticket_system_manipulation_service.FindTicketBookingByFullId(full_ticket_id);
+        }
+
         [CoreMethod]
         public async Task<List<TicketBooking>> FindSeveralTicketBookingsById(List<int> ticket_booking_ids)
         {

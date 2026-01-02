@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using RailwayCore.Migrations;
+using System.Text.Json.Serialization;
 /// <summary>
 /// Даний клас містить докладну характеристику про пасажира та його поїздку на певному рейсі між певними станціями
 /// </summary>
-public class InternalPassengerTripInfoDto
+public class ExternalPassengerTripInfoDto
 {
     [JsonPropertyName("user_id")]
     public int? User_Id { get; set; }
@@ -14,4 +15,9 @@ public class InternalPassengerTripInfoDto
     public string? Trip_Starting_Station { get; set; }
     [JsonPropertyName("trip_ending_station")]
     public string? Trip_Ending_Station { get; set; }
+    [JsonPropertyName("full_ticket_id")]
+    public string? Full_Ticket_Id { get; set; }
+    [JsonPropertyName("ticket_status")]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public RailwayCore.Models.ModelEnums.TicketBookingEnums.TicketStatus? Ticket_Status { get; set; }
 }
