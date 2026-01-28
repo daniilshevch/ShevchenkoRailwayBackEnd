@@ -118,7 +118,7 @@ namespace RailwayCore.InternalServices.ExecutiveServices.TrainRouteSearchService
         }
         /// <summary>
         /// Метод трансформує сирі дані про рейс поїзда в трансферний об'єкт InternalTrainRaceBetweenStationsDto, який містить повну інформацію про рейс
-        /// поїзда в контексті поїздки між двома заданими станіями в певну дату + розклад цього поїзда(інформації про бронювання цей об'єкт не містить)
+        /// поїзда в контексті поїздки між двома заданими станціями в певну дату + розклад цього поїзда(інформації про бронювання цей об'єкт не містить)
         /// </summary>
         /// <param name="train_route_on_date_id"></param>
         /// <param name="start_station_title"></param>

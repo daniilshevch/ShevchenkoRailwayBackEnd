@@ -56,7 +56,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             this.full_ticket_management_service = full_ticket_management_service;
         }
 
-        [PartialLogicMethod]
+        [PartialLogicMethod] //January
         public async Task<QueryResult<List<InternalTrainRaceBetweenStationsDto>>> _GetAppropriateTrainRoutesBetweenStationsOnDate(string starting_station_title, string ending_station_title, DateOnly departure_date)
         {
             //Отримуємо список поїздів, які проходять через дані станції в потрібному порядку в потрібну дату
@@ -70,7 +70,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             return new SuccessQuery<List<InternalTrainRaceBetweenStationsDto>>(appropriate_train_routes_on_date, new SuccessMessage($"Successfuly got train races passing between" +
                 $" {starting_station_title} and {ending_station_title} on {departure_date}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
-        [PartialLogicMethod]
+        [PartialLogicMethod] //January
         public List<ExternalSingleTrainStopDto> _CreateListOfExternalTrainStopsDto(List<TrainRouteOnDateOnStation> train_stops_for_current_train_route_on_date,
             string starting_station_title, string ending_station_title)
         {
@@ -125,7 +125,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             return external_train_stops;
         }
 
-        [PartialLogicMethod]
+        [PartialLogicMethod] //January
         public QueryResult<List<ExternalTrainRaceWithBookingsInfoDto>> _CreateListOfExternalTrainRaceWithBookingsInfoDto
             (List<InternalTrainRaceBetweenStationsDto> appropriate_train_routes_on_date,
             Dictionary<string, InternalTrainRouteOnDateAllCarriageAssignmentsRepresentationDto> ticket_bookings_info_for_appropriate_train_routes,
@@ -158,7 +158,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 DateTime arrival_time_to_trip_ending_station = current_train_route_trip_info.Arrival_Time_For_Desired_Ending_Station;
                 string full_route_starting_station_title = current_train_route_trip_info.Full_Route_Starting_Stop.Station.Title;
                 string full_route_ending_station_title = current_train_route_trip_info.Full_Route_Ending_Stop.Station.Title;
-
                 double? trip_starting_stop_km_point = current_train_route_trip_info.Km_Point_Of_Desired_Starting_Station;
                 double? trip_ending_stop_km_point = current_train_route_trip_info.Km_Point_Of_Desired_Ending_Station;
                 double trip_distance = 0;
@@ -233,11 +232,8 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                     carriage_type_and_quality_group.Carriage_Statistics_List.Add(external_single_carriage_info_dto);
                 }
                 
-
-
                 /////////////////////////////ЗБІР СТАТИСИТИКИ ПО ВАГОНАХ В РЕЙСІ//////////////////////////// 
-
-
+                
                 //Проводимо докладний збір аналітики по типах та класах вагонів
                 foreach (KeyValuePair<string, ExternalCarriageTypeGroupDto> carriage_type_group in external_carriage_type_groups)
                 {
@@ -245,13 +241,13 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                         carriage_type_group.Value.Carriage_Quality_Class_Dictionary;
                     int type_group_free_places = 0;
                     int type_group_total_places = 0;
-                    int type_group_min_price = 10000000;
+                    int type_group_min_price = int.MaxValue;
                     int type_group_max_price = 0;
                     foreach (KeyValuePair<string, ExternalCarriageTypeAndQualityGroupDto> carriage_type_and_quality_group in carriage_quality_class_dictionary)
                     {
                         int quality_class_free_places = 0;
                         int quality_class_total_places = 0;
-                        int quality_class_min_price = 10000000;
+                        int quality_class_min_price = int.MaxValue;
                         int quality_class_max_price = 0;
                         List<ExternalSinglePassengerCarriageBookingsInfoDto> carriages_list = carriage_type_and_quality_group.Value.Carriage_Statistics_List;
                         foreach (ExternalSinglePassengerCarriageBookingsInfoDto single_carriage in carriages_list)
@@ -282,7 +278,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                         {
                             type_group_max_price = quality_class_max_price;
                         }
-
                         //Якщо обраний параметр, що не потрібно передавати детальну статистику зайнятості місць, то видаляємо цю інформацію і передаємо більш легкий JSON
                         if (!include_places_availability_info)
                         {
@@ -293,7 +288,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                     carriage_type_group.Value.Total_Places = type_group_total_places;
                     carriage_type_group.Value.Min_Price = type_group_min_price;
                     carriage_type_group.Value.Max_Price = type_group_max_price;
-
                     carriage_type_group.Value.Carriage_Quality_Class_Dictionary = carriage_quality_class_dictionary
                         .OrderBy(quality_class_group => quality_class_group.Key, new QualityClassComparer()).ToDictionary();
                 }
@@ -343,7 +337,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
 
-        [PartialLogicMethod]
+        [PartialLogicMethod] //January
         public (ExternalTrainRaceWithBookingsInfoDto? fastest_train_race, ExternalTrainRaceWithBookingsInfoDto? cheapest_train_race) _DefineAvailableTrainRacesTopChart
             (List<ExternalTrainRaceWithBookingsInfoDto> total_train_routes_with_bookings_and_stations_info)
         {
@@ -372,7 +366,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         /// <param name="admin_mode"></param>
         /// <param name="places_availability_info"></param>
         /// <returns></returns>
-        [ClientApiMethod]
+        [ClientApiMethod] //January
         public async Task<QueryResult<List<ExternalTrainRaceWithBookingsInfoDto>>> SearchTrainRoutesBetweenStationsWithBookingsInfo
             (string starting_station_title, string ending_station_title, DateOnly departure_date, bool admin_mode = false, bool places_availability_info = true)
         {
@@ -380,7 +374,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             Console.WriteLine("----------------------TRAIN TRIPS SEARCH PROCESS-------------------------");
             Console.ResetColor();
             Stopwatch sw = Stopwatch.StartNew();
-
             //////////////////////////////////ЧАСТИНА ПОШУКУ РЕЙСІВ ПОЇЗДІВ//////////////////////////////////////////////
 
             //Отримуємо список поїздів, які проходять через дані станції в потрібному порядку в потрібну дату
@@ -475,6 +468,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         /// <param name="admin_mode"></param>
         /// <param name="places_availability_info"></param>
         /// <returns></returns>
+        [ClientApiMethod] //January
         public async Task<QueryResult<ExternalTrainRaceWithBookingsInfoDto>> GetCompleteInfoWithBookingsForTrainRaceOnDateBetweenStations(string train_route_on_date_id,
             string starting_station_title, string ending_station_title, bool admin_mode = false, bool places_availability_info = true)
         {
@@ -554,7 +548,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             return new SuccessQuery<ExternalTrainRaceWithBookingsInfoDto>(external_train_race_dto, new SuccessMessage($"Successfully got complete race info with bookings for " +
                 $"train race: {train_route_on_date_id} between stations {starting_station_title} and {ending_station_title}", annotation: service_name, unit: ProgramUnit.ClientAPI));
         }
-
+        [ClientApiMethod]
         public async Task<QueryResult<List<ExternalTrainRaceThroughStationDto>>> SearchTrainRoutesThroughStation(string station_title, DateTime time,
             TimeSpan? left_interval = null, TimeSpan? right_interval = null)
         {
@@ -585,6 +579,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
             return new SuccessQuery<List<ExternalTrainRaceThroughStationDto>>(external_train_races);
         }
 
+        [ClientApiMethod] //January
         public async Task<QueryResult<List<ExternalSingleTrainStopDto>>> GetScheduleForTrainRace(string train_route_on_date_id, string starting_station_title,
             string ending_station_title)
         {
