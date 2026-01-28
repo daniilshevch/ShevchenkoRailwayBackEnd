@@ -2,6 +2,7 @@
 using RailwayCore.Models.ModelEnums.PassengerCarriageEnums;
 namespace RailwayCore.Models
 {
+    //Verified
     public class PassengerCarriage //Пасажирський вагон
     {
         [Key]
@@ -14,7 +15,6 @@ namespace RailwayCore.Models
         [MaxLength(30)]
         public PassengerCarriageManufacturer? Manufacturer { get; set; } //Завод-виробник вагона
         [MaxLength(30)]
-
         public PassengerCarriageQualityClass? Quality_Class { get; set; } //Підклас якості для типу вагону
         public bool Renewal_Fact { get; set; } = false; //Факт проходження капітально-відновлювального ремонту
         public int? Renewal_Year { get; set; } //Рік КВР(в разі якщо вагон його проходив)
@@ -22,7 +22,7 @@ namespace RailwayCore.Models
         public PassengerCarriageManufacturer? Renewal_Performer { get; set; } //Завод,який проводив КВР(в разі якщо вагон його проходив)
         [MaxLength(60)]
         public string? Renewal_Info { get; set; } //Інформація про КВР
-        public bool Wi_Fi { get; set; }
+        public bool Wi_Fi { get; set; } //Фізична наявність точки доступу Wi-Fi в вагоні
         public bool Air_Conditioning { get; set; } = false; //Наявність кондиціонеру
         public bool Is_Inclusive { get; set; } = false; //Здатність перевозити пасажирів з відхиленнями
         public bool Is_For_Train_Chief { get; set; } = false; //Здатність перевозити начальника поїзда

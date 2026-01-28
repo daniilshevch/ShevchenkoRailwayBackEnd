@@ -1,11 +1,8 @@
 ﻿using RailwayCore.Models;
 using System.ComponentModel.DataAnnotations;
+using RailwayCore.Models.ModelEnums.ImageEnums;
 
-public enum ImageType
-{
-    Profile,
-    Station
-};
+//Verified
 public class Image
 {
     [Key]
