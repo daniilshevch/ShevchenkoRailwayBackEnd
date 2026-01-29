@@ -32,6 +32,17 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.ModelReposi
             }
             return Ok(passenger_carriage_creation_result.Value);
         }
+        [HttpPost("copy-passenger-carriage/{new_passenger_carriage_id}")]
+        public async Task<ActionResult<PassengerCarriageDto>> CopyPassengerCarriage([FromRoute] string new_passenger_carriage_id, [FromQuery] string prototype_passenger_carriage_id)
+        {
+            QueryResult<PassengerCarriageDto> passenger_carriage_copy_result = await passenger_carriage_repository_service
+                .CopyPassengerCarriage(new_passenger_carriage_id, prototype_passenger_carriage_id);
+            if (passenger_carriage_copy_result.Fail)
+            {
+                return passenger_carriage_copy_result.GetErrorFromQueryResult<PassengerCarriageDto, PassengerCarriageDto>();
+            }
+            return Ok(passenger_carriage_copy_result.Value);
+        }
         [HttpGet("get-passenger-carriage/{passenger_carriage_id}")]
         public async Task<ActionResult<PassengerCarriageDto>> GetPassengerCarriageById(string passenger_carriage_id)
         {

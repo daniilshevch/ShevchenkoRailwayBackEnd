@@ -5,6 +5,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
 {
     public interface IPassengerCarriageRepositoryService
     {
+        Task<QueryResult<PassengerCarriageDto>> CopyPassengerCarriage(string new_passenger_carriaged_id, string prototype_passenger_carriage_id);
         Task<QueryResult<PassengerCarriageDto>> CreatePassengerCarriage(string passenger_carriage_id, ExternalPassengerCarriageCreateAndUpdateDto input);
         Task<bool> DeletePassengerCarriage(string passenger_carriage_id);
         Task<List<PassengerCarriageDto>> GetAllPassengerCarriages();

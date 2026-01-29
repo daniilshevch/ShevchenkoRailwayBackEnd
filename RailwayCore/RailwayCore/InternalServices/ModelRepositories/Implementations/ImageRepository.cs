@@ -4,11 +4,7 @@ using RailwayCore.Context;
 using RailwayCore.InternalDTO.ModelDTO;
 using RailwayCore.InternalServices.ModelRepositories.Interfaces;
 using RailwayCore.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RailwayCore.Models.ModelEnums.ImageEnums;
 
 namespace RailwayCore.InternalServices.ModelRepositories.Implementations
 {

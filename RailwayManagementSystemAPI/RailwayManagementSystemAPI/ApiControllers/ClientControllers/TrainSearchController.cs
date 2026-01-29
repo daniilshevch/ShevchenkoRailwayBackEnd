@@ -18,7 +18,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
         {
             this.train_route_with_booking_search_service = train_route_with_booking_search_service;
         }
-        [HttpGet("Search-Train-Routes-Between-Stations-With-Bookings/{starting_station}/{ending_station}")]
+        [HttpGet("Search-Train-Routes-Between-Stations-With-Bookings/{starting_station}/{ending_station}")] //January
         public async Task<ActionResult<List<ExternalTrainRaceWithBookingsInfoDto>>> SearchTrainRoutesBetweenStationsWithBookingsInfo([FromRoute] string starting_station, [FromRoute] string ending_station, [FromQuery] DateOnly departure_date)
         {
             QueryResult<List<ExternalTrainRaceWithBookingsInfoDto>>? train_routes_with_bookings_info_result =
@@ -29,7 +29,7 @@ namespace RailwayManagementSystemAPI.ApiControllers.ClientControllers
             }
             return Ok(train_routes_with_bookings_info_result.Value);
         }
-        [HttpGet("Search-Train-Routes-Between-Stations-With-Bookings-Without-Places/{starting_station}/{ending_station}")]
+        [HttpGet("Search-Train-Routes-Between-Stations-With-Bookings-Without-Places/{starting_station}/{ending_station}")] //January
         public async Task<ActionResult<List<ExternalTrainRaceWithBookingsInfoDto>>> SearchTrainRoutesBetweenStationsWithBookingsInfoWithoutPlaces([FromRoute] string starting_station, [FromRoute] string ending_station, [FromQuery] DateOnly departure_date)
         {
             QueryResult<List<ExternalTrainRaceWithBookingsInfoDto>>? train_routes_with_bookings_info_result =

@@ -10,6 +10,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
     public class PassengerCarriageRepositoryService : IPassengerCarriageRepositoryService
     {
         private readonly IPassengerCarriageRepository passenger_carriage_repository;
+        private readonly string service_name = "PassengerCarriageRepositoryService";
         public PassengerCarriageRepositoryService(IPassengerCarriageRepository passenger_carriage_repository)
         {
             this.passenger_carriage_repository = passenger_carriage_repository;
@@ -18,7 +19,23 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.ModelReposit
         {
             PassengerCarriageDto passenger_carriage_dto = (PassengerCarriageDto)input;
             passenger_carriage_dto.Id = passenger_carriage_id;
-
+            QueryResult<PassengerCarriage> passenger_carriage_creation_result = await passenger_carriage_repository.CreatePassengerCarriage(passenger_carriage_dto);
+            if (passenger_carriage_creation_result.Fail)
+            {
+                return new FailQuery<PassengerCarriageDto>(passenger_carriage_creation_result.Error);
+            }
+            return new SuccessQuery<PassengerCarriageDto>((PassengerCarriageDto)passenger_carriage_creation_result.Value);
+        }
+        public async Task<QueryResult<PassengerCarriageDto>> CopyPassengerCarriage(string new_passenger_carriaged_id, string prototype_passenger_carriage_id)
+        {
+            PassengerCarriage? prototype_passenger_carriage = await passenger_carriage_repository.GetPassengerCarriageById(prototype_passenger_carriage_id);
+            if(prototype_passenger_carriage is null)
+            {
+                return new FailQuery<PassengerCarriageDto>(new Error(ErrorType.NotFound, $"Can't find prototype passenger carriage with ID: {prototype_passenger_carriage_id}",
+                    annotation: service_name, unit: ProgramUnit.AdminAPI));
+            }
+            PassengerCarriageDto passenger_carriage_dto = (PassengerCarriageDto)prototype_passenger_carriage;
+            passenger_carriage_dto.Id = new_passenger_carriaged_id;
             QueryResult<PassengerCarriage> passenger_carriage_creation_result = await passenger_carriage_repository.CreatePassengerCarriage(passenger_carriage_dto);
             if (passenger_carriage_creation_result.Fail)
             {
