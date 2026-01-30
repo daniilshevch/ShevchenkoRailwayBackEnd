@@ -49,6 +49,18 @@ namespace RailwayManagementSystemAPI.ApiControllers.AdminControllers.TrainAssign
             }    
             return Ok();
         }
+        [HttpPost("Copy-Train-With-Inverted-Schedule")]
+        public async Task<IActionResult> CopyTrainRouteOnDateWithInvertedSchedule([FromQuery] string prototype_train_route_id, [FromQuery] string new_inverted_train_route_id, 
+            [FromQuery] DateOnly prototype_date, [FromQuery] DateTime new_date_and_departure_time, [FromQuery] bool creation_option = true)
+        {
+            QueryResult inverted_schedule_copy_result = await api_train_assignment_service.CopyTrainRouteOnDateWithInvertedSchedule(prototype_train_route_id, new_inverted_train_route_id,
+                prototype_date, new_date_and_departure_time, creation_option);
+            if(inverted_schedule_copy_result.Fail)
+            {
+                return inverted_schedule_copy_result.GetErrorFromNonGenericQueryResult();
+            }
+            return Ok();
+        }
         [HttpPost("Copy-Train-With-Squad")]
         public async Task<IActionResult> CopyTrainRouteOnDateWithSquad([FromQuery] string prototype_train_route_id, [FromQuery] string new_train_route_id,
             [FromQuery] DateOnly prototype_date, [FromQuery] DateOnly new_date, [FromQuery] bool creation_option = true)

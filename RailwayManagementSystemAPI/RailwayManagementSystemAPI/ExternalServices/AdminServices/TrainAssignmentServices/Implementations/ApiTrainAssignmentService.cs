@@ -77,6 +77,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.AdminServices.TrainAssignm
         {
             return await full_train_assignment_service.CopyTrainRouteOnDateWithScheduleAndSquad(prototype_train_route_id, new_train_route_id, prototype_date, new_date, creation_option);
         }
+        public async Task<QueryResult> CopyTrainRouteOnDateWithInvertedSchedule(string prototype_train_route_id, string new_inverted_train_route_id, DateOnly prototype_date, DateTime new_date_and_departure_time, bool creation_option = true)
+        {
+            return await full_train_assignment_service.CopyTrainRouteOnDateWithInvertedSchedule(prototype_train_route_id, new_inverted_train_route_id, prototype_date, new_date_and_departure_time, creation_option);
+        }
         public async Task ChangeTrainRouteOnDateSchedule(string train_route_id, DateOnly departure_date, List<TrainStopWithArrivalAndDepartureTimeDto> train_stops, bool deletion_option = true)
         {
             List<TrainStopWithoutRouteDto> train_stops_list = new List<TrainStopWithoutRouteDto>();

@@ -163,6 +163,10 @@ namespace RailwayCore.InternalServices.CoreServices.Implementations
         {
             return await train_squad_copy_service.CopyTrainRouteOnDateWithSquad(prototype_train_route_id, new_train_route_id, prototype_date, new_date, creation_option);
         }
+        public async Task<QueryResult> CopyTrainRouteOnDateWithInvertedSchedule(string prototype_train_route_id, string new_inverted_train_route_id, DateOnly prototype_date, DateTime new_date_and_departure_time, bool creation_option = true)
+        {
+            return await train_schedule_copy_service.CopyTrainRouteOnDateWithInvertedSchedule(prototype_train_route_id, new_inverted_train_route_id, prototype_date, new_date_and_departure_time, creation_option);  
+        }
         public async Task<QueryResult> CopyTrainRouteOnDateWithScheduleAndSquad(string prototype_train_route_id, string new_train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true)
         {
             if (creation_option)

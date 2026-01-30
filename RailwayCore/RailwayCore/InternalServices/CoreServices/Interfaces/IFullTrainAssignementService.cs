@@ -6,6 +6,7 @@ namespace RailwayCore.InternalServices.CoreServices.Interfaces
     {
         Task ChangeTrainRouteOnDateSchedule(string train_route_id, DateOnly departure_date, List<TrainStopWithoutRouteDto> train_stops, bool deletion_option = true);
         Task ChangeTrainRouteOnDateSquad(string train_route_id, DateOnly departure_date, List<CarriageAssignementWithoutRouteDTO> carriage_assignments, bool deletion_option = true);
+        Task<QueryResult> CopyTrainRouteOnDateWithInvertedSchedule(string prototype_train_route_id, string new_inverted_train_route_id, DateOnly prototype_date, DateTime new_date_and_departure_time, bool creation_option = true);
         Task<QueryResult> CopyTrainRouteOnDateWithSchedule(string prototype_train_route_id, string new_train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true);
         Task<QueryResult> CopyTrainRouteOnDateWithScheduleAndSquad(string prototype_train_route_id, string new_train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true);
         Task<QueryResult> CopyTrainRouteOnDateWithSquad(string prototype_train_route_id, string new_train_route_id, DateOnly prototype_date, DateOnly new_date, bool creation_option = true);
