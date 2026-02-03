@@ -195,8 +195,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.InternalServerError, "System can't find the ticket to complete booking. Probably, ticket expiration time came down",
                     annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
-            //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка
+            //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка(згідно з даними фронт енду)
             if (user.Id != input_unfinished_ticket.User_Id)
+            {
+                return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed",
+                    annotation: service_name, unit: ProgramUnit.ClientAPI));
+            }
+            //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка(згідно з даними фронт бек енду)
+            if (user.Id != ticket_booking.User_Id)
             {
                 return new FailQuery<ExternalOutputCompletedTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed",
                     annotation: service_name, unit: ProgramUnit.ClientAPI));
@@ -355,8 +361,14 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.InternalServerError, "System can't find the ticket to complete booking",
                     annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
-            //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка
+            //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка(згідно з даними з фронт енду)
             if (user.Id != input_unfinished_ticket.User_Id)
+            {
+                return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed",
+                    annotation: service_name, unit: ProgramUnit.ClientAPI));
+            }
+            //Перевірка, чи аутентифікований користувач є тим самим, який розпочав процес бронювання квитка(згідно з даними з бек енду)
+            if (user.Id != ticket_booking.User_Id)
             {
                 return new FailQuery<ExternalOutputMediatorTicketBookingDto>(new Error(ErrorType.Forbidden, "Authenticated user doesn't own the ticket whose booking is being tried to be completed",
                     annotation: service_name, unit: ProgramUnit.ClientAPI));

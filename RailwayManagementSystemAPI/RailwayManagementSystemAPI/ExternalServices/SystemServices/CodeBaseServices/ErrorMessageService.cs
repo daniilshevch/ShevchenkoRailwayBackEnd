@@ -18,7 +18,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseSer
                 case ErrorType.Conflict:
                     return new ConflictObjectResult(message);
                 case ErrorType.Forbidden:
-                    return new ForbidResult(message); //?
+                    return new ObjectResult(message)
+                    {
+                        StatusCode = StatusCodes.Status403Forbidden
+                    };
                 default:
                     return new ObjectResult(message)
                     {
@@ -39,7 +42,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseSer
                 case ErrorType.Conflict:
                     return new ConflictObjectResult(message);
                 case ErrorType.Forbidden:
-                    return new ForbidResult(message); //?
+                    return new ObjectResult(message)
+                    {
+                        StatusCode = StatusCodes.Status403Forbidden
+                    };
                 default:
                     return new ObjectResult(message)
                     {
