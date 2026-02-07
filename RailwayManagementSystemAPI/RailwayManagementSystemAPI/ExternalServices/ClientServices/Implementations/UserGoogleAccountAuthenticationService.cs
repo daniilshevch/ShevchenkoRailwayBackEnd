@@ -37,7 +37,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
         /// <returns></returns>
         public async Task<QueryResult<ExternalOutputLoginUserDto>> LoginWithGoogle(ClaimsPrincipal google_user)
         {
-            //отримуємо з об'єкту ClaimsPrincipal пошту користувача(вона надходить з сервісів Google)
+            //Отримуємо з об'єкту ClaimsPrincipal пошту користувача(вона надходить з сервісів Google)
             string? email = google_user.FindFirst(ClaimTypes.Email)?.Value;
             if (email is null)
             {

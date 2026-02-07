@@ -144,6 +144,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseSer
             services.AddSingleton<IStationTranslator, StationTranslator>();
             services.AddSingleton<ICarriageTypeTranslator, CarriageTypeTranslator>();
             services.AddSingleton<ITrainRoutesTranslator, TrainRoutesTranslator>();
+            services.AddSingleton<ITicketStatusTranslator, TicketStatusTranslator>();
         }
         public void ConfigureSystemServices(IServiceCollection services)
         {

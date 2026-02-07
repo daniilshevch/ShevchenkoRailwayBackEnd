@@ -1,0 +1,22 @@
+[
+  {
+    "english": "Booked_And_Active",
+    "ukrainian": "Активний"
+  },
+  {
+    "english": "Booked_And_Used",
+    "ukrainian": "Активований"
+  },
+  {
+    "english": "Booking_In_Progress",
+    "ukrainian": "Тимчасово зарезервований"
+  },
+  {
+    "english": "Archieved",
+    "ukrainian": "Архівний"
+  },
+  {
+    "english": "Returned",
+    "ukrainian": "Повернений"
+  }
+]
