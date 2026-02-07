@@ -5,7 +5,6 @@
         body {
             margin: 0;
             padding: 0;
-            /* Колір залишаємо як запасний варіант */
             background-color: #2a3376;
             font-family: Arial, sans-serif;
         }
@@ -80,21 +79,9 @@
             font-weight: bold;
         }
 
-        .row-bg {
-            background-color: #f8f9fa;
-        }
-
-        .footer-link {
-            color: #1a73e8;
-            text-decoration: none;
-            font-size: 13px;
-            display: block;
-            margin-top: 4px;
-        }
-
         .logo-container {
             text-align: center;
-            padding-bottom: 20px; /* Відступ від лого до картки */
+            padding-bottom: 20px;
         }
 
         /* Стилі класів вагонів */
@@ -114,12 +101,11 @@
             color: #7b1fa2 !important;
         }
 
-        /* Фікс для тексту логотипу, щоб він був читабельний на будь-якому фото */
         .logo-text {
             color: white;
             margin: 0;
             font-size: 28px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Тінь для тексту */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
     </style>
 </head>
@@ -137,7 +123,7 @@
             </div>
 
             <div class='alert-green'>
-                Квиток знаходиться у вкладенні листа. Дякуємо, що подорожуєте потягами Shevchenko Railway.
+                Квитки знаходяться у вкладенні листа (PDF). Дякуємо, що подорожуєте з нами!
             </div>
 
             <table class='info-table'>
@@ -152,7 +138,7 @@
                     <td class='label'>Відправлення:</td>
                     <td class='value'>
                         <div style='font-size: 16px; margin-bottom: 4px;'>{{Trip_Starting_Station_Title}}</div>
-                        <div style='font-weight: normal; font-weight: 500;'>{{Departure_Time_From_Trip_Starting_Station}}</div>
+                        <div style='font-weight: 500;'>{{Departure_Time_From_Trip_Starting_Station}}</div>
                     </td>
                 </tr>
 
@@ -165,29 +151,17 @@
                 </tr>
 
                 <tr style='background-color: #f1f3f4;'>
-                    <td colspan='2' style='text-align: center; color: #5f6368; font-size: 13px; padding: 8px;'>Пасажир</td>
-                </tr>
-
-                <tr>
-                    <td class='value' style='width: 50%; white-space: nowrap;'>
-                        {{Passenger_Name}} {{Passenger_Surname}}
-                    </td>
-
-                    <td class='value' style='text-align: right;'>
-                        Вагон {{Passenger_Carriage_Position_In_Squad}} ({{Carriage_Type}}, клас
-                        <span class="quality-{{Carriage_Quality_Class}}">{{Carriage_Quality_Class}}</span>)
-
-                        <br>
-
-                        <span style='font-size: 15px; display: inline-block; margin-top: 4px;'>
-                            місце {{Place_In_Carriage}}
-                        </span>
+                    <td colspan='2' style='text-align: center; color: #5f6368; font-size: 13px; padding: 8px; font-weight: bold; text-transform: uppercase;'>
+                        Пасажири та місця
                     </td>
                 </tr>
+
+                {{PASSENGERS_BLOCK}}
+
             </table>
 
             <div class='alert-orange'>
-                Зауважте, що перевірка пасажирів на вокзалі стала ретельнішою задля безпеки — не забудьте взяти паспорт.
+                Зауважте, що перевірка пасажирів на вокзалі стала ретельнішою задля безпеки — не забудьте взяти паспорт для кожного пасажира.
             </div>
 
             <br>

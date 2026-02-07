@@ -42,5 +42,9 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
         {
             throw new NotImplementedException();
         }
+        public async Task<QueryResult> SendMultipleTicketBookingsInGroupsToEmail(string user_email, List<ExternalOutputCompletedTicketBookingDto> ticket_bookings_list)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

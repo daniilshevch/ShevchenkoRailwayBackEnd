@@ -326,7 +326,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Implementat
                 return new FailQuery<List<ExternalOutputCompletedTicketBookingDto>>(new Error(ErrorType.InternalServerError, $"Transaction error: " +
                     $"{ex.Message}", annotation: service_name, unit: ProgramUnit.ClientAPI));
             }
-            await email_ticket_sender.SendMultipleTicketsToEmail(user.Email, final_completed_tickets);
+            await email_ticket_sender.SendMultipleTicketBookingsInGroupsToEmail(user.Email, final_completed_tickets);
             return new SuccessQuery<List<ExternalOutputCompletedTicketBookingDto>>(final_completed_tickets, new SuccessMessage($"Successfully performed " +
     $"transaction for multiple ticket bookings completion", annotation: service_name, unit: ProgramUnit.ClientAPI));
 

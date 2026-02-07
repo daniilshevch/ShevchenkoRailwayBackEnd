@@ -1,14 +1,18 @@
 ﻿using MailKit;
+using Microsoft.EntityFrameworkCore.Storage.Json;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using MimeKit;
 using Org.BouncyCastle.Crypto;
 using RailwayCore.InternalServices.CoreServices.Interfaces;
 using RailwayCore.Models;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.AdminDTO;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement;
 using RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.TicketFormationServices.Interfaces;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.TranslationServices.Translators.Interfaces;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Mail;
 
@@ -127,5 +131,103 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
             }
             return new SuccessQuery(new SuccessMessage($"Ticket {ticket_booking_info.Full_Ticket_Id} has successfully been sent to email: {user_email}", annotation: service_title, unit: ProgramUnit.SystemAPI));
         }
+        public async Task<QueryResult> SendMultipleTicketBookingsInGroupsToEmail(string user_email, List<ExternalOutputCompletedTicketBookingDto> ticket_bookings_list)
+        {
+            List<TicketBooking> ticket_bookings = await full_ticket_management_service.FindSeveralTicketBookingsById(ticket_bookings_list.Select(ticket_booking => ticket_booking.Id).ToList());
+            List<(ExternalProfileTicketBookingDto Profile, TicketBooking Info)> ticket_bookings_data_list = new List<(ExternalProfileTicketBookingDto, TicketBooking)>();
+            foreach (TicketBooking ticket_booking in ticket_bookings)
+            {
+                ExternalProfileTicketBookingDto profile_ticket_booking_dto = await user_ticket_management_service.CreateProfileDtoForTicketBooking(ticket_booking);
+                pdf_ticket_generator_service.TranslateTicketIntoUkrainian(profile_ticket_booking_dto);
+                ticket_bookings_data_list.Add((profile_ticket_booking_dto, ticket_booking));
+            }
+
+            var ticket_groups = ticket_bookings_data_list.GroupBy(ticket => new
+            {
+                ticket.Profile.Train_Route_On_Date_Id,
+                ticket.Profile.Trip_Starting_Station_Title,
+                ticket.Profile.Trip_Ending_Station_Title
+            });
+
+            List<Task<QueryResult>> ticket_sending_to_email_task_list = new List<Task<QueryResult>>();
+            foreach (var ticket_group in ticket_groups)
+            {
+                ticket_sending_to_email_task_list.Add(_SendGroupOfTicketsToEmail(user_email, ticket_group.ToList()));
+            }
+            IEnumerable<QueryResult> ticket_send_results = await Task.WhenAll(ticket_sending_to_email_task_list);
+            foreach (QueryResult query_result in ticket_send_results)
+            {
+                if(query_result.Fail)
+                {
+                    return query_result;
+                }
+            }
+            return new SuccessQuery(new SuccessMessage($"All tickets have been successfully sent to email: {user_email}", annotation: service_title, unit: ProgramUnit.SystemAPI));
+
+        }
+        public async Task<QueryResult> _SendGroupOfTicketsToEmail(string user_email, List<(ExternalProfileTicketBookingDto, TicketBooking)> ticket_booking_group)
+        {
+            (ExternalProfileTicketBookingDto Profile, TicketBooking Info) first_ticket_booking = ticket_booking_group[0];
+            ExternalProfileTicketBookingDto first_ticket_booking_profile = first_ticket_booking.Profile;
+            MimeMessage message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Shevchenko Railway", from_email));
+            message.To.Add(new MailboxAddress(first_ticket_booking_profile.Passenger_Name, user_email));
+            string subject_starting_word = ticket_booking_group.Count > 1 ? "Квитки" : "Квиток"; 
+            message.Subject = $"{subject_starting_word} на поїзд {first_ticket_booking_profile.Train_Route_Id}, {first_ticket_booking_profile.Departure_Time_From_Trip_Starting_Station}";
+            BodyBuilder body_builder = new BodyBuilder();
+            CultureInfo ua_culture = new CultureInfo("uk-UA");
+
+            string passengers_html = "";
+            foreach((ExternalProfileTicketBookingDto Profile, TicketBooking Info) single_ticket in ticket_booking_group)
+            {
+                byte[] ticket_pdf = pdf_ticket_generator_service.GenerateTicketPdf(single_ticket.Profile);
+                body_builder.Attachments.Add($"Ticket_{single_ticket.Profile.Passenger_Surname}_{single_ticket.Info.Full_Ticket_Id}.pdf", ticket_pdf, ContentType.Parse("application/pdf"));
+                passengers_html += $@"
+            <tr>
+                <td class='value' style='width: 50%; white-space: nowrap; padding: 12px 20px; border-top: 1px solid #eee;'>
+                    {single_ticket.Profile.Passenger_Name} {single_ticket.Profile.Passenger_Surname}
+                </td>
+                <td class='value' style='text-align: right; padding: 12px 20px; border-top: 1px solid #eee;'>
+                    Вагон {single_ticket.Info.Passenger_Carriage_Position_In_Squad} ({single_ticket.Profile.Carriage_Type}, клас 
+                    <span class='quality-{single_ticket.Profile.Carriage_Quality_Class}'>{single_ticket.Profile.Carriage_Quality_Class}</span>)
+                    <br>
+                    <span style='font-size: 15px; display: inline-block; margin-top: 4px;'>місце {single_ticket.Profile.Place_In_Carriage}</span>
+                </td>
+            </tr>";
+            }
+
+            body_builder.HtmlBody = html_template
+                .Replace("{{Train_Route_Id}}", first_ticket_booking_profile.Train_Route_Id)
+                .Replace("{{Full_Route_Starting_Station_Title}}", first_ticket_booking_profile.Full_Route_Starting_Station_Title)
+                .Replace("{{Full_Route_Ending_Station_Title}}", first_ticket_booking_profile.Full_Route_Ending_Station_Title)
+                .Replace("{{Trip_Starting_Station_Title}}", first_ticket_booking_profile.Trip_Starting_Station_Title)
+                .Replace("{{Departure_Time_From_Trip_Starting_Station}}", first_ticket_booking_profile.Departure_Time_From_Trip_Starting_Station!.Value.ToString("dd MMMM о HH:mm", ua_culture))
+                .Replace("{{Trip_Ending_Station_Title}}", first_ticket_booking_profile.Trip_Ending_Station_Title)
+                .Replace("{{Arrival_Time_To_Trip_Ending_Station}}", first_ticket_booking_profile.Arrival_Time_To_Trip_Ending_Station!.Value.ToString("dd MMMM о HH:mm", ua_culture))
+                .Replace("{{PASSENGERS_BLOCK}}", passengers_html) 
+                .Replace("{{CurrentYear}}", DateTime.Now.Year.ToString());
+
+            message.Body = body_builder.ToMessageBody();
+
+            using (MailKit.Net.Smtp.SmtpClient client = new MailKit.Net.Smtp.SmtpClient())
+            {
+                try
+                {
+                    client.CheckCertificateRevocation = false;
+                    await client.ConnectAsync("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                    await client.AuthenticateAsync(from_email, app_password);
+                    await client.SendAsync(message);
+                    await client.DisconnectAsync(true);
+                }
+                catch (Exception ex)
+                {
+                    return new FailQuery(new Error(ErrorType.InternalServerError, $"Fail while attempt to send groupd of tickets to email: {user_email}. Error: {ex.Message}",
+                        annotation: service_title, unit: ProgramUnit.SystemAPI));
+                }
+            }
+            return new SuccessQuery(new SuccessMessage($"Group of tickets has been successfully sent to email: {user_email}", annotation: service_title, unit: ProgramUnit.SystemAPI));
+
+        }
+       
     }
 }
