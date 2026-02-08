@@ -6,7 +6,6 @@ namespace RailwayManagementSystemAPI.ExternalServices.ClientServices.Interfaces
 {
     public interface IUserTicketManagementService
     {
-        Task<ExternalProfileTicketBookingDto> CreateProfileDtoForTicketBooking(TicketBooking ticket_booking);
         Task<QueryResult<List<ExternalProfileTicketBookingDto>>> GetAllBookedTicketsForCurrentUser();
         Task<QueryResult<ExternalProfileTicketBookingDto>> ReturnTicketBookingForCurrentUserById(string ticket_id);
         Task<QueryResult<List<ExternalTicketBookingGroupDto>>> GetAllBookedTicketsInGroupsForCurrentUser(TicketGroupSearchOptions search_options);

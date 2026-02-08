@@ -27,21 +27,21 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
         private readonly string app_password;
         private readonly string html_template;
         private readonly string service_title = "EmailTicketSender";
-        private readonly IUserTicketManagementService user_ticket_management_service;
+        private readonly ITicketProfileBuilder ticket_profile_builder;
         private readonly IFullTicketManagementService full_ticket_management_service;
         private readonly IPdfTicketGeneratorService pdf_ticket_generator_service;
-        public GmailSmtpTicketSender(IConfiguration configuration, IUserTicketManagementService user_ticket_management_service,
-            IPdfTicketGeneratorService pdf_ticket_generator_service, IFullTicketManagementService full_ticket_management_service,
-            IWebHostEnvironment web_host_environment)
+        public GmailSmtpTicketSender(IConfiguration configuration, IPdfTicketGeneratorService pdf_ticket_generator_service, IFullTicketManagementService full_ticket_management_service,
+            IWebHostEnvironment web_host_environment, ITicketProfileBuilder ticket_profile_builder)
         {
             this.from_email = configuration["GmailSmtp:Email"]!;
             this.app_password = configuration["GmailSmtp:AppPassword"]!;
-            this.user_ticket_management_service = user_ticket_management_service;
             this.pdf_ticket_generator_service = pdf_ticket_generator_service;
             this.full_ticket_management_service = full_ticket_management_service;
+            this.ticket_profile_builder = ticket_profile_builder;
+
             string template_path = Path.Combine(web_host_environment.ContentRootPath, "ExternalServices",
                 "SystemServices", "EmailServices", "HtmlTemplate", "TicketEmailTemplate.html");
-            if(File.Exists(template_path))
+            if (File.Exists(template_path))
             {
                 html_template = File.ReadAllText(template_path);
             }
@@ -49,6 +49,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
             {
                 html_template = "<h1>Ticket for {Passenger_Name}</h1>";
             }
+
         }
         /// <summary>
         /// Даний метод відправляє один квиток на пошту користувача після покупки
@@ -59,7 +60,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
         public async Task<QueryResult> SendTicketToEmailAsync(string user_email, TicketBooking ticket_booking_info)
         {
             ExternalProfileTicketBookingDto ticket_booking_profile_for_pdf =
-                await user_ticket_management_service.CreateProfileDtoForTicketBooking(ticket_booking_info);
+                await ticket_profile_builder.CreateProfileDtoForTicketBooking(ticket_booking_info);
             pdf_ticket_generator_service.TranslateTicketIntoUkrainian(ticket_booking_profile_for_pdf);
             return await _SendOrganisedTicketBookingToEmail(user_email, ticket_booking_profile_for_pdf, ticket_booking_info);
         }
@@ -70,7 +71,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
             List<Task<QueryResult>> tickets_sending_to_email_task_list = new List<Task<QueryResult>>();
             foreach(TicketBooking ticket_booking in ticket_bookings)
             {
-                ExternalProfileTicketBookingDto profile_ticket_booking_dto = await user_ticket_management_service.CreateProfileDtoForTicketBooking(ticket_booking);
+                ExternalProfileTicketBookingDto profile_ticket_booking_dto = await ticket_profile_builder.CreateProfileDtoForTicketBooking(ticket_booking);
                 pdf_ticket_generator_service.TranslateTicketIntoUkrainian(profile_ticket_booking_dto);
                 tickets_sending_to_email_task_list.Add(_SendOrganisedTicketBookingToEmail(user_email, profile_ticket_booking_dto, ticket_booking));
             }
@@ -137,7 +138,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
             List<(ExternalProfileTicketBookingDto Profile, TicketBooking Info)> ticket_bookings_data_list = new List<(ExternalProfileTicketBookingDto, TicketBooking)>();
             foreach (TicketBooking ticket_booking in ticket_bookings)
             {
-                ExternalProfileTicketBookingDto profile_ticket_booking_dto = await user_ticket_management_service.CreateProfileDtoForTicketBooking(ticket_booking);
+                ExternalProfileTicketBookingDto profile_ticket_booking_dto = await ticket_profile_builder.CreateProfileDtoForTicketBooking(ticket_booking);
                 pdf_ticket_generator_service.TranslateTicketIntoUkrainian(profile_ticket_booking_dto);
                 ticket_bookings_data_list.Add((profile_ticket_booking_dto, ticket_booking));
             }
@@ -181,7 +182,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
             foreach((ExternalProfileTicketBookingDto Profile, TicketBooking Info) single_ticket in ticket_booking_group)
             {
                 byte[] ticket_pdf = pdf_ticket_generator_service.GenerateTicketPdf(single_ticket.Profile);
-                body_builder.Attachments.Add($"Ticket_{single_ticket.Profile.Passenger_Surname}_{single_ticket.Info.Full_Ticket_Id}.pdf", ticket_pdf, ContentType.Parse("application/pdf"));
+                body_builder.Attachments.Add($"Ticket_{single_ticket.Profile.Train_Route_Id}_{single_ticket.Profile.Passenger_Name}_{single_ticket.Profile.Passenger_Surname}.pdf", ticket_pdf, ContentType.Parse("application/pdf"));
                 passengers_html += $@"
             <tr>
                 <td class='value' style='width: 50%; white-space: nowrap; padding: 12px 20px; border-top: 1px solid #eee;'>
@@ -221,13 +222,76 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
                 }
                 catch (Exception ex)
                 {
-                    return new FailQuery(new Error(ErrorType.InternalServerError, $"Fail while attempt to send groupd of tickets to email: {user_email}. Error: {ex.Message}",
+                    return new FailQuery(new Error(ErrorType.InternalServerError, $"Fail while attempt to send grouped of tickets to email: {user_email}. Error: {ex.Message}",
                         annotation: service_title, unit: ProgramUnit.SystemAPI));
                 }
             }
             return new SuccessQuery(new SuccessMessage($"Group of tickets has been successfully sent to email: {user_email}", annotation: service_title, unit: ProgramUnit.SystemAPI));
 
         }
-       
-    }
+        public async Task<QueryResult> SendTicketReturnReceiptToEmail(string user_email, ExternalProfileTicketBookingDto ticket_booking_profile_dto)
+        {
+            pdf_ticket_generator_service.TranslateTicketIntoUkrainian(ticket_booking_profile_dto);
+            string refund_template_path = Path.Combine(Directory.GetCurrentDirectory(), "ExternalServices",
+        "SystemServices", "EmailServices", "HtmlTemplate", "TicketReturnReceiptEmailTemplate.html");
+
+            MimeMessage message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Shevchenko Railway", from_email));
+            message.To.Add(new MailboxAddress(ticket_booking_profile_dto.Passenger_Name, user_email));
+            message.Subject = $"Повернення квитка на поїзд {ticket_booking_profile_dto.Train_Route_Id} підтверджено";
+            string current_html = File.Exists(refund_template_path) ? File.ReadAllText(refund_template_path) : html_template;
+
+            BodyBuilder body_builder = new BodyBuilder();
+            CultureInfo ua_culture = new CultureInfo("uk-UA");
+
+            string passenger_row_html = $@"
+    <tr>
+        <td class='value' style='width: 50%; white-space: nowrap; padding: 12px 20px; border-top: 1px solid #eee;'>
+            {ticket_booking_profile_dto.Passenger_Name} {ticket_booking_profile_dto.Passenger_Surname}
+        </td>
+        <td class='value' style='text-align: right; padding: 12px 20px; border-top: 1px solid #eee;'>
+            Вагон {ticket_booking_profile_dto.Passenger_Carriage_Position_In_Squad} ({ticket_booking_profile_dto.Carriage_Type}, клас 
+            <span class='quality-{ticket_booking_profile_dto.Carriage_Quality_Class}'>{ticket_booking_profile_dto.Carriage_Quality_Class}</span>)
+            <br>
+            <span style='font-size: 15px; display: inline-block; margin-top: 4px;'>місце {ticket_booking_profile_dto.Place_In_Carriage}</span>
+        </td>
+    </tr>";
+
+            body_builder.HtmlBody = current_html
+                .Replace("{{Train_Route_Id}}", ticket_booking_profile_dto.Train_Route_Id)
+                .Replace("{{Full_Route_Starting_Station_Title}}", ticket_booking_profile_dto.Full_Route_Starting_Station_Title)
+                .Replace("{{Full_Route_Ending_Station_Title}}", ticket_booking_profile_dto.Full_Route_Ending_Station_Title)
+                .Replace("{{Trip_Starting_Station_Title}}", ticket_booking_profile_dto.Trip_Starting_Station_Title)
+                .Replace("{{Trip_Ending_Station_Title}}", ticket_booking_profile_dto.Trip_Ending_Station_Title)
+                .Replace("{{Departure_Time_From_Trip_Starting_Station}}", ticket_booking_profile_dto.Departure_Time_From_Trip_Starting_Station!.Value.ToString("dd MMMM о HH:mm", ua_culture))
+                .Replace("{{Arrival_Time_To_Trip_Ending_Station}}", ticket_booking_profile_dto.Arrival_Time_To_Trip_Ending_Station!.Value.ToString("dd MMMM о HH:mm", ua_culture))
+                .Replace("{{PASSENGERS_BLOCK}}", passenger_row_html)
+                .Replace("{{Passenger_Carriage_Position_In_Squad}}", ticket_booking_profile_dto.Passenger_Carriage_Position_In_Squad.ToString())
+                .Replace("{{Place_In_Carriage}}", ticket_booking_profile_dto.Place_In_Carriage.ToString())
+                .Replace("{{Full_Ticket_Id}}", ticket_booking_profile_dto.Full_Ticket_Id.ToString())
+                .Replace("{{CurrentYear}}", DateTime.Now.Year.ToString());
+
+            byte[] ticket_pdf = pdf_ticket_generator_service.GenerateTicketPdf(ticket_booking_profile_dto);
+            body_builder.Attachments.Add($"Ticket_Return_Receipt_{ticket_booking_profile_dto.Train_Route_Id}_{ticket_booking_profile_dto.Passenger_Name}_{ticket_booking_profile_dto.Passenger_Surname}.pdf", ticket_pdf, ContentType.Parse("application/pdf"));
+            message.Body = body_builder.ToMessageBody();
+
+            using (MailKit.Net.Smtp.SmtpClient client = new MailKit.Net.Smtp.SmtpClient())
+            {
+                try
+                {
+                    client.CheckCertificateRevocation = false;
+                    await client.ConnectAsync("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                    await client.AuthenticateAsync(from_email, app_password);
+                    await client.SendAsync(message);
+                    await client.DisconnectAsync(true);
+                }
+                catch (Exception ex)
+                {
+                    return new FailQuery(new Error(ErrorType.InternalServerError, $"Fail while attempt to send ticket return receipt xto email: {user_email}. Error: {ex.Message}",
+                        annotation: service_title, unit: ProgramUnit.SystemAPI));
+                }
+            }
+            return new SuccessQuery(new SuccessMessage($"Successfully sent ticket return receipt to email: {user_email}", annotation: service_title, unit: ProgramUnit.SystemAPI));
+        }
+    }  
 }

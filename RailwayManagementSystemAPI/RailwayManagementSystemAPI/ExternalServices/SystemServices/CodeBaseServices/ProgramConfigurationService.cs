@@ -154,6 +154,7 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.CodeBaseSer
             services.AddSingleton<IQRCodeGeneratorService, QRCodeGeneratorService>();
             services.AddScoped<IEmailTicketSender, GmailSmtpTicketSender>();
             services.AddScoped<IPdfTicketGeneratorService, PdfTicketGeneratorService>();
+            services.AddScoped<ITicketProfileBuilder, TicketProfileBuilder>();
         }
     }
     public class SwaggerDocumentationConfigurationManager

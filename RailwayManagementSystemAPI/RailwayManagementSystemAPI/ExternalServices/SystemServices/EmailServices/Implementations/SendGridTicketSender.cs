@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using RailwayCore.Models;
 using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.CompleteTicketBookingProcess;
+using RailwayManagementSystemAPI.ExternalDTO.TicketBookingDTO.ClientDTO.UserTicketManagement;
 using RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServices.Interfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -43,6 +44,10 @@ namespace RailwayManagementSystemAPI.ExternalServices.SystemServices.EmailServic
             throw new NotImplementedException();
         }
         public async Task<QueryResult> SendMultipleTicketBookingsInGroupsToEmail(string user_email, List<ExternalOutputCompletedTicketBookingDto> ticket_bookings_list)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<QueryResult> SendTicketReturnReceiptToEmail(string user_email, ExternalProfileTicketBookingDto ticket_booking_profile_dto)
         {
             throw new NotImplementedException();
         }
